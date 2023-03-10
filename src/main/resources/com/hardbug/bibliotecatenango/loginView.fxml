@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.LoginController">
+   <children>
+      <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="404.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="338.0" AnchorPane.leftAnchor="404.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../assets/logotenango.png" />
+         </image></ImageView>
+      <ImageView fitHeight="48.0" fitWidth="60.0" layoutX="461.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="338.0" AnchorPane.leftAnchor="461.0" AnchorPane.rightAnchor="91.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../assets/logotenangoNR.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="518.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="341.0" AnchorPane.leftAnchor="518.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../assets/conacultalogo.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="190.0" layoutY="79.0" prefHeight="261.0" prefWidth="221.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="79.0">
+         <children>
+            <TextField layoutX="36.0" layoutY="84.0" />
+            <TextField layoutX="36.0" layoutY="148.0" />
+            <Button layoutX="85.0" layoutY="202.0" mnemonicParsing="false" text="Ingresar">
+               <effect>
+                  <Glow />
+               </effect></Button>
+            <Label layoutX="36.0" layoutY="60.0" text="Usuario:" />
+            <Label layoutX="36.0" layoutY="129.0" text="Contraseña:" />
+            <Label layoutX="40.0" layoutY="14.0" text="Iniciar sesión">
+               <font>
+                  <Font name="Roboto Light" size="24.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Regresar" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="522.0" AnchorPane.topAnchor="14.0">
+         <effect>
+            <Glow level="0.59" />
+         </effect>
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
