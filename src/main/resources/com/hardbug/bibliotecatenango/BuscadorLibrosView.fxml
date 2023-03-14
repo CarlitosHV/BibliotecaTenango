@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.BuscadorLibrosController">
+   <children>
+      <TextField layoutX="32.0" layoutY="45.0" prefHeight="25.0" prefWidth="210.0" />
+      <Button layoutX="274.0" layoutY="45.0" mnemonicParsing="false" text="Buscar" />
+      <Label layoutX="32.0" layoutY="80.0" text="Filtrar por:" />
+      <ProgressIndicator layoutX="365.0" layoutY="38.0" progress="0.0" />
+      <CheckBox layoutX="32.0" layoutY="105.0" mnemonicParsing="false" text="Título" />
+      <CheckBox layoutX="101.0" layoutY="105.0" mnemonicParsing="false" text="Autor" />
+      <CheckBox layoutX="169.0" layoutY="105.0" mnemonicParsing="false" text="Editorial" />
+   </children>
+</AnchorPane>
