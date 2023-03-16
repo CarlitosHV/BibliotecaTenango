@@ -1,0 +1,8 @@
+#Fondo{
+    -fx-background-color: white;
+}
+
+#Boton{
+    -fx-background-color: #f46a37;
+    -fx-effect: dropshadow(gaussian, indianred, 12.0, 0.4, 5.0, 5.0);
+}

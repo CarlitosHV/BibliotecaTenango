@@ -4,22 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="PanelPrin" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.LoginController">
-   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Regresar" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.bottomAnchor="361.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="522.0" AnchorPane.topAnchor="14.0">
-      <font>
-         <Font name="Roboto Light" size="12.0" />
-      </font>
-   </Button>
-   <TextField fx:id="textuser" layoutX="226.0" layoutY="164.0" />
-   <TextField layoutX="226.0" layoutY="228.0" />
-   <Button id="Enter" layoutX="275.0" layoutY="282.0" mnemonicParsing="false" onAction="#RetornarInfo" text="Ingresar" />
-   <Label layoutX="226.0" layoutY="140.0" text="Usuario:">
+<AnchorPane fx:id="PanelPrin" prefHeight="403.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.LoginController">
+   <TextField fx:id="textuser" layoutX="237.0" layoutY="165.0" />
+   <TextField layoutX="237.0" layoutY="229.0" />
+   <Button id="Enter" layoutX="286.0" layoutY="283.0" mnemonicParsing="false" onAction="#RetornarInfo" text="Ingresar" />
+   <Label layoutX="237.0" layoutY="141.0" text="Usuario:">
       <font>
          <Font name="Roboto Light" size="12.0" />
       </font>
    </Label>
-   <Label layoutX="226.0" layoutY="209.0" text="Contraseña:" />
-   <Label layoutX="230.0" layoutY="94.0" text="Iniciar sesión">
+   <Label layoutX="237.0" layoutY="210.0" text="Contraseña:" />
+   <Label layoutX="241.0" layoutY="95.0" text="Iniciar sesión">
       <font>
          <Font name="Roboto Light" size="24.0" />
       </font>

@@ -1,20 +1,11 @@
 package com.hardbug.bibliotecatenango;
 
 
-import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import javax.swing.*;
-
-/*Clase que controla el login y la vista
-  Vista a la que está asociada la clase: LoginView.fxml
+/*Clase que controla la alta de libros
+  Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
-public class LoginController {
+
+public class AltaLibrosController {
     //Instanciamos al controlador de escenas para controlar la escena
     SceneController sceneController;
 
@@ -31,6 +22,4 @@ public class LoginController {
     public void setSceneController(SceneController sceneController) {
         this.sceneController = sceneController;
     }
-
-
 }
