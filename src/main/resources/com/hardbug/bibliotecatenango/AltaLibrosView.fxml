@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -62,12 +63,22 @@
                 <Font name="Roboto Light" size="12.0" />
             </font>
         </TextArea>
-        <Button layoutX="255.0" layoutY="305.0" mnemonicParsing="false" text="Guardar">
-            <effect>
-                <Glow />
-            </effect>
+        <Button id="BotonGuardar" layoutX="255.0" layoutY="305.0" mnemonicParsing="false" text="GUARDAR">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/save_button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
-        <DatePicker layoutX="37.0" layoutY="178.0" prefHeight="25.0" prefWidth="143.0" promptText="Año de edición"/>
+        <DatePicker layoutX="37.0" layoutY="178.0" prefHeight="25.0" prefWidth="143.0" promptText="Año de edición" />
     </children>
 
 </AnchorPane>

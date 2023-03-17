@@ -39,6 +39,8 @@ public class SceneController {
             //Al stage instanciado al principio de clase le asignamos la
             mainStage.setScene(s);
             mainStage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
+            mainStage.setMinHeight(450);
+            mainStage.setWidth(600);
             mainStage.getIcons().add(new Image(SceneController.class.getResourceAsStream("/assets/logotenango.png")));
             //Mostramos el Stage en pantalla
             mainStage.show();

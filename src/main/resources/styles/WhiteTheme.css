@@ -3,6 +3,27 @@
 }
 
 #Boton{
-    -fx-background-color: #f46a37;
-    -fx-effect: dropshadow(gaussian, indianred, 12.0, 0.4, 5.0, 5.0);
+    -fx-background-color: white;
+    -fx-border-color: #18e6ce;
+    -fx-border-width: 0.7;
+    -fx-border-radius: 0.6;
+}
+
+#Boton:hover{
+    -fx-background-color: gray;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#BotonGuardar{
+    -fx-background-color: white;
+    -fx-border-color: green;
+    -fx-border-width: 0.7;
+    -fx-border-radius: 0.6;
+}
+
+#BotonGuardar:hover{
+    -fx-background-color: gray;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
