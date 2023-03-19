@@ -1,0 +1,52 @@
+.base-btn {
+    -fx-width: 130px;
+    -fx-height: 40px;
+    -fx-color: #fff;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 25px;
+    -fx-font-family: 'Lato', sans-serif;
+    -fx-font-weight: 500;
+    -fx-background: transparent;
+    -fx-cursor: pointer;
+    -fx-transition: all 0.3s ease;
+    -fx-position: relative;
+    -fx-display: inline-block;
+    -fx-box-shadow:inset 2px 2px 2px rgba(255,255,255,.5),
+    7px 7px 20px rgba(0,0,0,.1),
+    4px 4px 5px rgba(0,0,0,.1);
+    -fx-outline: none;
+}
+
+.btn-regresar {
+    -fx-border: none;
+    -fx-color: #000;
+}
+.btn-regresar:after {
+    -fx-position: absolute;
+    -fx-content: "";
+    -fx-width: 0;
+    -fx-height: 100%;
+    -fx-top: 0;
+    -fx-left: 0;
+    -fx-direction: rtl;
+    -fx-z-index: -1;
+    -fx-box-shadow:
+            -7px -7px 20px #fff9,
+            -4px -4px 5px #fff9,
+            7px 7px 20px #0002,
+            4px 4px 5px #0001;
+    -fx-transition: all 0.3s ease;
+}
+.btn-regresar:hover {
+    -fx-color: #000;
+}
+.btn-regresar:hover:after {
+    -fx-left: auto;
+    -fx-right: 0;
+    -fx-width: 100%;
+}
+.btn-regresar:active {
+    -fx-top: 2px;
+}
+
+

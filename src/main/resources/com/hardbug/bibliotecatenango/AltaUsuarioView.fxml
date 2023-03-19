@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="861.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaUsuarioView">
+   <ImageView fitHeight="65.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="91.0" AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/logotenango.png" />
+   </ImageView>
+   <ImageView fitHeight="48.0" fitWidth="60.0" layoutX="604.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/logotenangoNR.png" />
+   </ImageView>
+   <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="511.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/conacultalogo.png" />
+   </ImageView>
+   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text=" Regresar" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+   <Button layoutX="727.0" layoutY="373.0" mnemonicParsing="false" text="Guardar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+   <ScrollPane layoutX="580.0" layoutY="85.0" prefHeight="272.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+      <AnchorPane prefHeight="701.0" prefWidth="780.0">
+         <Label layoutX="29.0" layoutY="120.0" text="Nombre(s):" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="680.0" AnchorPane.topAnchor="120.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="129.0" layoutY="116.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="217.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="116.0" />
+         <Label layoutX="302.0" layoutY="14.0" text="Alta de Usuarios" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="14.0">
+            <font>
+               <Font name="Roboto Light" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutX="379.0" layoutY="120.0" text="Edad:" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="120.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font></Label>
+         <Label layoutX="29.0" layoutY="170.0" text="Apellido Paterno:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="220.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="480.0" layoutY="116.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="220.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="116.0" />
+         <Label layoutX="29.0" layoutY="170.0" text="Apellido Materno:" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="170.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="129.0" layoutY="166.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="221.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="166.0" />
+         <TextField layoutX="129.0" layoutY="216.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="210.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="216.0" />
+         <Separator layoutY="49.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+         <Separator layoutX="1.0" layoutY="52.0" prefHeight="0.0" prefWidth="786.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+         <Label layoutX="14.0" layoutY="52.0" text="Datos personales" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="53.0">
+            <font>
+               <Font name="Roboto Light" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutX="29.0" layoutY="262.0" text="CURP:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="270.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="130.0" layoutY="266.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="210.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="266.0" />
+         <Label layoutX="30.0" layoutY="406.0" text="Teléfono:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="390.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="130.0" layoutY="402.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="210.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="386.0" />
+         <Label layoutX="377.0" layoutY="170.0" text="Ocupación:" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="170.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <ComboBox layoutX="480.0" layoutY="166.0" prefWidth="150.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="166.0" />
+         <Label layoutX="390.0" layoutY="180.0" text="Grado escolar:" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="220.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="490.0" layoutY="126.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="220.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="216.0" />
+         <Label layoutX="381.0" layoutY="390.0" text="Dirección (Calle):" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="390.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="480.0" layoutY="386.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="220.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="386.0" />
+         <Separator layoutX="5.0" layoutY="321.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0" />
+         <Separator layoutX="10.0" layoutY="330.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="360.0" />
+         <Label layoutX="27.0" layoutY="320.0" text="Información de contacto" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="323.0">
+            <font>
+               <Font name="Roboto Light" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutX="33.0" layoutY="442.0" text="Número de casa:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="440.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="131.0" layoutY="438.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="219.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="436.0" />
+         <Label layoutX="390.0" layoutY="400.0" text="Código postal:" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="440.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="490.0" layoutY="396.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="220.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="436.0" />
+         <Label layoutX="40.0" layoutY="450.0" text="Municipio:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="490.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="140.0" layoutY="446.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="219.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="486.0" />
+         <Label layoutX="390.0" layoutY="450.0" text="Estado:" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="490.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="490.0" layoutY="446.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="220.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="486.0" />
+         <Separator layoutX="5.0" layoutY="540.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="540.0" />
+         <Separator layoutX="5.0" layoutY="575.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="580.0" />
+         <Label layoutX="14.0" layoutY="549.0" text="Información de inicio de sesión" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="543.0">
+            <font>
+               <Font name="Roboto Light" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutX="30.0" layoutY="598.0" text="Correo:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="610.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <TextField layoutX="140.0" layoutY="396.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="210.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="606.0" />
+         <Label layoutX="380.0" layoutY="610.0" text="Contraseña:">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <PasswordField layoutX="480.0" layoutY="615.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="606.0" />
+         <Label layoutX="30.0" layoutY="657.0" text="Contraseña:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="660.0">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </Label>
+         <PasswordField layoutX="130.0" layoutY="656.0" prefHeight="25.0" prefWidth="223.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="656.0" />
+      </AnchorPane>
+   </ScrollPane>
+</AnchorPane>

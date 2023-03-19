@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.EliminaUsuarioView">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="512.0" prefWidth="746.0">
+         <ImageView fitHeight="65.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="91.0" AnchorPane.topAnchor="14.0">
+            <Image url="@../../../assets/logotenango.png" />
+         </ImageView>
+         <ImageView fitHeight="48.0" fitWidth="60.0" layoutX="604.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="14.0">
+            <Image url="@../../../assets/logotenangoNR.png" />
+         </ImageView>
+         <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="511.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+            <Image url="@../../../assets/conacultalogo.png" />
+         </ImageView>
+         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text=" Regresar" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+         <Button layoutX="727.0" layoutY="373.0" mnemonicParsing="false" text="Eliminar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+         <ScrollPane layoutX="580.0" layoutY="85.0" prefHeight="272.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+            <AnchorPane prefHeight="423.0" prefWidth="746.0">
+               <Label layoutX="160.0" layoutY="14.0" prefHeight="33.0" prefWidth="256.0" text="Eliminación de Usuarios" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="14.0">
+                  <font>
+                     <Font name="Roboto Light" size="24.0" />
+                  </font>
+               </Label>
+               <Separator layoutY="49.0" prefHeight="0.0" prefWidth="781.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               <Button layoutX="375.0" layoutY="66.0" mnemonicParsing="false" text="Buscar" />
+               <Label layoutX="455.0" layoutY="70.0" text="Filtrar por:" />
+               <ComboBox fx:id="combo" disable="true" layoutX="527.0" layoutY="66.0" prefWidth="150.0" />
+               <TextField layoutX="15.0" layoutY="66.0" prefHeight="25.0" prefWidth="318.0" />
+               <Separator layoutX="-8.0" layoutY="108.0" prefHeight="2.0" prefWidth="753.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               <TableView layoutX="15.0" layoutY="127.0" prefHeight="195.0" prefWidth="677.0">
+                 <columns>
+                   <TableColumn prefWidth="75.0" text="C1" />
+                   <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                 </columns>
+               </TableView>
+            </AnchorPane>
+         </ScrollPane>
+      </AnchorPane>
+   </children>
+</AnchorPane>
