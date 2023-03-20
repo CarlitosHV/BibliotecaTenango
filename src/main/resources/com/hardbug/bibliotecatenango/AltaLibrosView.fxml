@@ -1,84 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="436.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
-    <children>
-        <Label layoutX="17.0" layoutY="18.0" text="Registrar libro">
-            <font>
-                <Font name="Roboto Light" size="24.0" />
-            </font>
-            <padding>
-                <Insets left="20.0" right="20.0" />
-            </padding>
-        </Label>
-        <TextField layoutX="213.0" layoutY="233.0" promptText="Estante">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="37.0" layoutY="124.0" promptText="Registro de clasificación">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="37.0" layoutY="77.0" promptText="Título del libro">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="37.0" layoutY="233.0" promptText="Editorial">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="213.0" layoutY="77.0" promptText="Nombre del autor">
-
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="213.0" layoutY="178.0" promptText="Lugar de edición">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="37.0" layoutY="280.0" promptText="Existencias">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextField layoutX="213.0" layoutY="124.0" promptText="Clasificación">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextField>
-        <TextArea layoutX="37.0" layoutY="331.0" prefHeight="70.0" prefWidth="143.0" promptText="Descripción del libro">
-            <font>
-                <Font name="Roboto Light" size="12.0" />
-            </font>
-        </TextArea>
-        <Button id="BotonGuardar" layoutX="255.0" layoutY="305.0" mnemonicParsing="false" text="GUARDAR">
-         <graphic>
-            <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../assets/save_button.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <font>
-            <Font name="Roboto Light" size="12.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-        </Button>
-        <DatePicker layoutX="37.0" layoutY="178.0" prefHeight="25.0" prefWidth="143.0" promptText="Año de edición" />
-    </children>
-
+<AnchorPane prefHeight="618.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
+   <children>
+      <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="621.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../../../../../FrontEnd-Biblioteca/src/main/resources/assets/conacultalogo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="62.0" layoutX="567.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="567.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../../../../../FrontEnd-Biblioteca/src/main/resources/assets/logotenangoNR.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="507.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="556.0" AnchorPane.leftAnchor="507.0" AnchorPane.rightAnchor="142.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../../../../../FrontEnd-Biblioteca/src/main/resources/assets/logotenango.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="13.0" layoutY="59.0" prefHeight="542.0" prefWidth="671.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="59.0">
+         <children>
+            <Label alignment="CENTER" layoutX="237.0" layoutY="65.0" text="Datos de referencia">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Label>
+            <Label layoutX="355.0" layoutY="285.0" text="Año de edición:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="461.0" layoutY="281.0" prefHeight="25.0" prefWidth="56.0" promptText="2010" />
+            <TextField layoutX="185.0" layoutY="114.0" />
+            <TextField layoutX="185.0" layoutY="149.0" />
+            <TextField layoutX="499.0" layoutY="110.0" prefHeight="25.0" prefWidth="91.0" promptText="A-3" />
+            <TextField layoutX="499.0" layoutY="144.0" prefHeight="25.0" prefWidth="48.0" promptText="5" />
+            <TextField layoutX="145.0" layoutY="242.0" prefHeight="25.0" prefWidth="184.0" promptText="RBA" />
+            <TextField layoutX="145.0" layoutY="281.0" prefHeight="25.0" prefWidth="184.0" promptText="México" />
+            <TextField layoutX="460.0" layoutY="241.0" prefHeight="25.0" prefWidth="184.0" promptText="Confabulario " />
+            <TextField layoutX="145.0" layoutY="322.0" prefHeight="25.0" prefWidth="338.0" promptText="Juan José Arreola" />
+            <TextArea layoutX="31.0" layoutY="379.0" prefHeight="94.0" prefWidth="611.0" promptText="En este libro podemos encontrar temas como..." />
+            <Label layoutX="37.0" layoutY="118.0" text="Clasificación:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="153.0" text="Registro clasificación:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="417.0" layoutY="114.0" text="Estante:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="417.0" layoutY="148.0" text="Existencia:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="246.0" text="Editorial:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="285.0" text="Lugar de edición:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="354.0" layoutY="245.0" text="Título del libro:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="326.0" text="Nombre del  autor:">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </Label>
+            <Button layoutX="559.0" layoutY="493.0" mnemonicParsing="false" text="Guardar">
+               <effect>
+                  <Glow />
+               </effect>
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="W:\IDEA Proyectos\BibliotecaTenango\src\main\resources\assets\save_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="31.0" layoutY="358.0" text="Descripción del libro:" />
+            <Separator layoutY="93.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator layoutY="60.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator layoutY="479.0" prefHeight="5.0" prefWidth="671.0" />
+            <Label alignment="CENTER" layoutX="256.0" layoutY="197.0" text="Datos del Libro">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Label>
+            <Separator layoutY="225.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator layoutY="192.0" prefHeight="5.0" prefWidth="671.0" />
+            <Label layoutX="221.0" text="Registro de Libros">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
