@@ -1,4 +1,139 @@
 
 #Fondo{
-    --fxbackground-color: black;
+    -fx-background-color: black;
+}
+
+#Labels{
+    -fx-text-fill:  white;
+}
+
+#Campo_clasificacion{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+#Campo_clasificacion .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+#Campo_estante{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_estante .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_registro_clasificacion{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_registro_clasificacion .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+
+#Campo_existencias{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_existencias .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_editorial{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_editorial .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_titulo_libro{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_titulo_libro .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_lugar_edicion{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_lugar_edicion .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_anio_edicion{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_anio_edicion .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_nombre_autor{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_nombre_autor .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Campo_descripcion{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#Campo_descripcion .floating-text{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#BotonGuardar{
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+#BotonGuardar:hover{
+    -fx-background-color: gray;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+#BotonToggle{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+
+#BotonToggle:hover{
+    -fx-background-color: gray;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }

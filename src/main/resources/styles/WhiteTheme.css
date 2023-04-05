@@ -1,28 +1,138 @@
+
 #Fondo{
     -fx-background-color: white;
 }
 
-#Boton{
-    -fx-background-color: white;
-    -fx-border-color: #18e6ce;
-    -fx-border-width: 0.7;
-    -fx-border-radius: 0.6;
+#Labels{
+    -fx-text-fill:  black;
 }
 
-#Boton:hover{
+#Campo_clasificacion{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+#Campo_clasificacion .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+#Campo_estante{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_estante .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_registro_clasificacion{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_registro_clasificacion .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+
+#Campo_existencias{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_existencias .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_editorial{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_editorial .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_titulo_libro{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_titulo_libro .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_lugar_edicion{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_lugar_edicion .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_anio_edicion{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_anio_edicion .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_nombre_autor{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_nombre_autor .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#Campo_descripcion{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}
+
+#Campo_descripcion .floating-text{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+#BotonGuardar{
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+#BotonGuardar:hover{
     -fx-background-color: gray;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
-
-#BotonGuardar{
+#BotonToggle{
     -fx-background-color: white;
-    -fx-border-color: green;
-    -fx-border-width: 0.7;
-    -fx-border-radius: 0.6;
+    -fx-text-fill: black;
+    -fx-border-color: black;
 }
 
-#BotonGuardar:hover{
+#BotonToggle:hover{
     -fx-background-color: gray;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;

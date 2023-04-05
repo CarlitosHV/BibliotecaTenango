@@ -5,21 +5,33 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
+import io.github.palexdev.mfxcomponents.controls.buttons.MFXButton;
+import javafx.animation.FadeTransition;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
+
 public class AltaLibrosController {
-    //Instanciamos al controlador de escenas para controlar la escena
-    SceneController sceneController;
 
-    //Método para cambiar entre escenas, aún no tiene nada porque aún no se conecta el flujo
-    void changescene(){
 
-    }
+    @FXML
+    public MFXButton BotonToggle;
+    public TextField Campo_clasificacion;
+    public AnchorPane Fondo;
 
-    //Getters and setters del controlador de escenas
-    public SceneController getSceneController() {
-        return sceneController;
-    }
 
-    public void setSceneController(SceneController sceneController) {
-        this.sceneController = sceneController;
+
+
+    public void ActivarModoOscuro(){
+        if (ViewSwitcher.BANDERA_TEMA == 1){
+            ViewSwitcher.switchTo(View.CRUD_LIBROS, ViewSwitcher.TEMA_CLARO);
+            ViewSwitcher.BANDERA_TEMA = 0;
+        }else if(ViewSwitcher.BANDERA_TEMA == 0){
+            ViewSwitcher.switchTo(View.CRUD_LIBROS, ViewSwitcher.TEMA_OSCURO);
+            ViewSwitcher.BANDERA_TEMA = 1;
+        }
     }
 }
