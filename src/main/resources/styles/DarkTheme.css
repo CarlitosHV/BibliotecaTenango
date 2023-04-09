@@ -126,13 +126,14 @@
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
-#BotonToggle{
+#Boton_Modo{
     -fx-background-color: black;
     -fx-text-fill: white;
-    -fx-border-color: white;
+    -fx-border-radius: 0.8;
+    -fx-border-color: transparent;
 }
 
-#BotonToggle:hover{
+#Boton_Modo:hover{
     -fx-background-color: gray;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;

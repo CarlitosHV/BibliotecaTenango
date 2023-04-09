@@ -5,27 +5,25 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
-import io.github.palexdev.mfxcomponents.controls.buttons.MFXButton;
-import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 
 public class AltaLibrosController {
 
 
     @FXML
-    public MFXButton BotonToggle;
+    private Button Boton_Modo;
     public TextField Campo_clasificacion;
     public AnchorPane Fondo;
 
 
 
 
-    public void ActivarModoOscuro(){
+    @FXML
+    void ActivarModoOscuro(ActionEvent event){
         if (ViewSwitcher.BANDERA_TEMA == 1){
             ViewSwitcher.switchTo(View.CRUD_LIBROS, ViewSwitcher.TEMA_CLARO);
             ViewSwitcher.BANDERA_TEMA = 0;
