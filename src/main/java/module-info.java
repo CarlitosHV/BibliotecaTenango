@@ -10,7 +10,6 @@ module com.hardbug.bibliotecatenango {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires materialfx.all;
 
 
     opens com.hardbug.bibliotecatenango to javafx.fxml;

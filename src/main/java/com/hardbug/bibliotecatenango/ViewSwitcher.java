@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Clase ViewSwitcher:
+    su funcionalidad es recibir la vista que va a mostrar en la ventana, a su vez, recibe el tema seleccionado
+ */
+
 public class ViewSwitcher {
 
 private static Scene scene;
-
-public static String Tema;
-private static Map<View, Parent> cache = new HashMap<>();
 
     public static int TEMA_CLARO = 0;
     public static int TEMA_OSCURO = 1;

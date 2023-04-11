@@ -11,6 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+/* Clase AltaLibros:
+    Su funcionalidad es recibir la información de su vista ligada, tratar la información y mandarla a base de datos
+ */
+
 public class AltaLibrosController {
 
 

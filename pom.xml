@@ -131,36 +131,6 @@
             <artifactId>heatmap</artifactId>
             <version>17.0.12</version>
         </dependency>
-        <dependency>
-            <groupId>org.glavo.materialfx</groupId>
-            <artifactId>materialfx</artifactId>
-            <version>11.13.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.palexdev</groupId>
-            <artifactId>materialfx-all</artifactId>
-            <version>11.16.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.palexdev</groupId>
-            <artifactId>materialfx-all</artifactId>
-            <version>11.16.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glavo.materialfx</groupId>
-            <artifactId>virtualizedfx</artifactId>
-            <version>11.2.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.palexdev</groupId>
-            <artifactId>virtualizedfx</artifactId>
-            <version>11.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.plugin</groupId>
-            <artifactId>com-gluonhq-plugin-netbeans</artifactId>
-            <version>2.10.4</version>
-        </dependency>
     </dependencies>
 
     <build>
