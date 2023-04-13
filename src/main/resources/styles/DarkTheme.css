@@ -38,7 +38,7 @@
 #Boton_Modo{
     -fx-background-radius: 50;
     -fx-border-radius: 50;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10,0,0,1 );
     -fx-background-color: #2b2b2b;
     -fx-border-color: transparent;
     -fx-image-rendering: optimizeQuality;
