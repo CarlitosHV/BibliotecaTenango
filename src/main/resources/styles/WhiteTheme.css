@@ -2,139 +2,63 @@
 #Fondo{
     -fx-background-color: white;
 }
+#Imagen1{
+    -fx-image-rendering: optimizeQuality;
 
+}
 #Labels{
     -fx-text-fill:  black;
 }
 
-#Campo_clasificacion{
+#Textfields{
     -fx-background-color: white;
     -fx-border-color: black;
     -fx-text-fill: black;
+    -fx-border-radius: 3px;
+
 }
-#Campo_clasificacion .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-#Campo_estante{
-    -fx-background-color: white;
+
+#Textfields:focused{
+    -fx-background-color: #f3f3f3;
     -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_estante .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_registro_clasificacion{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_registro_clasificacion .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-
-#Campo_existencias{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_existencias .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_editorial{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_editorial .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_titulo_libro{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_titulo_libro .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_lugar_edicion{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_lugar_edicion .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_anio_edicion{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_anio_edicion .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_nombre_autor{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_nombre_autor .floating-text{
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-#Campo_descripcion{
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-}
-
-#Campo_descripcion .floating-text{
-    -fx-background-color: white;
     -fx-text-fill: black;
 }
 
 #BotonGuardar{
-    -fx-background-color: green;
+    -fx-background-color: #118511;
     -fx-text-fill: white;
 }
 
 #BotonGuardar:hover{
-    -fx-background-color: gray;
+    -fx-background-color: #7f8c40;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
+
+#BotonGuardar:pressed{
+    -fx-background-color: gray;
+}
 #Boton_Modo{
+    -fx-background-radius: 50;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );
+    -fx-border-radius: 50;
     -fx-background-color: white;
     -fx-text-fill: black;
-    -fx-border-radius: 0.8;
     -fx-border-color: transparent;
+    -fx-image-rendering: optimizeQuality;
+    -fx-smooth: true;
+    -fx-background-image: url('../assets/moon.png');
+    -fx-background-size: 70% 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 #Boton_Modo:hover{
-    -fx-background-color: gray;
+    -fx-background-color: #f3f3f3;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
+}
+
+#Boton_Modo:pressed{
+    -fx-background-color: #afaeae;
 }
