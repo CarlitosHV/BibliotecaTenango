@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.Button?>
-<AnchorPane id="Fondo" prefHeight="652.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
+<AnchorPane id="Fondo" prefHeight="652.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
    <children>
       <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="621.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <image>
@@ -41,22 +35,22 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </Label>
-            <TextField id="Campo_anio_edicion" promptText="Año de edición" layoutX="386.0" layoutY="309.0" prefHeight="43.0" prefWidth="145.0">
+            <TextField id="Textfields" layoutX="386.0" layoutY="309.0" prefHeight="38.0" prefWidth="145.0" promptText="Año de edición">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></TextField>
-            <TextField id="Campo_clasificacion" promptText="Clasificación" layoutX="165.0" layoutY="110.0" prefHeight="38.0" prefWidth="145.0">
+            <TextField id="Textfields" layoutX="165.0" layoutY="110.0" prefHeight="38.0" prefWidth="145.0" promptText="Clasificación">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></TextField>
-            <TextField id="Campo_registro_clasificacion" promptText="Registro de clasificación" layoutX="165.0" layoutY="163.0" />
-            <TextField id="Campo_estante" promptText="Estante" layoutX="386.0" layoutY="110.0" prefHeight="38.0" prefWidth="145.0" />
-            <TextField id="Campo_existencias" promptText="Existencias" layoutX="386.0" layoutY="163.0" prefHeight="38.0" prefWidth="145.0" />
-            <TextField id="Campo_editorial" promptText="Editorial" layoutX="163.0" layoutY="262.0" prefHeight="38.0" prefWidth="145.0" />
-            <TextField id="Campo_lugar_edicion" promptText="Lugar de edición" layoutX="163.0" layoutY="311.0" prefHeight="38.0" prefWidth="145.0" />
-            <TextField id="Campo_titulo_libro" promptText="Título del libro" layoutX="386.0" layoutY="262.0" prefHeight="38.0" prefWidth="145.0" />
-            <TextField id="Campo_nombre_autor" promptText="Nombre del autor" layoutX="165.0" layoutY="366.0" prefHeight="38.0" prefWidth="367.0" />
-            <TextArea id="Campo_descripcion"  promptText="Descripción del libro" layoutX="31.0" layoutY="414.0" prefHeight="70.0" prefWidth="611.0" />
+            <TextField id="Textfields" layoutX="165.0" layoutY="163.0" prefHeight="38.0" prefWidth="149.0" promptText="Registro de clasificación" />
+            <TextField id="Textfields" layoutX="386.0" layoutY="110.0" prefHeight="38.0" prefWidth="145.0" promptText="Estante" />
+            <TextField id="Textfields" layoutX="386.0" layoutY="163.0" prefHeight="38.0" prefWidth="145.0" promptText="Existencias" />
+            <TextField id="Textfields" layoutX="163.0" layoutY="262.0" prefHeight="38.0" prefWidth="145.0" promptText="Editorial" />
+            <TextField id="Textfields" layoutX="163.0" layoutY="311.0" prefHeight="38.0" prefWidth="145.0" promptText="Lugar de edición" />
+            <TextField id="Textfields" layoutX="386.0" layoutY="262.0" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro" />
+            <TextField id="Textfields" layoutX="165.0" layoutY="366.0" prefHeight="38.0" prefWidth="367.0" promptText="Nombre del autor" />
+            <TextField id="Textfields" alignment="TOP_LEFT" layoutX="31.0" layoutY="414.0" prefHeight="70.0" prefWidth="611.0" promptText="Descripción del libro" />
             <Button id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="519.0" mnemonicParsing="false" text="Guardar">
                <effect>
                   <Glow />
@@ -68,9 +62,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Separator layoutY="93.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator layoutY="60.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator layoutX="1.0" layoutY="491.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" layoutY="93.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" layoutY="60.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" layoutX="1.0" layoutY="491.0" prefHeight="5.0" prefWidth="671.0" />
             <Label id="Labels" alignment="CENTER" layoutX="255.0" layoutY="219.0" text="Datos del Libro">
                <font>
                   <Font size="18.0" />
@@ -79,8 +73,8 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </Label>
-            <Separator layoutX="-1.0" layoutY="247.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator layoutX="-1.0" layoutY="214.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" layoutX="-1.0" layoutY="247.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" layoutX="-1.0" layoutY="214.0" prefHeight="5.0" prefWidth="671.0" />
             <Label id="Labels" layoutX="221.0" text="Registro de Libros">
                <font>
                   <Font size="24.0" />
@@ -99,11 +93,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
-            <ImageView fitHeight="27.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../assets/darkmode.png" />
-               </image>
-            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
    </children>
