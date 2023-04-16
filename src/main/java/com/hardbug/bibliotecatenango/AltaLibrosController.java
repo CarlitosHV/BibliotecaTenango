@@ -29,6 +29,8 @@ public class AltaLibrosController {
     public AnchorPane Fondo;
 
 
+
+    //El método causará errores al correrse actualmente, se debe validar
     @FXML
     void GuardarLibro(ActionEvent event){
         /* Aquí se obtendrá la información de los campos de texto y se validarán, posteriormente se mandará

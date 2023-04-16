@@ -51,7 +51,7 @@
             <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="386.0" layoutY="262.0" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro" />
             <TextField id="Textfields" fx:id="Campo_nombre_autor"  layoutX="165.0" layoutY="366.0" prefHeight="38.0" prefWidth="367.0" promptText="Nombre del autor" />
             <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="31.0" layoutY="414.0" prefHeight="70.0" prefWidth="611.0" promptText="Descripción del libro" />
-            <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="519.0" mnemonicParsing="false" text="Guardar">
+            <Button id="BotonGuardar" fx:id="BotonGuardar" onAction="#GuardarLibro" contentDisplay="TOP" layoutX="561.0" layoutY="519.0" mnemonicParsing="false" text="Guardar">
                <effect>
                   <Glow />
                </effect>
