@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import javax.swing.*;
@@ -19,39 +20,46 @@ import java.util.Date;
  */
 
 public class AltaLibrosController {
+    private static boolean Clasificacion_bol;
 
+    private ClaseLibro libro = new ClaseLibro();
     private IndexApp indexApp = new IndexApp();
 
     @FXML
     private Button Boton_Modo, BotonGuardar;
     @FXML
-    private TextField  Campo_clasificacion, Campo_anio_edicion, Campo_registro_clasificacion, Campo_estante, Campo_existencias
-            , Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro;
+    private TextField Campo_clasificacion, Campo_anio_edicion, Campo_registro_clasificacion, Campo_estante,
+            Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro;
     public AnchorPane Fondo;
 
+
+    private void Campo_Clasi(ActionEvent event) {
+
+    }
+
     @FXML
-    void GuardarLibro(ActionEvent event){
+    void GuardarLibro(ActionEvent event) {
         /* Aquí se obtendrá la información de los campos de texto y se validarán,
         posteriormente se mandará a almacenar en la base de datos.
          */
-        //Valida una palabra iniciando por mayúscula
-        if ( Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b")) {
+        /*Valida una palabra iniciando por mayúscula
+        if (Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b")) {
             //Valida tres números del 000 al 999 o S/C
-            if ( Campo_registro_clasificacion.getText().matches("^\\d{3}") || Campo_registro_clasificacion.getText().matches("^S\\/C")) {
+            if (Campo_registro_clasificacion.getText().matches("^\\d{3}") || Campo_registro_clasificacion.getText().matches("^S\\/C")) {
                 //Valida de 1 a 6 letras A-Z seguida de un gion medio seguido de números n
-                if ( Campo_estante.getText().matches("^[A-Z]{1,6}-\\d+")) {
+                if (Campo_estante.getText().matches("^[A-Z]{1,6}-\\d+")) {
                     //Valida números hasta una cantidad de 1 a 8
-                    if ( Campo_existencias.getText().matches("^\\d{1,8}")) {
+                    if (Campo_existencias.getText().matches("^\\d{1,8}")) {
                         //Valida una o mas palaras con espacios y simbolos & -
-                        if ( Campo_editorial.getText().matches("^[A-Za-z\\s&-]+")) {
+                        if (Campo_editorial.getText().matches("^[A-Za-z\\s&-]+")) {
                             //Valida una o mas palaras con espacios y simbolos , . ´- -
-                            if ( Campo_lugar_edicion.getText().matches("^[A-Za-z]+[\\s,.'-]*")) {
+                            if (Campo_lugar_edicion.getText().matches("^[A-Za-z]+[\\s,.'-]*")) {
                                 //Valida de 1 a 4 palabras separadas por espacios iniciadas por mayúsculas
-                                if ( Campo_nombre_autor.getText().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+){1,4}")) {
+                                if (Campo_nombre_autor.getText().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+){1,4}")) {
                                     //Valida de 1 a 15 palabras separadas por espacios iniciada solo la primera por mayúscula
-                                    if ( Campo_titulo_libro.getText().matches("^[A-Z][a-z]+(\\s[a-z]+){1,15}")) {
+                                    if (Campo_titulo_libro.getText().matches("^[A-Z][a-z]+(\\s[a-z]+){1,15}")) {
                                         //Valida 4 números
-                                        if ( Campo_anio_edicion.getText().matches("^\\d{4}")) {
+                                        if (Campo_anio_edicion.getText().matches("^\\d{4}")) {
                                             //Valida que no este vacío el campo
                                             if (!Campo_descripcion_libro.getText().isEmpty()) {
 
@@ -85,38 +93,32 @@ public class AltaLibrosController {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Corrija los datos ingresados en el campo Clasificación.\n Ejemplo: Historia, Ciencias, Álgebra, etc.");
+        }*/
+        if (camposValidos()){
+            //Conectar a bd y mandamos a guardar el libro
+        }else{
+            //Error en campos
         }
     }
 
 
-
-
-
-
-
-
-    boolean camposValidos(){
-        String clasificacion = Campo_clasificacion.getText();
-        String anio_edicion = Campo_anio_edicion.getText();
-        String registro_clasificacion = Campo_registro_clasificacion.getText();
-        String estante = Campo_estante.getText();
-        int existencias = Integer.parseInt(Campo_existencias.getText());
-        String editorial = Campo_editorial.getText();
-        String lugar_edicion = Campo_lugar_edicion.getText();
-        String titulo_libro = Campo_titulo_libro.getText();
-        String nombre_autor = Campo_nombre_autor.getText();
-        String descripcion_libro = Campo_descripcion_libro.getText();
-        if (true){
+    boolean camposValidos() {
+        if (Clasificacion_bol){
+            libro.setClasificacion(Campo_clasificacion.getText());
+            libro.setAnio_edicion(Campo_anio_edicion.getText());
+            libro.setRegistro_clasificacion(Campo_registro_clasificacion.getText());
+            libro.setEstante(Campo_estante.getText());
+            libro.setExistencias(Integer.parseInt(Campo_existencias.getText()));
+            libro.setEditorial(Campo_editorial.getText());
+            libro.setLugar_edicion(Campo_lugar_edicion.getText());
+            libro.setTitulo_libro(Campo_titulo_libro.getText());
+            libro.setNombre_autor(Campo_nombre_autor.getText());
+            libro.setDescripcion_libro(Campo_descripcion_libro.getText());
             return true;
         }else{
             return false;
         }
     }
-
-
-
-
-
 
 
     @FXML
@@ -135,4 +137,20 @@ public class AltaLibrosController {
     }
 
 
+    public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+            Clasificacion_bol = false;
+        }else{
+            Clasificacion_bol = true;
+        }
+    }
+
+    public void validar_campo_anie_edicion(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
 }

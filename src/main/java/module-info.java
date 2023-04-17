@@ -11,6 +11,7 @@ module com.hardbug.bibliotecatenango {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires io.github.cdimascio.dotenv.java;
+    requires java.sql;
 
 
     opens com.hardbug.bibliotecatenango to javafx.fxml;

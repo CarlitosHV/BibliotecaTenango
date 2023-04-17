@@ -17,6 +17,7 @@ public class IndexApp extends Application {
     InputStream configInput = null;
     OutputStream configOutput = null;
     public static int TEMA;
+    BDController bdController = new BDController();
 
     //Método que inicia la aplicación
     public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class IndexApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ObtenerPropiedades();
+        //bdController.ConectarBD();
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
