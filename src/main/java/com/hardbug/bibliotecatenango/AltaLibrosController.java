@@ -21,6 +21,12 @@ import java.util.Date;
 
 public class AltaLibrosController {
     private static boolean Clasificacion_bol;
+    private static boolean Anio_edicion_bol;
+    private static boolean Registro_clasificacion_bol;
+    private static boolean Estante_bol;
+    private static boolean Existencias_bol;
+
+
 
     private ClaseLibro libro = new ClaseLibro();
     private IndexApp indexApp = new IndexApp();
@@ -139,10 +145,8 @@ public class AltaLibrosController {
 
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
         if (!Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
             Campo_clasificacion.setStyle("-fx-border-color: red");
             Clasificacion_bol = false;
-            System.out.println("bad");
         }else{
             Clasificacion_bol = true;
             if (IndexApp.TEMA==1){
@@ -150,40 +154,62 @@ public class AltaLibrosController {
             }else{
                 Campo_clasificacion.setStyle("-fx-border-color: black");
             }
-
-            System.out.println("ok");
         }
     }
 
     public void validar_anio_edicion(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^\\d{1,4}$") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_anio_edicion.getText().matches("^\\d{1,4}$") && Campo_anio_edicion.getText().isEmpty()) {
+            Campo_anio_edicion.setStyle("-fx-border-color: red");
+            Anio_edicion_bol = false;
         }else{
-
+            Anio_edicion_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_anio_edicion.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_registro_clasificacion(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^\\d{1,3}$") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_registro_clasificacion.getText().matches("^\\d{1,3}$") && Campo_registro_clasificacion.getText().isEmpty()) {
+            Campo_registro_clasificacion.setStyle("-fx-border-color: red");
+            Registro_clasificacion_bol = false;
         }else{
-
+            Registro_clasificacion_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_registro_clasificacion.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_registro_clasificacion.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_estante(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Z]-\\d+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_estante.getText().matches("^[A-Z]-\\d+") && Campo_estante.getText().isEmpty()) {
+            Campo_estante.setStyle("-fx-border-color: red");
+            Estante_bol = false;
         }else{
-
+            Estante_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_estante.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_estante.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_existencias(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^\\d{1,3}") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_existencias.getText().matches("^\\d{1,3}") && Campo_existencias.getText().isEmpty()) {
+            Campo_existencias.setStyle("-fx-border-color: red");
+            Existencias_bol = false;
         }else{
-
+            Existencias_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_existencias.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_existencias.setStyle("-fx-border-color: black");
+            }
         }
     }
 
