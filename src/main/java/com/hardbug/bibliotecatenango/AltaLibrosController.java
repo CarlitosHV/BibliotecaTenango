@@ -140,17 +140,93 @@ public class AltaLibrosController {
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
         if (!Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b") && Campo_clasificacion.getText().isEmpty()) {
             //Cambiar el color a rojo
+            Campo_clasificacion.setStyle("-fx-border-color: red");
             Clasificacion_bol = false;
+            System.out.println("bad");
         }else{
             Clasificacion_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_clasificacion.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_clasificacion.setStyle("-fx-border-color: black");
+            }
+
+            System.out.println("ok");
         }
     }
 
-    public void validar_campo_anie_edicion(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("\\b[A-Z][a-z]*\\b") && Campo_clasificacion.getText().isEmpty()) {
+    public void validar_anio_edicion(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^\\d{1,4}$") && Campo_clasificacion.getText().isEmpty()) {
             //Cambiar el color a rojo
         }else{
 
         }
     }
+
+    public void validar_registro_clasificacion(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^\\d{1,3}$") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_estante(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Z]-\\d+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_existencias(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^\\d{1,3}") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_editorial(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Za-z\\s)(&-]+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_lugar_edicion(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_titulo_libro(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_nombre_autor(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
+    public void validar_descripcion_libro(KeyEvent keyEvent) {
+        if (!Campo_clasificacion.getText().matches("^[A-Za-z0-9]+") && Campo_clasificacion.getText().isEmpty()) {
+            //Cambiar el color a rojo
+        }else{
+
+        }
+    }
+
 }
+
+
