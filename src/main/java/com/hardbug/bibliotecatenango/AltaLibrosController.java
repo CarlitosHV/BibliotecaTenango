@@ -20,7 +20,7 @@ import java.util.Date;
  */
 
 public class AltaLibrosController {
-    private static boolean Clasificacion_bol;
+    private static boolean Clasificacion_bol, Descripcion_libro_bol, Nombre_autor_bol, Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol;
 
     private ClaseLibro libro = new ClaseLibro();
     private IndexApp indexApp = new IndexApp();
@@ -188,42 +188,72 @@ public class AltaLibrosController {
     }
 
     public void validar_editorial(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Za-z\\s)(&-]+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_editorial.getText().matches("^[A-Za-z\\s&-]+") && Campo_editorial.getText().isEmpty()) {
+            Campo_editorial.setStyle("-fx-border-color: red");
+            Editorial_bol = false;
         }else{
-
+            Editorial_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_editorial.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_editorial.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_lugar_edicion(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_lugar_edicion.getText().matches("^[A-Za-z]+[\\s,.'-]*") && Campo_lugar_edicion.getText().isEmpty()) {
+            Campo_lugar_edicion.setStyle("-fx-border-color: red");
+            Lugar_edicion_bol = false;
         }else{
-
+            Lugar_edicion_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_lugar_edicion.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_titulo_libro(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_titulo_libro.getText().matches("^[A-Z][a-z]+(\\s[a-z]+){1,15}") && Campo_titulo_libro.getText().isEmpty()) {
+             Campo_titulo_libro.setStyle("-fx-border-color: red");
+             Titulo_libro_bol = false;
         }else{
-
+            Titulo_libro_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_titulo_libro.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_nombre_autor(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Za-z]+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_nombre_autor.getText().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+){1,4}") && Campo_nombre_autor.getText().isEmpty()) {
+            Campo_nombre_autor.setStyle("-fx-border-color: red");
+            Nombre_autor_bol = false;
         }else{
-
+            Nombre_autor_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_nombre_autor.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_nombre_autor.setStyle("-fx-border-color: black");
+            }
         }
     }
 
     public void validar_descripcion_libro(KeyEvent keyEvent) {
-        if (!Campo_clasificacion.getText().matches("^[A-Za-z0-9]+") && Campo_clasificacion.getText().isEmpty()) {
-            //Cambiar el color a rojo
+        if (!Campo_descripcion_libro.getText().isEmpty()) {
+            Campo_descripcion_libro.setStyle("-fx-border-color: red");
+            Descripcion_libro_bol = false;
         }else{
-
+            Descripcion_libro_bol = true;
+            if (IndexApp.TEMA==1){
+                Campo_descripcion_libro.setStyle("-fx-border-color: #595b5d");
+            }else{
+                Campo_descripcion_libro.setStyle("-fx-border-color: black");
+            }
         }
     }
 
