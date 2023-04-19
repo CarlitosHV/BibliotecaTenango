@@ -84,7 +84,7 @@
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="31.0" layoutY="414.0" onKeyTyped="#validar_descripcion_libro" prefHeight="70.0" prefWidth="620.0" promptText="Descripción del libro">
+            <TextField textFormatter=""  id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="31.0" layoutY="414.0" onKeyTyped="#validar_descripcion_libro" prefHeight="70.0" prefWidth="620.0" promptText="Descripción del libro">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>

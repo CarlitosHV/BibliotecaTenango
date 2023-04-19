@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.converter.IntegerStringConverter;
 
 import javax.swing.*;
 import java.net.URL;
@@ -495,6 +496,16 @@ public class AltaLibrosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
+
+        TextFormatter<Integer> formatter = new TextFormatter<>(new IntegerStringConverter(), null,
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.length() > 10) {
+                        return null;
+                    }
+                    return change;
+                });
+        Campo_clasificacion.setTextFormatter(formatter);
     }
 }
 
