@@ -506,6 +506,14 @@ public class AltaLibrosController implements Initializable {
                     return change;
                 });
         Campo_clasificacion.setTextFormatter(formatter);
+
+        Campo_titulo_libro.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 3) {
+                return null;
+            }
+            return change;
+        }));
     }
 }
 
