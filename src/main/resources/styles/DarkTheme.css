@@ -58,3 +58,35 @@
 #Boton_Modo:pressed{
     -fx-background-color: #595b5d;
 }
+
+#Buttons{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#Buttons:hover{
+    -fx-background-color: #7f8c40;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#Buttons:pressed{
+    -fx-background-color: gray;
+}
+
+#comboBox {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-border-color: black;
+    -fx-fill: red;
+}
+
+#comboBox .list-cell:selected {
+    -fx-background-color:   #118511;
+    -fx-text-fill: white;
+}
+
+#comboBox .list-cell:hover {
+    -fx-background-color: #30cc30;
+    -fx-text-fill: white;
+}

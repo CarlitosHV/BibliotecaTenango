@@ -28,7 +28,7 @@ public class IndexApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ObtenerPropiedades();
-        //bdController.ConectarBD();
+        bdController.ConectarPostgres();
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
@@ -36,6 +36,7 @@ public class IndexApp extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")));
         stage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -7,23 +7,33 @@ package com.hardbug.bibliotecatenango;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import javax.swing.*;
+import java.net.URL;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 /* Clase AltaLibros:
     Su funcionalidad es recibir la información de su vista ligada, tratar la información y mandarla a base de datos
  */
 
-public class AltaLibrosController {
+public class AltaLibrosController implements Initializable {
 
     private static boolean Clasificacion_bol, Anio_edicion_bol, Descripcion_libro_bol, Nombre_autor_bol,
             Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol, Registro_clasificacion_bol, Estante_bol,
             Existencias_bol;
+
+    @FXML
+    private ComboBox<String> comboBox;
+
+    @FXML
+    private Separator Separador_uno, Separador_dos, Separador_tres, Separador_cuatro, Separador_cinco;
+    @FXML
+    private Label Label_cabecera, Label_datos_del_libro, Label_datos_referencia;
 
     private ClaseLibro libro = new ClaseLibro();
     private IndexApp indexApp = new IndexApp();
@@ -36,8 +46,43 @@ public class AltaLibrosController {
     public AnchorPane Fondo;
 
 
+
+    /*
+        Método que dependiendo el texto del botón, se realiza la acción
+        Guardar: Invoca el método de guardar el libro
+        Buscar, Editar, Eliminar: Invoca a desactivar gran parte de la interfaz para hacer su operación
+        Buscar otro, Editar otro, Eliminar otro: Revierten la interfaz para visualizar la información
+     */
     @FXML
-    void GuardarLibro(ActionEvent event) {
+    void AccionesBotonGuardar() {
+        switch (BotonGuardar.getText()) {
+            case "Guardar":
+                GuardarLibro();
+                break;
+            case "Buscar":
+                crudEncontradosOriginal(2);
+                break;
+            case "Buscar otro":
+                crudLibro(2);
+                break;
+            case "Editar":
+                crudEncontradosOriginal(3);
+                break;
+            case "Editar otro":
+                crudLibro(3);
+                break;
+            case "Eliminar":
+                crudEncontradosOriginal(4);
+                break;
+            case "Eliminar otro":
+                crudLibro(4);
+                break;
+        }
+    }
+
+
+    @FXML
+    void GuardarLibro() {
         if (camposValidos()) {
             System.out.println("Listo para mandar a BD");
         } else {
@@ -84,143 +129,372 @@ public class AltaLibrosController {
 
 
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
-        if (Campo_clasificacion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,12}") && !Campo_clasificacion.getText().isEmpty()) {
-            Clasificacion_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_clasificacion.setStyle("-fx-border-color: #595b5d");
+        if (Campo_clasificacion.isEditable()) {
+            if (Campo_clasificacion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,12}") && !Campo_clasificacion.getText().isEmpty()) {
+                Clasificacion_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_clasificacion.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_clasificacion.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_clasificacion.setStyle("-fx-border-color: black");
+                Campo_clasificacion.setStyle("-fx-border-color: red");
+                Clasificacion_bol = false;
             }
-        } else {
-            Campo_clasificacion.setStyle("-fx-border-color: red");
-            Clasificacion_bol = false;
         }
     }
 
     public void validar_anio_edicion(KeyEvent keyEvent) {
-        if (Campo_anio_edicion.getText().matches("^\\d{1,4}$") && !Campo_anio_edicion.getText().isEmpty()) {
-            Anio_edicion_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
+        if (Campo_anio_edicion.isEditable()) {
+            if (Campo_anio_edicion.getText().matches("^\\d{1,4}$") && !Campo_anio_edicion.getText().isEmpty()) {
+                Anio_edicion_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_anio_edicion.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_anio_edicion.setStyle("-fx-border-color: black");
+                Campo_anio_edicion.setStyle("-fx-border-color: red");
+                Anio_edicion_bol = false;
             }
-        } else {
-            Campo_anio_edicion.setStyle("-fx-border-color: red");
-            Anio_edicion_bol = false;
         }
     }
 
     public void validar_registro_clasificacion(KeyEvent keyEvent) {
-        if (Campo_registro_clasificacion.getText().matches("^\\d{1,3}$") && !Campo_registro_clasificacion.getText().isEmpty()) {
-            Registro_clasificacion_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_registro_clasificacion.setStyle("-fx-border-color: #595b5d");
+        if (Campo_registro_clasificacion.isEditable()) {
+            if (Campo_registro_clasificacion.getText().matches("^\\d{1,3}$") && !Campo_registro_clasificacion.getText().isEmpty()) {
+                Registro_clasificacion_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_registro_clasificacion.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_registro_clasificacion.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_registro_clasificacion.setStyle("-fx-border-color: black");
+                Campo_registro_clasificacion.setStyle("-fx-border-color: red");
+                Registro_clasificacion_bol = false;
             }
-        } else {
-            Campo_registro_clasificacion.setStyle("-fx-border-color: red");
-            Registro_clasificacion_bol = false;
         }
     }
 
     public void validar_estante(KeyEvent keyEvent) {
-        if (Campo_estante.getText().matches("^[A-Z]-\\d{1,2}") && !Campo_estante.getText().isEmpty()) {
-            Estante_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_estante.setStyle("-fx-border-color: #595b5d");
+        if (Campo_estante.isEditable()) {
+            if (Campo_estante.getText().matches("^[A-Z]-\\d{1,2}") && !Campo_estante.getText().isEmpty()) {
+                Estante_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_estante.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_estante.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_estante.setStyle("-fx-border-color: black");
+                Campo_estante.setStyle("-fx-border-color: red");
+                Estante_bol = false;
             }
-        } else {
-            Campo_estante.setStyle("-fx-border-color: red");
-            Estante_bol = false;
         }
     }
 
     public void validar_existencias(KeyEvent keyEvent) {
-        if (Campo_existencias.getText().matches("^\\d{1,3}") && !Campo_existencias.getText().isEmpty()) {
-            Existencias_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_existencias.setStyle("-fx-border-color: #595b5d");
+        if (Campo_existencias.isEditable()) {
+            if (Campo_existencias.getText().matches("^\\d{1,3}") && !Campo_existencias.getText().isEmpty()) {
+                Existencias_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_existencias.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_existencias.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_existencias.setStyle("-fx-border-color: black");
+                Campo_existencias.setStyle("-fx-border-color: red");
+                Existencias_bol = false;
             }
-        } else {
-            Campo_existencias.setStyle("-fx-border-color: red");
-            Existencias_bol = false;
         }
     }
 
     public void validar_editorial(KeyEvent keyEvent) {
-        if (Campo_editorial.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,15}") && !Campo_editorial.getText().isEmpty()) {
-            Editorial_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_editorial.setStyle("-fx-border-color: #595b5d");
+        if (Campo_editorial.isEditable()) {
+            if (Campo_editorial.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,15}") && !Campo_editorial.getText().isEmpty()) {
+                Editorial_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_editorial.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_editorial.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_editorial.setStyle("-fx-border-color: black");
+                Campo_editorial.setStyle("-fx-border-color: red");
+                Editorial_bol = false;
             }
-        } else {
-            Campo_editorial.setStyle("-fx-border-color: red");
-            Editorial_bol = false;
         }
     }
 
     public void validar_lugar_edicion(KeyEvent keyEvent) {
-        if (Campo_lugar_edicion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_lugar_edicion.getText().isEmpty()) {
-            Lugar_edicion_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
+        if (Campo_lugar_edicion.isEditable()) {
+            if (Campo_lugar_edicion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_lugar_edicion.getText().isEmpty()) {
+                Lugar_edicion_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_lugar_edicion.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_lugar_edicion.setStyle("-fx-border-color: black");
+                Campo_lugar_edicion.setStyle("-fx-border-color: red");
+                Lugar_edicion_bol = false;
             }
-        } else {
-            Campo_lugar_edicion.setStyle("-fx-border-color: red");
-            Lugar_edicion_bol = false;
         }
     }
 
     public void validar_titulo_libro(KeyEvent keyEvent) {
-        if (Campo_titulo_libro.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_titulo_libro.getText().isEmpty()) {
-            Titulo_libro_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
+        if (Campo_titulo_libro.isEditable()) {
+            if (Campo_titulo_libro.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_titulo_libro.getText().isEmpty()) {
+                Titulo_libro_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_titulo_libro.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_titulo_libro.setStyle("-fx-border-color: black");
+                Campo_titulo_libro.setStyle("-fx-border-color: red");
+                Titulo_libro_bol = false;
             }
-        } else {
-            Campo_titulo_libro.setStyle("-fx-border-color: red");
-            Titulo_libro_bol = false;
         }
     }
 
     public void validar_nombre_autor(KeyEvent keyEvent) {
-        if (Campo_nombre_autor.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_nombre_autor.getText().isEmpty()) {
-            Nombre_autor_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_nombre_autor.setStyle("-fx-border-color: #595b5d");
+        if (Campo_nombre_autor.isEditable()) {
+            if (Campo_nombre_autor.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_nombre_autor.getText().isEmpty()) {
+                Nombre_autor_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_nombre_autor.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_nombre_autor.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_nombre_autor.setStyle("-fx-border-color: black");
+                Campo_nombre_autor.setStyle("-fx-border-color: red");
+                Nombre_autor_bol = false;
             }
-        } else {
-            Campo_nombre_autor.setStyle("-fx-border-color: red");
-            Nombre_autor_bol = false;
         }
     }
 
     public void validar_descripcion_libro(KeyEvent keyEvent) {
-        if (Campo_descripcion_libro.getText().matches("^[A-Z.\sñ][A-Za-z.\sñ]{1,70}") && !Campo_descripcion_libro.getText().isEmpty()) {
-            Descripcion_libro_bol = true;
-            if (IndexApp.TEMA == 1) {
-                Campo_descripcion_libro.setStyle("-fx-border-color: #595b5d");
+        if (Campo_descripcion_libro.isEditable()) {
+            if (Campo_descripcion_libro.getText().matches("^[A-Z.\sñ][A-Za-z.\sñ]{1,70}") && !Campo_descripcion_libro.getText().isEmpty()) {
+                Descripcion_libro_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_descripcion_libro.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_descripcion_libro.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_descripcion_libro.setStyle("-fx-border-color: black");
+                Campo_descripcion_libro.setStyle("-fx-border-color: red");
+                Descripcion_libro_bol = false;
             }
-        } else {
-            Campo_descripcion_libro.setStyle("-fx-border-color: red");
-            Descripcion_libro_bol = false;
         }
+    }
+
+    @FXML
+    void ObtenerCombo() {
+        switch (comboBox.getValue()) {
+            case "Agregar":
+                crudLibro(1);
+                break;
+            case "Buscar":
+                crudLibro(2);
+                break;
+            case "Editar":
+                crudLibro(3);
+                break;
+            case "Eliminar":
+                crudLibro(4);
+                break;
+        }
+    }
+
+
+    private void crudLibro(int bandera) {
+        switch (bandera) {
+            case 1:
+                Label_cabecera.setText("Registro de Libro");
+                Label_cabecera.setLayoutX(254.0);
+                BotonGuardar.setLayoutX(317.0);
+                BotonGuardar.setLayoutY(334.0);
+                BotonGuardar.setText("Guardar");
+                ActivarCampos();
+                break;
+            case 2:
+                Label_cabecera.setText("Búsqueda de Libros");
+                Label_cabecera.setLayoutX(221.0);
+                BotonGuardar.setLayoutX(317.0);
+                BotonGuardar.setLayoutY(334.0);
+                BotonGuardar.setText("Buscar");
+                DesactivarCampos();
+                break;
+            case 3:
+                Label_cabecera.setText("Editar Libro");
+                Label_cabecera.setLayoutX(254.0);
+                BotonGuardar.setLayoutX(317.0);
+                BotonGuardar.setLayoutY(334.0);
+                BotonGuardar.setText("Editar");
+                DesactivarCampos();
+                break;
+            case 4:
+                Label_cabecera.setText("Eliminar Libro");
+                Label_cabecera.setLayoutX(254.0);
+                BotonGuardar.setLayoutX(317.0);
+                BotonGuardar.setLayoutY(334.0);
+                BotonGuardar.setText("Eliminar");
+                DesactivarCampos();
+                break;
+        }
+    }
+
+    private void ActivarCampos() {
+        activarVisible();
+        limpiarCampos();
+    }
+
+    /*
+        Limpia el texto de los campos
+     */
+    private void limpiarCampos() {
+        Campo_clasificacion.setText("");
+        Campo_estante.setText("");
+        Campo_registro_clasificacion.setText("");
+        Campo_existencias.setText("");
+        Campo_editorial.setText("");
+        Campo_lugar_edicion.setText("");
+        Campo_anio_edicion.setText("");
+        Campo_nombre_autor.setText("");
+        Campo_descripcion_libro.setText("");
+        Campo_titulo_libro.setText("");
+    }
+
+    private void DesactivarCampos() {
+        desactivarVisible();
+        limpiarCampos();
+        Label_cabecera.setLayoutX(221.0);
+        Campo_titulo_libro.setEditable(true);
+        Campo_titulo_libro.setLayoutX(160.0);
+        Campo_titulo_libro.setLayoutY(262.0);
+        Campo_titulo_libro.setPrefWidth(371);
+    }
+
+
+    /*
+        Activa la visibilidad de los elementos en pantalla
+     */
+    private void activarVisible() {
+        Separador_dos.setVisible(true);
+        Separador_tres.setVisible(true);
+        Separador_cuatro.setVisible(true);
+        Label_datos_referencia.setVisible(true);
+        Label_datos_del_libro.setVisible(true);
+        Campo_clasificacion.setVisible(true);
+        Campo_estante.setVisible(true);
+        Campo_registro_clasificacion.setVisible(true);
+        Campo_existencias.setVisible(true);
+        Campo_editorial.setVisible(true);
+        Campo_lugar_edicion.setVisible(true);
+        Campo_anio_edicion.setVisible(true);
+        Campo_nombre_autor.setVisible(true);
+        Campo_descripcion_libro.setVisible(true);
+        BotonGuardar.setLayoutX(561.0);
+        BotonGuardar.setLayoutY(519.0);
+        Campo_titulo_libro.setLayoutX(386.0);
+        Campo_titulo_libro.setLayoutY(262.0);
+        Campo_titulo_libro.setPrefWidth(145.0);
+    }
+
+    /*
+        Desactiva la visibilidad de los elementos en pantalla
+     */
+    private void desactivarVisible() {
+        Separador_dos.setVisible(false);
+        Separador_tres.setVisible(false);
+        Separador_cuatro.setVisible(false);
+        Label_datos_referencia.setVisible(false);
+        Label_datos_del_libro.setVisible(false);
+        Campo_clasificacion.setVisible(false);
+        Campo_estante.setVisible(false);
+        Campo_registro_clasificacion.setVisible(false);
+        Campo_existencias.setVisible(false);
+        Campo_editorial.setVisible(false);
+        Campo_lugar_edicion.setVisible(false);
+        Campo_anio_edicion.setVisible(false);
+        Campo_nombre_autor.setVisible(false);
+        Campo_descripcion_libro.setVisible(false);
+    }
+
+    /*
+        Dependiendo la bandera, revierte la interfaz a la principal y cambia las cabeceras, textos y la posibilidad de editar los
+        campos de texto
+        Habilitados los campos: Agregar(1) y Editar(3)
+        Inhabilitados los campos: Buscar(2) y Eliminar(4)
+     */
+    private void crudEncontradosOriginal(int bandera) {
+        activarVisible();
+        switch (bandera) {
+            case 1:
+                Label_cabecera.setText("Registro de Libros");
+                Label_cabecera.setLayoutX(221.0);
+                BotonGuardar.setText("Guardar");
+                activarEditable();
+                break;
+            case 2:
+                Label_cabecera.setText("Búsqueda de Libros");
+                Label_cabecera.setLayoutX(221.0);
+                BotonGuardar.setText("Buscar otro");
+                desactivarEditable();
+                break;
+            case 3:
+                Label_cabecera.setText("Edición de Libro");
+                Label_cabecera.setLayoutX(221.0);
+                BotonGuardar.setText("Editar otro");
+                activarEditable();
+                break;
+            case 4:
+                Label_cabecera.setText("Eliminar Libro");
+                Label_cabecera.setLayoutX(221.0);
+                BotonGuardar.setText("Eliminar otro");
+                desactivarEditable();
+                break;
+        }
+    }
+
+
+    /*
+        Activa la edición de los campos de texto
+     */
+    void activarEditable() {
+        Campo_clasificacion.setEditable(true);
+        Campo_estante.setEditable(true);
+        Campo_registro_clasificacion.setEditable(true);
+        Campo_existencias.setEditable(true);
+        Campo_editorial.setEditable(true);
+        Campo_anio_edicion.setEditable(true);
+        Campo_nombre_autor.setEditable(true);
+        Campo_descripcion_libro.setEditable(true);
+        Campo_titulo_libro.setEditable(true);
+    }
+
+    /*
+       Desactiva la edición de los campos de texto
+    */
+    void desactivarEditable() {
+        Campo_clasificacion.setEditable(false);
+        Campo_estante.setEditable(false);
+        Campo_registro_clasificacion.setEditable(false);
+        Campo_existencias.setEditable(false);
+        Campo_editorial.setEditable(false);
+        Campo_anio_edicion.setEditable(false);
+        Campo_nombre_autor.setEditable(false);
+        Campo_descripcion_libro.setEditable(false);
+        Campo_titulo_libro.setEditable(false);
+    }
+
+
+    /*
+      Inicializa el combobox para que cargue los ítems
+   */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
     }
 }
 

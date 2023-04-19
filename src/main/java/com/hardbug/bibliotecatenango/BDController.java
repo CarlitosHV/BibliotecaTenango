@@ -16,13 +16,7 @@ public class BDController {
     public void ConectarBD() {
         ObtenerBD();
         String connectionUrl =
-                "jdbc:sqlserver://" + servidor + ";"
-                        + "database=" + base_datos + ";"
-                        + "user=" + usuario + ";"
-                        + "password=" + contrasenia + ";"
-                        + "encrypt=true;"
-                        + "loginTimeout=30;"
-                        + "integratedSecurity=true;";
+                "jdbc:sqlserver://localhost\\SQLEXPRESS01:1433; Database=master; encrypt=true; trustServerCertificate=false; loginTimeout=30;";
 
         try (Connection connection = DriverManager.getConnection(connectionUrl);) {
             if(connection.isValid(500)){
@@ -34,6 +28,22 @@ public class BDController {
             e.printStackTrace();
         }
     }
+
+    public void ConectarPostgres(){
+        Connection c = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:postgresql://localhost:5432/Biblioteca",
+                            "postgres", "dwX48AogL8b");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Opened database successfully");
+    }
+
 
     private void ObtenerBD() {
         try {
