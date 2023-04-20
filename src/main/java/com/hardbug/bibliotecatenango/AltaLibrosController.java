@@ -15,6 +15,7 @@ import javafx.util.converter.IntegerStringConverter;
 
 import javax.swing.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -26,7 +27,7 @@ public class AltaLibrosController implements Initializable {
 
     private static boolean Clasificacion_bol, Anio_edicion_bol, Descripcion_libro_bol, Nombre_autor_bol,
             Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol, Registro_clasificacion_bol, Estante_bol,
-            Existencias_bol;
+            Existencias_bol, Clave_registro_bol;
 
     @FXML
     private ComboBox<String> comboBox;
@@ -38,12 +39,14 @@ public class AltaLibrosController implements Initializable {
 
     private ClaseLibro libro = new ClaseLibro();
     private IndexApp indexApp = new IndexApp();
+    private BDController bdController = new BDController();
 
     @FXML
     private Button Boton_Modo, BotonGuardar;
     @FXML
     private TextField Campo_clasificacion, Campo_anio_edicion, Campo_registro_clasificacion, Campo_estante,
-            Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro;
+            Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro,
+            Campo_clave_registro;
     public AnchorPane Fondo;
 
 
@@ -55,7 +58,7 @@ public class AltaLibrosController implements Initializable {
         Buscar otro, Editar otro, Eliminar otro: Revierten la interfaz para visualizar la información
      */
     @FXML
-    void AccionesBotonGuardar() {
+    void AccionesBotonGuardar() throws SQLException {
         switch (BotonGuardar.getText()) {
             case "Guardar":
                 GuardarLibro();
@@ -83,9 +86,11 @@ public class AltaLibrosController implements Initializable {
 
 
     @FXML
-    void GuardarLibro() {
+    void GuardarLibro() throws SQLException {
         if (camposValidos()) {
-            System.out.println("Listo para mandar a BD");
+            bdController.InsertarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
+                        libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
+                        libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
         } else {
             System.out.println("Error en el llenado de los campos");
         }
@@ -95,7 +100,8 @@ public class AltaLibrosController implements Initializable {
     boolean camposValidos() {
         if (Clasificacion_bol && Anio_edicion_bol && Descripcion_libro_bol && Nombre_autor_bol &&
                 Titulo_libro_bol && Lugar_edicion_bol && Editorial_bol && Registro_clasificacion_bol && Estante_bol &&
-                Existencias_bol) {
+                Existencias_bol && Clave_registro_bol) {
+            libro.setClave_registro(Integer.parseInt(Campo_clave_registro.getText()));
             libro.setClasificacion(Campo_clasificacion.getText());
             libro.setAnio_edicion(Campo_anio_edicion.getText());
             libro.setRegistro_clasificacion(Campo_registro_clasificacion.getText());
@@ -128,6 +134,22 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
+
+    public void validar_clave_registro(javafx.scene.input.KeyEvent keyEvent){
+        if (Campo_clave_registro.isEditable()) {
+            if (Campo_clave_registro.getText().matches("^[a-zA-Z0-9]{1,15}$") && !Campo_clave_registro.getText().isEmpty()) {
+                Clave_registro_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_clave_registro.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_clave_registro.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_clave_registro.setStyle("-fx-border-color: red");
+                Clave_registro_bol = false;
+            }
+        }
+    }
 
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
         if (Campo_clasificacion.isEditable()) {
@@ -386,6 +408,7 @@ public class AltaLibrosController implements Initializable {
         Separador_cuatro.setVisible(true);
         Label_datos_referencia.setVisible(true);
         Label_datos_del_libro.setVisible(true);
+        Campo_clave_registro.setVisible(true);
         Campo_clasificacion.setVisible(true);
         Campo_estante.setVisible(true);
         Campo_registro_clasificacion.setVisible(true);
@@ -411,6 +434,7 @@ public class AltaLibrosController implements Initializable {
         Separador_cuatro.setVisible(false);
         Label_datos_referencia.setVisible(false);
         Label_datos_del_libro.setVisible(false);
+        Campo_clave_registro.setVisible(false);
         Campo_clasificacion.setVisible(false);
         Campo_estante.setVisible(false);
         Campo_registro_clasificacion.setVisible(false);
@@ -463,6 +487,7 @@ public class AltaLibrosController implements Initializable {
         Activa la edición de los campos de texto
      */
     void activarEditable() {
+        Campo_clave_registro.setEditable(true);
         Campo_clasificacion.setEditable(true);
         Campo_estante.setEditable(true);
         Campo_registro_clasificacion.setEditable(true);
@@ -478,6 +503,7 @@ public class AltaLibrosController implements Initializable {
        Desactiva la edición de los campos de texto
     */
     void desactivarEditable() {
+        Campo_clave_registro.setEditable(false);
         Campo_clasificacion.setEditable(false);
         Campo_estante.setEditable(false);
         Campo_registro_clasificacion.setEditable(false);
@@ -496,6 +522,14 @@ public class AltaLibrosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
+
+        Campo_clave_registro.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 15) {
+                return null;
+            }
+            return change;
+        }));
 
         Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();

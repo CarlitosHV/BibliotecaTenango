@@ -12,8 +12,6 @@ import java.util.Properties;
 /*Clase principal que maneja el inicio de la aplicación y muestra el Stage*/
 
 public class IndexApp extends Application {
-
-
     InputStream configInput = null;
     OutputStream configOutput = null;
     public static int TEMA;

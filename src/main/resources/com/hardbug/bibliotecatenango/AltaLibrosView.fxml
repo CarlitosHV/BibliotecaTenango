@@ -31,7 +31,7 @@
             <Image url="@../../../assets/logotenango.png" />
          </image>
       </ImageView>
-      <Pane layoutX="13.0" layoutY="59.0" maxHeight="Infinity" maxWidth="Infinity" prefHeight="587.0" prefWidth="671.0" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="59.0">
+      <Pane layoutX="13.0" layoutY="59.0" maxHeight="Infinity" maxWidth="Infinity" prefHeight="652.0" prefWidth="671.0" AnchorPane.bottomAnchor="-59.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="59.0">
          <children>
             <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="237.0" layoutY="65.0" text="Datos de referencia">
                <font>
@@ -60,36 +60,41 @@
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_editorial" layoutX="163.0" layoutY="262.0" onKeyTyped="#validar_editorial" prefHeight="38.0" prefWidth="145.0" promptText="Editorial">
+            <TextField id="Textfields" fx:id="Campo_clave_registro"  layoutX="165.0" layoutY="212.0" onKeyTyped="#validar_clave_registro" prefHeight="38.0" prefWidth="371.0" promptText="Clave registro">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="386.0" layoutY="262.0" onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro">
+            <TextField id="Textfields" fx:id="Campo_editorial" layoutX="163.0" layoutY="307.0" onKeyTyped="#validar_editorial" prefHeight="38.0" prefWidth="145.0" promptText="Editorial">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_lugar_edicion" layoutX="163.0" layoutY="311.0" onKeyTyped="#validar_lugar_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Lugar de edición">
+            <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="386.0" layoutY="307.0" onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_anio_edicion" layoutX="386.0" layoutY="309.0" onKeyTyped="#validar_anio_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Año de edición">
+            <TextField id="Textfields" fx:id="Campo_lugar_edicion" layoutX="163.0" layoutY="356.0" onKeyTyped="#validar_lugar_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Lugar de edición">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+            </TextField>
+            <TextField id="Textfields" fx:id="Campo_anio_edicion" layoutX="386.0" layoutY="354.0" onKeyTyped="#validar_anio_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Año de edición">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></TextField>
-            <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="162.0" layoutY="366.0" onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0" promptText="Nombre del autor">
+            <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="163.0" layoutY="401.0" onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0" promptText="Nombre del autor">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="31.0" layoutY="414.0" onKeyTyped="#validar_descripcion_libro" prefHeight="70.0" prefWidth="620.0" promptText="Descripción del libro">
+            <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="25.0" layoutY="453.0" onKeyTyped="#validar_descripcion_libro" prefHeight="38.0" prefWidth="620.0" promptText="Descripción del libro">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="519.0" mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar">
+            <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="531.0" mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar">
                <effect>
                   <Glow />
                </effect>
@@ -102,8 +107,8 @@
             </Button>
             <Separator id="Separators" fx:id="Separador_dos" layoutY="93.0" prefHeight="5.0" prefWidth="671.0" />
             <Separator id="Separators" fx:id="Separador_uno" layoutY="60.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator id="Separators" fx:id="Separador_cinco" layoutX="1.0" layoutY="491.0" prefHeight="5.0" prefWidth="671.0" />
-            <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="219.0" text="Datos del Libro">
+            <Separator id="Separators" fx:id="Separador_cinco" layoutY="506.0" prefHeight="5.0" prefWidth="671.0" />
+            <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="264.0" text="Datos del Libro">
                <font>
                   <Font size="18.0" />
                </font>
@@ -111,8 +116,8 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </Label>
-            <Separator id="Separators" fx:id="Separador_cuatro" layoutX="-1.0" layoutY="247.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="214.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" fx:id="Separador_cuatro" layoutX="-1.0" layoutY="292.0" prefHeight="5.0" prefWidth="671.0" />
+            <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0" prefWidth="671.0" />
             <Label id="Labels" fx:id="Label_cabecera" layoutX="221.0" text="Registro de Libros">
                <font>
                   <Font size="24.0" />
