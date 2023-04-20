@@ -497,19 +497,81 @@ public class AltaLibrosController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
 
-        TextFormatter<Integer> formatter = new TextFormatter<>(new IntegerStringConverter(), null,
-                change -> {
-                    String newText = change.getControlNewText();
-                    if (newText.length() > 10) {
-                        return null;
-                    }
-                    return change;
-                });
-        Campo_clasificacion.setTextFormatter(formatter);
-
-        Campo_titulo_libro.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, change -> {
+        Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.length() > 3) {
+            if (newText.length() > 10) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_estante.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 4) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_registro_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 30) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_existencias.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 4) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_editorial.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 30) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_titulo_libro.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 40) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_lugar_edicion.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 40) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_anio_edicion.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 4) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_nombre_autor.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 40) {
+                return null;
+            }
+            return change;
+        }));
+
+        Campo_descripcion_libro.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 70) {
                 return null;
             }
             return change;

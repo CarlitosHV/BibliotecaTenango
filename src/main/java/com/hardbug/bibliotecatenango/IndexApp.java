@@ -17,6 +17,7 @@ public class IndexApp extends Application {
     InputStream configInput = null;
     OutputStream configOutput = null;
     public static int TEMA;
+    public static String servidor, usuario, contrasenia, base_datos;
     BDController bdController = new BDController();
 
     //Método que inicia la aplicación
@@ -46,6 +47,10 @@ public class IndexApp extends Application {
             configInput = new FileInputStream("src/main/resources/config.properties");
             config.load(configInput);
             TEMA = Integer.parseInt(config.getProperty("theme"));
+            servidor = config.getProperty("server");
+            usuario = config.getProperty("user");
+            contrasenia = config.getProperty("password");
+            base_datos = config.getProperty("database");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +61,10 @@ public class IndexApp extends Application {
             configOutput = new FileOutputStream("src/main/resources/config.properties");
             Properties config = new Properties();
             config.setProperty(property, value);
+            config.setProperty("server", servidor);
+            config.setProperty("user", usuario);
+            config.setProperty("password", contrasenia);
+            config.setProperty("database", base_datos);
             config.store(configOutput, null);
         } catch (Exception e) {
             e.printStackTrace();
