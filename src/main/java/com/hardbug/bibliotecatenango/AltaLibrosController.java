@@ -49,8 +49,6 @@ public class AltaLibrosController implements Initializable {
             Campo_clave_registro;
     public AnchorPane Fondo;
 
-
-
     /*
         Método que dependiendo el texto del botón, se realiza la acción
         Guardar: Invoca el método de guardar el libro
@@ -84,7 +82,6 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
-
     @FXML
     void GuardarLibro() throws SQLException {
         if (camposValidos()) {
@@ -101,7 +98,7 @@ public class AltaLibrosController implements Initializable {
         if (Clasificacion_bol && Anio_edicion_bol && Descripcion_libro_bol && Nombre_autor_bol &&
                 Titulo_libro_bol && Lugar_edicion_bol && Editorial_bol && Registro_clasificacion_bol && Estante_bol &&
                 Existencias_bol && Clave_registro_bol) {
-            libro.setClave_registro(Integer.parseInt(Campo_clave_registro.getText()));
+            libro.setClave_registro(Campo_clave_registro.getText());
             libro.setClasificacion(Campo_clasificacion.getText());
             libro.setAnio_edicion(Campo_anio_edicion.getText());
             libro.setRegistro_clasificacion(Campo_registro_clasificacion.getText());
@@ -118,7 +115,7 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
-
+// Activación del tema de las interfaces
     @FXML
     void ActivarModoOscuro(ActionEvent event) {
         if (IndexApp.TEMA == 1) {
@@ -133,27 +130,11 @@ public class AltaLibrosController implements Initializable {
             indexApp.EscribirPropiedades("theme", String.valueOf(ViewSwitcher.BANDERA_TEMA));
         }
     }
-
-
-    public void validar_clave_registro(javafx.scene.input.KeyEvent keyEvent){
-        if (Campo_clave_registro.isEditable()) {
-            if (Campo_clave_registro.getText().matches("^[a-zA-Z0-9]{1,15}$") && !Campo_clave_registro.getText().isEmpty()) {
-                Clave_registro_bol = true;
-                if (IndexApp.TEMA == 1) {
-                    Campo_clave_registro.setStyle("-fx-border-color: #595b5d");
-                } else {
-                    Campo_clave_registro.setStyle("-fx-border-color: black");
-                }
-            } else {
-                Campo_clave_registro.setStyle("-fx-border-color: red");
-                Clave_registro_bol = false;
-            }
-        }
-    }
-
+    // Validaciones de los campos
+    // Campo Clasificación: Literatura, Historia, Ciencias,Matemáticas, etc.
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
         if (Campo_clasificacion.isEditable()) {
-            if (Campo_clasificacion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,12}") && !Campo_clasificacion.getText().isEmpty()) {
+            if (Campo_clasificacion.getText().matches("^[A-Z.\s][A-Za-z\s\\á\\é\\í\\ó\\ú\\ñ]{4,15}") && !Campo_clasificacion.getText().isEmpty()) {
                 Clasificacion_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_clasificacion.setStyle("-fx-border-color: #595b5d");
@@ -166,26 +147,11 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
-    public void validar_anio_edicion(KeyEvent keyEvent) {
-        if (Campo_anio_edicion.isEditable()) {
-            if (Campo_anio_edicion.getText().matches("^\\d{1,4}$") && !Campo_anio_edicion.getText().isEmpty()) {
-                Anio_edicion_bol = true;
-                if (IndexApp.TEMA == 1) {
-                    Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
-                } else {
-                    Campo_anio_edicion.setStyle("-fx-border-color: black");
-                }
-            } else {
-                Campo_anio_edicion.setStyle("-fx-border-color: red");
-                Anio_edicion_bol = false;
-            }
-        }
-    }
-
+    //Campo Registro de clasificación: Del 000 al 900 o S/C
+    //Debe de contener 3 digitos obligatorios o S/C =Sin Clasificación
     public void validar_registro_clasificacion(KeyEvent keyEvent) {
         if (Campo_registro_clasificacion.isEditable()) {
-            if (Campo_registro_clasificacion.getText().matches("^\\d{1,3}$") && !Campo_registro_clasificacion.getText().isEmpty()) {
+            if (Campo_registro_clasificacion.getText().matches("S/C") || Campo_registro_clasificacion.getText().matches("^\\d{3}$") && !Campo_registro_clasificacion.getText().isEmpty()) {
                 Registro_clasificacion_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_registro_clasificacion.setStyle("-fx-border-color: #595b5d");
@@ -198,10 +164,28 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
+    //Campo Clave registro: Clave dada por la biblioteca a libros “etiqueta”
+    public void validar_clave_registro(javafx.scene.input.KeyEvent keyEvent){
+        if (Campo_clave_registro.isEditable()) {
+            if (Campo_clave_registro.getText().matches("^[a-zA-Z0-9.-]{2,10}$") && !Campo_clave_registro.getText().isEmpty()) {
+                Clave_registro_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_clave_registro.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_clave_registro.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_clave_registro.setStyle("-fx-border-color: red");
+                Clave_registro_bol = false;
+            }
+        }
+    }
+    //Caja de campo Estante: Letra mayuscúla = estante, numero = filas, pueden haber más de 26 estantes
+    // en algun punto, por eso pueden haber de 1 a 3 letras separadas del guion y seguidas de dos digitos máximo
+    // El formato minimo es A-1 formato máximo ZZ-99
     public void validar_estante(KeyEvent keyEvent) {
         if (Campo_estante.isEditable()) {
-            if (Campo_estante.getText().matches("^[A-Z]-\\d{1,2}") && !Campo_estante.getText().isEmpty()) {
+            if (Campo_estante.getText().matches("^[A-Z Ñ]{1,2}-[0-9]{1,2}$") && !Campo_estante.getText().isEmpty()) {
                 Estante_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_estante.setStyle("-fx-border-color: #595b5d");
@@ -214,10 +198,10 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
+    //Campo Existencias solo digitos enteros de hasta una cantidad de 4 cifras mayor a 0
     public void validar_existencias(KeyEvent keyEvent) {
         if (Campo_existencias.isEditable()) {
-            if (Campo_existencias.getText().matches("^\\d{1,3}") && !Campo_existencias.getText().isEmpty()) {
+            if (Campo_existencias.getText().matches("^[1-9][0-9]{0,4}$") && !Campo_existencias.getText().isEmpty()) {
                 Existencias_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_existencias.setStyle("-fx-border-color: #595b5d");
@@ -230,10 +214,10 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
+    //Campo Editorial Valida de 1 a n palabras con un margnen de 30 caracteres incluiodos los simbolos &.- y espacios con vocales con acentos
     public void validar_editorial(KeyEvent keyEvent) {
         if (Campo_editorial.isEditable()) {
-            if (Campo_editorial.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,15}") && !Campo_editorial.getText().isEmpty()) {
+            if (Campo_editorial.getText().matches("^[A-Za-z\\s&.-\\á\\é\\í\\ó\\ú\\ñ]{1,30}$") && !Campo_editorial.getText().isEmpty()) {
                 Editorial_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_editorial.setStyle("-fx-border-color: #595b5d");
@@ -246,10 +230,10 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
+    //Campo Lugar de edición Valida de 1 a 4 palabras con un margnen de 40 caracteres incluiodos el simolo - espacios, vocales con acentos
     public void validar_lugar_edicion(KeyEvent keyEvent) {
         if (Campo_lugar_edicion.isEditable()) {
-            if (Campo_lugar_edicion.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_lugar_edicion.getText().isEmpty()) {
+            if (Campo_lugar_edicion.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_lugar_edicion.getText().isEmpty()) {
                 Lugar_edicion_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
@@ -262,26 +246,10 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
-    public void validar_titulo_libro(KeyEvent keyEvent) {
-        if (Campo_titulo_libro.isEditable()) {
-            if (Campo_titulo_libro.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_titulo_libro.getText().isEmpty()) {
-                Titulo_libro_bol = true;
-                if (IndexApp.TEMA == 1) {
-                    Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
-                } else {
-                    Campo_titulo_libro.setStyle("-fx-border-color: black");
-                }
-            } else {
-                Campo_titulo_libro.setStyle("-fx-border-color: red");
-                Titulo_libro_bol = false;
-            }
-        }
-    }
-
+    //Campo Nombre del autor Valida de 1 a 4 palabras con un margnen de 40 caracteres incluiodos espacios, vocales con acentos
     public void validar_nombre_autor(KeyEvent keyEvent) {
         if (Campo_nombre_autor.isEditable()) {
-            if (Campo_nombre_autor.getText().matches("^[A-Z.\s][A-Za-z.\sñ]{1,30}") && !Campo_nombre_autor.getText().isEmpty()) {
+            if (Campo_nombre_autor.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_nombre_autor.getText().isEmpty()) {
                 Nombre_autor_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_nombre_autor.setStyle("-fx-border-color: #595b5d");
@@ -294,10 +262,42 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
+    //Campo Título del libro Valida de 1 a n palabras con un margnen de 40 caracteres incluidos espacios, vocales con acentos
+    public void validar_titulo_libro(KeyEvent keyEvent) {
+        if (Campo_titulo_libro.isEditable()) {
+            if (Campo_titulo_libro.getText().matches("^[A-Za-z\\s\\á\\é\\í\\ó\\ú\\ñ]{1,40}$") && !Campo_titulo_libro.getText().isEmpty()) {
+                Titulo_libro_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_titulo_libro.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_titulo_libro.setStyle("-fx-border-color: red");
+                Titulo_libro_bol = false;
+            }
+        }
+    }
+    //Campo Año de edición valida que se escriba un año mayor a 1000 y menor a 2029
+    public void validar_anio_edicion(KeyEvent keyEvent) {
+        if (Campo_anio_edicion.isEditable()) {
+            if (Campo_anio_edicion.getText().matches("^(1\\d{3}|20[0-2]\\d)$") && !Campo_anio_edicion.getText().isEmpty()) {
+                Anio_edicion_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_anio_edicion.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_anio_edicion.setStyle("-fx-border-color: red");
+                Anio_edicion_bol = false;
+            }
+        }
+    }
+    //Campo Descripción del libro Valida de 1 a n palabras con un margnen de 80 caracteres incliodo los simolos ., espacios, vocales con acentos
     public void validar_descripcion_libro(KeyEvent keyEvent) {
         if (Campo_descripcion_libro.isEditable()) {
-            if (Campo_descripcion_libro.getText().matches("^[A-Z.\sñ][A-Za-z.\sñ]{1,70}") && !Campo_descripcion_libro.getText().isEmpty()) {
+            if (Campo_descripcion_libro.getText().matches("^[A-Za-z\\s.,\\á\\é\\í\\ó\\ú\\ñ]{1,80}$") && !Campo_descripcion_libro.getText().isEmpty()) {
                 Descripcion_libro_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_descripcion_libro.setStyle("-fx-border-color: #595b5d");
@@ -310,6 +310,8 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
+
 
     @FXML
     void ObtenerCombo() {
@@ -421,7 +423,7 @@ public class AltaLibrosController implements Initializable {
         BotonGuardar.setLayoutX(561.0);
         BotonGuardar.setLayoutY(519.0);
         Campo_titulo_libro.setLayoutX(386.0);
-        Campo_titulo_libro.setLayoutY(262.0);
+        Campo_titulo_libro.setLayoutY(307.0);
         Campo_titulo_libro.setPrefWidth(145.0);
     }
 
@@ -521,40 +523,42 @@ public class AltaLibrosController implements Initializable {
    */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
 
-        Campo_clave_registro.setTextFormatter(new TextFormatter<>(change -> {
+        //Caja de campo Clasificación rango de 15 caracteres
+        Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 15) {
                 return null;
             }
             return change;
         }));
-
-        Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
+        //Campo Registro de clasificación rango de 3 caracteres
+        Campo_registro_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 3) {
+                return null;
+            }
+            return change;
+        }));
+        //Caja de campo Clave de registro rango de 10 caracteres
+        Campo_clave_registro.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 10) {
                 return null;
             }
             return change;
         }));
-
+        //Caja de campo Estante rango de 5 caracteres
         Campo_estante.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.length() > 4) {
+            if (newText.length() > 5) {
                 return null;
             }
             return change;
         }));
-
-        Campo_registro_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > 30) {
-                return null;
-            }
-            return change;
-        }));
-
+        //Caja de campo Existecias rango de 4 caracteres
         Campo_existencias.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 4) {
@@ -562,7 +566,7 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
-
+        //Caja de campo Editorial rango de 30 caracteres
         Campo_editorial.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 30) {
@@ -570,15 +574,7 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
-
-        Campo_titulo_libro.setTextFormatter(new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > 40) {
-                return null;
-            }
-            return change;
-        }));
-
+        //Caja de campo Lugar de edición rango de 40 caracteres
         Campo_lugar_edicion.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 40) {
@@ -586,15 +582,7 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
-
-        Campo_anio_edicion.setTextFormatter(new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() > 4) {
-                return null;
-            }
-            return change;
-        }));
-
+        //Caja de campo Nombre del autor rango de 40 caracteres
         Campo_nombre_autor.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.length() > 40) {
@@ -602,10 +590,26 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
-
+        //Caja de campo Título del libro rango de 40 caracteres
+        Campo_titulo_libro.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 40) {
+                return null;
+            }
+            return change;
+        }));
+        //Caja de campo Año de edición  rango de 4 caracteres
+        Campo_anio_edicion.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 4) {
+                return null;
+            }
+            return change;
+        }));
+        //Caja de campo Descripción del libro rango de 80 caracteres
         Campo_descripcion_libro.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.length() > 70) {
+            if (newText.length() > 80) {
                 return null;
             }
             return change;

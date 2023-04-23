@@ -1,7 +1,7 @@
 package com.hardbug.bibliotecatenango;
 
 public class ClaseLibro {
-    int clave_registro;
+    String clave_registro;
     String clasificacion;
     String anio_edicion;
     String registro_clasificacion;
@@ -16,7 +16,7 @@ public class ClaseLibro {
     public ClaseLibro() {
     }
 
-    public ClaseLibro(int clave_registro, String clasificacion, String anio_edicion, String registro_clasificacion, String estante, int existencias,
+    public ClaseLibro(String clave_registro, String clasificacion, String anio_edicion, String registro_clasificacion, String estante, int existencias,
                       String editorial, String lugar_edicion, String titulo_libro, String nombre_autor, String descripcion_libro) {
         this.clave_registro = clave_registro;
         this.clasificacion = clasificacion;
@@ -31,9 +31,10 @@ public class ClaseLibro {
         this.descripcion_libro = descripcion_libro;
     }
 
-    public int getClave_registro() { return clave_registro; }
+    public String getClave_registro() { return clave_registro; }
 
-    public void setClave_registro(int clave_registro) { this.clave_registro = clave_registro; }
+    public void setClave_registro(String clave_registro) { this.clave_registro = clave_registro; }
+
 
     public String getClasificacion() {
         return clasificacion;
@@ -42,6 +43,7 @@ public class ClaseLibro {
     public void setClasificacion(String clasificacion) {
         this.clasificacion = clasificacion;
     }
+
 
     public String getAnio_edicion() {
         return anio_edicion;

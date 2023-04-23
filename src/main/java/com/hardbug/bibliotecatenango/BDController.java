@@ -11,9 +11,8 @@ public class BDController {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-                    .getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                            IndexApp.usuario, IndexApp.contrasenia);
-
+                        .getConnection("jdbc:postgresql://" + IndexApp.servidor + "/"
+                                + IndexApp.base_datos, IndexApp.usuario, IndexApp.contrasenia);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -23,7 +22,7 @@ public class BDController {
         System.out.println("Opened database successfully");
     }
 
-    public void InsertarLibro(int Clave_registro, String Estante, String Descripcion_libro, int Existencias,
+    public void InsertarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
                               String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
                               String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
 
@@ -32,7 +31,7 @@ public class BDController {
              CallableStatement stmt = conn.prepareCall("{ call insertar_libro(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }")) {
 
             // Setear los parámetros del stored procedure
-            stmt.setInt(1, Clave_registro); // p_clave_registro
+            stmt.setString(1, Clave_registro); // p_clave_registro
             stmt.setString(2, Estante); // p_estante
             stmt.setString(3, Descripcion_libro); // p_descripcion_libro
             stmt.setInt(4, Existencias); // p_existencias

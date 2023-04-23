@@ -10,6 +10,7 @@ module com.hardbug.bibliotecatenango {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires org.postgresql.jdbc;
 
 
     opens com.hardbug.bibliotecatenango to javafx.fxml;
