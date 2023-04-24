@@ -27,7 +27,7 @@ public class IndexApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ObtenerPropiedades();
-        bdController.ConectarPostgres();
+        //bdController.ConectarPostgres();
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);

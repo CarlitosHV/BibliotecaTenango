@@ -74,6 +74,7 @@ public class AltaLibrosController implements Initializable {
                 crudLibro(3);
                 break;
             case "Eliminar":
+                EliminarLibro();
                 crudEncontradosOriginal(4);
                 break;
             case "Eliminar otro":
@@ -91,6 +92,10 @@ public class AltaLibrosController implements Initializable {
         } else {
             System.out.println("Error en el llenado de los campos");
         }
+    }
+
+    void EliminarLibro()throws SQLException{
+        bdController.BorrarLibro(libro.titulo_libro);
     }
 
 

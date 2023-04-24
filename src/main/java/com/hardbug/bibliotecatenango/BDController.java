@@ -21,6 +21,17 @@ public class BDController {
         }
         System.out.println("Opened database successfully");
     }
+    public void BorrarLibro(String Titulo_libro)throws SQLException {
+        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                IndexApp.usuario, IndexApp.contrasenia);
+             CallableStatement stmt = conn.prepareCall("{call eliminar_libro(?)}")) {
+
+            stmt.setString(1,Titulo_libro);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.err.println("Error al ejecutar stored procedure: " + e.getMessage());
+        }
+    }
 
     public void InsertarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
                               String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
