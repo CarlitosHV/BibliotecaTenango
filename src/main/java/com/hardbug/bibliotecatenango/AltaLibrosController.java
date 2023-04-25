@@ -16,14 +16,15 @@ import javafx.util.converter.IntegerStringConverter;
 import javax.swing.*;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /* Clase AltaLibros:
     Su funcionalidad es recibir la información de su vista ligada, tratar la información y mandarla a base de datos
  */
 
 public class AltaLibrosController implements Initializable {
+
+    public static ArrayList<Object> datosLibro = new ArrayList<>();
 
     private static boolean Clasificacion_bol, Anio_edicion_bol, Descripcion_libro_bol, Nombre_autor_bol,
             Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol, Registro_clasificacion_bol, Estante_bol,
@@ -63,6 +64,7 @@ public class AltaLibrosController implements Initializable {
                 break;
             case "Buscar":
                 crudEncontradosOriginal(2);
+                BuscarLibro();
                 break;
             case "Buscar otro":
                 crudLibro(2);
@@ -74,8 +76,8 @@ public class AltaLibrosController implements Initializable {
                 crudLibro(3);
                 break;
             case "Eliminar":
-                EliminarLibro();
-                crudEncontradosOriginal(4);
+                CrearAlerta(4);
+                //crudEncontradosOriginal(4);
                 break;
             case "Eliminar otro":
                 crudLibro(4);
@@ -83,19 +85,107 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
-    @FXML
-    void GuardarLibro() throws SQLException {
-        if (camposValidos()) {
-            bdController.InsertarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
-                        libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
-                        libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
+    void CrearAlerta(int tipo) throws SQLException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        DialogPane dialogPane = alert.getDialogPane();
+        alert.setHeaderText(null);
+        if (IndexApp.TEMA == 1) {
+            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: black");
         } else {
-            System.out.println("Error en el llenado de los campos");
+            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
+        }
+        switch (tipo) {
+            case 0:
+                alert.setTitle("¡Ocurrió un error!");
+                alert.setContentText("Error al guardar en base de datos");
+                alert.showAndWait();
+                break;
+            case 1:
+                alert.setTitle("¡Libro guardado con éxito!");
+                alert.setContentText("El libro " + libro.getTitulo_libro() + " ha sido registrado :)");
+                alert.showAndWait();
+                break;
+            case 2:
+                alert.setTitle("¡Libro no encontrado!");
+                alert.setContentText("No se encontró el libro, prueba checando la ortografía :)");
+                alert.showAndWait();
+                break;
+            case 3:
+                alert.setTitle("¡Campos inválidos!");
+                alert.setContentText("Error en procesar la información, verifica que los campos estén llenados de forma correcta");
+                alert.showAndWait();
+                break;
+            case 4:
+                Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                DialogPane dialogPane1 = alert.getDialogPane();
+                alert1.setHeaderText(null);
+                alert1.setTitle("¡Cuidado!");
+                alert1.setContentText("¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?");
+                if (IndexApp.TEMA == 1) {
+                    dialogPane1.setStyle("-fx-background-color: white; -fx-text-fill: black");
+                } else {
+                    dialogPane1.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
+                }
+                Optional<ButtonType> result = alert1.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    EliminarLibro();
+                } else {
+                    alert1.close();
+                }
+                break;
+            case 5:
+                alert.setTitle("Eliminación realizada");
+                alert.setContentText("Se ha eliminado el libro de manera correcta");
+                Optional<ButtonType> result1 = alert.showAndWait();
+                if (result1.isPresent() && result1.get() == ButtonType.OK) {
+                    alert.close();
+                    crudLibro(4);
+                }
+                break;
         }
     }
 
-    void EliminarLibro()throws SQLException{
-        bdController.BorrarLibro(libro.titulo_libro);
+    @FXML
+    void GuardarLibro() throws SQLException {
+        if (camposValidos()) {
+            boolean guardado = bdController.InsertarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
+                    libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
+                    libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
+            if (guardado) {
+                CrearAlerta(1);
+                limpiarCampos();
+            } else {
+                CrearAlerta(0);
+            }
+        } else {
+            CrearAlerta(3);
+        }
+    }
+
+    void EliminarLibro() throws SQLException {
+        Boolean eliminado = bdController.BorrarLibro(Campo_titulo_libro.getText());
+        if (eliminado){
+            CrearAlerta(5);
+        }
+    }
+
+    void BuscarLibro() throws SQLException {
+        boolean encontrado = bdController.BuscarLibro(libro.getTitulo_libro());
+        if (encontrado) {
+            System.out.println(datosLibro);
+            Campo_clave_registro.setText(libro.getClave_registro());
+            Campo_clasificacion.setText(libro.getClasificacion());
+            Campo_anio_edicion.setText(libro.getAnio_edicion());
+            Campo_registro_clasificacion.setText(libro.getRegistro_clasificacion());
+            Campo_existencias.setText(String.valueOf(libro.getExistencias()));
+            Campo_editorial.setText(libro.getEditorial());
+            Campo_lugar_edicion.setText(libro.getLugar_edicion());
+            Campo_titulo_libro.setText(libro.getTitulo_libro());
+            Campo_nombre_autor.setText(libro.getNombre_autor());
+            Campo_descripcion_libro.setText(libro.getDescripcion_libro());
+        } else {
+            CrearAlerta(2);
+        }
     }
 
 
@@ -120,7 +210,7 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
-// Activación del tema de las interfaces
+    // Activación del tema de las interfaces
     @FXML
     void ActivarModoOscuro(ActionEvent event) {
         if (IndexApp.TEMA == 1) {
@@ -135,6 +225,7 @@ public class AltaLibrosController implements Initializable {
             indexApp.EscribirPropiedades("theme", String.valueOf(ViewSwitcher.BANDERA_TEMA));
         }
     }
+
     // Validaciones de los campos
     // Campo Clasificación: Literatura, Historia, Ciencias,Matemáticas, etc.
     public void validar_clasificacion(javafx.scene.input.KeyEvent keyEvent) {
@@ -152,6 +243,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Registro de clasificación: Del 000 al 900 o S/C
     //Debe de contener 3 digitos obligatorios o S/C =Sin Clasificación
     public void validar_registro_clasificacion(KeyEvent keyEvent) {
@@ -169,8 +261,9 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Clave registro: Clave dada por la biblioteca a libros “etiqueta”
-    public void validar_clave_registro(javafx.scene.input.KeyEvent keyEvent){
+    public void validar_clave_registro(javafx.scene.input.KeyEvent keyEvent) {
         if (Campo_clave_registro.isEditable()) {
             if (Campo_clave_registro.getText().matches("^[a-zA-Z0-9.-]{2,10}$") && !Campo_clave_registro.getText().isEmpty()) {
                 Clave_registro_bol = true;
@@ -185,6 +278,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Caja de campo Estante: Letra mayuscúla = estante, numero = filas, pueden haber más de 26 estantes
     // en algun punto, por eso pueden haber de 1 a 3 letras separadas del guion y seguidas de dos digitos máximo
     // El formato minimo es A-1 formato máximo ZZ-99
@@ -203,6 +297,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Existencias solo digitos enteros de hasta una cantidad de 4 cifras mayor a 0
     public void validar_existencias(KeyEvent keyEvent) {
         if (Campo_existencias.isEditable()) {
@@ -219,6 +314,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Editorial Valida de 1 a n palabras con un margnen de 30 caracteres incluiodos los simbolos &.- y espacios con vocales con acentos
     public void validar_editorial(KeyEvent keyEvent) {
         if (Campo_editorial.isEditable()) {
@@ -235,6 +331,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Lugar de edición Valida de 1 a 4 palabras con un margnen de 40 caracteres incluiodos el simolo - espacios, vocales con acentos
     public void validar_lugar_edicion(KeyEvent keyEvent) {
         if (Campo_lugar_edicion.isEditable()) {
@@ -251,6 +348,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Nombre del autor Valida de 1 a 4 palabras con un margnen de 40 caracteres incluiodos espacios, vocales con acentos
     public void validar_nombre_autor(KeyEvent keyEvent) {
         if (Campo_nombre_autor.isEditable()) {
@@ -267,6 +365,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Título del libro Valida de 1 a n palabras con un margnen de 40 caracteres incluidos espacios, vocales con acentos
     public void validar_titulo_libro(KeyEvent keyEvent) {
         if (Campo_titulo_libro.isEditable()) {
@@ -283,6 +382,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Año de edición valida que se escriba un año mayor a 1000 y menor a 2029
     public void validar_anio_edicion(KeyEvent keyEvent) {
         if (Campo_anio_edicion.isEditable()) {
@@ -299,6 +399,7 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
+
     //Campo Descripción del libro Valida de 1 a n palabras con un margnen de 80 caracteres incliodo los simolos ., espacios, vocales con acentos
     public void validar_descripcion_libro(KeyEvent keyEvent) {
         if (Campo_descripcion_libro.isEditable()) {
@@ -315,7 +416,6 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
 
 
     @FXML

@@ -16,7 +16,6 @@ public class IndexApp extends Application {
     OutputStream configOutput = null;
     public static int TEMA;
     public static String servidor, usuario, contrasenia, base_datos;
-    BDController bdController = new BDController();
 
     //Método que inicia la aplicación
     public static void main(String[] args) {
@@ -27,7 +26,6 @@ public class IndexApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ObtenerPropiedades();
-        //bdController.ConectarPostgres();
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
