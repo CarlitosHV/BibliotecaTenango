@@ -63,21 +63,19 @@ public class AltaLibrosController implements Initializable {
                 GuardarLibro();
                 break;
             case "Buscar":
-                crudEncontradosOriginal(2);
-                BuscarLibro();
+                BuscarLibro(0);
                 break;
             case "Buscar otro":
                 crudLibro(2);
                 break;
             case "Editar":
-                crudEncontradosOriginal(3);
+                BuscarLibro(1);
                 break;
-            case "Editar otro":
-                crudLibro(3);
+            case "Editar libro":
+                EditarLibro();
                 break;
             case "Eliminar":
                 CrearAlerta(4);
-                //crudEncontradosOriginal(4);
                 break;
             case "Eliminar otro":
                 crudLibro(4);
@@ -89,7 +87,7 @@ public class AltaLibrosController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         DialogPane dialogPane = alert.getDialogPane();
         alert.setHeaderText(null);
-        if (IndexApp.TEMA == 1) {
+        if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: black");
         } else {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
@@ -108,6 +106,7 @@ public class AltaLibrosController implements Initializable {
             case 2:
                 alert.setTitle("¡Libro no encontrado!");
                 alert.setContentText("No se encontró el libro, prueba checando la ortografía :)");
+                Campo_titulo_libro.setText("");
                 alert.showAndWait();
                 break;
             case 3:
@@ -116,21 +115,23 @@ public class AltaLibrosController implements Initializable {
                 alert.showAndWait();
                 break;
             case 4:
-                Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                DialogPane dialogPane1 = alert.getDialogPane();
-                alert1.setHeaderText(null);
-                alert1.setTitle("¡Cuidado!");
-                alert1.setContentText("¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?");
-                if (IndexApp.TEMA == 1) {
-                    dialogPane1.setStyle("-fx-background-color: white; -fx-text-fill: black");
-                } else {
-                    dialogPane1.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-                }
-                Optional<ButtonType> result = alert1.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    EliminarLibro();
-                } else {
-                    alert1.close();
+                if (!Campo_titulo_libro.getText().isEmpty()) {
+                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                    DialogPane dialogPane1 = alert.getDialogPane();
+                    alert1.setHeaderText(null);
+                    alert1.setTitle("¡Cuidado!");
+                    alert1.setContentText("¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?");
+                    if (IndexApp.TEMA == 0) {
+                        dialogPane1.setStyle("-fx-background-color: white; -fx-text-fill: white");
+                    } else {
+                        dialogPane1.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
+                    }
+                    Optional<ButtonType> result = alert1.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        EliminarLibro();
+                    } else {
+                        alert1.close();
+                    }
                 }
                 break;
             case 5:
@@ -141,6 +142,11 @@ public class AltaLibrosController implements Initializable {
                     alert.close();
                     crudLibro(4);
                 }
+                break;
+            case 6:
+                alert.setTitle("¡Libro editado con éxito!");
+                alert.setContentText("El libro " + libro.getTitulo_libro() + " ha sido editado :)");
+                alert.showAndWait();
                 break;
         }
     }
@@ -162,27 +168,48 @@ public class AltaLibrosController implements Initializable {
         }
     }
 
+    void EditarLibro() throws SQLException {
+        if (camposValidos()) {
+            boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
+                    libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
+                    libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
+            if (editado) {
+                CrearAlerta(6);
+                limpiarCampos();
+            } else {
+                CrearAlerta(0);
+            }
+        } else {
+            CrearAlerta(3);
+        }
+    }
+
     void EliminarLibro() throws SQLException {
         Boolean eliminado = bdController.BorrarLibro(Campo_titulo_libro.getText());
-        if (eliminado){
+        if (eliminado) {
             CrearAlerta(5);
         }
     }
 
-    void BuscarLibro() throws SQLException {
-        boolean encontrado = bdController.BuscarLibro(libro.getTitulo_libro());
+    void BuscarLibro(int tipo) throws SQLException {
+        boolean encontrado = bdController.BuscarLibro(Campo_titulo_libro.getText());
         if (encontrado) {
-            System.out.println(datosLibro);
-            Campo_clave_registro.setText(libro.getClave_registro());
-            Campo_clasificacion.setText(libro.getClasificacion());
-            Campo_anio_edicion.setText(libro.getAnio_edicion());
-            Campo_registro_clasificacion.setText(libro.getRegistro_clasificacion());
-            Campo_existencias.setText(String.valueOf(libro.getExistencias()));
-            Campo_editorial.setText(libro.getEditorial());
-            Campo_lugar_edicion.setText(libro.getLugar_edicion());
-            Campo_titulo_libro.setText(libro.getTitulo_libro());
-            Campo_nombre_autor.setText(libro.getNombre_autor());
-            Campo_descripcion_libro.setText(libro.getDescripcion_libro());
+            Campo_clave_registro.setText(datosLibro.get(0).toString());
+            Campo_clasificacion.setText(datosLibro.get(1).toString());
+            Campo_anio_edicion.setText(datosLibro.get(2).toString());
+            Campo_registro_clasificacion.setText(datosLibro.get(3).toString());
+            Campo_estante.setText(datosLibro.get(4).toString());
+            Campo_existencias.setText(datosLibro.get(5).toString());
+            Campo_editorial.setText(datosLibro.get(6).toString());
+            Campo_lugar_edicion.setText(datosLibro.get(7).toString());
+            Campo_titulo_libro.setText(datosLibro.get(8).toString());
+            Campo_nombre_autor.setText(datosLibro.get(9).toString());
+            Campo_descripcion_libro.setText(datosLibro.get(10).toString());
+            if (tipo == 0) {
+                crudEncontradosOriginal(2);
+            }else{
+                crudEncontradosOriginal(3);
+            }
         } else {
             CrearAlerta(2);
         }
@@ -493,6 +520,7 @@ public class AltaLibrosController implements Initializable {
         Campo_nombre_autor.setText("");
         Campo_descripcion_libro.setText("");
         Campo_titulo_libro.setText("");
+        Campo_clave_registro.setText("");
     }
 
     private void DesactivarCampos() {
@@ -577,7 +605,7 @@ public class AltaLibrosController implements Initializable {
             case 3:
                 Label_cabecera.setText("Edición de Libro");
                 Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setText("Editar otro");
+                BotonGuardar.setText("Editar libro");
                 activarEditable();
                 break;
             case 4:

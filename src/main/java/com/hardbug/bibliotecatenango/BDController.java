@@ -7,9 +7,9 @@ public class BDController {
 
 
     private Connection c = null;
-    public static ArrayList<Object> datosLibro = new ArrayList<>();
+    ClaseLibro libro = new ClaseLibro();
 
-    public boolean BorrarLibro(String Titulo_libro)throws SQLException {
+    public boolean BorrarLibro(String Titulo_libro) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
              CallableStatement stmt = conn.prepareCall("{call eliminar_libro(?)}")) {
@@ -34,7 +34,7 @@ public class BDController {
         }
     }
 
-    public boolean BuscarLibro(String Titulo_libro)throws SQLException {
+    public boolean BuscarLibro(String Titulo_libro) throws SQLException {
         Boolean encontrado = false;
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -43,25 +43,24 @@ public class BDController {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM buscar_libro(?)");
 
             stmt.setString(1, Titulo_libro);
+            stmt.execute();
 
+            ResultSet rs = stmt.getResultSet();
 
-            ResultSet rs = stmt.executeQuery();
-
-            while(rs.next()){
+            while (rs.next()) {
                 encontrado = true;
-                String clave_registro = rs.getString("clave_registro");
-                String estante = rs.getString("estante");
-                String descripcion_libro = rs.getString("descripcion_libro");
-                int existencias = rs.getInt("existencias");
-                String titulo_libro = rs.getString("titulo_libro");
-                String anio_edicion = rs.getString("anio_edicion");
-                String nombre_autor = rs.getString("nombre_autor");
-                String clasificacion = rs.getString("clasificacion");
-                String registro_clasificacion = rs.getString("registro_clasificacion");
-                String editorial = rs.getString("editorial");
-                String lugar_edicion = rs.getString("lugar_edicion");
-
-                System.out.println(clave_registro + " | " + estante + " | " + descripcion_libro + " | " + existencias + " | " + titulo_libro + " | " + anio_edicion + " | " + nombre_autor + " | " + clasificacion + " | " + registro_clasificacion + " | " + editorial + " | " + lugar_edicion);
+                AltaLibrosController.datosLibro.clear();
+                AltaLibrosController.datosLibro.add(rs.getString("clave_registro"));
+                AltaLibrosController.datosLibro.add(rs.getString("clasificacion"));
+                AltaLibrosController.datosLibro.add(rs.getString("anio_edicion"));
+                AltaLibrosController.datosLibro.add(rs.getString("registro_clasificacion"));
+                AltaLibrosController.datosLibro.add(rs.getString("estante"));
+                AltaLibrosController.datosLibro.add(rs.getInt("existencias"));
+                AltaLibrosController.datosLibro.add(rs.getString("editorial"));
+                AltaLibrosController.datosLibro.add(rs.getString("lugar_edicion"));
+                AltaLibrosController.datosLibro.add(rs.getString("titulo_libro"));
+                AltaLibrosController.datosLibro.add(rs.getString("nombre_autor"));
+                AltaLibrosController.datosLibro.add(rs.getString("descripcion_libro"));
             }
 
             rs.close();
@@ -75,8 +74,8 @@ public class BDController {
     }
 
     public boolean InsertarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
-                              String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
-                              String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
+                                 String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
+                                 String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
 
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
@@ -105,33 +104,34 @@ public class BDController {
         }
     }
 
-    public void EditarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
-                              String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
-                              String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
+    public boolean EditarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
+                            String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
+                            String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
 
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
              CallableStatement stmt = conn.prepareCall("{ call editar_libro(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }")) {
 
-            // Setear los parámetros del stored procedure
-            stmt.setString(1, Clave_registro); // p_clave_registro
-            stmt.setString(2, Estante); // p_estante
-            stmt.setString(3, Descripcion_libro); // p_descripcion_libro
-            stmt.setInt(4, Existencias); // p_existencias
-            stmt.setString(5, Titulo_libro); // p_titulo_libro
-            stmt.setString(6, Anio_edicion); // p_anio_edicion
-            stmt.setString(7, Nombre_autor); // p_nombre_autor
-            stmt.setString(8, Clasificacion); // p_nombre_clasificacion
-            stmt.setString(9, Registro_clasificacion); // p_nombre_registro_clasificacion
-            stmt.setString(10, Editorial); // p_nombre_editorial
-            stmt.setString(11, Lugar_edicion); // p_nombre_lugar_edicion
-
+            stmt.setString(1, Clave_registro);
+            stmt.setString(2, Estante);
+            stmt.setString(3, Descripcion_libro);
+            stmt.setInt(4, Existencias);
+            stmt.setString(5, Titulo_libro);
+            stmt.setString(6, Anio_edicion);
+            stmt.setString(7, Nombre_autor);
+            stmt.setString(8, Clasificacion);
+            stmt.setString(9, Registro_clasificacion);
+            stmt.setString(10, Editorial);
+            stmt.setString(11, Lugar_edicion);
             // Ejecutar el stored procedure
-            stmt.execute();
+            boolean executeResult = stmt.execute();
 
-            System.out.println("Stored procedure insertar_libro ejecutado correctamente");
+            conn.close();
+            stmt.close();
+            return executeResult;
         } catch (SQLException e) {
             System.err.println("Error al ejecutar stored procedure: " + e.getMessage());
+            return  false;
         }
     }
 }
