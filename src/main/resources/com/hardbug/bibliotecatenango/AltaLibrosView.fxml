@@ -14,131 +14,157 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="Fondo" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="652.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
-   <children>
-      <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="621.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
-         <image>
-            <Image url="@../../../assets/conacultalogo.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="62.0" layoutX="567.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="567.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="14.0">
-         <image>
-            <Image url="@../../../assets/logotenangoNR.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="507.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="556.0" AnchorPane.leftAnchor="507.0" AnchorPane.rightAnchor="142.0" AnchorPane.topAnchor="14.0">
-         <image>
-            <Image url="@../../../assets/logotenango.png" />
-         </image>
-      </ImageView>
-      <Pane layoutX="13.0" layoutY="59.0" maxHeight="Infinity" maxWidth="Infinity" prefHeight="652.0" prefWidth="671.0" AnchorPane.bottomAnchor="-59.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="59.0">
-         <children>
-            <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="237.0" layoutY="65.0" text="Datos de referencia">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </Label>
-            <TextField id="Textfields" fx:id="Campo_clasificacion" layoutX="165.0" layoutY="110.0" onKeyTyped="#validar_clasificacion" prefHeight="38.0" prefWidth="145.0" promptText="Clasificación">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font></TextField>
-            <TextField id="Textfields" fx:id="Campo_estante" layoutX="386.0" layoutY="110.0" onKeyTyped="#validar_estante" prefHeight="38.0" prefWidth="145.0" promptText="Estante">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_registro_clasificacion" layoutX="165.0" layoutY="163.0" onKeyTyped="#validar_registro_clasificacion" prefHeight="38.0" prefWidth="149.0" promptText="Registro de clasificación">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_existencias" layoutX="386.0" layoutY="163.0" onKeyTyped="#validar_existencias" prefHeight="38.0" prefWidth="145.0" promptText="Existencias">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_clave_registro"  layoutX="165.0" layoutY="212.0" onKeyTyped="#validar_clave_registro" prefHeight="38.0" prefWidth="371.0" promptText="Clave registro">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_editorial" layoutX="163.0" layoutY="307.0" onKeyTyped="#validar_editorial" prefHeight="38.0" prefWidth="145.0" promptText="Editorial">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="386.0" layoutY="307.0" onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_lugar_edicion" layoutX="163.0" layoutY="356.0" onKeyTyped="#validar_lugar_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Lugar de edición">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_anio_edicion" layoutX="386.0" layoutY="354.0" onKeyTyped="#validar_anio_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Año de edición">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font></TextField>
-            <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="163.0" layoutY="401.0" onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0" promptText="Nombre del autor">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="25.0" layoutY="453.0" onKeyTyped="#validar_descripcion_libro" prefHeight="38.0" prefWidth="620.0" promptText="Descripción del libro">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
-            <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="531.0" mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar">
-               <effect>
-                  <Glow />
-               </effect>
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator id="Separators" fx:id="Separador_dos" layoutY="93.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator id="Separators" fx:id="Separador_uno" layoutY="60.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator id="Separators" fx:id="Separador_cinco" layoutY="506.0" prefHeight="5.0" prefWidth="671.0" />
-            <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="264.0" text="Datos del Libro">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </Label>
-            <Separator id="Separators" fx:id="Separador_cuatro" layoutX="-1.0" layoutY="292.0" prefHeight="5.0" prefWidth="671.0" />
-            <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0" prefWidth="671.0" />
-            <Label id="Labels" fx:id="Label_cabecera" layoutX="221.0" text="Registro de Libros">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </Label>
-            <ComboBox id="comboBox" fx:id="comboBox" layoutX="531.0" layoutY="5.0" onAction="#ObtenerCombo" prefHeight="26.0" prefWidth="135.0" promptText="Selecciona" />
-         </children>
-      </Pane>
-      <Button fx:id="Boton_Modo" contentDisplay="GRAPHIC_ONLY" layoutX="35.0" layoutY="23.0" mnemonicParsing="false" onAction="#ActivarModoOscuro" text="Modo oscuro">
+<AnchorPane id="Fondo" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="652.0" prefWidth="697.0"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
+   <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="621.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true"
+              AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="14.0"
+              AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/conacultalogo.png"/>
+   </ImageView>
+   <ImageView fitHeight="45.0" fitWidth="62.0" layoutX="567.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true"
+              AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="567.0" AnchorPane.rightAnchor="85.0"
+              AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/logotenangoNR.png"/>
+   </ImageView>
+   <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="507.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true"
+              AnchorPane.bottomAnchor="556.0" AnchorPane.leftAnchor="507.0" AnchorPane.rightAnchor="142.0"
+              AnchorPane.topAnchor="14.0">
+      <Image url="@../../../assets/logotenango.png"/>
+   </ImageView>
+   <Pane layoutX="13.0" layoutY="59.0" maxHeight="Infinity" maxWidth="Infinity" prefHeight="652.0" prefWidth="671.0"
+         AnchorPane.bottomAnchor="-59.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0"
+         AnchorPane.topAnchor="59.0">
+      <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="237.0" layoutY="65.0"
+             text="Datos de referencia">
          <font>
-            <Font name="Roboto Light" size="12.0" />
+            <Font size="18.0"/>
+         </font>
+         <padding>
+            <Insets left="20.0" right="20.0"/>
+         </padding>
+      </Label>
+      <TextField id="Textfields" fx:id="Campo_clasificacion" layoutX="165.0" layoutY="110.0"
+                 onKeyTyped="#validar_clasificacion" prefHeight="38.0" prefWidth="145.0" promptText="Clasificación">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_estante" layoutX="386.0" layoutY="110.0" onKeyTyped="#validar_estante"
+                 prefHeight="38.0" prefWidth="145.0" promptText="Estante">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_registro_clasificacion" layoutX="165.0" layoutY="163.0"
+                 onKeyTyped="#validar_registro_clasificacion" prefHeight="38.0" prefWidth="149.0"
+                 promptText="Registro de clasificación">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_existencias" layoutX="386.0" layoutY="163.0"
+                 onKeyTyped="#validar_existencias" prefHeight="38.0" prefWidth="145.0" promptText="Existencias">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_clave_registro" layoutX="165.0" layoutY="212.0"
+                 onKeyTyped="#validar_clave_registro" prefHeight="38.0" prefWidth="371.0"
+                 promptText="Clave registro">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_editorial" layoutX="163.0" layoutY="307.0"
+                 onKeyTyped="#validar_editorial" prefHeight="38.0" prefWidth="145.0" promptText="Editorial">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="386.0" layoutY="307.0"
+                 onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0"
+                 promptText="Título del libro">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_lugar_edicion" layoutX="163.0" layoutY="356.0"
+                 onKeyTyped="#validar_lugar_edicion" prefHeight="38.0" prefWidth="145.0"
+                 promptText="Lugar de edición">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_anio_edicion" layoutX="386.0" layoutY="354.0"
+                 onKeyTyped="#validar_anio_edicion" prefHeight="38.0" prefWidth="145.0" promptText="Año de edición">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="163.0" layoutY="401.0"
+                 onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0"
+                 promptText="Nombre del autor">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="25.0" layoutY="453.0"
+                 onKeyTyped="#validar_descripcion_libro" prefHeight="38.0" prefWidth="620.0"
+                 promptText="Descripción del libro">
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
+         </font>
+      </TextField>
+      <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="531.0"
+              mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar">
+         <effect>
+            <Glow/>
+         </effect>
+         <font>
+            <Font name="Roboto Light" size="12.0"/>
          </font>
          <cursor>
-            <Cursor fx:constant="HAND" />
+            <Cursor fx:constant="HAND"/>
          </cursor>
-         <graphic>
-            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
       </Button>
-   </children>
+      <Separator id="Separators" fx:id="Separador_dos" layoutY="93.0" prefHeight="5.0" prefWidth="671.0"/>
+      <Separator id="Separators"  layoutY="60.0" prefHeight="5.0" prefWidth="671.0"/>
+      <Separator id="Separators"  layoutY="506.0" prefHeight="5.0" prefWidth="671.0"/>
+      <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="264.0"
+             text="Datos del Libro">
+         <font>
+            <Font size="18.0"/>
+         </font>
+         <padding>
+            <Insets left="20.0" right="20.0"/>
+         </padding>
+      </Label>
+      <Separator id="Separators" fx:id="Separador_cuatro" layoutX="-1.0" layoutY="292.0" prefHeight="5.0"
+                 prefWidth="671.0"/>
+      <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0"
+                 prefWidth="671.0"/>
+      <Label id="Labels" fx:id="Label_cabecera" layoutX="221.0" text="Registro de Libros">
+         <font>
+            <Font size="24.0"/>
+         </font>
+         <padding>
+            <Insets left="20.0" right="20.0"/>
+         </padding>
+      </Label>
+      <ComboBox id="comboBox" fx:id="comboBox" layoutX="531.0" layoutY="5.0" onAction="#ObtenerCombo"
+                prefHeight="26.0" prefWidth="135.0" promptText="Selecciona"/>
+   </Pane>
+   <Button id="Boton_Modo" contentDisplay="GRAPHIC_ONLY" layoutX="35.0" layoutY="23.0" mnemonicParsing="false"
+           onAction="#ActivarModoOscuro" text="Modo oscuro">
+      <font>
+         <Font name="Roboto Light" size="12.0"/>
+      </font>
+      <cursor>
+         <Cursor fx:constant="HAND"/>
+      </cursor>
+      <graphic>
+         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+      </graphic>
+   </Button>
 </AnchorPane>

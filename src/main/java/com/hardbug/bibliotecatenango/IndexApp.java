@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.Properties;
 
 /*Clase principal que maneja el inicio de la aplicación y muestra el Stage*/
@@ -24,14 +25,14 @@ public class IndexApp extends Application {
 
     //Método que comienza y manda a crear el stage
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         ObtenerPropiedades();
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
         ViewSwitcher.switchTo(View.CRUD_LIBROS, TEMA);
         stage.setScene(scene);
-        stage.getIcons().add(new Image(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png"))));
         stage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
         stage.setResizable(false);
         stage.show();
