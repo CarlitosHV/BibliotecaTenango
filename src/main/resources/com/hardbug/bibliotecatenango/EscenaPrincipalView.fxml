@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane id="Fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <AnchorPane id="Fondo" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="59.0" prefWidth="600.0"
-                  BorderPane.alignment="CENTER">
+      <AnchorPane id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="417.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="417.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="11.0">
+            <ImageView fitHeight="65.0" fitWidth="48.0" layoutX="417.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="11.0">
                <image>
                   <Image url="@../../../assets/logotenango.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="48.0" fitWidth="60.0" layoutX="473.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="473.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="11.0">
+            <ImageView fitHeight="48.0" fitWidth="60.0" layoutX="473.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="11.0">
                <image>
                   <Image url="@../../../assets/logotenangoNR.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="530.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="530.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="7.0">
+            <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="530.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="11.0">
                <image>
                   <Image url="@../../../assets/conacultalogo.png" />
                </image>
             </ImageView>
-            <Button id="Boton" cancelButton="true" layoutX="23.0" layoutY="17.0" mnemonicParsing="false" text="REGRESAR">
+            <Button id="Boton" cancelButton="true" layoutX="23.0" layoutY="17.0" mnemonicParsing="false" text="REGRESAR" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="17.0">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
