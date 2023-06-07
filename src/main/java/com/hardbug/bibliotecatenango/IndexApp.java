@@ -17,6 +17,8 @@ public class IndexApp extends Application {
     OutputStream configOutput = null;
     public static int TEMA;
     public static String servidor, usuario, contrasenia, base_datos;
+    String rutabiblioteca = "C:/Users/Biblioteca/Documents/config.properties";
+    String rutacar = "C:/Program Files/Biblioteca/config.properties";
 
     //Método que inicia la aplicación
     public static void main(String[] args) {
@@ -30,12 +32,14 @@ public class IndexApp extends Application {
         var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.CRUD_LIBROS, TEMA);
+        ViewSwitcher.switchTo(View.MENU_PRINCIPAL, TEMA);
         stage.setScene(scene);
         stage.getIcons().add(new Image(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png"))));
         stage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
-        stage.setResizable(false);
+        stage.setMinWidth(850);
+        stage.setMinHeight(600);
         stage.show();
+        stage.centerOnScreen();
     }
 
     public void ObtenerPropiedades() {

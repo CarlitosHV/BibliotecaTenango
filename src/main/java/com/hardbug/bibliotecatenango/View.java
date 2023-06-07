@@ -8,7 +8,10 @@ public enum View {
     LOGIN("LoginView.fxml"),
     CRUD_LIBROS("AltaLibrosView.fxml"),
     MODO_OSCURO("/styles/DarkTheme.css"),
-    MODO_BLANCO("/styles/WhiteTheme.css");
+    MODO_BLANCO("/styles/WhiteTheme.css"),
+    MENU_LATERAL("MenuLateralView.fxml"),
+    MENU_PRINCIPAL("IndexView.fxml"),
+    BUSCADOR_LIBROS("BuscadorLibrosView.fxml");
 
     private String fileName;
 

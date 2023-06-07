@@ -72,9 +72,9 @@ public class AltaLibrosController implements Initializable {
             case "Editar" -> BuscarLibro(1);
             case "Editar libro" -> EditarLibro();
             case "Eliminar" -> {
-                if (!Campo_titulo_libro.getText().isEmpty()){
+                if (!Campo_titulo_libro.getText().isEmpty()) {
                     CrearAlerta(ALERTA_ELIMINAR_LIBRO);
-                }else{
+                } else {
                     CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
                 }
             }
@@ -89,12 +89,17 @@ public class AltaLibrosController implements Initializable {
     void CrearAlerta(int TIPO_ALERTA) throws SQLException {
         switch (TIPO_ALERTA) {
             case 0 -> aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
-            case 1 -> aplicarTemaAlerta("¡Libro guardado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido registrado :)", 0);
-            case 2 -> aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 0);
-            case 3 -> aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
-            case 4 -> aplicarTemaAlerta("¡Cuidado!", "¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?", 2);
+            case 1 ->
+                    aplicarTemaAlerta("¡Libro guardado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido registrado :)", 0);
+            case 2 ->
+                    aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 0);
+            case 3 ->
+                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
+            case 4 ->
+                    aplicarTemaAlerta("¡Cuidado!", "¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?", 2);
             case 5 -> aplicarTemaAlerta("Eliminación realizada", "Se ha eliminado el libro de manera correcta", 1);
-            case 6 -> aplicarTemaAlerta("¡Libro editado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido editado :)", 0);
+            case 6 ->
+                    aplicarTemaAlerta("¡Libro editado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido editado :)", 0);
         }
     }
 
@@ -104,9 +109,9 @@ public class AltaLibrosController implements Initializable {
      */
     void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
         Alert alert;
-        if (tipo == 2){
+        if (tipo == 2) {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
-        }else{
+        } else {
             alert = new Alert(Alert.AlertType.INFORMATION);
         }
         DialogPane dialogPane = alert.getDialogPane();
@@ -124,20 +129,20 @@ public class AltaLibrosController implements Initializable {
             content.setTextFill(Color.WHITESMOKE);
             alert.getDialogPane().setContent(content);
         }
-        if (tipo == 1){
+        if (tipo == 1) {
             Optional<ButtonType> result1 = alert.showAndWait();
             if (result1.isPresent() && result1.get() == ButtonType.OK) {
                 alert.close();
                 crudLibro(4);
             }
-        }else if (tipo == 2){
+        } else if (tipo == 2) {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 EliminarLibro();
             } else {
                 alert.close();
             }
-        }else{
+        } else {
             alert.showAndWait();
         }
 
@@ -169,18 +174,16 @@ public class AltaLibrosController implements Initializable {
         Método que manda el libro editado a Base de Datos el libro, y valida los campos
      */
     void EditarLibro() throws SQLException {
-        if (camposValidos()) {
-            boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
-                    libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
-                    libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
-            if (editado) {
-                CrearAlerta(ALERTA_LIBRO_EDITADO);
-                limpiarCampos();
-            } else {
-                CrearAlerta(ALERTA_ERROR);
-            }
+        llenarLibro();
+        boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
+                libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
+                libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
+        if (editado) {
+            CrearAlerta(ALERTA_LIBRO_EDITADO);
+            limpiarCampos();
+            crudLibro(3);
         } else {
-            CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
+            CrearAlerta(ALERTA_ERROR);
         }
     }
 
@@ -229,21 +232,29 @@ public class AltaLibrosController implements Initializable {
         if (Clasificacion_bol && Anio_edicion_bol && Descripcion_libro_bol && Nombre_autor_bol &&
                 Titulo_libro_bol && Lugar_edicion_bol && Editorial_bol && Registro_clasificacion_bol && Estante_bol &&
                 Existencias_bol && Clave_registro_bol) {
-            libro.setClave_registro(Campo_clave_registro.getText());
-            libro.setClasificacion(Campo_clasificacion.getText());
-            libro.setAnio_edicion(Campo_anio_edicion.getText());
-            libro.setRegistro_clasificacion(Campo_registro_clasificacion.getText());
-            libro.setEstante(Campo_estante.getText());
-            libro.setExistencias(Integer.parseInt(Campo_existencias.getText()));
-            libro.setEditorial(Campo_editorial.getText());
-            libro.setLugar_edicion(Campo_lugar_edicion.getText());
-            libro.setTitulo_libro(Campo_titulo_libro.getText());
-            libro.setNombre_autor(Campo_nombre_autor.getText());
-            libro.setDescripcion_libro(Campo_descripcion_libro.getText());
+            llenarLibro();
             return true;
         } else {
             return false;
         }
+    }
+
+    /*
+    Función para llenar el libro
+     */
+
+    private void llenarLibro() {
+        libro.setClave_registro(Campo_clave_registro.getText());
+        libro.setClasificacion(Campo_clasificacion.getText());
+        libro.setAnio_edicion(Campo_anio_edicion.getText());
+        libro.setRegistro_clasificacion(Campo_registro_clasificacion.getText());
+        libro.setEstante(Campo_estante.getText());
+        libro.setExistencias(Integer.parseInt(Campo_existencias.getText()));
+        libro.setEditorial(Campo_editorial.getText());
+        libro.setLugar_edicion(Campo_lugar_edicion.getText());
+        libro.setTitulo_libro(Campo_titulo_libro.getText());
+        libro.setNombre_autor(Campo_nombre_autor.getText());
+        libro.setDescripcion_libro(Campo_descripcion_libro.getText());
     }
 
     /*
@@ -322,7 +333,7 @@ public class AltaLibrosController implements Initializable {
     // El formato minimo es A-1 formato máximo ZZ-99
     public void validar_estante() {
         if (Campo_estante.isEditable()) {
-            if (Campo_estante.getText().matches("^[A-Z Ñ]{1,2}-[0-9]{1,2}$") && !Campo_estante.getText().isEmpty()) {
+            if (Campo_estante.getText().matches("^[A-Z]{1,2}-[1-5]$") && !Campo_estante.getText().isEmpty()) {
                 Estante_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_estante.setStyle("-fx-border-color: #595b5d");
@@ -373,7 +384,8 @@ public class AltaLibrosController implements Initializable {
     //Campo Lugar de edición Valida de 1 a 4 palabras con un margnen de 40 caracteres incluiodos el simolo - espacios, vocales con acentos
     public void validar_lugar_edicion() {
         if (Campo_lugar_edicion.isEditable()) {
-            if (Campo_lugar_edicion.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_lugar_edicion.getText().isEmpty()) {
+            if (Campo_lugar_edicion.getText().matches("^[A-Z][a-záéíóú]+([,.]?\\s[A-Z][a-záéíóú,.]+){0,3}$") && !Campo_lugar_edicion.getText().isEmpty()) {
+
                 Lugar_edicion_bol = true;
                 if (IndexApp.TEMA == 1) {
                     Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
@@ -700,10 +712,10 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
-        //Caja de campo Estante rango de 5 caracteres
+        //Caja de campo Estante rango de 4 caracteres
         Campo_estante.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.length() > 5) {
+            if (newText.length() > 4) {
                 return null;
             }
             return change;

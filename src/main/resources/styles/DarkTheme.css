@@ -90,3 +90,23 @@
     -fx-background-color: #30cc30;
     -fx-text-fill: white;
 }
+
+#MenuItems {
+    -fx-border-color: none;
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: white;
+}
+
+#MenuItems:hover{
+    -fx-background-color: #3636f6;
+    -fx-text-fill: white;
+}
+
+#BotonMenu{
+    -fx-border-color: none;
+    -fx-background-color: #2b2b2b;
+}
+
+#BotonMenu:pressed{
+    -fx-background-color: gray;
+}
