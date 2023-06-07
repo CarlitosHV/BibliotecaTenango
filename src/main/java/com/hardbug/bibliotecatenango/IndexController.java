@@ -25,6 +25,7 @@ public class IndexController implements Initializable {
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
         Node contentNode = rootPane.getLeft();
         contentNode.setTranslateX(-250);
+
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), contentNode);
         menuTransition.setToX(0);
         BotonMenu.setOnAction(actionEvent -> {
