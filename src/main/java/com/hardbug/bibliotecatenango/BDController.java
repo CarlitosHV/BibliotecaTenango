@@ -5,11 +5,7 @@ import java.util.ArrayList;
 
 public class BDController {
 
-
-    private Connection c = null;
-    ClaseLibro libro = new ClaseLibro();
-
-    public boolean BorrarLibro(String Titulo_libro) throws SQLException {
+    public boolean BorrarLibro(String Titulo_libro) {
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
              CallableStatement stmt = conn.prepareCall("{call eliminar_libro(?)}")) {
@@ -70,6 +66,80 @@ public class BDController {
         } catch (SQLException e) {
             System.err.println("Error al ejecutar stored procedure: " + e.getMessage());
             return encontrado;
+        }
+    }
+
+    public ArrayList<ClaseLibro> TraerLibros () throws SQLException{
+        ArrayList<ClaseLibro> _libros = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnseleccionartodoslibros()");
+
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                ClaseLibro libro = new ClaseLibro();
+                libro.setClave_registro(rs.getString("clave_registro"));
+                libro.setEstante(rs.getString("Estante"));
+                libro.setDescripcion_libro(rs.getString("descripcion_libro"));
+                libro.setExistencias(rs.getInt("existencias"));
+                libro.setTitulo_libro(rs.getString("titulo_libro"));
+                libro.setAnio_edicion(rs.getString("anio_edicion"));
+                libro.setNombre_autor(rs.getString("nombre_autor"));
+                libro.setClasificacion(rs.getString("clasificacion"));
+                libro.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
+                libro.setEditorial(rs.getString("editorial"));
+                libro.setLugar_edicion(rs.getString("lugar_edicion"));
+                _libros.add(libro);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _libros;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<ClaseLibro> BusquedaGeneral (String palabra) throws SQLException{
+        ArrayList<ClaseLibro> _libros = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnbusquedageneral(?)");
+            stmt.setString(1, palabra);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                ClaseLibro libro = new ClaseLibro();
+                libro.setClave_registro(rs.getString("clave_registro"));
+                libro.setEstante(rs.getString("Estante"));
+                libro.setDescripcion_libro(rs.getString("descripcion_libro"));
+                libro.setExistencias(rs.getInt("existencias"));
+                libro.setTitulo_libro(rs.getString("titulo_libro"));
+                libro.setAnio_edicion(rs.getString("anio_edicion"));
+                libro.setNombre_autor(rs.getString("nombre_autor"));
+                libro.setClasificacion(rs.getString("clasificacion"));
+                libro.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
+                libro.setEditorial(rs.getString("editorial"));
+                libro.setLugar_edicion(rs.getString("lugar_edicion"));
+                _libros.add(libro);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _libros;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 

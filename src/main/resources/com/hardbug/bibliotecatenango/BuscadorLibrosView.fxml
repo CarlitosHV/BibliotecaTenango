@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,8 +25,8 @@
           <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField id="TextFields" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa título de libro, autor o editorial" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-            <Button id="BotonMenu" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+            <TextField id="TextFields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa título de libro, autor o editorial" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+            <Button id="BotonMenu" fx:id="BotonBuscar" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                <graphic>
                   <ImageView fitHeight="79.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,6 +54,7 @@
             </GridPane>
          </children>
       </GridPane>
-      <ListView layoutX="58.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="485.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="155.0" />
+      <ListView fx:id="LibrosListView" layoutX="58.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="332.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="155.0" />
+      <ProgressIndicator fx:id="IconoCarga" layoutX="213.0" layoutY="238.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="62.0" prefWidth="23.0" progress="0.0" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="364.0" />
    </children>
 </AnchorPane>

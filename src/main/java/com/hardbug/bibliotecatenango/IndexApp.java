@@ -35,8 +35,8 @@ public class IndexApp extends Application {
         stage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
         stage.setMinWidth(850);
         stage.setMinHeight(600);
+        stage.setMaximized(true);
         stage.show();
-        stage.centerOnScreen();
     }
 
     public void ObtenerPropiedades() {
