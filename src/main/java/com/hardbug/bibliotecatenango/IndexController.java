@@ -23,10 +23,11 @@ public class IndexController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ViewSwitcher.showTo(View.MENU_LATERAL, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
-        Node contentNode = rootPane.getLeft();
-        contentNode.setTranslateX(-250);
+        Node contentNodeLeft = rootPane.getLeft();
+        Node contentNodeCenter = rootPane.getCenter();
+        contentNodeLeft.setTranslateX(-250);
 
-        TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), contentNode);
+        TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), contentNodeLeft);
         menuTransition.setToX(0);
         BotonMenu.setOnAction(actionEvent -> {
             if (isMenuOpen) {

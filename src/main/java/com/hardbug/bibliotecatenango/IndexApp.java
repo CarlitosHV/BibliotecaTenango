@@ -17,9 +17,6 @@ public class IndexApp extends Application {
     OutputStream configOutput = null;
     public static int TEMA;
     public static String servidor, usuario, contrasenia, base_datos;
-    String rutabiblioteca = "C:/Users/Biblioteca/Documents/config.properties";
-    String rutacar = "C:/Program Files/Biblioteca/config.properties";
-
     //Método que inicia la aplicación
     public static void main(String[] args) {
         launch(args);
