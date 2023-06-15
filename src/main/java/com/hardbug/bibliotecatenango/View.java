@@ -11,7 +11,8 @@ public enum View {
     MODO_BLANCO("/styles/WhiteTheme.css"),
     MENU_LATERAL("MenuLateralView.fxml"),
     MENU_PRINCIPAL("IndexView.fxml"),
-    BUSCADOR_LIBROS("BuscadorLibrosView.fxml");
+    BUSCADOR_LIBROS("BuscadorLibrosView.fxml"),
+    MENU_LIBROS("MenuLibros.fxml");
 
     private String fileName;
 
