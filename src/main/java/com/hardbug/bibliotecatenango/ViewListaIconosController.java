@@ -8,14 +8,14 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class ViewIconoGrandeController extends ListCell<MenuItems> {
+public class ViewListaIconosController extends ListCell<MenuItems> {
+
     private FXMLLoader fxmlLoader;
-    private Pane pane;
+    private AnchorPane anchorPane;
     private ImageView imagen;
     private Label Descripcion;
     private EventHandler<ActionEvent> onItemSelected;
@@ -27,12 +27,12 @@ public class ViewIconoGrandeController extends ListCell<MenuItems> {
         this.onItemSelected = onItemSelected;
     }
 
-    public ViewIconoGrandeController() {
+    public ViewListaIconosController() {
         super();
-        fxmlLoader = new FXMLLoader(getClass().getResource("ViewIconoGrande.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("ViewListaIconos.fxml"));
         try {
-            pane = fxmlLoader.load();
-            Descripcion = (Label) fxmlLoader.getNamespace().get("TextoItem");
+            anchorPane = fxmlLoader.load();
+            Descripcion = (Label) fxmlLoader.getNamespace().get("LabelDescription");
             imagen = (ImageView) fxmlLoader.getNamespace().get("ImageIcon");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -46,8 +46,8 @@ public class ViewIconoGrandeController extends ListCell<MenuItems> {
             setGraphic(null);
         } else {
             Descripcion.setText(items.getDescription());
-            imagen.setImage(new Image(Objects.requireNonNull(ViewIconoGrandeController.class.getResourceAsStream(items.getImagePath()))));
-            setGraphic(pane);
+            imagen.setImage(new Image(Objects.requireNonNull(ViewListaIconosController.class.getResourceAsStream(items.getImagePath()))));
+            setGraphic(anchorPane);
         }
     }
 }
