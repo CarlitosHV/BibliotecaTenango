@@ -34,13 +34,7 @@ private static Scene scene;
         }else{
             try {
                 Parent root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
-                if (theme == TEMA_CLARO){
-                    scene.getStylesheets().clear();
-                    scene.getStylesheets().add(Objects.requireNonNull(IndexApp.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
-                }else if (theme == TEMA_OSCURO){
-                    scene.getStylesheets().clear();
-                    scene.getStylesheets().add(Objects.requireNonNull(IndexApp.class.getResource("/styles/DarkTheme.css")).toExternalForm());
-                }
+                applyCSS(theme);
                 if (view == View.MENU_LATERAL){
                     rootPane.setLeft(root);
                 }else{
@@ -58,17 +52,21 @@ private static Scene scene;
         }else{
             try {
                 Parent root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
-                if (theme == TEMA_CLARO){
-                    scene.getStylesheets().clear();
-                    scene.getStylesheets().add(Objects.requireNonNull(IndexApp.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
-                }else if (theme == TEMA_OSCURO){
-                    scene.getStylesheets().clear();
-                    scene.getStylesheets().add(Objects.requireNonNull(IndexApp.class.getResource("/styles/DarkTheme.css")).toExternalForm());
-                }
+                applyCSS(theme);
                 scene.setRoot(root);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public static void applyCSS(int theme){
+        if (theme == TEMA_CLARO){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(Objects.requireNonNull(ViewSwitcher.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
+        }else if (theme == TEMA_OSCURO){
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(Objects.requireNonNull(ViewSwitcher.class.getResource("/styles/DarkTheme.css")).toExternalForm());
         }
     }
 }
