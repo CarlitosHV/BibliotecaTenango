@@ -16,21 +16,25 @@ import java.util.ResourceBundle;
 
 public class MenuLateralController implements Initializable {
     @FXML
-    private Button ButtonBooks, ButtonHome;
+    private Button ButtonBooks, ButtonHome, ButtonConfig;
     @FXML
     private GridPane fondo;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonBooks.setOnAction(evt -> {
-            AccionBoton(evt, View.MENU_LIBROS);
+            ButtonAction(evt, View.MENU_LIBROS);
         });
 
         ButtonHome.setOnAction(evt -> {
-            AccionBoton(evt, View.BUSCADOR_LIBROS);
+            ButtonAction(evt, View.BUSCADOR_LIBROS);
+        });
+
+        ButtonConfig.setOnAction(evt -> {
+            ButtonAction(evt, View.MENU_CONFIGURACION);
         });
     }
 
-    private void AccionBoton(ActionEvent evt, View view){
+    private void ButtonAction(ActionEvent evt, View view){
         Node sourceNode = (Node) evt.getSource();
         Stage currentStage = (Stage) sourceNode.getScene().getWindow();
         BorderPane rootPane = (BorderPane) currentStage.getScene().getRoot();

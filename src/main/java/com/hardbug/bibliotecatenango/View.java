@@ -12,7 +12,8 @@ public enum View {
     MENU_LATERAL("MenuLateralView.fxml"),
     MENU_PRINCIPAL("IndexView.fxml"),
     BUSCADOR_LIBROS("BuscadorLibrosView.fxml"),
-    MENU_LIBROS("MenuLibros.fxml");
+    MENU_LIBROS("MenuLibros.fxml"),
+    MENU_CONFIGURACION("ViewConfig.fxml");
 
     private String fileName;
 
