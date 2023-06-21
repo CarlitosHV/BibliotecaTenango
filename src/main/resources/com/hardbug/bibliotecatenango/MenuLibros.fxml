@@ -5,21 +5,21 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.MenuLibrosController">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.MenuLibrosController">
    <children>
-      <GridPane alignment="CENTER" layoutX="70.0" layoutY="14.0" prefHeight="308.0" prefWidth="577.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="14.0">
+      <GridPane alignment="CENTER" layoutX="32.0" layoutY="14.0" prefHeight="435.0" prefWidth="880.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="55.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="314.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="65.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="434.0" minWidth="10.0" prefWidth="434.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="0.0" prefWidth="0.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="93.0" minHeight="0.0" prefHeight="47.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="237.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="131.0" minHeight="0.0" prefHeight="14.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="391.0" minHeight="10.0" prefHeight="332.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ListView fx:id="ListViewItems" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="439.0" prefWidth="591.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <ListView fx:id="ListViewItems" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="81.0" prefWidth="703.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <Label fx:id="LabelCategoria" contentDisplay="RIGHT" text="Label" textFill="#004fff" underline="true" GridPane.columnIndex="2">
                <graphic>
                   <ImageView fx:id="ImagenCategoria" fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
