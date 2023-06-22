@@ -29,8 +29,7 @@ public class MenuLibrosController implements Initializable {
             Arrays.asList(
                     new MenuItems("/assets/ico_addbook.png", "Agregar libro"),
                     new MenuItems("/assets/ico_editbook.png", "Editar libro"),
-                    new MenuItems("/assets/ico_deletebook.png", "Eliminar libro"),
-                    new MenuItems("/assets/ico_books.png", "Ver libros")
+                    new MenuItems("/assets/ico_deletebook.png", "Eliminar libro")
             )
     );
     @Override
@@ -60,11 +59,7 @@ public class MenuLibrosController implements Initializable {
         ListViewItems.getItems().clear();
         ListViewItems.setOrientation(Orientation.VERTICAL);
         ListViewItems.setCellFactory(menuItemsListView -> {
-            ViewListaIconosController listaIconosController = new ViewListaIconosController();
-            listaIconosController.setOnItemSelected(actionEvent -> {
-                //Acciones de los botones
-            });
-            return listaIconosController;
+            return new ViewListaIconosController();
         });
         ListViewItems.setItems(FXCollections.observableArrayList(_items));
     }
@@ -73,11 +68,7 @@ public class MenuLibrosController implements Initializable {
         ListViewItems.getItems().clear();
         ListViewItems.setOrientation(Orientation.HORIZONTAL);
         ListViewItems.setCellFactory(menuItemsListView -> {
-            ViewIconoGrandeController listaIconosController = new ViewIconoGrandeController();
-            listaIconosController.setOnItemSelected(actionEvent -> {
-                //Acciones de los botones
-            });
-            return listaIconosController;
+            return new ViewIconoGrandeController();
         });
         ListViewItems.setItems(FXCollections.observableArrayList(_items));
     }

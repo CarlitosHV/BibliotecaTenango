@@ -5,6 +5,7 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -21,6 +22,19 @@ import java.util.ResourceBundle;
  */
 
 public class AltaLibrosController implements Initializable {
+
+    public AltaLibrosController(int OPERACION) {
+        this.OPERACION = OPERACION;
+    }
+
+    public AltaLibrosController(){
+
+    }
+
+    private int OPERACION;
+
+    private static final int INSERTAR = 0, EDITAR = 1, ELIMINAR = 2;
+
 
     /* Este arraylist almacena la información del libro consultado */
     public static ArrayList<Object> datosLibro = new ArrayList<>();
@@ -255,24 +269,6 @@ public class AltaLibrosController implements Initializable {
         libro.setTitulo_libro(Campo_titulo_libro.getText());
         libro.setNombre_autor(Campo_nombre_autor.getText());
         libro.setDescripcion_libro(Campo_descripcion_libro.getText());
-    }
-
-    /*
-        Método que trae el tema seleccionado de la app y lo aplica a la interfaz, a su vez reescribe las propiedades para que no se pierdan
-     */
-    @FXML
-    void ActivarModoOscuro() {
-        if (IndexApp.TEMA == 1) {
-            ViewSwitcher.switchTo(View.CRUD_LIBROS, ViewSwitcher.TEMA_CLARO);
-            ViewSwitcher.BANDERA_TEMA = 0;
-            IndexApp.TEMA = 0;
-            indexApp.EscribirPropiedades("theme", String.valueOf(ViewSwitcher.BANDERA_TEMA));
-        } else if (IndexApp.TEMA == 0) {
-            ViewSwitcher.switchTo(View.CRUD_LIBROS, ViewSwitcher.TEMA_OSCURO);
-            ViewSwitcher.BANDERA_TEMA = 1;
-            IndexApp.TEMA = 1;
-            indexApp.EscribirPropiedades("theme", String.valueOf(ViewSwitcher.BANDERA_TEMA));
-        }
     }
 
     // Validaciones de los campos
@@ -687,6 +683,11 @@ public class AltaLibrosController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
+
+        switch (OPERACION){
+            case INSERTAR -> crudLibro(1);
+            case EDITAR -> crudLibro(2);
+        }
 
         //Caja de campo Clasificación rango de 15 caracteres
         Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {

@@ -81,7 +81,7 @@ public class BuscadorLibrosController implements Initializable {
         traer_busqueda.setOnSucceeded(event -> {
             Buscador.setEditable(true);
             IconoCarga.setVisible(false);
-            if (!_libros.isEmpty()){
+            if (!_libros.isEmpty()) {
                 _libros.clear();
             }
             LibrosListView.getItems().clear();
