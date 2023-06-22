@@ -33,7 +33,7 @@ public class ConfigController implements Initializable {
                 ToggleActivar.setText("Desactivar");
             }else{
                 ViewSwitcher.applyCSS(ViewSwitcher.TEMA_CLARO);
-                ViewSwitcher.BANDERA_TEMA = 1;
+                ViewSwitcher.BANDERA_TEMA = 0;
                 IndexApp.TEMA = 0;
                 indexApp.EscribirPropiedades("theme", String.valueOf(ViewSwitcher.BANDERA_TEMA));
                 ToggleActivar.setText("Activar");

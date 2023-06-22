@@ -7,12 +7,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class ViewListaIconosController extends ListCell<MenuItems> {
+    private int INSERTAR = 0, EDITAR = 1, ELIMINAR = 2;
 
     private FXMLLoader fxmlLoader;
     private AnchorPane anchorPane;
@@ -22,6 +25,7 @@ public class ViewListaIconosController extends ListCell<MenuItems> {
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
     }
+
 
     public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
         this.onItemSelected = onItemSelected;
@@ -49,5 +53,16 @@ public class ViewListaIconosController extends ListCell<MenuItems> {
             imagen.setImage(new Image(Objects.requireNonNull(ViewListaIconosController.class.getResourceAsStream(items.getImagePath()))));
             setGraphic(anchorPane);
         }
+
+        setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && !Empty) {
+                switch (items.getDescription()){
+                    case "Agregar libro" -> {
+                        new AltaLibrosController(INSERTAR);
+                        ViewSwitcher.buttonAction(View.CRUD_LIBROS);
+                    }
+                }
+            }
+        });
     }
 }

@@ -1,9 +1,12 @@
 package com.hardbug.bibliotecatenango;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -68,5 +71,22 @@ private static Scene scene;
             scene.getStylesheets().clear();
             scene.getStylesheets().add(Objects.requireNonNull(ViewSwitcher.class.getResource("/styles/DarkTheme.css")).toExternalForm());
         }
+    }
+
+    public static void buttonAction(View view) {
+        if (scene == null) {
+            System.out.println("No hay una escena configurada");
+            return;
+        }
+
+        BorderPane rootPane = (BorderPane) scene.getRoot();
+        Node newView = rootPane.getCenter();
+        FadeTransition transition = new FadeTransition(Duration.millis(200), newView);
+        transition.setFromValue(1);
+        transition.setToValue(0);
+        transition.setOnFinished(actionEvent -> {
+            ViewSwitcher.showTo(view, IndexApp.TEMA, rootPane);
+        });
+        transition.play();
     }
 }
