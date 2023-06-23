@@ -6,10 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import static com.hardbug.bibliotecatenango.View.*;
 
 /* Clase ViewSwitcher:
     su funcionalidad es recibir la vista que va a mostrar en la ventana, a su vez, recibe el tema seleccionado
@@ -38,10 +41,13 @@ private static Scene scene;
             try {
                 Parent root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
                 applyCSS(theme);
-                if (view == View.MENU_LATERAL){
-                    rootPane.setLeft(root);
-                }else{
-                    rootPane.setCenter(root);
+                switch (view) {
+                    case MENU_LATERAL -> rootPane.setLeft(root);
+                    case DETALLES_LIBROS -> {
+                        StackPane rightPane = new StackPane(root);
+                        rootPane.setRight(rightPane);
+                    }
+                    default -> rootPane.setCenter(root);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -78,14 +84,15 @@ private static Scene scene;
             System.out.println("No hay una escena configurada");
             return;
         }
-
         BorderPane rootPane = (BorderPane) scene.getRoot();
         Node newView = rootPane.getCenter();
+        Node VieRight = rootPane.getLeft();
         FadeTransition transition = new FadeTransition(Duration.millis(200), newView);
         transition.setFromValue(1);
         transition.setToValue(0);
         transition.setOnFinished(actionEvent -> {
             ViewSwitcher.showTo(view, IndexApp.TEMA, rootPane);
+            rootPane.getCenter().requestFocus();
         });
         transition.play();
     }

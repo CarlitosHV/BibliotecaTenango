@@ -1,11 +1,17 @@
 package com.hardbug.bibliotecatenango;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -15,6 +21,7 @@ public class BookItemController extends ListCell<ClaseLibro> {
     private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
     private EventHandler<ActionEvent> onItemSelected;
     BDController bd = new BDController();
+    private boolean isMenuOpen = false;
 
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
@@ -56,5 +63,16 @@ public class BookItemController extends ListCell<ClaseLibro> {
             LabelExistencias.setText(String.valueOf(libro.getExistencias()));
             setGraphic(fondoItem);
         }
+
+        setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && !Empty) {
+                Parent bp = ViewSwitcher.getScene().getRoot();
+                BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+                Node right = pb.getRight();
+                TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
+                menuTransition.setToX(-400);
+                menuTransition.play();
+            }
+        });
     }
 }

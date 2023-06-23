@@ -38,11 +38,7 @@ public class BuscadorLibrosController implements Initializable {
         }
         IconoCarga.setVisible(false);
         LibrosListView.setCellFactory(lv -> {
-            BookItemController book = new BookItemController();
-            book.setOnItemSelected(event -> {
-                //Aquí va a ir la lógica de cada libro seleccionado
-            });
-            return book;
+            return new BookItemController();
         });
         LibrosListView.setItems(FXCollections.observableArrayList(_libros));
         BotonBuscar.setOnAction(actionEvent -> buscar(Buscador.getText()));
