@@ -13,7 +13,8 @@ public enum View {
     MENU_PRINCIPAL("IndexView.fxml"),
     BUSCADOR_LIBROS("BuscadorLibrosView.fxml"),
     MENU_LIBROS("MenuLibros.fxml"),
-    MENU_CONFIGURACION("ViewConfig.fxml");
+    MENU_CONFIGURACION("ViewConfig.fxml"),
+    DETALLES_LIBROS("ViewBookDetails.fxml");
 
     private String fileName;
 

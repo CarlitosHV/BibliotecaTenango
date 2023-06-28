@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="573.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.BookDetailsController">
+   <children>
+      <GridPane alignment="CENTER" layoutX="87.0" layoutY="53.0" prefHeight="471.0" prefWidth="200.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="53.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="LabelTitulo" text="TITULO" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelAutor" prefHeight="17.0" prefWidth="201.0" text="Autor" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Label fx:id="LabelEditorial" prefHeight="17.0" prefWidth="200.0" text="Editorial" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label fx:id="LabelEstante" prefHeight="17.0" prefWidth="215.0" text="Estante" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Label fx:id="LabelClaveRegistro" prefHeight="17.0" prefWidth="199.0" text="Clave registro" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Label fx:id="LabelClasificacion" prefHeight="17.0" prefWidth="210.0" text="Clasificacion" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <TextArea fx:id="TextAreaDescripcion" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <Label fx:id="LabelDisponibilidad" prefHeight="17.0" prefWidth="226.0" text="Disponibilidad" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Button fx:id="ButtonEliminar" mnemonicParsing="false" text="Eliminar" GridPane.rowIndex="8" />
+            <Button fx:id="ButtonEditar" mnemonicParsing="false" text="Editar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+            <Button fx:id="ButtonSolicitar" mnemonicParsing="false" text="Solicitar" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+      <Button fx:id="ButtonCerrar" layoutX="20.0" layoutY="28.0" mnemonicParsing="false" text="Cerrar" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="28.0" />
+   </children>
+</AnchorPane>

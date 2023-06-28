@@ -4,7 +4,9 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: BuscadorLibrosView.fxml
  */
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +23,7 @@ public class BuscadorLibrosController implements Initializable {
     @FXML
     private ListView<ClaseLibro> LibrosListView;
     private static ArrayList<ClaseLibro> _libros = new ArrayList<>();
+    private static FilteredList<ClaseLibro> _librosfiltrados;
     @FXML
     private ProgressIndicator IconoCarga;
     @FXML
@@ -31,67 +34,34 @@ public class BuscadorLibrosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            _libros = bd.TraerLibros();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        _libros = bd.TraerLibros();
+        _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
         IconoCarga.setVisible(false);
         LibrosListView.setCellFactory(lv -> {
-            BookItemController book = new BookItemController();
-            book.setOnItemSelected(event -> {
-                //Aquí va a ir la lógica de cada libro seleccionado
-            });
-            return book;
+            return new BookItemController();
         });
-        LibrosListView.setItems(FXCollections.observableArrayList(_libros));
-        BotonBuscar.setOnAction(actionEvent -> buscar(Buscador.getText()));
+        LibrosListView.setItems(_librosfiltrados);
+        BotonBuscar.setOnAction(actionEvent -> {
+            Search();
+        });
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 0){
-                buscar(newValue);
-            }else{
-                if (!_libros.isEmpty()){
-                    _libros.clear();
-                }
-                LibrosListView.getItems().clear();
-                try {
-                    _libros = bd.TraerLibros();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                LibrosListView.setItems(FXCollections.observableArrayList(_libros));
-            }
+            Search();
         });
     }
 
-    void buscar(String palabra){
+    private void Search() {
         IconoCarga.setVisible(true);
-        IconoCarga.setProgress(-1.0);
-
-        Task<ArrayList<ClaseLibro>> traer_busqueda = new Task<ArrayList<ClaseLibro>>() {
-            @Override
-            protected ArrayList<ClaseLibro> call() throws Exception {
-                return bd.BusquedaGeneral(palabra);
-            }
-        };
-
-        new Thread(traer_busqueda).start();
-
-
-        traer_busqueda.setOnSucceeded(event -> {
-            Buscador.setEditable(true);
-            IconoCarga.setVisible(false);
-            if (!_libros.isEmpty()) {
-                _libros.clear();
-            }
-            LibrosListView.getItems().clear();
-            _libros = traer_busqueda.getValue();
-            LibrosListView.setItems(FXCollections.observableArrayList(_libros));
+        String searchText = Buscador.getText().toLowerCase();
+        _librosfiltrados.setPredicate(libro -> {
+            boolean match = libro.getTitulo_libro().toLowerCase().contains(searchText)
+                    || libro.getNombre_autor().toLowerCase().contains(searchText)
+                    || libro.getEditorial().toLowerCase().contains(searchText)
+                    || libro.getEstante().toLowerCase().contains(searchText)
+                    || libro.getClasificacion().toLowerCase().contains(searchText)
+                    || libro.getAnio_edicion().toLowerCase().contains(searchText)
+                    || libro.getClave_registro().toLowerCase().contains(searchText);
+            Platform.runLater(() -> IconoCarga.setVisible(false));
+            return match;
         });
-
-        if(traer_busqueda.isRunning()){
-            Buscador.setEditable(false);
-        }
-
     }
 }
