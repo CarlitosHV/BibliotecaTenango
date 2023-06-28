@@ -46,8 +46,6 @@ public class AltaLibrosController implements Initializable {
 
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
-    private ComboBox<String> comboBox;
-    @FXML
     private Separator Separador_dos, Separador_tres, Separador_cuatro;
     @FXML
     private Label Label_cabecera, Label_datos_del_libro, Label_datos_referencia;
@@ -79,23 +77,8 @@ public class AltaLibrosController implements Initializable {
      */
     @FXML
     void AccionesBotonGuardar() throws SQLException {
-        switch (BotonGuardar.getText()) {
-            case "Guardar" -> GuardarLibro();
-            case "Buscar" -> BuscarLibro(0);
-            case "Buscar otro" -> crudLibro(2);
-            case "Editar" -> BuscarLibro(1);
-            case "Editar libro" -> EditarLibro();
-            case "Eliminar" -> {
-                if (!Campo_titulo_libro.getText().isEmpty()) {
-                    CrearAlerta(ALERTA_ELIMINAR_LIBRO);
-                } else {
-                    CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
-                }
-            }
-            case "Eliminar otro" -> crudLibro(4);
-        }
+        GuardarLibro();
     }
-
 
     /*
         Método que crea la alerta, dependiendo el tipo de alerta que recibe es la información que muestra
@@ -109,11 +92,6 @@ public class AltaLibrosController implements Initializable {
                     aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 0);
             case 3 ->
                     aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
-            case 4 ->
-                    aplicarTemaAlerta("¡Cuidado!", "¿Estás seguro de eliminar el libro: " + Campo_titulo_libro.getText() + "?", 2);
-            case 5 -> aplicarTemaAlerta("Eliminación realizada", "Se ha eliminado el libro de manera correcta", 1);
-            case 6 ->
-                    aplicarTemaAlerta("¡Libro editado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido editado :)", 0);
         }
     }
 
@@ -143,23 +121,7 @@ public class AltaLibrosController implements Initializable {
             content.setTextFill(Color.WHITESMOKE);
             alert.getDialogPane().setContent(content);
         }
-        if (tipo == 1) {
-            Optional<ButtonType> result1 = alert.showAndWait();
-            if (result1.isPresent() && result1.get() == ButtonType.OK) {
-                alert.close();
-                crudLibro(4);
-            }
-        } else if (tipo == 2) {
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                EliminarLibro();
-            } else {
-                alert.close();
-            }
-        } else {
-            alert.showAndWait();
-        }
-
+        alert.showAndWait();
     }
 
 
@@ -182,63 +144,6 @@ public class AltaLibrosController implements Initializable {
             CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
         }
     }
-
-
-    /*
-        Método que manda el libro editado a Base de Datos el libro, y valida los campos
-     */
-    void EditarLibro() throws SQLException {
-        llenarLibro();
-        boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
-                libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
-                libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
-        if (editado) {
-            CrearAlerta(ALERTA_LIBRO_EDITADO);
-            limpiarCampos();
-            crudLibro(3);
-        } else {
-            CrearAlerta(ALERTA_ERROR);
-        }
-    }
-
-    /*
-        Método que manda a eliminar a Base de Datos el libro
-     */
-    void EliminarLibro() throws SQLException {
-        boolean eliminado = bdController.BorrarLibro(Campo_titulo_libro.getText());
-        if (eliminado) {
-            CrearAlerta(ALERTA_LIBRO_ELIMINADO);
-        }
-    }
-
-
-    /*
-        Método que manda a buscar en Base de Datos el libro
-     */
-    void BuscarLibro(int tipo) throws SQLException {
-        boolean encontrado = bdController.BuscarLibro(Campo_titulo_libro.getText());
-        if (encontrado) {
-            Campo_clave_registro.setText(datosLibro.get(0).toString());
-            Campo_clasificacion.setText(datosLibro.get(1).toString());
-            Campo_anio_edicion.setText(datosLibro.get(2).toString());
-            Campo_registro_clasificacion.setText(datosLibro.get(3).toString());
-            Campo_estante.setText(datosLibro.get(4).toString());
-            Campo_existencias.setText(datosLibro.get(5).toString());
-            Campo_editorial.setText(datosLibro.get(6).toString());
-            Campo_lugar_edicion.setText(datosLibro.get(7).toString());
-            Campo_titulo_libro.setText(datosLibro.get(8).toString());
-            Campo_nombre_autor.setText(datosLibro.get(9).toString());
-            Campo_descripcion_libro.setText(datosLibro.get(10).toString());
-            if (tipo == 0) {
-                crudEncontradosOriginal(2);
-            } else {
-                crudEncontradosOriginal(3);
-            }
-        } else {
-            CrearAlerta(ALERTA_LIBRO_NO_ENCONTRADO);
-        }
-    }
-
     /*
         Método que valida los campos y manda a escribir en el objeto libro
      */
@@ -462,73 +367,6 @@ public class AltaLibrosController implements Initializable {
             }
         }
     }
-
-
-    /*
-        Método que trae el valor seleccionado en el ComboBox para mostrar esa parte de la interfaz
-     */
-    @FXML
-    void ObtenerCombo() {
-        switch (comboBox.getValue()) {
-            case "Agregar" -> crudLibro(1);
-            case "Buscar" -> crudLibro(2);
-            case "Editar" -> crudLibro(3);
-            case "Eliminar" -> crudLibro(4);
-        }
-    }
-
-
-    /*
-        Método que actualiza la interfaz para mostrar la información de la operación seleccionada
-     */
-    private void crudLibro(int bandera) {
-        switch (bandera) {
-            case 1 -> {
-                Label_cabecera.setText("Registro de Libro");
-                Label_cabecera.setLayoutX(254.0);
-                BotonGuardar.setLayoutX(317.0);
-                BotonGuardar.setLayoutY(334.0);
-                BotonGuardar.setText("Guardar");
-                ActivarCampos();
-            }
-            case 2 -> {
-                Label_cabecera.setText("Búsqueda de Libros");
-                Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setLayoutX(317.0);
-                BotonGuardar.setLayoutY(334.0);
-                BotonGuardar.setText("Buscar");
-                DesactivarCampos();
-            }
-            case 3 -> {
-                Label_cabecera.setText("Editar Libro");
-                Label_cabecera.setLayoutX(254.0);
-                BotonGuardar.setLayoutX(317.0);
-                BotonGuardar.setLayoutY(334.0);
-                BotonGuardar.setText("Editar");
-                DesactivarCampos();
-            }
-            case 4 -> {
-                Label_cabecera.setText("Eliminar Libro");
-                Label_cabecera.setLayoutX(254.0);
-                BotonGuardar.setLayoutX(317.0);
-                BotonGuardar.setLayoutY(334.0);
-                BotonGuardar.setText("Eliminar");
-                DesactivarCampos();
-            }
-        }
-    }
-
-    /*
-        Método que activa los campos previamente desactivados, dependiendo de la operación
-     */
-    private void ActivarCampos() {
-        activarVisible();
-        limpiarCampos();
-    }
-
-    /*
-        Limpia el texto de los campos
-     */
     private void limpiarCampos() {
         Campo_clasificacion.setText("");
         Campo_estante.setText("");
@@ -543,136 +381,6 @@ public class AltaLibrosController implements Initializable {
         Campo_clave_registro.setText("");
     }
 
-    /*
-        Método que desactiva los campos que no se utilizarán en la operación seleccionada en la interfaz
-     */
-    private void DesactivarCampos() {
-        desactivarVisible();
-        limpiarCampos();
-        Label_cabecera.setLayoutX(221.0);
-        Campo_titulo_libro.setEditable(true);
-        Campo_titulo_libro.setLayoutX(160.0);
-        Campo_titulo_libro.setLayoutY(262.0);
-        Campo_titulo_libro.setPrefWidth(371);
-    }
-
-
-    /*
-        Activa la visibilidad de los elementos en pantalla
-     */
-    private void activarVisible() {
-        Separador_dos.setVisible(true);
-        Separador_tres.setVisible(true);
-        Separador_cuatro.setVisible(true);
-        Label_datos_referencia.setVisible(true);
-        Label_datos_del_libro.setVisible(true);
-        Campo_clave_registro.setVisible(true);
-        Campo_clasificacion.setVisible(true);
-        Campo_estante.setVisible(true);
-        Campo_registro_clasificacion.setVisible(true);
-        Campo_existencias.setVisible(true);
-        Campo_editorial.setVisible(true);
-        Campo_lugar_edicion.setVisible(true);
-        Campo_anio_edicion.setVisible(true);
-        Campo_nombre_autor.setVisible(true);
-        Campo_descripcion_libro.setVisible(true);
-        BotonGuardar.setLayoutX(561.0);
-        BotonGuardar.setLayoutY(519.0);
-        Campo_titulo_libro.setLayoutX(386.0);
-        Campo_titulo_libro.setLayoutY(307.0);
-        Campo_titulo_libro.setPrefWidth(145.0);
-    }
-
-    /*
-        Desactiva la visibilidad de los elementos en pantalla
-     */
-    private void desactivarVisible() {
-        Separador_dos.setVisible(false);
-        Separador_tres.setVisible(false);
-        Separador_cuatro.setVisible(false);
-        Label_datos_referencia.setVisible(false);
-        Label_datos_del_libro.setVisible(false);
-        Campo_clave_registro.setVisible(false);
-        Campo_clasificacion.setVisible(false);
-        Campo_estante.setVisible(false);
-        Campo_registro_clasificacion.setVisible(false);
-        Campo_existencias.setVisible(false);
-        Campo_editorial.setVisible(false);
-        Campo_lugar_edicion.setVisible(false);
-        Campo_anio_edicion.setVisible(false);
-        Campo_nombre_autor.setVisible(false);
-        Campo_descripcion_libro.setVisible(false);
-    }
-
-    /*
-        Dependiendo la bandera, revierte la interfaz a la principal y cambia las cabeceras, textos y la posibilidad de editar los
-        campos de texto
-        Habilitados los campos: Agregar(1) y Editar(3)
-        Inhabilitados los campos: Buscar(2) y Eliminar(4)
-     */
-    private void crudEncontradosOriginal(int bandera) {
-        activarVisible();
-        switch (bandera) {
-            case 1 -> {
-                Label_cabecera.setText("Registro de Libros");
-                Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setText("Guardar");
-                activarEditable();
-            }
-            case 2 -> {
-                Label_cabecera.setText("Búsqueda de Libros");
-                Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setText("Buscar otro");
-                desactivarEditable();
-            }
-            case 3 -> {
-                Label_cabecera.setText("Edición de Libro");
-                Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setText("Editar libro");
-                activarEditable();
-            }
-            case 4 -> {
-                Label_cabecera.setText("Eliminar Libro");
-                Label_cabecera.setLayoutX(221.0);
-                BotonGuardar.setText("Eliminar otro");
-                desactivarEditable();
-            }
-        }
-    }
-
-
-    /*
-        Activa la edición de los campos de texto
-     */
-    void activarEditable() {
-        Campo_clave_registro.setEditable(true);
-        Campo_clasificacion.setEditable(true);
-        Campo_estante.setEditable(true);
-        Campo_registro_clasificacion.setEditable(true);
-        Campo_existencias.setEditable(true);
-        Campo_editorial.setEditable(true);
-        Campo_anio_edicion.setEditable(true);
-        Campo_nombre_autor.setEditable(true);
-        Campo_descripcion_libro.setEditable(true);
-        Campo_titulo_libro.setEditable(true);
-    }
-
-    /*
-       Desactiva la edición de los campos de texto
-    */
-    void desactivarEditable() {
-        Campo_clave_registro.setEditable(false);
-        Campo_clasificacion.setEditable(false);
-        Campo_estante.setEditable(false);
-        Campo_registro_clasificacion.setEditable(false);
-        Campo_existencias.setEditable(false);
-        Campo_editorial.setEditable(false);
-        Campo_anio_edicion.setEditable(false);
-        Campo_nombre_autor.setEditable(false);
-        Campo_descripcion_libro.setEditable(false);
-        Campo_titulo_libro.setEditable(false);
-    }
-
 
     /*
       Inicializa los elementos de la interfaz
@@ -681,13 +389,6 @@ public class AltaLibrosController implements Initializable {
    */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        comboBox.getItems().addAll("Agregar", "Buscar", "Editar", "Eliminar");
-
-        switch (OPERACION){
-            case INSERTAR -> crudLibro(1);
-            case EDITAR -> crudLibro(2);
-        }
 
         //Caja de campo Clasificación rango de 15 caracteres
         Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {

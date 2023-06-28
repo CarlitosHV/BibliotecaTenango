@@ -1,13 +1,22 @@
 package com.hardbug.bibliotecatenango;
 
+import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,58 +27,100 @@ import java.util.ResourceBundle;
 public class MenuLibrosController implements Initializable {
 
     @FXML
-    private Label LabelCategoria;
+    private Label LabelCrearUsuario;
     @FXML
-    private ImageView ImagenCategoria;
+    private ListView<ClaseLibro> LibrosListView;
     @FXML
-    private ListView<MenuItems> ListViewItems;
-
-    private boolean isListCard = false;
-    private ArrayList<MenuItems> _items = new ArrayList<>(
-            Arrays.asList(
-                    new MenuItems("/assets/ico_addbook.png", "Agregar libro"),
-                    new MenuItems("/assets/ico_editbook.png", "Editar libro"),
-                    new MenuItems("/assets/ico_deletebook.png", "Eliminar libro")
-            )
-    );
+    private ProgressIndicator IconoCarga;
+    @FXML
+    private Button BotonBuscar;
+    @FXML
+    private TextField Buscador;
+    @FXML
+    private AnchorPane rootPane;
+    private static ArrayList<ClaseLibro> _libros = new ArrayList<>();
+    private static FilteredList<ClaseLibro> _librosfiltrados;
+    BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LabelCategoria.setText("Vista cuadrícula");
-        ImagenCategoria.setImage(new Image(Objects.requireNonNull(MenuLibrosController.class.getResourceAsStream("/assets/ico_cuadricula.png"))));
-        CambiarALista();
-        LabelCategoria.setOnMouseClicked(mouseEvent -> {
-            isListCard = !isListCard;
-            actualizarVista();
+        _libros = bd.TraerLibros();
+        _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
+        IconoCarga.setVisible(false);
+        LibrosListView.setCellFactory(lv -> {
+            return new BookCrudController();
+        });
+        LibrosListView.setItems(_librosfiltrados);
+        BotonBuscar.setOnAction(actionEvent -> {
+            Search();
+        });
+        Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
+            Search();
+        });
+        LabelCrearUsuario.setOnMouseClicked(event -> {
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            mostrarVentanaModal(stage);
         });
     }
 
-    private void actualizarVista() {
-        if (isListCard) {
-            LabelCategoria.setText("Vista de lista");
-            ImagenCategoria.setImage(new Image(Objects.requireNonNull(MenuLibrosController.class.getResourceAsStream("/assets/ico_lista.png"))));
-            CambiarACuadricula();
-        } else {
-            LabelCategoria.setText("Vista cuadrícula");
-            ImagenCategoria.setImage(new Image(Objects.requireNonNull(MenuLibrosController.class.getResourceAsStream("/assets/ico_cuadricula.png"))));
-            CambiarALista();
+    private void Search() {
+        IconoCarga.setVisible(true);
+        String searchText = Buscador.getText().toLowerCase();
+        _librosfiltrados.setPredicate(libro -> {
+            boolean match = libro.getTitulo_libro().toLowerCase().contains(searchText)
+                    || libro.getNombre_autor().toLowerCase().contains(searchText)
+                    || libro.getEditorial().toLowerCase().contains(searchText)
+                    || libro.getEstante().toLowerCase().contains(searchText)
+                    || libro.getClasificacion().toLowerCase().contains(searchText)
+                    || libro.getAnio_edicion().toLowerCase().contains(searchText)
+                    || libro.getClave_registro().toLowerCase().contains(searchText);
+            Platform.runLater(() -> IconoCarga.setVisible(false));
+            return match;
+        });
+    }
+    private void mostrarVentanaModal(Stage ownerStage) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaLibrosView.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.initOwner(ownerStage);
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setTitle("Datos del libro");
+            modalStage.setResizable(false);
+            modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+            Scene modalScene = new Scene(root);
+            if (IndexApp.TEMA == 0){
+                modalScene.getStylesheets().clear();
+                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+            }else if (IndexApp.TEMA == 1){
+                modalScene.getStylesheets().clear();
+                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+            }
+            modalStage.setScene(modalScene);
+
+            // Crear la animación de escala para iniciar el modal
+            ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.3), root);
+            scaleIn.setFromX(0);
+            scaleIn.setFromY(0);
+            scaleIn.setToX(1);
+            scaleIn.setToY(1);
+            // Crear la animación de escala para cerrar el modal
+            ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.3), root);
+            scaleOut.setFromX(1);
+            scaleOut.setFromY(1);
+            scaleOut.setToX(0);
+            scaleOut.setToY(0);
+            scaleOut.setOnFinished(e -> modalStage.close());
+
+            modalStage.setOnShowing(e -> scaleIn.play());
+            modalStage.setOnCloseRequest(e -> {
+                e.consume();
+                scaleOut.play();
+            });
+
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    private void CambiarALista(){
-        ListViewItems.getItems().clear();
-        ListViewItems.setOrientation(Orientation.VERTICAL);
-        ListViewItems.setCellFactory(menuItemsListView -> {
-            return new ViewListaIconosController();
-        });
-        ListViewItems.setItems(FXCollections.observableArrayList(_items));
-    }
-
-    private void CambiarACuadricula(){
-        ListViewItems.getItems().clear();
-        ListViewItems.setOrientation(Orientation.HORIZONTAL);
-        ListViewItems.setCellFactory(menuItemsListView -> {
-            return new ViewIconoGrandeController();
-        });
-        ListViewItems.setItems(FXCollections.observableArrayList(_items));
     }
 }

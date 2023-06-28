@@ -1,170 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="652.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
-   <AnchorPane layoutX="13.0" layoutY="62.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-               prefHeight="590.0" prefWidth="671.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="13.0"
-               AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="62.0">
-      <GridPane layoutX="150.0" layoutY="307.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                prefHeight="86.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+
+<AnchorPane id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltaLibrosController">
+   <AnchorPane layoutX="13.0" layoutY="62.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="590.0" prefWidth="671.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="62.0">
+      <GridPane layoutX="150.0" layoutY="307.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="38.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="38.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="161.0" layoutY="307.0"
-                    onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0"
-                    promptText="Título del libro" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
+         <TextField id="Textfields" fx:id="Campo_titulo_libro" layoutX="161.0" layoutY="307.0" onKeyTyped="#validar_titulo_libro" prefHeight="38.0" prefWidth="145.0" promptText="Título del libro" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_editorial" onKeyTyped="#validar_editorial" prefHeight="38.0"
-                    prefWidth="143.0" promptText="Editorial" GridPane.columnIndex="2">
+         <TextField id="Textfields" fx:id="Campo_editorial" onKeyTyped="#validar_editorial" prefHeight="38.0" prefWidth="143.0" promptText="Editorial" GridPane.columnIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1"/>
-         <TextField id="Textfields" fx:id="Campo_anio_edicion" onKeyTyped="#validar_anio_edicion"
-                    prefHeight="38.0" prefWidth="150.0" promptText="Año de edición" GridPane.rowIndex="2">
+         <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
+         <TextField id="Textfields" fx:id="Campo_anio_edicion" onKeyTyped="#validar_anio_edicion" prefHeight="38.0" prefWidth="150.0" promptText="Año de edición" GridPane.rowIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_lugar_edicion" onKeyTyped="#validar_lugar_edicion"
-                    prefHeight="42.0" prefWidth="149.0" promptText="Lugar de edición" GridPane.columnIndex="2"
-                    GridPane.rowIndex="2">
+         <TextField id="Textfields" fx:id="Campo_lugar_edicion" onKeyTyped="#validar_lugar_edicion" prefHeight="42.0" prefWidth="149.0" promptText="Lugar de edición" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
       </GridPane>
-      <GridPane layoutX="150.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                prefHeight="134.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+      <GridPane layoutX="150.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="134.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="38.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="38.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="38.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <TextField id="Textfields" fx:id="Campo_clasificacion" nodeOrientation="LEFT_TO_RIGHT"
-                    onKeyTyped="#validar_clasificacion" prefHeight="38.0" prefWidth="145.0"
-                    promptText="Clasificación">
+         <TextField id="Textfields" fx:id="Campo_clasificacion" nodeOrientation="LEFT_TO_RIGHT" onKeyTyped="#validar_clasificacion" prefHeight="38.0" prefWidth="145.0" promptText="Clasificación">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_estante" nodeOrientation="LEFT_TO_RIGHT"
-                    onKeyTyped="#validar_estante" prefHeight="38.0" prefWidth="145.0" promptText="Estante"
-                    GridPane.columnIndex="2">
+         <TextField id="Textfields" fx:id="Campo_estante" nodeOrientation="LEFT_TO_RIGHT" onKeyTyped="#validar_estante" prefHeight="38.0" prefWidth="145.0" promptText="Estante" GridPane.columnIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_clave_registro" onKeyTyped="#validar_clave_registro"
-                    prefHeight="38.0" prefWidth="145.0" promptText="Clave registro" GridPane.rowIndex="2">
+         <TextField id="Textfields" fx:id="Campo_clave_registro" onKeyTyped="#validar_clave_registro" prefHeight="38.0" prefWidth="145.0" promptText="Clave registro" GridPane.rowIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_existencias" onKeyTyped="#validar_existencias" prefHeight="38.0"
-                    prefWidth="145.0" promptText="Existencias" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <TextField id="Textfields" fx:id="Campo_existencias" onKeyTyped="#validar_existencias" prefHeight="38.0" prefWidth="145.0" promptText="Existencias" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_registro_clasificacion"
-                    onKeyTyped="#validar_registro_clasificacion" prefHeight="38.0" prefWidth="145.0"
-                    promptText="Registro de clasificación" GridPane.rowIndex="4">
+         <TextField id="Textfields" fx:id="Campo_registro_clasificacion" onKeyTyped="#validar_registro_clasificacion" prefHeight="38.0" prefWidth="145.0" promptText="Registro de clasificación" GridPane.rowIndex="4">
             <font>
-               <Font name="Roboto Light" size="12.0"/>
+               <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
       </GridPane>
-      <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="150.0" layoutY="403.0"
-                 onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0" promptText="Nombre del autor"
-                 AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+      <TextField id="Textfields" fx:id="Campo_nombre_autor" layoutX="150.0" layoutY="403.0" onKeyTyped="#validar_nombre_autor" prefHeight="38.0" prefWidth="371.0" promptText="Nombre del autor" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <font>
-            <Font name="Roboto Light" size="12.0"/>
+            <Font name="Roboto Light" size="12.0" />
          </font>
       </TextField>
-      <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="15.0" layoutY="451.0"
-                 onKeyTyped="#validar_descripcion_libro" prefHeight="38.0" prefWidth="639.0"
-                 promptText="Descripción del libro" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <TextField id="Textfields" fx:id="Campo_descripcion_libro" alignment="TOP_LEFT" layoutX="15.0" layoutY="451.0" onKeyTyped="#validar_descripcion_libro" prefHeight="38.0" prefWidth="639.0" promptText="Descripción del libro" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font name="Roboto Light" size="12.0"/>
+            <Font name="Roboto Light" size="12.0" />
          </font>
       </TextField>
-      <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="531.0"
-              mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar" AnchorPane.bottomAnchor="30.0"
-              AnchorPane.rightAnchor="50.0">
+      <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="561.0" layoutY="531.0" mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="50.0">
          <effect>
-            <Glow/>
+            <Glow />
          </effect>
          <font>
-            <Font name="Roboto Light" size="12.0"/>
+            <Font name="Roboto Light" size="12.0" />
          </font>
          <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Separator id="Separators" fx:id="Separador_dos" layoutY="93.0" prefHeight="5.0" prefWidth="671.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-      <Separator id="Separators" layoutY="60.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0"
-                 AnchorPane.rightAnchor="0.0"/>
-      <Separator id="Separators" layoutY="504.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0"
-                 AnchorPane.rightAnchor="0.0"/>
-      <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="264.0"
-             text="Datos del Libro" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="215.0">
+      <Separator id="Separators" fx:id="Separador_dos" layoutY="93.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator id="Separators" layoutY="60.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator id="Separators" layoutY="504.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label id="Labels" fx:id="Label_datos_del_libro" alignment="CENTER" layoutX="255.0" layoutY="264.0" text="Datos del Libro" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="215.0">
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
          <padding>
-            <Insets left="20.0" right="20.0"/>
+            <Insets left="20.0" right="20.0" />
          </padding>
       </Label>
-      <Separator id="Separators" fx:id="Separador_cuatro" layoutY="292.0" prefHeight="5.0" prefWidth="671.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-      <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0"
-                 prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-      <Label id="Labels" fx:id="Label_cabecera" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0"
-             layoutY="1.0" text="Registro de Libros" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="215.0">
+      <Separator id="Separators" fx:id="Separador_cuatro" layoutY="292.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label id="Labels" fx:id="Label_cabecera" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="1.0" text="Registro de Libros" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="215.0">
          <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
          </font>
          <padding>
-            <Insets left="20.0" right="20.0"/>
+            <Insets left="20.0" right="20.0" />
          </padding>
       </Label>
-      <ComboBox id="comboBox" fx:id="comboBox" layoutX="531.0" layoutY="5.0" onAction="#ObtenerCombo"
-                prefHeight="26.0" prefWidth="135.0" promptText="Selecciona" AnchorPane.rightAnchor="5.0"
-                AnchorPane.topAnchor="5.0"/>
-      <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="238.0" layoutY="65.0"
-             text="Datos de referencia" AnchorPane.leftAnchor="238.0" AnchorPane.rightAnchor="238.0">
+      <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="238.0" layoutY="65.0" text="Datos de referencia" AnchorPane.leftAnchor="238.0" AnchorPane.rightAnchor="238.0">
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
          <padding>
-            <Insets left="20.0" right="20.0"/>
+            <Insets left="20.0" right="20.0" />
          </padding>
       </Label>
    </AnchorPane>

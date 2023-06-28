@@ -149,7 +149,7 @@ public class BDController {
 
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
-             CallableStatement stmt = conn.prepareCall("{ call insertar_libro(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }")) {
+             CallableStatement stmt = conn.prepareCall("{ call spinsertarlibro(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }")) {
 
             stmt.setString(1, Clave_registro);
             stmt.setString(2, Estante);
