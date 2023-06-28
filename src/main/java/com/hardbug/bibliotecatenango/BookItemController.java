@@ -31,6 +31,7 @@ public class BookItemController extends ListCell<ClaseLibro> {
         this.onItemSelected = onItemSelected;
     }
 
+
     public BookItemController() {
         super();
         fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
@@ -54,7 +55,7 @@ public class BookItemController extends ListCell<ClaseLibro> {
         if (Empty || libro == null) {
             setGraphic(null);
         } else {
-            LabelTitulo.setText("Título: " + libro.getTitulo_libro());
+            LabelTitulo.setText(libro.getTitulo_libro());
             LabelAutor.setText("Autor: " + libro.getNombre_autor());
             LabelClave.setText("Clave registro: " + libro.getClave_registro());
             LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
@@ -70,7 +71,12 @@ public class BookItemController extends ListCell<ClaseLibro> {
                 BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
                 Node right = pb.getRight();
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
-                menuTransition.setToX(-400);
+                menuTransition.setToX(0);
+                BookDetailsController controller = ViewSwitcher.getBookDetailsController();
+                if (controller != null) {
+                    controller.initData(libro.getTitulo_libro(), libro.getNombre_autor(), libro.getEditorial(), libro.getClave_registro(),
+                            libro.getEstante(), libro.getClasificacion(), libro.getDescripcion_libro(), libro.getExistencias(), BookDetailsController.SOLICITAR);
+                }
                 menuTransition.play();
             }
         });

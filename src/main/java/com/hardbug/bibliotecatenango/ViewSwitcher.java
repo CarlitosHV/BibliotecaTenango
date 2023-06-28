@@ -34,18 +34,25 @@ private static Scene scene;
         return scene;
     }
 
+    private static BookDetailsController bookDetailsController;
+
+    public static BookDetailsController getBookDetailsController() {
+        return bookDetailsController;
+    }
+
     public static void showTo(View view, int theme, BorderPane rootPane){
         if (scene == null){
             System.out.print("No hay una escena configurada");
         }else{
             try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFileName())));
+                FXMLLoader loader = new FXMLLoader(ViewSwitcher.class.getResource(view.getFileName()));
+                Parent root = loader.load();
                 applyCSS(theme);
                 switch (view) {
                     case MENU_LATERAL -> rootPane.setLeft(root);
                     case DETALLES_LIBROS -> {
-                        StackPane rightPane = new StackPane(root);
-                        rootPane.setRight(rightPane);
+                        bookDetailsController = loader.getController();
+                        rootPane.setRight(root);
                     }
                     default -> rootPane.setCenter(root);
                 }

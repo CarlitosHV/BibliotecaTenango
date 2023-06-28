@@ -69,7 +69,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<ClaseLibro> TraerLibros () throws SQLException{
+    public ArrayList<ClaseLibro> TraerLibros (){
         ArrayList<ClaseLibro> _libros = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
