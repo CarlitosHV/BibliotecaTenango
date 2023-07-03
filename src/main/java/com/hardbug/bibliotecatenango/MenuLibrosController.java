@@ -43,13 +43,7 @@ public class MenuLibrosController implements Initializable {
     BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        _libros = bd.TraerLibros();
-        _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
-        IconoCarga.setVisible(false);
-        LibrosListView.setCellFactory(lv -> {
-            return new BookCrudController();
-        });
-        LibrosListView.setItems(_librosfiltrados);
+        configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
         });
@@ -114,6 +108,7 @@ public class MenuLibrosController implements Initializable {
 
             modalStage.setOnShowing(e -> scaleIn.play());
             modalStage.setOnCloseRequest(e -> {
+                configurarLista();
                 e.consume();
                 scaleOut.play();
             });
@@ -122,5 +117,15 @@ public class MenuLibrosController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void configurarLista(){
+        _libros = bd.TraerLibros();
+        _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
+        IconoCarga.setVisible(false);
+        LibrosListView.setCellFactory(lv -> {
+            return new BookCrudController();
+        });
+        LibrosListView.setItems(_librosfiltrados);
     }
 }

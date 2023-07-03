@@ -5,7 +5,6 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -24,28 +22,16 @@ import java.util.ResourceBundle;
     Su funcionalidad es recibir la información de su vista ligada, tratar la información y mandarla a base de datos
  */
 
-public class AltaLibrosController implements Initializable {
-
-    public AltaLibrosController(int OPERACION) {
-        this.OPERACION = OPERACION;
-    }
-
-    public AltaLibrosController(){
-
-    }
+public class EditBooksController implements Initializable {
 
     private int OPERACION;
 
     private static final int INSERTAR = 0, EDITAR = 1, ELIMINAR = 2;
 
-
-    /* Este arraylist almacena la información del libro consultado */
-    public static ArrayList<Object> datosLibro = new ArrayList<>();
-
     /* Variables booleanas que marcan si los campos están correctos */
-    private static boolean Clasificacion_bol, Anio_edicion_bol, Descripcion_libro_bol, Nombre_autor_bol,
-            Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol, Registro_clasificacion_bol, Estante_bol,
-            Existencias_bol, Clave_registro_bol;
+    private static boolean Clasificacion_bol = true, Anio_edicion_bol = true, Descripcion_libro_bol = true, Nombre_autor_bol = true,
+            Titulo_libro_bol = true, Lugar_edicion_bol = true, Editorial_bol = true, Registro_clasificacion_bol = true, Estante_bol = true,
+            Existencias_bol = true, Clave_registro_bol = true;
 
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
@@ -59,17 +45,24 @@ public class AltaLibrosController implements Initializable {
             Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro,
             Campo_clave_registro;
 
+    public static String clave_registro = "";
+
 
     /* Variables de tipo integer para manejar los tipos de alertas */
-    private static final int ALERTA_ERROR = 0, ALERTA_LIBRO_GUARDADO = 1, ALERTA_LIBRO_NO_ENCONTRADO = 2,
+    private static final int ALERTA_ERROR = 0, ALERTA_LIBRO_NO_ENCONTRADO = 2,
             ALERTA_CAMPOS_INVALIDOS = 3, ALERTA_ELIMINAR_LIBRO = 4, ALERTA_LIBRO_ELIMINADO = 5,
-            ALERTA_LIBRO_EDITADO = 6;
+            ALERTA_LIBRO_EDITADO = 1;
 
 
     /* Instancias de las clases necesarias para funcionar el código */
     private final ClaseLibro libro = new ClaseLibro();
     private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
+
+    private Stage modalStage;
+    public void setModalStage(Stage modalStage) {
+        this.modalStage = modalStage;
+    }
 
 
     /*
@@ -80,7 +73,7 @@ public class AltaLibrosController implements Initializable {
      */
     @FXML
     void AccionesBotonGuardar() throws SQLException {
-        GuardarLibro();
+        EditarLibro();
     }
 
     /*
@@ -90,11 +83,11 @@ public class AltaLibrosController implements Initializable {
         switch (TIPO_ALERTA) {
             case 0 -> aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
             case 1 ->
-                    aplicarTemaAlerta("¡Libro guardado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido registrado :)", 0);
+                    aplicarTemaAlerta("¡Libro editado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido editado", 0);
             case 2 ->
-                    aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 0);
+                    aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 1);
             case 3 ->
-                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
+                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 1);
         }
     }
 
@@ -125,7 +118,16 @@ public class AltaLibrosController implements Initializable {
             content.setTextFill(Color.WHITESMOKE);
             alerta.getDialogPane().setContent(content);
         }
-        alerta.showAndWait();
+        if(tipo == 0){
+            Optional<ButtonType> result = alerta.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                alerta.close();
+                modalStage.close();
+                ViewSwitcher.buttonAction(View.MENU_LIBROS);
+            }
+        }else{
+            alerta.showAndWait();
+        }
     }
 
 
@@ -133,13 +135,13 @@ public class AltaLibrosController implements Initializable {
         Método que manda guardar a Base de Datos el libro, y valida los campos
      */
     @FXML
-    void GuardarLibro() throws SQLException {
+    void EditarLibro() throws SQLException {
         if (camposValidos()) {
-            boolean guardado = bdController.InsertarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
+            boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
                     libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
-            if (guardado) {
-                CrearAlerta(ALERTA_LIBRO_GUARDADO);
+            if (editado) {
+                CrearAlerta(ALERTA_LIBRO_EDITADO);
                 limpiarCampos();
             } else {
                 CrearAlerta(ALERTA_ERROR);
@@ -393,7 +395,20 @@ public class AltaLibrosController implements Initializable {
    */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        ClaseLibro librorecibido = bdController.TraerLibro(clave_registro);
+        if(librorecibido != null){
+            Campo_clasificacion.setText(librorecibido.getClasificacion());
+            Campo_anio_edicion.setText(librorecibido.getAnio_edicion());
+            Campo_registro_clasificacion.setText(librorecibido.getRegistro_clasificacion());
+            Campo_estante.setText(librorecibido.getEstante());
+            Campo_existencias.setText(String.valueOf(librorecibido.getExistencias()));
+            Campo_editorial.setText(librorecibido.getEditorial());
+            Campo_lugar_edicion.setText(librorecibido.getLugar_edicion());
+            Campo_titulo_libro.setText(librorecibido.getTitulo_libro());
+            Campo_nombre_autor.setText(librorecibido.getNombre_autor());
+            Campo_descripcion_libro.setText(librorecibido.getDescripcion_libro());
+            Campo_clave_registro.setText(librorecibido.getClave_registro());
+        }
         //Caja de campo Clasificación rango de 15 caracteres
         Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
