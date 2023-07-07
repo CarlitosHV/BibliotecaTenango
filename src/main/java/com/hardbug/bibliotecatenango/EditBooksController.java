@@ -5,6 +5,7 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -55,7 +56,7 @@ public class EditBooksController implements Initializable {
 
 
     /* Instancias de las clases necesarias para funcionar el código */
-    private final ClaseLibro libro = new ClaseLibro();
+    private final Libro libro = new Libro();
     private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
 
@@ -395,7 +396,7 @@ public class EditBooksController implements Initializable {
    */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ClaseLibro librorecibido = bdController.TraerLibro(clave_registro);
+        Libro librorecibido = bdController.TraerLibro(clave_registro);
         if(librorecibido != null){
             Campo_clasificacion.setText(librorecibido.getClasificacion());
             Campo_anio_edicion.setText(librorecibido.getAnio_edicion());

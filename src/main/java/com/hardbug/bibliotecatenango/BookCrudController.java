@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +16,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class BookCrudController extends ListCell<ClaseLibro> {
+public class BookCrudController extends ListCell<Libro> {
     private FXMLLoader fxmlLoader;
     private GridPane fondoItem;
     private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion;
@@ -49,7 +50,7 @@ public class BookCrudController extends ListCell<ClaseLibro> {
     }
 
     @Override
-    protected void updateItem(ClaseLibro libro, boolean Empty) {
+    protected void updateItem(Libro libro, boolean Empty) {
         super.updateItem(libro, Empty);
         if (Empty || libro == null) {
             setGraphic(null);

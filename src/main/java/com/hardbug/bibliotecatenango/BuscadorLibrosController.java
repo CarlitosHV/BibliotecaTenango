@@ -4,15 +4,14 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: BuscadorLibrosView.fxml
  */
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -21,9 +20,9 @@ public class BuscadorLibrosController implements Initializable {
 
     BDController bd = new BDController();
     @FXML
-    private ListView<ClaseLibro> LibrosListView;
-    private static ArrayList<ClaseLibro> _libros = new ArrayList<>();
-    private static FilteredList<ClaseLibro> _librosfiltrados;
+    private ListView<Libro> LibrosListView;
+    private static ArrayList<Libro> _libros = new ArrayList<>();
+    private static FilteredList<Libro> _librosfiltrados;
     @FXML
     private ProgressIndicator IconoCarga;
     @FXML

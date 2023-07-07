@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class MenuLateralController implements Initializable {
     @FXML
-    private Button ButtonBooks, ButtonHome, ButtonConfig;
+    private Button ButtonBooks, ButtonHome, ButtonConfig, ButtonUsers;
     @FXML
     private GridPane fondo;
     @Override
@@ -36,6 +36,11 @@ public class MenuLateralController implements Initializable {
         ButtonConfig.setOnAction(evt -> {
             cerrarVistaDerecha();
             ViewSwitcher.buttonAction(View.MENU_CONFIGURACION);
+        });
+
+        ButtonUsers.setOnAction(evt -> {
+            cerrarVistaDerecha();
+            ViewSwitcher.buttonAction(View.MENU_USUARIOS);
         });
     }
 

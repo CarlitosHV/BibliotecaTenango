@@ -15,4 +15,6 @@ module com.hardbug.bibliotecatenango {
 
     opens com.hardbug.bibliotecatenango to javafx.fxml;
     exports com.hardbug.bibliotecatenango;
+    exports com.hardbug.bibliotecatenango.Models;
+    opens com.hardbug.bibliotecatenango.Models to javafx.fxml;
 }

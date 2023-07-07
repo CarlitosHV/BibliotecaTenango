@@ -1,6 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
-import com.hardbug.bibliotecatenango.Models.Libro;
+import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -22,22 +22,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MenuLibrosController implements Initializable {
+public class MenuUsuariosController implements Initializable {
 
     @FXML
-    private Label LabelCrearLibro, LabelSinLibros;
+    private Label LabelCrearUsuario, LabelSinUsuarios;
     @FXML
-    private ListView<Libro> LibrosListView;
+    private ListView<Usuario> UsuariosListView;
     @FXML
     private ProgressIndicator IconoCarga;
     @FXML
     private Button BotonBuscar;
     @FXML
-    private TextField Buscador;
+    private TextField BuscadorUsuarios;
     @FXML
     private AnchorPane rootPane;
-    private static ArrayList<Libro> _libros = new ArrayList<>();
-    private static FilteredList<Libro> _librosfiltrados;
+    private static ArrayList<Usuario> _usuarios = new ArrayList<>();
+    private static FilteredList<Usuario> _usuariosfiltrados;
     BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,10 +45,10 @@ public class MenuLibrosController implements Initializable {
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
         });
-        Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
+        BuscadorUsuarios.textProperty().addListener((observable, oldValue, newValue) -> {
             Search();
         });
-        LabelCrearLibro.setOnMouseClicked(event -> {
+        LabelCrearUsuario.setOnMouseClicked(event -> {
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
         });
@@ -56,37 +56,36 @@ public class MenuLibrosController implements Initializable {
 
     private void Search() {
         IconoCarga.setVisible(true);
-        String searchText = Buscador.getText().toLowerCase();
-        _librosfiltrados.setPredicate(libro -> {
-            boolean match = libro.getTitulo_libro().toLowerCase().contains(searchText)
-                    || libro.getNombre_autor().toLowerCase().contains(searchText)
-                    || libro.getEditorial().toLowerCase().contains(searchText)
-                    || libro.getEstante().toLowerCase().contains(searchText)
-                    || libro.getClasificacion().toLowerCase().contains(searchText)
-                    || libro.getAnio_edicion().toLowerCase().contains(searchText)
-                    || libro.getClave_registro().toLowerCase().contains(searchText);
+        String searchText = BuscadorUsuarios.getText().toLowerCase();
+        _usuariosfiltrados.setPredicate(libro -> {
+            boolean match = libro.getNombre().toLowerCase().contains(searchText)
+                    || libro.getCorreo().toLowerCase().contains(searchText)
+                    || libro.getCurp().toLowerCase().contains(searchText)
+                    || libro.getCalle().toLowerCase().contains(searchText)
+                    || libro.getOcupacion().toLowerCase().contains(searchText)
+                    || libro.getTelefono().toString().toLowerCase().contains(searchText);
             Platform.runLater(() -> IconoCarga.setVisible(false));
             return match;
         });
     }
     private void mostrarVentanaModal(Stage ownerStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaLibrosView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Datos del libro");
+            modalStage.setTitle("Datos del usuario");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -118,19 +117,19 @@ public class MenuLibrosController implements Initializable {
     }
 
     void configurarLista(){
-        _libros = bd.TraerLibros();
+        //_usuarios = bd.TraerLibros();
         IconoCarga.setVisible(false);
-        if (!_libros.isEmpty()){
-            LabelSinLibros.setVisible(false);
-            LibrosListView.setVisible(true);
-            _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
-            LibrosListView.setCellFactory(lv -> {
+        if (!_usuarios.isEmpty()){
+            LabelSinUsuarios.setVisible(false);
+            UsuariosListView.setVisible(true);
+            _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));;
+            /*UsuariosListView.setCellFactory(lv -> {
                 return new BookCrudController();
-            });
-            LibrosListView.setItems(_librosfiltrados);
+            });*/
+            UsuariosListView.setItems(_usuariosfiltrados);
         }else{
-            LabelSinLibros.setVisible(true);
-            LibrosListView.setVisible(false);
+            LabelSinUsuarios.setVisible(true);
+            UsuariosListView.setVisible(false);
         }
     }
 }

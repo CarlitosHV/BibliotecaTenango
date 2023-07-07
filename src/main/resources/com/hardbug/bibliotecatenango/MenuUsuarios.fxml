@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="424.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.MenuLibrosController">
+<AnchorPane fx:id="rootPane" prefHeight="424.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.MenuUsuariosController">
     <children>
         <GridPane hgap="10.0" layoutX="48.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="158.0" prefWidth="382.0" AnchorPane.bottomAnchor="252.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="14.0">
             <columnConstraints>
@@ -18,7 +18,7 @@
                 <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField id="TextFields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa título de libro, autor o editorial" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                <TextField id="TextFields" fx:id="BuscadorUsuarios" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa el correo, CURP o teléfono" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
                 <Button id="BotonMenu" fx:id="BotonBuscar" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                     <graphic>
                         <ImageView fitHeight="79.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -28,7 +28,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Label fx:id="LabelCrearLibro" alignment="TOP_CENTER" text="Crear nuevo libro" textFill="#3f81eb" underline="true" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="LabelCrearUsuario" alignment="TOP_CENTER" text="Crear nuevo usuario" textFill="#3f81eb" underline="true" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="Roboto Light" size="14.0" />
                </font>
@@ -38,12 +38,12 @@
             </Label>
             </children>
         </GridPane>
-        <ListView fx:id="LibrosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
+        <ListView fx:id="UsuariosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
         <ProgressIndicator fx:id="IconoCarga" layoutX="203.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="225.0" />
-      <Label fx:id="LabelSinLibros" layoutX="128.0" layoutY="234.0" text="No hay libros registrados" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="234.0">
-         <font>
-            <Font name="Roboto Light" size="16.0" />
-         </font>
-      </Label>
+        <Label fx:id="LabelSinUsuarios" layoutX="115.0" layoutY="234.0" prefHeight="22.0" prefWidth="202.0" text="No hay usuarios registrados" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="234.0">
+            <font>
+                <Font name="Roboto Light" size="16.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>
