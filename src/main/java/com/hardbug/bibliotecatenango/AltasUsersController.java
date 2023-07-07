@@ -2,10 +2,21 @@ package com.hardbug.bibliotecatenango;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-public class AltasUsersController {
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AltasUsersController implements Initializable {
     @FXML
     private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
     Campo_apellido_materno, Campo_codigo, Campo_ocupacion, Campo_calle;
@@ -54,5 +65,18 @@ public class AltasUsersController {
     }
 
     public void AccionesBotonGuardar(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Hyperlink_curp.setOnAction(actionEvent -> {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                String direccion = "https://www.gob.mx/curp/";
+                desktop.browse(new URI(direccion));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
