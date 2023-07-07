@@ -70,13 +70,13 @@ public class MenuUsuariosController implements Initializable {
     }
     private void mostrarVentanaModal(Stage ownerStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaLibrosView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Datos del libro");
+            modalStage.setTitle("Datos del usuario");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
             Scene modalScene = new Scene(root);

@@ -19,7 +19,34 @@ public class Usuario {
     String Calle;
     String Estado;
     String Municipio;
+    String Localidad;
     int CodigoPostal;
+
+    public Usuario() {
+    }
+
+    public Usuario(int idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
+                   String contrasenia, BigInteger telefono, int edad, String sexo, String curp, String gradoEscolar, String tipoUsuario,
+                   String ocupacion, String calle, String estado, String municipio, String localidad, int codigoPostal) {
+        IdUsuario = idUsuario;
+        Nombre = nombre;
+        ApellidoPaterno = apellidoPaterno;
+        ApellidoMaterno = apellidoMaterno;
+        Correo = correo;
+        Contrasenia = contrasenia;
+        Telefono = telefono;
+        Edad = edad;
+        this.sexo = sexo;
+        Curp = curp;
+        GradoEscolar = gradoEscolar;
+        TipoUsuario = tipoUsuario;
+        Ocupacion = ocupacion;
+        Calle = calle;
+        Estado = estado;
+        Municipio = municipio;
+        Localidad = localidad;
+        CodigoPostal = codigoPostal;
+    }
 
     public int getIdUsuario() {
         return IdUsuario;
@@ -149,36 +176,19 @@ public class Usuario {
         Municipio = municipio;
     }
 
+    public String getLocalidad() {
+        return Localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        Localidad = localidad;
+    }
+
     public int getCodigoPostal() {
         return CodigoPostal;
     }
 
     public void setCodigoPostal(int codigoPostal) {
-        CodigoPostal = codigoPostal;
-    }
-
-    public Usuario() {
-    }
-
-    public Usuario(int idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
-                   String contrasenia, BigInteger telefono, int edad, String sexo, String curp, String gradoEscolar,
-                   String tipoUsuario, String ocupacion, String calle, String estado, String municipio, int codigoPostal) {
-        IdUsuario = idUsuario;
-        Nombre = nombre;
-        ApellidoPaterno = apellidoPaterno;
-        ApellidoMaterno = apellidoMaterno;
-        Correo = correo;
-        Contrasenia = contrasenia;
-        Telefono = telefono;
-        Edad = edad;
-        this.sexo = sexo;
-        Curp = curp;
-        GradoEscolar = gradoEscolar;
-        TipoUsuario = tipoUsuario;
-        Ocupacion = ocupacion;
-        Calle = calle;
-        Estado = estado;
-        Municipio = municipio;
         CodigoPostal = codigoPostal;
     }
 }
