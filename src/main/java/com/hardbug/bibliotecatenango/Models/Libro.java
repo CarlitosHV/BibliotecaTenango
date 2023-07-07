@@ -1,6 +1,6 @@
-package com.hardbug.bibliotecatenango;
+package com.hardbug.bibliotecatenango.Models;
 
-public class ClaseLibro {
+public class Libro {
     String clave_registro;
     String clasificacion;
     String anio_edicion;
@@ -13,11 +13,11 @@ public class ClaseLibro {
     String nombre_autor;
     String descripcion_libro;
 
-    public ClaseLibro() {
+    public Libro() {
     }
 
-    public ClaseLibro(String clave_registro, String clasificacion, String anio_edicion, String registro_clasificacion, String estante, int existencias,
-                      String editorial, String lugar_edicion, String titulo_libro, String nombre_autor, String descripcion_libro) {
+    public Libro(String clave_registro, String clasificacion, String anio_edicion, String registro_clasificacion, String estante, int existencias,
+                 String editorial, String lugar_edicion, String titulo_libro, String nombre_autor, String descripcion_libro) {
         this.clave_registro = clave_registro;
         this.clasificacion = clasificacion;
         this.anio_edicion = anio_edicion;

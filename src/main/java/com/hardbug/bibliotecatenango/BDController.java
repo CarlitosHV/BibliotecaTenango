@@ -1,5 +1,7 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Libro;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -30,8 +32,8 @@ public class BDController {
         }
     }
 
-    public ArrayList<ClaseLibro> TraerLibros (){
-        ArrayList<ClaseLibro> _libros = new ArrayList<>();
+    public ArrayList<Libro> TraerLibros (){
+        ArrayList<Libro> _libros = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
@@ -43,7 +45,7 @@ public class BDController {
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
-                ClaseLibro libro = new ClaseLibro();
+                Libro libro = new Libro();
                 libro.setClave_registro(rs.getString("clave_registro"));
                 libro.setEstante(rs.getString("Estante"));
                 libro.setDescripcion_libro(rs.getString("descripcion_libro"));
@@ -67,8 +69,8 @@ public class BDController {
         }
     }
 
-    public ClaseLibro TraerLibro(String clave_registro) {
-        ClaseLibro book = null;
+    public Libro TraerLibro(String clave_registro) {
+        Libro book = null;
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -82,7 +84,7 @@ public class BDController {
             ResultSet rs = stmt.getResultSet();
 
             if (rs.next()) {
-                book = new ClaseLibro();
+                book = new Libro();
                 book.setClave_registro(rs.getString("clave_registro"));
                 book.setEstante(rs.getString("Estante"));
                 book.setDescripcion_libro(rs.getString("descripcion_libro"));
@@ -107,8 +109,8 @@ public class BDController {
     }
 
 
-    public ArrayList<ClaseLibro> BusquedaGeneral (String palabra) throws SQLException{
-        ArrayList<ClaseLibro> _libros = new ArrayList<>();
+    public ArrayList<Libro> BusquedaGeneral (String palabra) throws SQLException{
+        ArrayList<Libro> _libros = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
@@ -120,7 +122,7 @@ public class BDController {
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
-                ClaseLibro libro = new ClaseLibro();
+                Libro libro = new Libro();
                 libro.setClave_registro(rs.getString("clave_registro"));
                 libro.setEstante(rs.getString("Estante"));
                 libro.setDescripcion_libro(rs.getString("descripcion_libro"));

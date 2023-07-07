@@ -5,7 +5,7 @@ package com.hardbug.bibliotecatenango;
   Vista a la que está asociada la clase: AltaLibrosView.fxml
  */
 
-import javafx.beans.property.SimpleObjectProperty;
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -17,7 +17,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /* Clase AltaLibros:
@@ -67,7 +66,7 @@ public class AltaLibrosController implements Initializable {
 
 
     /* Instancias de las clases necesarias para funcionar el código */
-    private final ClaseLibro libro = new ClaseLibro();
+    private final Libro libro = new Libro();
     private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
 
