@@ -1,6 +1,9 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Estados;
 import com.hardbug.bibliotecatenango.Models.Libro;
+import com.hardbug.bibliotecatenango.Models.Localidad;
+import com.hardbug.bibliotecatenango.Models.Municipios;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -204,6 +207,153 @@ public class BDController {
         } catch (SQLException e) {
             System.err.println("Error al ejecutar stored procedure: " + e.getMessage());
             return false;
+        }
+    }
+
+    public ArrayList<Localidad> BuscarLocalidades (int CP) throws SQLException{
+        ArrayList<Localidad> _localidades = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarLocalidadPorCP(?)");
+            stmt.setInt(1, CP);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                Localidad localidad = new Localidad();
+                localidad.setId(rs.getInt("id"));
+                localidad.setLocalidad(rs.getString("nombre_localidad"));
+                localidad.setMunicipio(rs.getString("nombre_municipio"));
+                localidad.setEstado(rs.getString("nombre_estado"));
+                _localidades.add(localidad);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _localidades;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Estados> BuscarEstados () throws SQLException{
+        ArrayList<Estados> _estados = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarEstados()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                Estados estado = new Estados();
+                estado.setId(rs.getInt("id_estado"));
+                estado.setEstado(rs.getString("nombre"));
+                _estados.add(estado);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _estados;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Municipios> BuscarMunicipios (String Estado) throws SQLException{
+        ArrayList<Municipios> _municipios = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnseleccionarmunicipiosporestado(?)");
+            stmt.setString(1, Estado);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                Municipios municipios = new Municipios();
+                municipios.setId(rs.getInt("id_municipio"));
+                municipios.setMunicipio(rs.getString("nombre"));
+                municipios.setEstado(rs.getString("estado"));
+                _municipios.add(municipios);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _municipios;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Localidad> BuscarLocalidades (String Municipio, String Estado) throws SQLException{
+        ArrayList<Localidad> _localidades = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarLocalidadesPorMunicipio(?, ?)");
+            stmt.setString(1, Municipio);
+            stmt.setString(2, Estado);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                Localidad localidad = new Localidad();
+                localidad.setId(rs.getInt("id_localidad"));
+                localidad.setLocalidad(rs.getString("localidad"));
+                localidad.setCP(rs.getInt("cp"));
+                _localidades.add(localidad);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _localidades;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Localidad> BuscarCodigoPostal (int cp) throws SQLException{
+        ArrayList<Localidad> _localidades = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnseleccionarlocalidadporcp(?)");
+            stmt.setInt(1, cp);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                Localidad localidad = new Localidad();
+                localidad.setId(rs.getInt("id_localidad"));
+                localidad.setLocalidad(rs.getString("nombre_localidad"));
+                localidad.setMunicipio(rs.getString("nombre_municipio"));
+                localidad.setEstado(rs.getString("nombre_estado"));
+                localidad.setCP(cp);
+                _localidades.add(localidad);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _localidades;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 }

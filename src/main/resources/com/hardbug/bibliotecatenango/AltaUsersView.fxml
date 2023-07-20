@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltasUsersController">
+<AnchorPane fx:id="Fondo" id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltasUsersController">
    <AnchorPane layoutX="13.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="671.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
       <GridPane layoutX="150.0" layoutY="284.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <columnConstraints>
@@ -164,7 +164,10 @@
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextField>
-            <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
+            <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1">
+               <children>
+                  <ProgressIndicator fx:id="IconoCarga" layoutX="17.0" layoutY="13.0" prefHeight="40.0" prefWidth="43.0" progress="0.0" />
+               </children></AnchorPane>
             <ComboBox fx:id="Combo_estado" prefHeight="42.0" prefWidth="150.0" promptText="Estado" GridPane.columnIndex="2" />
             <ComboBox fx:id="Combo_municipio" layoutX="228.0" layoutY="10.0" prefHeight="42.0" prefWidth="150.0" promptText="Municipio" GridPane.rowIndex="1" />
             <ComboBox fx:id="Combo_localidad" layoutX="10.0" layoutY="58.0" prefHeight="42.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
