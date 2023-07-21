@@ -1,4 +1,5 @@
-CREATE OR REPLACE PROCEDURE spInsertarUsuario(
+CREATE OR REPLACE PROCEDURE spActualizarUsuario(
+    IN i_id_usuario INT,
     IN i_telefono BIGINT,
     IN i_edad INT,
     IN i_sexo VARCHAR(15),
@@ -95,31 +96,20 @@ BEGIN
     WHERE calle = i_calle AND codigo_postal = i_codigo_postal
     AND id_municipio = v_id_municipio AND id_estado = v_id_estado AND id_localidad = v_id_localidad;
 
-    
-    INSERT INTO USUARIOS (
-        telefono,
-        edad,
-        sexo,
-        curp,
-        contrasenia,
-        id_grado_escolar,
-        correo,
-        id_nombre,
-        id_ocupacion,
-        id_tipo_usuario,
-        id_direccion
-    ) VALUES (
-        i_telefono,
-        i_edad,
-        i_sexo,
-        i_curp,
-        i_contrasenia,
-        v_id_grado_escolar,
-        i_correo,
-        v_id_nombre,
-        v_id_ocupacion,
-        v_id_tipo_usuario,
-        v_id_direccion
-    );
+    UPDATE USUARIOS 
+    SET
+        telefono = i_telefono,
+        edad = i_edad,
+        sexo = i_sexo,
+        curp = i_curp,
+        contrasenia = i_contrasenia,
+        id_grado_escolar = id_grado_escolar,
+        correo = i_correo,
+        id_nombre = v_id_nombre,
+        id_tipo_usuario = v_id_tipo_usuario,
+        id_ocupacion = v_id_ocupacion,
+        id_direccion = v_id_direccion
+    WHERE 
+        id_usuario = i_id_usuario;
 END;
 $$;
