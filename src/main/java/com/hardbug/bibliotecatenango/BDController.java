@@ -1,9 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
-import com.hardbug.bibliotecatenango.Models.Estados;
-import com.hardbug.bibliotecatenango.Models.Libro;
-import com.hardbug.bibliotecatenango.Models.Localidad;
-import com.hardbug.bibliotecatenango.Models.Municipios;
+import com.hardbug.bibliotecatenango.Models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -352,6 +349,34 @@ public class BDController {
             conn.close();
             return _localidades;
         } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<Catalogo> ConsultarGradosEscolares(){
+        ArrayList<Catalogo> _grados = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnseleccionartodosgrados()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            _grados.add(new Catalogo("Selecciona un grado"));
+            while (rs.next()) {
+                Catalogo catalogo = new Catalogo();
+                catalogo.setId(rs.getInt("id"));
+                catalogo.setNombre(rs.getString("nombre"));
+                _grados.add(catalogo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _grados;
+        }catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
         }

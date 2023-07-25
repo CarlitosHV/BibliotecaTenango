@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Catalogo;
 import com.hardbug.bibliotecatenango.Models.Estados;
 import com.hardbug.bibliotecatenango.Models.Localidad;
 import com.hardbug.bibliotecatenango.Models.Municipios;
@@ -40,7 +41,7 @@ public class AltasUsersController implements Initializable {
     @FXML
     private ComboBox<Localidad> Combo_localidad;
     @FXML
-    private ComboBox Combo_grado;
+    private ComboBox<Catalogo> Combo_grado;
     @FXML
     private Button BotonGuardar;
     @FXML
@@ -56,6 +57,7 @@ public class AltasUsersController implements Initializable {
 
     private static ArrayList<Municipios> _municipios = new ArrayList<>();
     private static ArrayList<Localidad> _localidades = new ArrayList<>();
+    private static ArrayList<Catalogo> _grados = new ArrayList<>();
 
     Estados estados = new Estados();
     Municipios municipios = new Municipios();
@@ -103,6 +105,7 @@ public class AltasUsersController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IconoCarga.setVisible(false);
         ConfigurarCellFactory();
+        configurarCatalogos();
         try {
             ConfigurarCombos();
         } catch (SQLException e) {
@@ -138,6 +141,12 @@ public class AltasUsersController implements Initializable {
             }
         });
 
+        BotonGuardar.setOnAction(event -> {
+            Catalogo gradoseleccionado =  Combo_grado.getValue();
+            Estados estadosele = Combo_estado.getValue();
+            estadosele.getId();
+        });
+
 
         Combo_localidad.setOnAction(actionEvent -> {
             Localidad localidad = Combo_localidad.getValue();
@@ -159,14 +168,14 @@ public class AltasUsersController implements Initializable {
 
         Campo_codigo.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() == 5) {
-                /*try {
+                try {
                     IconoCarga.setVisible(true);
                     IconoCarga.setProgress(-1.0);
                     Fondo.setOpacity(0.5);
                     TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                }*/
+                }
             }else{
                 Combo_localidad.getItems().clear();
                 Combo_estado.getItems().clear();
@@ -234,7 +243,7 @@ public class AltasUsersController implements Initializable {
         });
     }
 
-    /*private void TareaCodigoPostal(int CP) throws SQLException {
+    private void TareaCodigoPostal(int CP) throws SQLException {
         ArrayList<Estados> _estados = bd.BuscarEstados();
         Combo_estado.getItems().addAll(_estados);
         Combo_localidad.getItems().clear();
@@ -253,7 +262,7 @@ public class AltasUsersController implements Initializable {
             });
 
         }
-    }*/
+    }
     private void ConfigurarCellFactory(){
         Combo_estado.setCellFactory(new Callback<ListView<Estados>, ListCell<Estados>>() {
             @Override
@@ -304,6 +313,38 @@ public class AltasUsersController implements Initializable {
                     }
                 };
             }
+        });
+
+        Combo_grado.setCellFactory(new Callback<ListView<Catalogo>, ListCell<Catalogo>>() {
+            @Override
+            public ListCell<Catalogo> call(ListView<Catalogo> listView) {
+                return new ListCell<Catalogo>() {
+                    @Override
+                    protected void updateItem(Catalogo grado, boolean empty) {
+                        super.updateItem(grado, empty);
+                        if (grado != null) {
+                            setText(grado.getNombre());
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    private void configurarCatalogos(){
+        Task<ArrayList<Catalogo>> grados = new Task<ArrayList<Catalogo>>() {
+            @Override
+            protected ArrayList<Catalogo> call() throws Exception {
+                return bd.ConsultarGradosEscolares();
+            }
+        };
+        new Thread(grados).start();
+        grados.setOnSucceeded(workerStateEvent -> {
+            _grados = grados.getValue();
+            Combo_grado.getItems().addAll(_grados);
+            Combo_grado.setValue(_grados.get(0));
         });
     }
 }
