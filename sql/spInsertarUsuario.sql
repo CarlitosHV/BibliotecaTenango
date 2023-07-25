@@ -39,8 +39,8 @@ BEGIN
     WHERE nombre = i_grado_escolar;
 
 
-	IF NOT EXISTS (SELECT 1 FROM NOMBRES WHERE nombre = i_nombre AND apellido_paterno = i_apellido_paterno 
-    AND apellido_materno = i_apellido_materno) THEN
+	IF NOT EXISTS (SELECT 1 FROM NOMBRES n WHERE n.nombre = i_nombre AND n.apellido_paterno = i_apellido_paterno 
+    AND n.apellido_materno = i_apellido_materno) THEN
     INSERT INTO NOMBRES (nombre, apellido_paterno, apellido_materno)
     VALUES (i_nombre, apellido_paterno, i_apellido_materno);
     END IF;
