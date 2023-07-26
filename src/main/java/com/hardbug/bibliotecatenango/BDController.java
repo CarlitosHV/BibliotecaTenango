@@ -354,7 +354,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<Catalogo> ConsultarGradosEscolares(){
+    public ArrayList<Catalogo> ConsultarGradosEscolares(Boolean InsertBlank){
         ArrayList<Catalogo> _grados = new ArrayList<>();
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -365,7 +365,9 @@ public class BDController {
 
             ResultSet rs = stmt.getResultSet();
 
-            _grados.add(new Catalogo("Selecciona un grado"));
+            if (InsertBlank){
+                _grados.add(new Catalogo("Selecciona un grado"));
+            }
             while (rs.next()) {
                 Catalogo catalogo = new Catalogo();
                 catalogo.setId(rs.getInt("id"));
@@ -379,6 +381,44 @@ public class BDController {
         }catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
+        }
+    }
+
+    public boolean InsertarEditarOcupacion(Catalogo Ocupacion){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarOcupacion(?,?)");
+            stmt.setInt(1, Ocupacion.getId());
+            stmt.setString(2, Ocupacion.getNombre());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean InsertarEditarGrado(Catalogo Ocupacion){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarGrado(?,?)");
+            stmt.setInt(1, Ocupacion.getId());
+            stmt.setString(2, Ocupacion.getNombre());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
         }
     }
 }

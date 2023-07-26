@@ -337,7 +337,7 @@ public class AltasUsersController implements Initializable {
         Task<ArrayList<Catalogo>> grados = new Task<ArrayList<Catalogo>>() {
             @Override
             protected ArrayList<Catalogo> call() throws Exception {
-                return bd.ConsultarGradosEscolares();
+                return bd.ConsultarGradosEscolares(true);
             }
         };
         new Thread(grados).start();
