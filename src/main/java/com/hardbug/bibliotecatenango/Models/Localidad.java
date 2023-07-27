@@ -4,6 +4,8 @@ public class Localidad {
     public Integer Id=0;
     public String Localidad="";
     public String Municipio="";
+    public Integer IdMunicipio = 0;
+    public Integer IdEstado = 0;
     public String Estado="";
     public Integer CP=0;
 

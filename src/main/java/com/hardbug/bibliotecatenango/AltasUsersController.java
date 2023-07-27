@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AltasUsersController implements Initializable {
+public class AltasUsersController extends BDController implements Initializable {
     @FXML
     private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
     Campo_apellido_materno, Campo_codigo, Campo_ocupacion, Campo_calle;
@@ -141,7 +141,11 @@ public class AltasUsersController implements Initializable {
                 IconoCarga.setVisible(true);
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
-                TareaLocalidades();
+                try {
+                    TareaLocalidades();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }else{
                 Combo_localidad.setDisable(true);
             }
@@ -172,22 +176,6 @@ public class AltasUsersController implements Initializable {
                 Combo_estado.setDisable(true);
             }else{
                 Combo_estado.setDisable(false);
-            }
-            if (newValue.length() == 5) {
-                /*try {
-                    IconoCarga.setVisible(true);
-                    IconoCarga.setProgress(-1.0);
-                    Fondo.setOpacity(0.5);
-                    TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }*/
-            }else{
-                Combo_localidad.getItems().clear();
-                Combo_municipio.getItems().clear();
-                Combo_municipio.setPromptText("Municipio");
-                Combo_estado.setPromptText("Estado");
-                Combo_localidad.setPromptText("Localidad");
             }
         });
     }
@@ -238,25 +226,19 @@ public class AltasUsersController implements Initializable {
         });
     }
 
-    private void TareaLocalidades() {
+    private void TareaLocalidades() throws SQLException {
         Estados estado = Combo_estado.getValue();
         Municipios municipio = Combo_municipio.getValue();
         IconoCarga.setVisible(true);
         Fondo.setOpacity(0.5);
-        CompletableFuture<ArrayList<Localidad>> completableFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return bd.BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new ArrayList<>();
-            }
-        });
-        completableFuture.thenAccept(localidades -> {
+        _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
+        Combo_localidad.setPromptText("Localidad");
+        Combo_localidad.getItems().setAll(_localidades);
+        if (!_localidades.isEmpty()){
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
-            Combo_localidad.setPromptText("Localidad");
-            Combo_localidad.getItems().setAll(localidades);
-        });
+        }
+
     }
 
     /*private void TareaCodigoPostal(int CP) throws SQLException {
