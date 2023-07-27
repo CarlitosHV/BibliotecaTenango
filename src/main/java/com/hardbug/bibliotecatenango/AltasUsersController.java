@@ -3,17 +3,14 @@ package com.hardbug.bibliotecatenango;
 import com.hardbug.bibliotecatenango.Models.Estados;
 import com.hardbug.bibliotecatenango.Models.Localidad;
 import com.hardbug.bibliotecatenango.Models.Municipios;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -26,6 +23,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AltasUsersController implements Initializable {
     @FXML
@@ -109,24 +109,31 @@ public class AltasUsersController implements Initializable {
             throw new RuntimeException(e);
         }
 
+      //bloqueo los campos de municipio y localidad al iniciar para que lleven un orden al seleccionar los campos
+        Combo_municipio.setDisable(true);
+        Combo_localidad.setDisable(true);
+
         Combo_estado.setOnAction(actionEvent -> {
+            Combo_localidad.setDisable(true);
             if (Combo_estado.getValue() != null){
+                Combo_municipio.setDisable(false);
                 Combo_municipio.getItems().clear();
                 _municipios.clear();
-                Combo_municipio.setPromptText("Municipio");
-                Combo_localidad.getItems().clear();
-                _localidades.clear();
-                Combo_localidad.setPromptText("Localidad");
-                Campo_codigo.setText("");
                 IconoCarga.setVisible(true);
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
                 TareaMunicipios();
+            } else{
+                Combo_municipio.setDisable(true);
+                Combo_localidad.setDisable(true);
             }
         });
 
         Combo_municipio.setOnAction(actionEvent -> {
+            Combo_localidad.setDisable(true);
+            Combo_municipio.setPromptText("Municipio");
             if(Combo_municipio.getValue() != null){
+                Combo_localidad.setDisable(false);
                 Combo_localidad.getItems().clear();
                 _localidades.clear();
                 Combo_localidad.setPromptText("Localidad");
@@ -135,18 +142,19 @@ public class AltasUsersController implements Initializable {
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
                 TareaLocalidades();
+            }else{
+                Combo_localidad.setDisable(true);
             }
         });
-
 
         Combo_localidad.setOnAction(actionEvent -> {
             Localidad localidad = Combo_localidad.getValue();
             if (localidad != null) {
-                Campo_codigo.setText(String.valueOf(localidad.getCP()));
+                Campo_codigo.setText(localidad.getCP().toString());
             }
         });
 
-
+//crea un hipervinculo para buscar en curp
         Hyperlink_curp.setOnAction(actionEvent -> {
             Desktop desktop = Desktop.getDesktop();
             try {
@@ -158,6 +166,13 @@ public class AltasUsersController implements Initializable {
         });
 
         Campo_codigo.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 0){
+                Combo_municipio.setDisable(true);
+                Combo_localidad.setDisable(true);
+                Combo_estado.setDisable(true);
+            }else{
+                Combo_estado.setDisable(false);
+            }
             if (newValue.length() == 5) {
                 /*try {
                     IconoCarga.setVisible(true);
@@ -169,7 +184,6 @@ public class AltasUsersController implements Initializable {
                 }*/
             }else{
                 Combo_localidad.getItems().clear();
-                Combo_estado.getItems().clear();
                 Combo_municipio.getItems().clear();
                 Combo_municipio.setPromptText("Municipio");
                 Combo_estado.setPromptText("Estado");
@@ -184,7 +198,7 @@ public class AltasUsersController implements Initializable {
         Combo_estado.getItems().addAll(_estados);
     }
 
-    private void TareaMunicipios(){
+    private void TareaMunicipios() {
         Estados estado = Combo_estado.getValue();
         Task<ArrayList<Municipios>> traer_municipios = new Task<>() {
             @Override
@@ -192,13 +206,22 @@ public class AltasUsersController implements Initializable {
                 return bd.BuscarMunicipios(estado.getEstado());
             }
         };
-        new Thread(traer_municipios).start();
+        IconoCarga.setVisible(true);
+        Fondo.setOpacity(0.5);
+
         traer_municipios.setOnSucceeded(event -> {
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
-            _municipios = traer_municipios.getValue();
-            Combo_municipio.getItems().addAll(_municipios);
+            Combo_municipio.getItems().setAll(traer_municipios.getValue());
         });
+
+        traer_municipios.setOnFailed(event -> {
+            IconoCarga.setVisible(false);
+            Fondo.setOpacity(1.0);
+        });
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(traer_municipios);
+        executor.shutdown();
     }
 
     private void TareaMunicipiosCP(){
@@ -215,22 +238,24 @@ public class AltasUsersController implements Initializable {
         });
     }
 
-    private void TareaLocalidades(){
+    private void TareaLocalidades() {
         Estados estado = Combo_estado.getValue();
         Municipios municipio = Combo_municipio.getValue();
-        Task<ArrayList<Localidad>> traer_localidades = new Task<ArrayList<Localidad>>() {
-            @Override
-            protected ArrayList<Localidad> call() throws Exception {
+        IconoCarga.setVisible(true);
+        Fondo.setOpacity(0.5);
+        CompletableFuture<ArrayList<Localidad>> completableFuture = CompletableFuture.supplyAsync(() -> {
+            try {
                 return bd.BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ArrayList<>();
             }
-        };
-        new Thread(traer_localidades).start();
-        traer_localidades.setOnSucceeded(event -> {
+        });
+        completableFuture.thenAccept(localidades -> {
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
-            _localidades = traer_localidades.getValue();
             Combo_localidad.setPromptText("Localidad");
-            Combo_localidad.getItems().addAll(_localidades);
+            Combo_localidad.getItems().setAll(localidades);
         });
     }
 
@@ -254,6 +279,7 @@ public class AltasUsersController implements Initializable {
 
         }
     }*/
+    //Carga los estados en el combo estados
     private void ConfigurarCellFactory(){
         Combo_estado.setCellFactory(new Callback<ListView<Estados>, ListCell<Estados>>() {
             @Override
