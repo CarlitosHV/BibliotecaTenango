@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -15,6 +16,9 @@
           <font>
               <Font name="Roboto Light" size="12.0" />
           </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Label>
       <ListView fx:id="ListaGrados" layoutY="98.0" prefHeight="352.0" prefWidth="393.0" />
       <Label fx:id="LabelSinGrados" layoutX="84.0" layoutY="262.0" text="No hay grados registrados" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="82.0">

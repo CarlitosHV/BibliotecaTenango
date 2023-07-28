@@ -82,7 +82,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
         });
     }
 
-    private void configurarLista(){
+    protected void configurarLista(){
         _ocupaciones = ConsultarOcupaciones(false);
         if (!_ocupaciones.isEmpty()){
             LabelSinOcupaciones.setVisible(false);
@@ -90,7 +90,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             IconoCarga.setVisible(false);
             _ocupacionesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_ocupaciones));;
             ListaOcupaciones.setCellFactory(lv -> {
-                return new VistaCatalogoController(2);
+                return new VistaCatalogoController(2, new ControladorGradosEscolares(), this);
             });
             ListaOcupaciones.setItems(_ocupacionesfiltradas);
         }else{

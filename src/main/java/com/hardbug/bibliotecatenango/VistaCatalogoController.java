@@ -27,7 +27,8 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
     private FXMLLoader fxmlLoader;
     private EventHandler<ActionEvent> onItemSelected;
     BDController bd = new BDController();
-    ControladorGradosEscolares CGE = new ControladorGradosEscolares();
+    private ControladorGradosEscolares controladorGradosEscolares;
+    private ControladorOcupaciones controladorOcupaciones;
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
     }
@@ -35,10 +36,13 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
         this.onItemSelected = onItemSelected;
     }
 
-    public VistaCatalogoController(int Opcion) {
+    public VistaCatalogoController(int Opcion, ControladorGradosEscolares controladorGradosEscolares,
+                                   ControladorOcupaciones controladorOcupaciones) {
         super();
         fxmlLoader = new FXMLLoader(getClass().getResource("VistaCatalogo.fxml"));
         opcion = Opcion;
+        this.controladorGradosEscolares = controladorGradosEscolares;
+        this.controladorOcupaciones = controladorOcupaciones;
         try {
             Fondo = fxmlLoader.load();
             LabelNombre = (Label) fxmlLoader.getNamespace().get("LabelNombre");
@@ -81,13 +85,14 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
                 dialog.showAndWait().ifPresent(text -> {
                     if (text.isEmpty()) {
-                        CGE.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
+                        controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                     } else {
                         gradoseleccionado.setNombre(text);
                         if(bd.InsertarEditarGrado(gradoseleccionado)){
-                            CGE.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó el grado escolar: " + catalogo.getNombre());
+                            controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó el grado escolar: " + catalogo.getNombre());
+                            controladorGradosEscolares.configurarLista();
                         }else{
-                            CGE.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + catalogo.getNombre());
+                            controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + catalogo.getNombre());
                         }
                     }
                 });
@@ -101,13 +106,14 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
                 dialog.showAndWait().ifPresent(text -> {
                     if (text.isEmpty()) {
-                        CGE.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
+                        controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                     } else {
                         ocupacionseleccionada.setNombre(text);
                         if(bd.InsertarEditarOcupacion(ocupacionseleccionada)){
-                            CGE.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó la ocupación: " + catalogo.getNombre());
+                            controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó la ocupación: " + catalogo.getNombre());
+                            controladorOcupaciones.configurarLista();
                         }else{
-                            CGE.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + catalogo.getNombre());
+                            controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + catalogo.getNombre());
                         }
                     }
                 });
@@ -125,7 +131,10 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     if (bd.EliminarGrado(gradoseleccionado)){
-                        CGE.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado el grado: " + gradoseleccionado.getNombre());
+                        controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado el grado: " + gradoseleccionado.getNombre());
+                        controladorGradosEscolares.configurarLista();
+                    }else{
+                        controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "No se puede eliminar un grado si algún usuario la tiene en su perfil");
                     }
                 }else{
                     alert.close();
@@ -140,7 +149,10 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     if (bd.EliminarOcupacion(ocupacionseleccionada)){
-                        CGE.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado la ocupación: " + ocupacionseleccionada.getNombre());
+                        controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado la ocupación: " + ocupacionseleccionada.getNombre());
+                        controladorOcupaciones.configurarLista();
+                    }else{
+                        controladorOcupaciones.Alerta(Alert.AlertType.WARNING, "Error", "No se puede eliminar una ocupación si algún usuario la tiene en su perfil");
                     }
                 }else{
                     alert.close();

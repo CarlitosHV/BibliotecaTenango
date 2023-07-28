@@ -1,14 +1,11 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Catalogo;
-import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -29,6 +26,10 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     private TextField Buscador;
     ArrayList<Catalogo> _grados = new ArrayList<>();
     private static FilteredList<Catalogo> _gradosfiltrados;
+
+    public ListView<Catalogo> getLista(){
+        return ListaGrados;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -85,7 +86,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
         });
     }
 
-    private void configurarLista(){
+    protected void configurarLista(){
         _grados = ConsultarGradosEscolares(false);
         if (!_grados.isEmpty()){
             LabelSinGrados.setVisible(false);
@@ -93,7 +94,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             IconoCarga.setVisible(false);
             _gradosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_grados));;
             ListaGrados.setCellFactory(lv -> {
-                return new VistaCatalogoController(1);
+                return new VistaCatalogoController(1, this, new ControladorOcupaciones());
             });
             ListaGrados.setItems(_gradosfiltrados);
         }else{
