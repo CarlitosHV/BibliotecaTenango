@@ -62,7 +62,8 @@ public class ConfigController extends BDController implements Initializable {
         });
 
         LabelOcupaciones.setOnMouseClicked(event -> {
-
+            Stage stage = (Stage) fondo.getScene().getWindow();
+            abrirModalOcupaciones(stage);
         });
     }
 
@@ -75,6 +76,53 @@ public class ConfigController extends BDController implements Initializable {
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setTitle("Grados Escolares");
+            modalStage.setResizable(false);
+            modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+            Scene modalScene = new Scene(root);
+            if (IndexApp.TEMA == 0){
+                modalScene.getStylesheets().clear();
+                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+            }else if (IndexApp.TEMA == 1){
+                modalScene.getStylesheets().clear();
+                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+            }
+            modalStage.setScene(modalScene);
+
+            // Crear la animación de escala para iniciar el modal
+            ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.3), root);
+            scaleIn.setFromX(0);
+            scaleIn.setFromY(0);
+            scaleIn.setToX(1);
+            scaleIn.setToY(1);
+            // Crear la animación de escala para cerrar el modal
+            ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.3), root);
+            scaleOut.setFromX(1);
+            scaleOut.setFromY(1);
+            scaleOut.setToX(0);
+            scaleOut.setToY(0);
+            scaleOut.setOnFinished(e -> modalStage.close());
+
+            modalStage.setOnShowing(e -> scaleIn.play());
+            modalStage.setOnCloseRequest(e -> {
+                e.consume();
+                scaleOut.play();
+            });
+
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirModalOcupaciones(Stage ownerStage){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VistaOcupaciones.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.initOwner(ownerStage);
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setTitle("Ocupaciones");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
             Scene modalScene = new Scene(root);

@@ -1,14 +1,11 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Catalogo;
-import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -18,18 +15,18 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ControladorGradosEscolares extends BDController implements Initializable {
+public class ControladorOcupaciones extends BDController implements Initializable {
+
     @FXML
-    private Label LabelCrearGrado, LabelSinGrados;
+    private Label LabelCrearOcupacion, LabelSinOcupaciones;
     @FXML
-    private ListView<Catalogo> ListaGrados;
+    private ListView<Catalogo> ListaOcupaciones;
     @FXML
     private ProgressIndicator IconoCarga;
     @FXML
     private TextField Buscador;
-    ArrayList<Catalogo> _grados = new ArrayList<>();
-    private static FilteredList<Catalogo> _gradosfiltrados;
-
+    ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
+    private static FilteredList<Catalogo> _ocupacionesfiltradas;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarLista();
@@ -37,10 +34,10 @@ public class ControladorGradosEscolares extends BDController implements Initiali
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
             Search();
         });
-        LabelCrearGrado.setOnMouseClicked(event -> {
+        LabelCrearOcupacion.setOnMouseClicked(event -> {
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Crear nuevo grado escolar");
-            dialog.setHeaderText("Ingresa el nombre del grado");
+            dialog.setTitle("Crear nueva ocupación");
+            dialog.setHeaderText("Ingresa el nombre de la ocupación");
             dialog.setContentText("Nombre: ");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
@@ -48,12 +45,12 @@ public class ControladorGradosEscolares extends BDController implements Initiali
                 if (text.isEmpty()) {
                     Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                 } else {
-                    Catalogo grado = new Catalogo(text);
-                    if(InsertarEditarGrado(grado)){
-                        Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó el grado escolar: " + text);
+                    Catalogo ocupacion = new Catalogo(text);
+                    if(InsertarEditarOcupacion(ocupacion)){
+                        Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la ocupación: " + text);
                         configurarLista();
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + text);
+                        Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + text);
                     }
                 }
             });
@@ -63,7 +60,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     public void Alerta (Alert.AlertType TipoAlerta, String Titulo, String Contenido){
         Alert alert;
         if (TipoAlerta == Alert.AlertType.WARNING){
-             alert = new Alert(Alert.AlertType.WARNING);
+            alert = new Alert(Alert.AlertType.WARNING);
         }else{
             alert = new Alert(Alert.AlertType.CONFIRMATION);
         }
@@ -78,7 +75,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     private void Search() {
         IconoCarga.setVisible(true);
         String searchText = Buscador.getText().toLowerCase();
-        _gradosfiltrados.setPredicate(catalogo -> {
+        _ocupacionesfiltradas.setPredicate(catalogo -> {
             boolean match = catalogo.getNombre().toLowerCase().contains(searchText);
             Platform.runLater(() -> IconoCarga.setVisible(false));
             return match;
@@ -86,19 +83,19 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     }
 
     private void configurarLista(){
-        _grados = ConsultarGradosEscolares(false);
-        if (!_grados.isEmpty()){
-            LabelSinGrados.setVisible(false);
-            ListaGrados.setVisible(true);
+        _ocupaciones = ConsultarOcupaciones(false);
+        if (!_ocupaciones.isEmpty()){
+            LabelSinOcupaciones.setVisible(false);
+            ListaOcupaciones.setVisible(true);
             IconoCarga.setVisible(false);
-            _gradosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_grados));;
-            ListaGrados.setCellFactory(lv -> {
-                return new VistaCatalogoController(1);
+            _ocupacionesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_ocupaciones));;
+            ListaOcupaciones.setCellFactory(lv -> {
+                return new VistaCatalogoController(2);
             });
-            ListaGrados.setItems(_gradosfiltrados);
+            ListaOcupaciones.setItems(_ocupacionesfiltradas);
         }else{
-            LabelSinGrados.setVisible(true);
-            ListaGrados.setVisible(false);
+            LabelSinOcupaciones.setVisible(true);
+            ListaOcupaciones.setVisible(false);
         }
     }
 }

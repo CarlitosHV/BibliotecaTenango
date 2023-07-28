@@ -19,7 +19,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="LabelNombre" prefHeight="20.0" prefWidth="130.0" text="Label" GridPane.columnSpan="2">
+            <Label fx:id="LabelNombre" prefHeight="20.0" prefWidth="130.0" text="Label" textFill="#433939" GridPane.columnSpan="2">
                <font>
                   <Font name="Roboto Light" size="14.0" />
                </font>

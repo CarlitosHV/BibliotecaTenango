@@ -384,6 +384,36 @@ public class BDController {
         }
     }
 
+    public ArrayList<Catalogo> ConsultarOcupaciones(Boolean InsertBlank){
+        ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnseleccionartodasocupaciones()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            if (InsertBlank){
+                _ocupaciones.add(new Catalogo("Selecciona una ocupación"));
+            }
+            while (rs.next()) {
+                Catalogo catalogo = new Catalogo();
+                catalogo.setId(rs.getInt("id_ocupacion"));
+                catalogo.setNombre(rs.getString("nombre"));
+                _ocupaciones.add(catalogo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _ocupaciones;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
     public boolean InsertarEditarOcupacion(Catalogo Ocupacion){
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -403,14 +433,50 @@ public class BDController {
         }
     }
 
-    public boolean InsertarEditarGrado(Catalogo Ocupacion){
+    public boolean InsertarEditarGrado(Catalogo Grado){
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
 
             PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarGrado(?,?)");
+            stmt.setInt(1, Grado.getId());
+            stmt.setString(2, Grado.getNombre());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean EliminarGrado(Catalogo Grado){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spEliminarGrado(?)");
+            stmt.setInt(1, Grado.getId());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean EliminarOcupacion(Catalogo Ocupacion){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spEliminarOcupacion(?)");
             stmt.setInt(1, Ocupacion.getId());
-            stmt.setString(2, Ocupacion.getNombre());
             stmt.execute();
 
             stmt.close();
