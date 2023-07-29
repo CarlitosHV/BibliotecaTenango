@@ -396,7 +396,7 @@ public class BDController {
             ResultSet rs = stmt.getResultSet();
 
             if (InsertBlank){
-                _ocupaciones.add(new Catalogo("Selecciona una ocupación"));
+                _ocupaciones.add(new Catalogo("Selecciona ocupación"));
             }
             while (rs.next()) {
                 Catalogo catalogo = new Catalogo();

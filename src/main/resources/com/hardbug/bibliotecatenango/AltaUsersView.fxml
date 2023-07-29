@@ -138,13 +138,9 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField id="Textfields" fx:id="Campo_ocupacion" layoutX="161.0" layoutY="307.0" onKeyTyped="#validar_ocupacion" prefHeight="38.0" prefWidth="155.0" promptText="Ocupación" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font>
-            </TextField>
             <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
             <ComboBox fx:id="Combo_grado" prefHeight="42.0" prefWidth="150.0" GridPane.columnIndex="2" />
+            <ComboBox fx:id="Combo_ocupacion" layoutX="228.0" layoutY="19.0" prefHeight="42.0" prefWidth="150.0" />
          </children>
       </GridPane>
       <GridPane layoutX="150.0" layoutY="458.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" vgap="12.0">

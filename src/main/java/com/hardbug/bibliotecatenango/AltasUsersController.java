@@ -1,8 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
-import com.hardbug.bibliotecatenango.Models.Estados;
-import com.hardbug.bibliotecatenango.Models.Localidad;
-import com.hardbug.bibliotecatenango.Models.Municipios;
+import com.hardbug.bibliotecatenango.Models.*;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +20,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -30,9 +29,11 @@ import java.util.concurrent.Executors;
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
     private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
-    Campo_apellido_materno, Campo_codigo, Campo_ocupacion, Campo_calle;
+    Campo_apellido_materno, Campo_codigo, Campo_calle;
     @FXML
-    private ComboBox Combo_sexo;
+    private ComboBox<String> Combo_sexo;
+    @FXML
+    private ComboBox<Catalogo> Combo_ocupacion;
     @FXML
     private ComboBox<Estados> Combo_estado;
     @FXML
@@ -40,7 +41,7 @@ public class AltasUsersController extends BDController implements Initializable 
     @FXML
     private ComboBox<Localidad> Combo_localidad;
     @FXML
-    private ComboBox Combo_grado;
+    private ComboBox<Catalogo> Combo_grado;
     @FXML
     private Button BotonGuardar;
     @FXML
@@ -56,12 +57,18 @@ public class AltasUsersController extends BDController implements Initializable 
 
     private static ArrayList<Municipios> _municipios = new ArrayList<>();
     private static ArrayList<Localidad> _localidades = new ArrayList<>();
+    private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
+    private static ArrayList<Catalogo> _grados = new ArrayList<>();
+    private static ArrayList<String> _sexos = new ArrayList<>();
 
     Estados estados = new Estados();
     Municipios municipios = new Municipios();
-    private static int Acumulador = 0;
-
     BDController bd = new BDController();
+    Usuario mUsuario;
+
+
+
+
 
     public void validar_correo(KeyEvent keyEvent) {
     }
@@ -102,7 +109,6 @@ public class AltasUsersController extends BDController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IconoCarga.setVisible(false);
-        ConfigurarCellFactory();
         try {
             ConfigurarCombos();
         } catch (SQLException e) {
@@ -158,7 +164,7 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         });
 
-//crea un hipervinculo para buscar en curp
+        //crea un hipervinculo para buscar en curp
         Hyperlink_curp.setOnAction(actionEvent -> {
             Desktop desktop = Desktop.getDesktop();
             try {
@@ -178,12 +184,27 @@ public class AltasUsersController extends BDController implements Initializable 
                 Combo_estado.setDisable(false);
             }
         });
+
+        BotonGuardar.setOnAction(event -> {
+            mUsuario = new Usuario();
+            mUsuario.setNombre(Campo_nombre.getText().trim());
+            mUsuario.setApellidoPaterno(Campo_apellido_paterno.getText().trim());
+            mUsuario.setApellidoMaterno(Campo_apellido_materno.getText().trim());
+
+        });
+
     }
 
     private void ConfigurarCombos() throws SQLException {
         ArrayList<Estados> _estados = bd.BuscarEstados();
         ConfigurarCellFactory();
         Combo_estado.getItems().addAll(_estados);
+        _ocupaciones = bd.ConsultarOcupaciones(false);
+        _grados = bd.ConsultarGradosEscolares(false);
+        Combo_grado.getItems().addAll(_grados);
+        Combo_ocupacion.getItems().addAll(_ocupaciones);
+        _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
+        Combo_sexo.getItems().addAll(_sexos);
     }
 
     private void TareaMunicipios() {
