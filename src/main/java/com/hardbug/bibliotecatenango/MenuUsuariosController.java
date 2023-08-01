@@ -57,13 +57,13 @@ public class MenuUsuariosController implements Initializable {
     private void Search() {
         IconoCarga.setVisible(true);
         String searchText = BuscadorUsuarios.getText().toLowerCase();
-        _usuariosfiltrados.setPredicate(libro -> {
-            boolean match = libro.getNombre().toLowerCase().contains(searchText)
-                    || libro.getCorreo().toLowerCase().contains(searchText)
-                    || libro.getCurp().toLowerCase().contains(searchText)
-                    || libro.getCalle().toLowerCase().contains(searchText)
-                    || libro.getOcupacion().toLowerCase().contains(searchText)
-                    || libro.getTelefono().toString().toLowerCase().contains(searchText);
+        _usuariosfiltrados.setPredicate(usuario -> {
+            boolean match = usuario.getNombre().toLowerCase().contains(searchText)
+                    || usuario.getCorreo().toLowerCase().contains(searchText)
+                    || usuario.getCurp().toLowerCase().contains(searchText)
+                    || usuario.getCalle().toLowerCase().contains(searchText)
+                    || usuario.getOcupacion().getNombre().contains(searchText)
+                    || usuario.getTelefono().toString().toLowerCase().contains(searchText);
             Platform.runLater(() -> IconoCarga.setVisible(false));
             return match;
         });

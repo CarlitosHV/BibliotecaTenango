@@ -487,4 +487,24 @@ public class BDController {
             return false;
         }
     }
+
+    public boolean InsertarActualizarUsuario(Usuario mUsuario){
+        /*
+            Aquí se va a hacer la inserción del nombre
+            retornar id
+
+            IF(IdNombre > 0){
+
+                    Insertar la dirección
+            If(IdDireccion > 0){
+
+                Insertar el usuario
+         */
+
+
+        /*
+           Función es insertar el nombre y obtener y retornar el valor del id insertado
+         */
+        return true;
+    }
 }

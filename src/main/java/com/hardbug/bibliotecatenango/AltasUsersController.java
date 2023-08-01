@@ -15,6 +15,7 @@ import javafx.util.Callback;
 
 import java.awt.*;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -115,7 +116,7 @@ public class AltasUsersController extends BDController implements Initializable 
             throw new RuntimeException(e);
         }
 
-      //bloqueo los campos de municipio y localidad al iniciar para que lleven un orden al seleccionar los campos
+        //bloqueo los campos de municipio y localidad al iniciar para que lleven un orden al seleccionar los campos
         Combo_municipio.setDisable(true);
         Combo_localidad.setDisable(true);
 
@@ -190,9 +191,26 @@ public class AltasUsersController extends BDController implements Initializable 
             mUsuario.setNombre(Campo_nombre.getText().trim());
             mUsuario.setApellidoPaterno(Campo_apellido_paterno.getText().trim());
             mUsuario.setApellidoMaterno(Campo_apellido_materno.getText().trim());
-
+            mUsuario.setSexo(Combo_sexo.getValue());
+            mUsuario.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
+            mUsuario.setCorreo(Campo_correo.getText().trim());
+            try {
+                String contraseniacifrada = ClaseCifrarContrasenia.encript(Campo_contrasenia.getText().trim());
+                mUsuario.setContrasenia(contraseniacifrada);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            mUsuario.setCurp(Campo_curp.getText().trim());
+            mUsuario.setTelefono(new BigInteger(Campo_telefono.getText().trim()));
+            mUsuario.setOcupacion(Combo_ocupacion.getValue());
+            mUsuario.setGradoEscolar(Combo_grado.getValue());
+            mUsuario.setCodigoPostal(Integer.parseInt(Campo_codigo.getText().trim()));
+            mUsuario.setEstado(Combo_estado.getValue());
+            mUsuario.setMunicipio(Combo_municipio.getValue());
+            mUsuario.setLocalidad(Combo_localidad.getValue());
+            mUsuario.setCalle(Campo_calle.getText().trim());
+            InsertarActualizarUsuario(mUsuario);
         });
-
     }
 
     private void ConfigurarCombos() throws SQLException {
