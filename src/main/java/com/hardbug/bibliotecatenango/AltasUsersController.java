@@ -9,23 +9,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
@@ -165,6 +168,7 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         });
 
+
         //crea un hipervinculo para buscar en curp
         Hyperlink_curp.setOnAction(actionEvent -> {
             Desktop desktop = Desktop.getDesktop();
@@ -194,6 +198,8 @@ public class AltasUsersController extends BDController implements Initializable 
             mUsuario.setSexo(Combo_sexo.getValue());
             mUsuario.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
             mUsuario.setCorreo(Campo_correo.getText().trim());
+            Nombres nombre = new Nombres(mUsuario.getNombre(), mUsuario.getApellidoPaterno(), mUsuario.getApellidoMaterno());
+            mUsuario.nombre = nombre;
             try {
                 String contraseniacifrada = ClaseCifrarContrasenia.encript(Campo_contrasenia.getText().trim());
                 mUsuario.setContrasenia(contraseniacifrada);
@@ -209,7 +215,18 @@ public class AltasUsersController extends BDController implements Initializable 
             mUsuario.setMunicipio(Combo_municipio.getValue());
             mUsuario.setLocalidad(Combo_localidad.getValue());
             mUsuario.setCalle(Campo_calle.getText().trim());
-            InsertarActualizarUsuario(mUsuario);
+            Direccion direccion = new Direccion(mUsuario.getCalle(), Campo_codigo.getText().trim(), mUsuario.Municipio.getId(), mUsuario.Estado.getId(), mUsuario.Localidad.Id);
+            mUsuario.direccion = direccion;
+            try {
+                if (InsertarActualizarUsuario(mUsuario)){
+                    CrearAlerta("¡Usuario registrado!", "El usuario: " + mUsuario.getNombre() + "ha sido registrado", Alert.AlertType.INFORMATION);
+                    ConfigurarCombos();
+                }else{
+                    CrearAlerta("Error", "Ha ocurrido un error al registrar al usuario", Alert.AlertType.WARNING);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -253,6 +270,7 @@ public class AltasUsersController extends BDController implements Initializable 
 
     private void TareaMunicipiosCP(){
         Estados estado = Combo_estado.getValue();
+
         Task<ArrayList<Municipios>> traer_municipios = new Task<>() {
             @Override
             protected ArrayList<Municipios> call() throws SQLException {return bd.BuscarMunicipios(estado.getEstado());
@@ -352,5 +370,31 @@ public class AltasUsersController extends BDController implements Initializable 
                 };
             }
         });
+    }
+
+    void CrearAlerta(String titulo, String contenido, Alert.AlertType tipo) throws SQLException {
+        Alert alerta;
+        if (tipo == Alert.AlertType.WARNING) {
+            alerta = new Alert(Alert.AlertType.WARNING);
+        } else {
+            alerta = new Alert(Alert.AlertType.INFORMATION);
+        }
+        DialogPane dialogPane = alerta.getDialogPane();
+        Stage stage = (Stage) dialogPane.getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
+        Label content = new Label(alerta.getContentText());
+        alerta.setHeaderText(null);
+        alerta.setTitle(titulo);
+        content.setText(contenido);
+        if (IndexApp.TEMA == 0) {
+            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: white");
+            content.setTextFill(javafx.scene.paint.Color.BLACK);
+            alerta.getDialogPane().setContent(content);
+        } else {
+            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
+            content.setTextFill(Color.WHITESMOKE);
+            alerta.getDialogPane().setContent(content);
+        }
+        alerta.showAndWait();
     }
 }

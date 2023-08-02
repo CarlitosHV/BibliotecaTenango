@@ -3,27 +3,29 @@ package com.hardbug.bibliotecatenango.Models;
 import java.math.BigInteger;
 
 public class Usuario {
-    int IdUsuario = 0;
-    String Nombre = "";
-    String ApellidoPaterno = "";
-    String ApellidoMaterno = "";
-    String Correo = "";
-    String Contrasenia = "";
-    BigInteger Telefono = BigInteger.valueOf(0);
-    int Edad = 0;
-    String sexo = "";
-    String Curp = "";
-    Integer IdGradoEscolar = 0;
-    Catalogo GradoEscolar = null;
-    Integer IdTipoUsuario = 1;
-    Integer IdOcupacion = 0;
-    Catalogo Ocupacion = null;
-    String Calle = "";
-    Estados Estado = null;
-    Municipios Municipio = null;
-    Localidad Localidad = null;
+    public int IdUsuario = 0;
+    public String Nombre = "";
+    public String ApellidoPaterno = "";
+    public String ApellidoMaterno = "";
+    public String Correo = "";
+    public String Contrasenia = "";
+    public BigInteger Telefono = BigInteger.valueOf(0);
+    public int Edad = 0;
+    public String sexo = "";
+    public String Curp = "";
+    public Integer IdGradoEscolar = 0;
+    public Catalogo GradoEscolar = null;
+    public Integer IdTipoUsuario = 1;
+    public Catalogo TipoUsuario = null;
+    public Integer IdOcupacion = 0;
+    public Catalogo Ocupacion = null;
+    public String Calle = "";
+    public Estados Estado = null;
+    public Municipios Municipio = null;
+    public Localidad Localidad = null;
     int CodigoPostal = 0;
-
+    public Nombres nombre = null;
+    public Direccion direccion = null;
     public Usuario() {
     }
 

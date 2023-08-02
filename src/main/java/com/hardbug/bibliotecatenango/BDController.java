@@ -2,6 +2,7 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.*;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -488,23 +489,142 @@ public class BDController {
         }
     }
 
-    public boolean InsertarActualizarUsuario(Usuario mUsuario){
-        /*
-            Aquí se va a hacer la inserción del nombre
-            retornar id
+    public boolean InsertarActualizarUsuario(Usuario mUsuario) throws Exception {
+        Integer IdNombre = 0;
+        Integer IdDir = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
 
-            IF(IdNombre > 0){
+            PreparedStatement stmt = conn.prepareStatement("select * from fninsertaractualizarnombre(?,?,?,?)");
+            stmt.setInt(1, mUsuario.nombre.IdNombre);
+            stmt.setString(2, mUsuario.nombre.Nombre);
+            stmt.setString(3, mUsuario.nombre.ApellidoPaterno);
+            stmt.setString(4, mUsuario.nombre.ApellidoMaterno);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
 
-                    Insertar la dirección
-            If(IdDireccion > 0){
+            while(rs.next()){
+                IdNombre = rs.getInt("fninsertaractualizarnombre");
+            }
 
-                Insertar el usuario
-         */
+            if (IdNombre > 0){
+                stmt.close();
+                mUsuario.nombre.IdNombre = IdNombre;
+                PreparedStatement stmtDir = conn.prepareStatement("select * from fninsertaractualizardireccion(?,?,?,?,?,?)");
+                stmtDir.setInt(1, mUsuario.direccion.IdDireccion);
+                stmtDir.setString(2, mUsuario.direccion.Calle);
+                stmtDir.setString(3, mUsuario.direccion.CP);
+                stmtDir.setInt(4, mUsuario.direccion.IdMunicipio);
+                stmtDir.setInt(5, mUsuario.direccion.IdEstado);
+                stmtDir.setInt(6, mUsuario.direccion.IdLocalidad);
+                stmtDir.execute();
+                ResultSet rsDir = stmtDir.getResultSet();
+                while (rsDir.next()){
+                    IdDir = rsDir.getInt("fninsertaractualizardireccion");
+                }
 
+                if (IdDir > 0){
+                    stmtDir.close();
+                    mUsuario.direccion.IdDireccion = IdDir;
+                    PreparedStatement stmtUser = conn.prepareStatement("call spInsertarActualizarUsuario(?,?,?,?,?,?,?,?,?,?,?,?)");
+                    stmtUser.setInt(1, mUsuario.IdUsuario);
+                    stmtUser.setLong(2, mUsuario.Telefono.longValueExact());
+                    stmtUser.setInt(3, mUsuario.getEdad());
+                    stmtUser.setString(4, mUsuario.sexo);
+                    stmtUser.setString(5, mUsuario.Curp);
+                    stmtUser.setString(6, mUsuario.Contrasenia);
+                    stmtUser.setInt(7, mUsuario.GradoEscolar.getId());
+                    stmtUser.setString(8, mUsuario.getCorreo());
+                    stmtUser.setInt(9, mUsuario.nombre.IdNombre);
+                    stmtUser.setInt(10, mUsuario.IdTipoUsuario);
+                    stmtUser.setInt(11, mUsuario.Ocupacion.getId());
+                    stmtUser.setInt(12, mUsuario.direccion.IdDireccion);
+                    stmtUser.execute();
+                    stmtUser.close();
+                    conn.close();
+                    if (mUsuario.IdUsuario == 0){
+                        new EmailSender().emailSender(mUsuario.getCorreo(),
+                                "Bienvenido, " + mUsuario.getNombre() + "\n" + """
+                                Tu correo ha sido registrado en el sistema de Biblioteca Pública Municipal Lic. Abel C. Salazar.
+                                ¡Ahora puedes solicitar libros con tu cuenta al proporcionar tu CURP!
+                                Dudas o sugerencias al correo: direccion.educacion@tenangodelvalle.gob.mx
+                                
+                                *Este mensaje ha sido generado automáticamente*
+                            """);
+                    }else{
+                        new EmailSender().emailSender(mUsuario.getCorreo(), """
+                                Tu cuenta ha sido actualizada 
+                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
+                                De lo contrario, haz caso omiso a este mensaje                              
+                                
+                                *Este mensaje ha sido generado automáticamente*
+                                """);
+                    }
+                    return true;
+                }else{
+                    conn.close();
+                    return false;
+                }
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
 
-        /*
-           Función es insertar el nombre y obtener y retornar el valor del id insertado
-         */
-        return true;
+    public ArrayList<Usuario> MostrarTodosUsuarios(){
+        ArrayList<Usuario> _usuarios = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnseleccionartodosusuarios()");
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                Usuario usuario = new Usuario();
+                usuario.IdUsuario = rs.getInt("id_usuario");
+                usuario.setTelefono(new BigInteger(String.valueOf(rs.getLong("telefono"))));
+                usuario.setEdad(rs.getInt("edad"));
+                usuario.sexo = rs.getString("sexo");
+                usuario.setCurp(rs.getString("curp"));
+                /*String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
+                usuario.Contrasenia = contradecifrada;*/
+                usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
+                usuario.setCorreo(rs.getString("correo"));
+                Nombres nombre = new Nombres();
+                nombre.IdNombre = rs.getInt("id_nombre");
+                nombre.Nombre = rs.getString("nombre");
+                nombre.ApellidoPaterno = rs.getString("apellido_paterno");
+                nombre.ApellidoMaterno = rs.getString("apellido_materno");
+                usuario.nombre = nombre;
+                usuario.TipoUsuario = new Catalogo(rs.getInt("id_tipo_usuario"), rs.getString("tipo_usuario"));
+                usuario.Ocupacion = new Catalogo(rs.getInt("id_ocupacion"), rs.getString("ocupacion"));
+                Direccion direccion = new Direccion();
+                direccion.IdDireccion = rs.getInt("id_direccion");
+                direccion.setCalle(rs.getString("calle"));
+                direccion.setCP(rs.getString("codigo_postal"));
+                direccion.IdMunicipio = rs.getInt("id_municipio");
+                direccion.IdEstado = rs.getInt("id_estado");
+                direccion.IdLocalidad = rs.getInt("id_localidad");
+                usuario.direccion = direccion;
+                _usuarios.add(usuario);
+            }
+
+            stmt.close();
+            conn.close();
+            return _usuarios;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

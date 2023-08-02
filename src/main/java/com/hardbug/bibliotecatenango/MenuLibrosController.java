@@ -124,9 +124,7 @@ public class MenuLibrosController implements Initializable {
             LabelSinLibros.setVisible(false);
             LibrosListView.setVisible(true);
             _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
-            LibrosListView.setCellFactory(lv -> {
-                return new BookCrudController();
-            });
+            LibrosListView.setCellFactory(lv -> new BookCrudController());
             LibrosListView.setItems(_librosfiltrados);
         }else{
             LabelSinLibros.setVisible(true);

@@ -117,15 +117,13 @@ public class MenuUsuariosController implements Initializable {
     }
 
     void configurarLista(){
-        //_usuarios = bd.TraerLibros();
+        _usuarios = bd.MostrarTodosUsuarios();
         IconoCarga.setVisible(false);
         if (!_usuarios.isEmpty()){
             LabelSinUsuarios.setVisible(false);
             UsuariosListView.setVisible(true);
             _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));;
-            /*UsuariosListView.setCellFactory(lv -> {
-                return new BookCrudController();
-            });*/
+            UsuariosListView.setCellFactory(lv -> new UserItemController());
             UsuariosListView.setItems(_usuariosfiltrados);
         }else{
             LabelSinUsuarios.setVisible(true);
