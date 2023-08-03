@@ -30,6 +30,9 @@ public class IndexController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ViewSwitcher.showTo(View.MENU_LATERAL, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
+        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, rootPane);
+        Node contentNodeRight = rootPane.getRight();
+        contentNodeRight.setTranslateX(400);
         Node contentNodeLeft = rootPane.getLeft();
         contentNodeLeft.setTranslateX(-250);
         ObtenerFecha();

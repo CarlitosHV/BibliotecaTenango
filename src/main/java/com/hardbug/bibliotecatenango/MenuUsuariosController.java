@@ -43,6 +43,11 @@ public class MenuUsuariosController implements Initializable {
     BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Parent bp = ViewSwitcher.getScene().getRoot();
+        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+        ViewSwitcher.showTo(View.DETALLES_USUARIOS, IndexApp.TEMA, pb);
+        Node contentNodeRight = pb.getRight();
+        contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
@@ -60,7 +65,7 @@ public class MenuUsuariosController implements Initializable {
         IconoCarga.setVisible(true);
         String searchText = BuscadorUsuarios.getText().toLowerCase();
         _usuariosfiltrados.setPredicate(usuario -> {
-            boolean match = usuario.getNombre().toLowerCase().contains(searchText)
+            boolean match = usuario.nombre.GetNombreCompleto().toLowerCase().contains(searchText)
                     || usuario.getCorreo().toLowerCase().contains(searchText)
                     || usuario.getCurp().toLowerCase().contains(searchText)
                     || usuario.getCalle().toLowerCase().contains(searchText)
