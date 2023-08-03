@@ -10,7 +10,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -29,6 +34,8 @@ public class BuscadorLibrosController implements Initializable {
     private Button BotonBuscar;
     @FXML
     private TextField Buscador;
+    @FXML
+    private AnchorPane Fondo;
 
 
     @Override

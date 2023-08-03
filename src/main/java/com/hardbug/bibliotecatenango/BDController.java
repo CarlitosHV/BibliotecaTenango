@@ -339,9 +339,11 @@ public class BDController {
             while (rs.next()) {
                 Localidad localidad = new Localidad();
                 localidad.setId(rs.getInt("id_localidad"));
-                localidad.setLocalidad(rs.getString("nombre_localidad"));
-                localidad.setMunicipio(rs.getString("nombre_municipio"));
-                localidad.setEstado(rs.getString("nombre_estado"));
+                localidad.setLocalidad(rs.getString("localidad"));
+                localidad.IdMunicipio = (rs.getInt("id_municipio"));
+                localidad.setMunicipio(rs.getString("municipio"));
+                localidad.IdEstado = rs.getInt("id_estado");
+                localidad.setEstado(rs.getString("estado"));
                 localidad.setCP(cp);
                 _localidades.add(localidad);
             }
@@ -611,8 +613,11 @@ public class BDController {
                 direccion.setCalle(rs.getString("calle"));
                 direccion.setCP(rs.getString("codigo_postal"));
                 direccion.IdMunicipio = rs.getInt("id_municipio");
+                direccion.Municipio = rs.getString("municipio");
                 direccion.IdEstado = rs.getInt("id_estado");
+                direccion.Estado = rs.getString("estado");
                 direccion.IdLocalidad = rs.getInt("id_localidad");
+                direccion.Localidad = rs.getString("localidad");
                 usuario.direccion = direccion;
                 _usuarios.add(usuario);
             }

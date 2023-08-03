@@ -34,8 +34,8 @@ public class UserDetailsController implements Initializable {
     public void initData(Usuario mUsuario) {
         LabelNombre.setText(mUsuario.nombre.GetNombreCompleto());
         LabelCorreo.setText("Correo: " + mUsuario.getCorreo());
-        LabelDireccion.setText("Dirección: " + mUsuario.direccion.getDireccionCompleta());
-        LabelOcupacion.setText("Ocupacion: " + mUsuario.getOcupacion().getNombre());
+        LabelDireccion.setText(mUsuario.direccion.getDireccionCompleta());
+        LabelOcupacion.setText("Ocupación: " + mUsuario.getOcupacion().getNombre());
         LabelGradoEscolar.setText("Grado escolar: " + mUsuario.getGradoEscolar().getNombre());
         LabelCurp.setText("CURP: " + mUsuario.getCurp());
         LabelEdad.setText("Edad: " + mUsuario.getEdad());
@@ -71,10 +71,10 @@ public class UserDetailsController implements Initializable {
         });
 
         ButtonEditar.setOnAction(actionEvent -> {
-            /*
-            EditBooksController.clave_registro = Clave;
+            AltasUsersController.editUsuario = usuario;
+            AltasUsersController.OPERACION = 2;
             Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
-            mostrarVentanaModal(stage);*/
+            mostrarVentanaModal(stage);
         });
     }
 
@@ -130,27 +130,25 @@ public class UserDetailsController implements Initializable {
         return alerta;
     }
 
-    /*
+
     private void mostrarVentanaModal(Stage ownerStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditBooksView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Datos del libro");
+            modalStage.setTitle("Datos a editar del usuario");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-            EditBooksController modalcontroller = fxmlLoader.getController();
-            modalcontroller.setModalStage(modalStage);
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -170,7 +168,6 @@ public class UserDetailsController implements Initializable {
 
             modalStage.setOnShowing(e -> scaleIn.play());
             modalStage.setOnCloseRequest(e -> {
-                EditBooksController.clave_registro = "";
                 e.consume();
                 scaleOut.play();
             });
@@ -179,5 +176,5 @@ public class UserDetailsController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
