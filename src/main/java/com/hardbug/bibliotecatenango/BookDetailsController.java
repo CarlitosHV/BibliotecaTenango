@@ -33,6 +33,18 @@ public class BookDetailsController implements Initializable {
     int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
 
     public static int SOLICITAR = 0, OPERACION_CRUD = 1;
+
+    private BuscadorLibrosController buscadorLibrosController;
+    private MenuLibrosController menuLibrosController;
+
+    public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
+        this.buscadorLibrosController = buscadorLibrosController;
+    }
+
+    public void setmenuLibrosController(MenuLibrosController menuLibrosController){
+        this.menuLibrosController = menuLibrosController;
+    }
+
     public void initData(String titulo, String autor, String editorial, String clave, String estante, String clasificacion, String descripcion, int existencias, int operacion) {
         Clave = clave;
         LabelTitulo.setText(titulo);
@@ -61,6 +73,7 @@ public class BookDetailsController implements Initializable {
         });
 
         ButtonEliminar.setOnAction(actionEvent -> {
+            CerrarVista();
             Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText(),  ALERTA_PRECAUCION);
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -70,6 +83,7 @@ public class BookDetailsController implements Initializable {
                     Alert al = crearAlerta("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!", ALERTA_CONFIRMACION);
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
+                        menuLibrosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
@@ -80,9 +94,17 @@ public class BookDetailsController implements Initializable {
         });
 
         ButtonEditar.setOnAction(actionEvent -> {
+            CerrarVista();
             EditBooksController.clave_registro = Clave;
             Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
             mostrarVentanaModal(stage);
+        });
+
+        ButtonSolicitar.setOnAction(event -> {
+            /*
+            Falta la lógica pero ya se implementa la vista cerrada
+             */
+            CerrarVista();
         });
     }
 
@@ -151,6 +173,8 @@ public class BookDetailsController implements Initializable {
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
             EditBooksController modalcontroller = fxmlLoader.getController();
             modalcontroller.setModalStage(modalStage);
+            modalcontroller.setBuscadorLibrosController(buscadorLibrosController);
+            modalcontroller.setMenuLibrosController(menuLibrosController);
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();

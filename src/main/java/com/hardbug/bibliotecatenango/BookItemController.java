@@ -24,6 +24,18 @@ public class BookItemController extends ListCell<Libro> {
     BDController bd = new BDController();
     private boolean isMenuOpen = false;
 
+    private BuscadorLibrosController buscadorLibrosController;
+
+    public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
+        this.buscadorLibrosController = buscadorLibrosController;
+    }
+
+    private MenuLibrosController menuLibrosController;
+
+    public void setMenuLibrosController(MenuLibrosController menuLibrosController){
+        this.menuLibrosController = menuLibrosController;
+    }
+
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
     }
@@ -33,8 +45,10 @@ public class BookItemController extends ListCell<Libro> {
     }
 
 
-    public BookItemController() {
+    public BookItemController(BuscadorLibrosController buscadorLibrosController, MenuLibrosController menuLibrosController) {
         super();
+        this.buscadorLibrosController = buscadorLibrosController;
+        this.menuLibrosController = menuLibrosController;
         fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
         try {
             fondoItem = fxmlLoader.load();
@@ -62,7 +76,7 @@ public class BookItemController extends ListCell<Libro> {
             LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
             LabelEditorial.setText("Editorial: " + libro.getEditorial());
             LabelEstante.setText(libro.getEstante());
-            LabelExistencias.setText(Integer.toString(libro.getExistencias()));
+            LabelExistencias.setText(String.valueOf(libro.getExistencias()));
             setGraphic(fondoItem);
         }
 
@@ -74,6 +88,8 @@ public class BookItemController extends ListCell<Libro> {
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
                 menuTransition.setToX(0);
                 BookDetailsController controller = ViewSwitcher.getBookDetailsController();
+                controller.setmenuLibrosController(menuLibrosController);
+                controller.setBuscadorLibrosController(buscadorLibrosController);
                 if (controller != null) {
                     controller.initData(libro.getTitulo_libro(), libro.getNombre_autor(), libro.getEditorial(), libro.getClave_registro(),
                             libro.getEstante(), libro.getClasificacion(), libro.getDescripcion_libro(), libro.getExistencias(), BookDetailsController.SOLICITAR);

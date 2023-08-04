@@ -41,6 +41,8 @@ public class MenuLibrosController implements Initializable {
     private static ArrayList<Libro> _libros = new ArrayList<>();
     private static FilteredList<Libro> _librosfiltrados;
     BDController bd = new BDController();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Parent bp = ViewSwitcher.getScene().getRoot();
@@ -111,6 +113,11 @@ public class MenuLibrosController implements Initializable {
             scaleOut.setToY(0);
             scaleOut.setOnFinished(e -> modalStage.close());
 
+            AltaLibrosController modalcontroller = fxmlLoader.getController();
+            modalcontroller.setModalStage(modalStage);
+            modalcontroller.setBuscadorLibrosController(new BuscadorLibrosController());
+            modalcontroller.setMenuLibrosController(this);
+
             modalStage.setOnShowing(e -> scaleIn.play());
             modalStage.setOnCloseRequest(e -> {
                 configurarLista();
@@ -131,7 +138,7 @@ public class MenuLibrosController implements Initializable {
             LabelSinLibros.setVisible(false);
             LibrosListView.setVisible(true);
             _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
-            LibrosListView.setCellFactory(lv -> new BookCrudController());
+            LibrosListView.setCellFactory(lv -> new BookCrudController(new BuscadorLibrosController() ,this));
             LibrosListView.setItems(_librosfiltrados);
         }else{
             LabelSinLibros.setVisible(true);

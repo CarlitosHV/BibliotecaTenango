@@ -70,6 +70,21 @@ public class AltaLibrosController implements Initializable {
     private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
 
+    private BuscadorLibrosController buscadorLibrosController;
+    private MenuLibrosController menuLibrosController;
+    private Stage modalStage;
+
+    public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
+        this.buscadorLibrosController = buscadorLibrosController;
+    }
+
+    public void setMenuLibrosController(MenuLibrosController menuLibrosController){
+        this.menuLibrosController = menuLibrosController;
+    }
+    public void setModalStage(Stage modalStage) {
+        this.modalStage = modalStage;
+    }
+
 
     /*
         Método que dependiendo el texto del botón, se realiza la acción
@@ -139,6 +154,7 @@ public class AltaLibrosController implements Initializable {
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (guardado) {
                 CrearAlerta(ALERTA_LIBRO_GUARDADO);
+                cerrarModalMenuLibros();
                 limpiarCampos();
             } else {
                 CrearAlerta(ALERTA_ERROR);
@@ -481,6 +497,13 @@ public class AltaLibrosController implements Initializable {
             }
             return change;
         }));
+    }
+
+    private void cerrarModalMenuLibros() {
+        if (modalStage != null) {
+            menuLibrosController.configurarLista();
+            modalStage.close();
+        }
     }
 }
 

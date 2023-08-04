@@ -19,10 +19,12 @@ import java.io.IOException;
 public class BookCrudController extends ListCell<Libro> {
     private FXMLLoader fxmlLoader;
     private GridPane fondoItem;
-    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion;
+    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
     private EventHandler<ActionEvent> onItemSelected;
     BDController bd = new BDController();
     private boolean isMenuOpen = false;
+    private BuscadorLibrosController buscadorLibrosController;
+    private MenuLibrosController menuLibrosController;
 
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
@@ -33,8 +35,10 @@ public class BookCrudController extends ListCell<Libro> {
     }
 
 
-    public BookCrudController() {
+    public BookCrudController(BuscadorLibrosController buscadorLibrosController, MenuLibrosController menuLibrosController) {
         super();
+        this.buscadorLibrosController = buscadorLibrosController;
+        this.menuLibrosController = menuLibrosController;
         fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
         try {
             fondoItem = fxmlLoader.load();
@@ -44,6 +48,7 @@ public class BookCrudController extends ListCell<Libro> {
             LabelClave = (Label) fxmlLoader.getNamespace().get("LabelClave");
             LabelClasificacion = (Label) fxmlLoader.getNamespace().get("LabelClasificacion");
             LabelEstante = (Label) fxmlLoader.getNamespace().get("LabelEstante");
+            LabelExistencias = (Label) fxmlLoader.getNamespace().get("LabelExistencias");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,6 +66,7 @@ public class BookCrudController extends ListCell<Libro> {
             LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
             LabelEditorial.setText("Editorial: " + libro.getEditorial());
             LabelEstante.setText(libro.getEstante());
+            LabelExistencias.setText(String.valueOf(libro.getExistencias()));
             setGraphic(fondoItem);
         }
 
@@ -72,6 +78,8 @@ public class BookCrudController extends ListCell<Libro> {
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
                 menuTransition.setToX(0);
                 BookDetailsController controller = ViewSwitcher.getBookDetailsController();
+                controller.setBuscadorLibrosController(buscadorLibrosController);
+                controller.setmenuLibrosController(menuLibrosController);
                 if (controller != null) {
                     controller.initData(libro.getTitulo_libro(), libro.getNombre_autor(), libro.getEditorial(), libro.getClave_registro(),
                             libro.getEstante(), libro.getClasificacion(), libro.getDescripcion_libro(), libro.getExistencias(), BookDetailsController.OPERACION_CRUD);
