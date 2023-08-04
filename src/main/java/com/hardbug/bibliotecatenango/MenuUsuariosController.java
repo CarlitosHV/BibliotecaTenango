@@ -2,6 +2,7 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -40,9 +41,15 @@ public class MenuUsuariosController implements Initializable {
     private AnchorPane rootPane;
     private static ArrayList<Usuario> _usuarios = new ArrayList<>();
     private static FilteredList<Usuario> _usuariosfiltrados;
+    private MenuUsuariosController menuUsuariosController;
+
+    public MenuUsuariosController MenuUsuariosController(){
+        return menuUsuariosController;
+    }
     BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        menuUsuariosController = this;
         Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
         ViewSwitcher.showTo(View.DETALLES_USUARIOS, IndexApp.TEMA, pb);
@@ -56,6 +63,7 @@ public class MenuUsuariosController implements Initializable {
             Search();
         });
         LabelCrearUsuario.setOnMouseClicked(event -> {
+            AltasUsersController.OPERACION = 1;
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
         });
@@ -79,6 +87,7 @@ public class MenuUsuariosController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
+            AltasUsersController controller = fxmlLoader.getController();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
@@ -116,7 +125,9 @@ public class MenuUsuariosController implements Initializable {
                 e.consume();
                 scaleOut.play();
             });
-
+            controller.setModalStage(modalStage);
+            controller.setMenuUsuariosController(this);
+            CerrarVista();
             modalStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,11 +141,20 @@ public class MenuUsuariosController implements Initializable {
             LabelSinUsuarios.setVisible(false);
             UsuariosListView.setVisible(true);
             _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));;
-            UsuariosListView.setCellFactory(lv -> new UserItemController());
+            UsuariosListView.setCellFactory(lv -> new UserItemController(this));
             UsuariosListView.setItems(_usuariosfiltrados);
         }else{
             LabelSinUsuarios.setVisible(true);
             UsuariosListView.setVisible(false);
         }
+    }
+
+    private void CerrarVista() {
+        Parent bp = ViewSwitcher.getScene().getRoot();
+        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+        Node right = pb.getRight();
+        TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
+        menuTransition.setToX(400);
+        menuTransition.play();
     }
 }

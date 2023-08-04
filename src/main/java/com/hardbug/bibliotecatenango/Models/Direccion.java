@@ -15,6 +15,15 @@ public class Direccion {
     public Direccion() {
     }
 
+    public Direccion(int idDireccion, String calle, String CP, Integer idMunicipio, Integer idEstado, Integer idLocalidad) {
+        this.IdDireccion = idDireccion;
+        Calle = calle;
+        this.CP = CP;
+        IdMunicipio = idMunicipio;
+        IdEstado = idEstado;
+        IdLocalidad = idLocalidad;
+    }
+
     public Direccion(String calle, String CP, Integer idMunicipio, Integer idEstado, Integer idLocalidad) {
         Calle = calle;
         this.CP = CP;

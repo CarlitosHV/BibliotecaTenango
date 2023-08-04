@@ -546,22 +546,27 @@ public class BDController {
                     stmtUser.close();
                     conn.close();
                     if (mUsuario.IdUsuario == 0){
-                        new EmailSender().emailSender(mUsuario.getCorreo(),
+                        new EmailSender().emailSender("Registro de cuenta", mUsuario.getCorreo(),
                                 "Bienvenido, " + mUsuario.getNombre() + "\n" + """
                                 Tu correo ha sido registrado en el sistema de Biblioteca Pública Municipal Lic. Abel C. Salazar.
                                 ¡Ahora puedes solicitar libros con tu cuenta al proporcionar tu CURP!
                                 Dudas o sugerencias al correo: direccion.educacion@tenangodelvalle.gob.mx
                                 
                                 *Este mensaje ha sido generado automáticamente*
+                                Biblioteca Pública Municipal Lic. Abel C. Salazar
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
                             """);
                     }else{
-                        new EmailSender().emailSender(mUsuario.getCorreo(), """
+                        new EmailSender().emailSender("Actualización de cuenta", mUsuario.getCorreo(), """
                                 Tu cuenta ha sido actualizada 
                                 Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
                                 mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
                                 De lo contrario, haz caso omiso a este mensaje                              
                                 
                                 *Este mensaje ha sido generado automáticamente*
+                                
+                                Biblioteca Pública Municipal Lic. Abel C. Salazar
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
                                 """);
                     }
                     return true;
@@ -596,8 +601,8 @@ public class BDController {
                 usuario.setEdad(rs.getInt("edad"));
                 usuario.sexo = rs.getString("sexo");
                 usuario.setCurp(rs.getString("curp"));
-                /*String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
-                usuario.Contrasenia = contradecifrada;*/
+                String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
+                usuario.Contrasenia = contradecifrada;
                 usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
                 usuario.setCorreo(rs.getString("correo"));
                 Nombres nombre = new Nombres();
@@ -628,6 +633,47 @@ public class BDController {
         }catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean EliminarUsuario(Integer IdUsuario, String Correo){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spEliminarUsuario(?)");
+            stmt.setInt(1, IdUsuario);
+            stmt.execute();
+            stmt.close();
+
+            PreparedStatement statement = conn.prepareStatement("select * from fnseleccionartodosusuariosporid(?)");
+            statement.setInt(1, IdUsuario);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+
+            if (resultSet.next()){
+                conn.close();
+                return false;
+            }else{
+                conn.close();
+                new EmailSender().emailSender("Cuenta eliminada del sistema", Correo, """
+                                Tu cuenta ha sido eliminada del sistema. Esperamos verte pronto :( 
+                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
+                                De lo contrario, haz caso omiso a este mensaje 
+                                
+                                *Este mensaje ha sido generado automáticamente*
+                                
+                                Biblioteca Pública Municipal Lic. Abel C. Salazar
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                """);
+                return true;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

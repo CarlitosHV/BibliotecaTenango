@@ -34,7 +34,7 @@ import java.util.concurrent.Executors;
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
     private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
-    Campo_apellido_materno, Campo_codigo, Campo_calle;
+            Campo_apellido_materno, Campo_codigo, Campo_calle;
     @FXML
     private ComboBox<String> Combo_sexo;
     @FXML
@@ -67,12 +67,28 @@ public class AltasUsersController extends BDController implements Initializable 
     private static ArrayList<Catalogo> _grados = new ArrayList<>();
     private static ArrayList<String> _sexos = new ArrayList<>();
 
+    private MenuUsuariosController menuUsuariosController;
+    private UserDetailsController userDetailsController;
+
+    public void setUserDetailsController(UserDetailsController userDetailsController){
+        this.userDetailsController = userDetailsController;
+    }
+
+    public void setMenuUsuariosController(MenuUsuariosController menuUsuariosController){
+        this.menuUsuariosController = menuUsuariosController;
+    }
+
     private boolean isTextFieldAction = false;
     Estados estados = new Estados();
     Municipios municipios = new Municipios();
     BDController bd = new BDController();
     Usuario mUsuario;
     public static Usuario editUsuario;
+    private Stage modalStage;
+
+    public void setModalStage(Stage modalStage) {
+        this.modalStage = modalStage;
+    }
 
     public static int OPERACION = 1;
 
@@ -121,9 +137,9 @@ public class AltasUsersController extends BDController implements Initializable 
             throw new RuntimeException(e);
         }
 
-        //2 significa que va a editar
-        /*if(OPERACION == 2){
-            Label_cabecera.setText("Editar al usuario " + mUsuario.Nombre);
+        //Entra al IF si se va a editar el usuario
+        if (OPERACION == 2) {
+            Label_cabecera.setText("Editar al usuario " + editUsuario.Nombre);
             Campo_nombre.setText(editUsuario.nombre.Nombre);
             Campo_apellido_paterno.setText(editUsuario.nombre.ApellidoPaterno);
             Campo_apellido_materno.setText(editUsuario.nombre.ApellidoMaterno);
@@ -132,12 +148,26 @@ public class AltasUsersController extends BDController implements Initializable 
             Campo_contrasenia.setText(editUsuario.Contrasenia);
             Campo_curp.setText(editUsuario.Curp);
             Campo_telefono.setText(String.valueOf(editUsuario.getTelefono()));
-            Campo_codigo.setText(mUsuario.direccion.CP);
-        }*/
+            Campo_codigo.setText(editUsuario.direccion.CP);
+            Campo_calle.setText(editUsuario.direccion.Calle);
+            Campo_contrasenia.setText(editUsuario.getContrasenia());
+            try {
+                TareaCodigoPostal(Integer.parseInt(editUsuario.direccion.CP));
+                Combo_localidad.setValue(new Localidad(editUsuario.direccion.IdLocalidad, editUsuario.direccion.Localidad,
+                        editUsuario.direccion.Municipio, editUsuario.direccion.Estado, Integer.parseInt(editUsuario.direccion.CP)));
+                Combo_sexo.setValue(editUsuario.sexo);
+                Combo_ocupacion.setValue(editUsuario.Ocupacion);
+                Combo_grado.setValue(editUsuario.GradoEscolar);
+                Combo_municipio.setDisable(true);
+                Combo_estado.setDisable(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         Combo_estado.setOnAction(actionEvent -> {
             Combo_localidad.setDisable(true);
-            if (Combo_estado.getValue() != null && !isTextFieldAction){
+            if (Combo_estado.getValue() != null && !isTextFieldAction) {
                 Combo_municipio.setDisable(false);
                 Combo_municipio.getItems().clear();
                 _municipios.clear();
@@ -145,7 +175,7 @@ public class AltasUsersController extends BDController implements Initializable 
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
                 TareaMunicipios();
-            } else{
+            } else {
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
             }
@@ -154,7 +184,7 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_municipio.setOnAction(actionEvent -> {
             Combo_localidad.setDisable(true);
             Combo_municipio.setPromptText("Municipio");
-            if(Combo_municipio.getValue() != null && !isTextFieldAction){
+            if (Combo_municipio.getValue() != null && !isTextFieldAction) {
                 Combo_localidad.setDisable(false);
                 Combo_localidad.getItems().clear();
                 _localidades.clear();
@@ -194,12 +224,11 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_estado.setOnMouseClicked(event -> isTextFieldAction = false);
 
         Campo_codigo.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (isTextFieldAction &&  Campo_codigo.getLength()>0){
-
+            if (isTextFieldAction && Campo_codigo.getLength() > 0) {
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
                 Combo_estado.setDisable(true);
-                if (Campo_codigo.getLength()==4 || Campo_codigo.getLength()==5){
+                if (Campo_codigo.getLength() == 4 || Campo_codigo.getLength() == 5) {
                     try {
                         TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
                         Combo_localidad.setDisable(false);
@@ -207,20 +236,27 @@ public class AltasUsersController extends BDController implements Initializable 
                         throw new RuntimeException(e);
                     }
                 }
-            }else{
+            } else {
                 Combo_estado.setDisable(false);
             }
         });
 
         BotonGuardar.setOnAction(event -> {
+            int IdNombre = 0;
+            int IdDir = 0;
             mUsuario = new Usuario();
+            if (editUsuario != null) {
+                mUsuario.IdUsuario = editUsuario.IdUsuario;
+                IdNombre = editUsuario.nombre.getIdNombre();
+                IdDir = editUsuario.direccion.IdDireccion;
+            }
             mUsuario.setNombre(Campo_nombre.getText().trim());
             mUsuario.setApellidoPaterno(Campo_apellido_paterno.getText().trim());
             mUsuario.setApellidoMaterno(Campo_apellido_materno.getText().trim());
             mUsuario.setSexo(Combo_sexo.getValue());
             mUsuario.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
             mUsuario.setCorreo(Campo_correo.getText().trim());
-            Nombres nombre = new Nombres(mUsuario.getNombre(), mUsuario.getApellidoPaterno(), mUsuario.getApellidoMaterno());
+            Nombres nombre = new Nombres(IdNombre, mUsuario.getNombre(), mUsuario.getApellidoPaterno(), mUsuario.getApellidoMaterno());
             mUsuario.nombre = nombre;
             try {
                 String contraseniacifrada = ClaseCifrarContrasenia.encript(Campo_contrasenia.getText().trim());
@@ -237,13 +273,18 @@ public class AltasUsersController extends BDController implements Initializable 
             mUsuario.setMunicipio(Combo_municipio.getValue());
             mUsuario.setLocalidad(Combo_localidad.getValue());
             mUsuario.setCalle(Campo_calle.getText().trim());
-            Direccion direccion = new Direccion(mUsuario.getCalle(), Campo_codigo.getText().trim(), mUsuario.Municipio.getId(), mUsuario.Estado.getId(), mUsuario.Localidad.Id);
+            Direccion direccion = new Direccion(IdDir, mUsuario.getCalle(), Campo_codigo.getText().trim(), mUsuario.Municipio.getId(), mUsuario.Estado.getId(), mUsuario.Localidad.Id);
             mUsuario.direccion = direccion;
             try {
-                if (InsertarActualizarUsuario(mUsuario)){
-                    CrearAlerta("¡Usuario registrado!", "El usuario: " + mUsuario.getNombre() + " ha sido registrado", Alert.AlertType.INFORMATION);
-                    ConfigurarCombos();
-                }else{
+                if (InsertarActualizarUsuario(mUsuario)) {
+                    if (OPERACION == 2) {
+                        CrearAlerta("¡Usuario actualizado!", "El usuario: " + mUsuario.getNombre() + " ha sido actualizado", Alert.AlertType.INFORMATION);
+                    } else {
+                        CrearAlerta("¡Usuario registrado!", "El usuario: " + mUsuario.getNombre() + " ha sido registrado", Alert.AlertType.INFORMATION);
+                    }
+                    OPERACION = 0;
+                    cerrarModalMenuUsuarios();
+                } else {
                     CrearAlerta("Error", "Ha ocurrido un error al registrar al usuario", Alert.AlertType.WARNING);
                 }
             } catch (Exception e) {
@@ -299,7 +340,7 @@ public class AltasUsersController extends BDController implements Initializable 
         _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
         Combo_localidad.setPromptText("Localidad");
         Combo_localidad.getItems().setAll(_localidades);
-        if (!_localidades.isEmpty()){
+        if (!_localidades.isEmpty()) {
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
         }
@@ -313,7 +354,7 @@ public class AltasUsersController extends BDController implements Initializable 
         _localidades.clear();
         _municipios.clear();
         _localidades = BuscarCodigoPostal(CP);
-        if (!_localidades.isEmpty()){
+        if (!_localidades.isEmpty()) {
             Estados IdEstado = new Estados(_localidades.get(0).IdEstado, _localidades.get(0).Estado);
             Combo_municipio.getItems().addAll(_municipios);
             IconoCarga.setVisible(false);
@@ -335,8 +376,9 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         }
     }
+
     //Carga los estados en el combo estados
-    private void ConfigurarCellFactory(){
+    private void ConfigurarCellFactory() {
         Combo_estado.setCellFactory(new Callback<ListView<Estados>, ListCell<Estados>>() {
             @Override
             public ListCell<Estados> call(ListView<Estados> listView) {
@@ -413,5 +455,12 @@ public class AltasUsersController extends BDController implements Initializable 
             alerta.getDialogPane().setContent(content);
         }
         alerta.showAndWait();
+    }
+
+    private void cerrarModalMenuUsuarios() {
+        if (modalStage != null) {
+            menuUsuariosController.configurarLista();
+            modalStage.close();
+        }
     }
 }

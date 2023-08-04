@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -30,6 +31,12 @@ public class UserDetailsController implements Initializable {
     BDController bd = new BDController();
     Usuario usuario = new Usuario();
     int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
+
+    private MenuUsuariosController menuUsuariosController;
+
+    public void setMenuUsuariosController(MenuUsuariosController menuUsuariosController){
+        this.menuUsuariosController = menuUsuariosController;
+    }
 
     public void initData(Usuario mUsuario) {
         LabelNombre.setText(mUsuario.nombre.GetNombreCompleto());
@@ -52,21 +59,22 @@ public class UserDetailsController implements Initializable {
         });
 
         ButtonEliminar.setOnAction(actionEvent -> {
-            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar a? " + usuario.getNombre(),  ALERTA_PRECAUCION);
+            CerrarVista();
+            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar",  ALERTA_PRECAUCION);
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alerta.close();
-                /*boolean eliminado = bd.BorrarLibro(Clave); implementar esto
-                if (eliminado){
-                    Alert al = crearAlerta("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!", ALERTA_CONFIRMACION);
+                if (bd.EliminarUsuario(usuario.IdUsuario, usuario.getCorreo())){
+                    Alert al = crearAlerta("Eliminación correcta", "¡Haz eliminado a " + usuario.nombre.Nombre + " del sistema!", ALERTA_CONFIRMACION);
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
+                        menuUsuariosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText(), ALERTA_CONFIRMACION);
+                    Alert alertaR = crearAlerta("Error", "El usuario " +  usuario.nombre.Nombre + "no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar", ALERTA_CONFIRMACION);
                     alertaR.showAndWait();
-                }*/
+                }
             }
         });
 
@@ -107,6 +115,15 @@ public class UserDetailsController implements Initializable {
             alerta = new Alert(Alert.AlertType.INFORMATION);
         }else{
             alerta = new Alert(Alert.AlertType.WARNING);
+            List<ButtonType> buttonTypes = alerta.getButtonTypes();
+
+            for (ButtonType buttonType : buttonTypes) {
+                if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                    Button button = (Button) alerta.getDialogPane().lookupButton(buttonType);
+                    button.setText("Eliminar");
+                    break;
+                }
+            }
         }
         DialogPane dialogPane = alerta.getDialogPane();
         Stage stage = (Stage) dialogPane.getScene().getWindow();
@@ -135,6 +152,7 @@ public class UserDetailsController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
+            AltasUsersController controller = fxmlLoader.getController();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
@@ -171,6 +189,11 @@ public class UserDetailsController implements Initializable {
                 e.consume();
                 scaleOut.play();
             });
+
+            controller.setModalStage(modalStage);
+            controller.setUserDetailsController(this);
+            controller.setMenuUsuariosController(menuUsuariosController);
+            CerrarVista();
 
             modalStage.showAndWait();
         } catch (Exception e) {

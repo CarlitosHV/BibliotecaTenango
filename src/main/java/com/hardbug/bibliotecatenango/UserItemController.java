@@ -22,6 +22,7 @@ public class UserItemController extends ListCell<Usuario> {
     private GridPane fondoItem;
     private Label LabelNombre, LabelEdad, LabelCurp, LabelCorreo, LabelTelefono;
     private EventHandler<ActionEvent> onItemSelected;
+    private MenuUsuariosController menuUsuariosController;
     BDController bd = new BDController();
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
@@ -30,8 +31,9 @@ public class UserItemController extends ListCell<Usuario> {
         this.onItemSelected = onItemSelected;
     }
 
-    public UserItemController() {
+    public UserItemController(MenuUsuariosController menuUsuariosController) {
         super();
+        this.menuUsuariosController = menuUsuariosController;
         fxmlLoader = new FXMLLoader(getClass().getResource("UserView.fxml"));
         try {
             fondoItem = fxmlLoader.load();
@@ -67,6 +69,7 @@ public class UserItemController extends ListCell<Usuario> {
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
                 menuTransition.setToX(0);
                 UserDetailsController cont = ViewSwitcher.getUserDetailsController();
+                cont.setMenuUsuariosController(menuUsuariosController);
                 if (cont != null) {
                     cont.initData(usuario);
                 }

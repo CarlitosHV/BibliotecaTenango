@@ -26,6 +26,7 @@ import org.apache.commons.codec.binary.Base64;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.security.auth.Subject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,13 +46,13 @@ public class EmailSender {
                 .setApplicationName("Biblioteca Pública Municipal Lic. Abel C. Salazar")
                 .build();
     }
-    public void emailSender(String Correo, String Mensaje) throws Exception {
+    public void emailSender(String subject, String Correo, String Mensaje) throws Exception {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage email = new MimeMessage(session);
         email.setFrom(new InternetAddress(Email));
         email.addRecipient(TO, new InternetAddress(Correo));
-        email.setSubject("Registro exitoso");
+        email.setSubject(subject);
         email.setText(Mensaje);
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
