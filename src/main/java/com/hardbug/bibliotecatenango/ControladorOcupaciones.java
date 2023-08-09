@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class ControladorOcupaciones extends BDController implements Initializabl
     private ProgressIndicator IconoCarga;
     @FXML
     private TextField Buscador;
+
+    private TextField nombrefield;
     ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static FilteredList<Catalogo> _ocupacionesfiltradas;
     @Override
@@ -32,25 +36,46 @@ public class ControladorOcupaciones extends BDController implements Initializabl
         configurarLista();
         IconoCarga.setVisible(false);
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 20) {
+                Buscador.setText(oldValue);
+
+            }
             Search();
         });
         LabelCrearOcupacion.setOnMouseClicked(event -> {
-            TextInputDialog dialog = new TextInputDialog();
+
+           TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Crear nueva ocupación");
             dialog.setHeaderText("Ingresa el nombre de la ocupación");
             dialog.setContentText("Nombre: ");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+            ImageView InformacionView = CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Estudiante, Ingeriero Industrial");
+            dialog.setGraphic(InformacionView);
+
+            //limitar el campo a 20 caracteres
+            dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+
+                if (newValue.length() > 20) {
+                    dialog.getEditor().setText(oldValue);
+
+                }
+            });
             dialog.showAndWait().ifPresent(text -> {
                 if (text.isEmpty()) {
-                    Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
+                    Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese una ocpación válida");
                 } else {
                     Catalogo ocupacion = new Catalogo(text);
-                    if(InsertarEditarOcupacion(ocupacion)){
-                        Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la ocupación: " + text);
-                        configurarLista();
+                    if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                        if(InsertarEditarOcupacion(ocupacion)){
+                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la ocupación: " + text);
+                            configurarLista();
+                        }else{
+                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + text);
+                        }
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + text);
+                        Alerta(Alert.AlertType.WARNING, "Error", "La ocupación: " + text +" es inválida");
+
                     }
                 }
             });
@@ -98,4 +123,19 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             ListaOcupaciones.setVisible(false);
         }
     }
+
+    public static ImageView CrearHooverInformacion(String rutaImagen,String tooltipText){
+        //Imagen con hoover de informacion
+        Image Informacion = new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream(rutaImagen))));
+        ImageView InformacionView = new ImageView(Informacion);
+        InformacionView .setFitWidth(32);
+        InformacionView .setFitHeight(32);
+        InformacionView.setPickOnBounds(true);
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setShowDuration(Duration.INDEFINITE);
+        tooltip.setShowDelay(Duration.millis(500));
+        Tooltip.install(InformacionView, tooltip);
+        return InformacionView;
+    }
+
 }

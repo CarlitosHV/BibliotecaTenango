@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -36,6 +37,9 @@ public class ControladorGradosEscolares extends BDController implements Initiali
         configurarLista();
         IconoCarga.setVisible(false);
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 20) {
+                Buscador.setText(oldValue);
+            }
             Search();
         });
         LabelCrearGrado.setOnMouseClicked(event -> {
@@ -45,17 +49,31 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             dialog.setContentText("Nombre: ");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+            ImageView InformacionView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Preparatoria, Postgrado");
+            dialog.setGraphic(InformacionView);
+
+            dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue.length() > 20) {
+                    dialog.getEditor().setText(oldValue);
+                }
+            });
+
             dialog.showAndWait().ifPresent(text -> {
                 if (text.isEmpty()) {
                     Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                 } else {
                     Catalogo grado = new Catalogo(text);
-                    if(InsertarEditarGrado(grado)){
-                        Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó el grado escolar: " + text);
-                        configurarLista();
+                    if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                        if(InsertarEditarGrado(grado)){
+                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó el grado escolar: " + text);
+                            configurarLista();
+                        }else{
+                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + text);
+                        }
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + text);
+                        Alerta(Alert.AlertType.WARNING, "Error", "El grado escolar: " + text + " es inválido");
                     }
+
                 }
             });
         });
@@ -102,4 +120,6 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             ListaGrados.setVisible(false);
         }
     }
+
+
 }
