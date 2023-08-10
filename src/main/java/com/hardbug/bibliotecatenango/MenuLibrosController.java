@@ -8,11 +8,13 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -39,8 +41,15 @@ public class MenuLibrosController implements Initializable {
     private static ArrayList<Libro> _libros = new ArrayList<>();
     private static FilteredList<Libro> _librosfiltrados;
     BDController bd = new BDController();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Parent bp = ViewSwitcher.getScene().getRoot();
+        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, pb);
+        Node contentNodeRight = pb.getRight();
+        contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
@@ -104,6 +113,11 @@ public class MenuLibrosController implements Initializable {
             scaleOut.setToY(0);
             scaleOut.setOnFinished(e -> modalStage.close());
 
+            AltaLibrosController modalcontroller = fxmlLoader.getController();
+            modalcontroller.setModalStage(modalStage);
+            modalcontroller.setBuscadorLibrosController(new BuscadorLibrosController());
+            modalcontroller.setMenuLibrosController(this);
+
             modalStage.setOnShowing(e -> scaleIn.play());
             modalStage.setOnCloseRequest(e -> {
                 configurarLista();
@@ -124,9 +138,7 @@ public class MenuLibrosController implements Initializable {
             LabelSinLibros.setVisible(false);
             LibrosListView.setVisible(true);
             _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
-            LibrosListView.setCellFactory(lv -> {
-                return new BookCrudController();
-            });
+            LibrosListView.setCellFactory(lv -> new BookCrudController(new BuscadorLibrosController() ,this));
             LibrosListView.setItems(_librosfiltrados);
         }else{
             LabelSinLibros.setVisible(true);

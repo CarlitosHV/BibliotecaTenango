@@ -31,11 +31,10 @@ public class IndexController implements Initializable {
         ViewSwitcher.showTo(View.MENU_LATERAL, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, rootPane);
-        Node contentNodeLeft = rootPane.getLeft();
-        Node contentNodeCenter = rootPane.getCenter();
         Node contentNodeRight = rootPane.getRight();
-        contentNodeLeft.setTranslateX(-250);
         contentNodeRight.setTranslateX(400);
+        Node contentNodeLeft = rootPane.getLeft();
+        contentNodeLeft.setTranslateX(-250);
         ObtenerFecha();
 
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), contentNodeLeft);

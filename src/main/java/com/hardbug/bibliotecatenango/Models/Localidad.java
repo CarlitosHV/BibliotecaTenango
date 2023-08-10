@@ -1,25 +1,27 @@
 package com.hardbug.bibliotecatenango.Models;
 
 public class Localidad {
-    int Id;
-    String Localidad;
-    String Municipio;
-    String Estado;
-    int CP;
+    public Integer Id=0;
+    public String Localidad="";
+    public String Municipio="";
+    public Integer IdMunicipio = 0;
+    public Integer IdEstado = 0;
+    public String Estado="";
+    public Integer CP=0;
 
-    public int getCP() {
+    public Integer getCP() {
         return CP;
     }
 
-    public void setCP(int CP) {
+    public void setCP(Integer CP) {
         this.CP = CP;
     }
 
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
@@ -50,7 +52,7 @@ public class Localidad {
     public Localidad() {
     }
 
-    public Localidad(int id, String localidad, String municipio, String estado, int cp) {
+    public Localidad(Integer id, String localidad, String municipio, String estado, Integer cp) {
         Id = id;
         Localidad = localidad;
         Municipio = municipio;

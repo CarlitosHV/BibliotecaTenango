@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -83,6 +84,13 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 dialog.setContentText("Nombre: ");
                 Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
                 stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+                ImageView InformacionEditarGradosView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Preparatoria, Postgrado");
+                dialog.setGraphic(InformacionEditarGradosView);
+                dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.length() > 20) {
+                        dialog.getEditor().setText(oldValue);
+                    }
+                });
                 dialog.showAndWait().ifPresent(text -> {
                     if (text.isEmpty()) {
                         controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
@@ -104,16 +112,29 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 dialog.setContentText("Nombre: ");
                 Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
                 stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+                ImageView InformacionEditarOcupacionesView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Estudiante, Ingeriero Industrial");
+                dialog.setGraphic(InformacionEditarOcupacionesView);
+                dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.length() > 20) {
+                        dialog.getEditor().setText(oldValue);
+                    }
+                });
                 dialog.showAndWait().ifPresent(text -> {
                     if (text.isEmpty()) {
                         controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                     } else {
                         ocupacionseleccionada.setNombre(text);
-                        if(bd.InsertarEditarOcupacion(ocupacionseleccionada)){
-                            controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó la ocupación: " + catalogo.getNombre());
-                            controladorOcupaciones.configurarLista();
+
+                        if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                            if(bd.InsertarEditarOcupacion(ocupacionseleccionada)){
+                                controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó la ocupación: " + catalogo.getNombre());
+                                controladorOcupaciones.configurarLista();
+                            }else{
+                                controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + catalogo.getNombre());
+                            }
                         }else{
-                            controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + catalogo.getNombre());
+                            controladorOcupaciones.Alerta(Alert.AlertType.WARNING, "Error", "Por favor, ingrese un valor válido" + text);
+
                         }
                     }
                 });

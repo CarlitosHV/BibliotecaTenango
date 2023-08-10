@@ -3,31 +3,36 @@ package com.hardbug.bibliotecatenango.Models;
 import java.math.BigInteger;
 
 public class Usuario {
-    int IdUsuario;
-    String Nombre;
-    String ApellidoPaterno;
-    String ApellidoMaterno;
-    String Correo;
-    String Contrasenia;
-    BigInteger Telefono;
-    int Edad;
-    String sexo;
-    String Curp;
-    String GradoEscolar;
-    String TipoUsuario;
-    String Ocupacion;
-    String Calle;
-    String Estado;
-    String Municipio;
-    String Localidad;
-    int CodigoPostal;
-
+    public int IdUsuario = 0;
+    public String Nombre = "";
+    public String ApellidoPaterno = "";
+    public String ApellidoMaterno = "";
+    public String Correo = "";
+    public String Contrasenia = "";
+    public BigInteger Telefono = BigInteger.valueOf(0);
+    public int Edad = 0;
+    public String sexo = "";
+    public String Curp = "";
+    public Integer IdGradoEscolar = 0;
+    public Catalogo GradoEscolar = null;
+    public Integer IdTipoUsuario = 1;
+    public Catalogo TipoUsuario = null;
+    public Integer IdOcupacion = 0;
+    public Catalogo Ocupacion = null;
+    public String Calle = "";
+    public Estados Estado = null;
+    public Municipios Municipio = null;
+    public Localidad Localidad = null;
+    int CodigoPostal = 0;
+    public Nombres nombre = null;
+    public Direccion direccion = null;
     public Usuario() {
     }
 
     public Usuario(int idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
-                   String contrasenia, BigInteger telefono, int edad, String sexo, String curp, String gradoEscolar, String tipoUsuario,
-                   String ocupacion, String calle, String estado, String municipio, String localidad, int codigoPostal) {
+                   String contrasenia, BigInteger telefono, int edad, String sexo, String curp, Integer idGradoEscolar,
+                   Catalogo gradoEscolar, Integer idTipoUsuario, Integer idOcupacion, Catalogo ocupacion, String calle,
+                   Estados estado, Municipios municipio, com.hardbug.bibliotecatenango.Models.Localidad localidad, int codigoPostal) {
         IdUsuario = idUsuario;
         Nombre = nombre;
         ApellidoPaterno = apellidoPaterno;
@@ -38,8 +43,10 @@ public class Usuario {
         Edad = edad;
         this.sexo = sexo;
         Curp = curp;
+        IdGradoEscolar = idGradoEscolar;
         GradoEscolar = gradoEscolar;
-        TipoUsuario = tipoUsuario;
+        IdTipoUsuario = idTipoUsuario;
+        IdOcupacion = idOcupacion;
         Ocupacion = ocupacion;
         Calle = calle;
         Estado = estado;
@@ -128,27 +135,43 @@ public class Usuario {
         Curp = curp;
     }
 
-    public String getGradoEscolar() {
+    public Integer getIdGradoEscolar() {
+        return IdGradoEscolar;
+    }
+
+    public void setIdGradoEscolar(Integer idGradoEscolar) {
+        IdGradoEscolar = idGradoEscolar;
+    }
+
+    public Catalogo getGradoEscolar() {
         return GradoEscolar;
     }
 
-    public void setGradoEscolar(String gradoEscolar) {
+    public void setGradoEscolar(Catalogo gradoEscolar) {
         GradoEscolar = gradoEscolar;
     }
 
-    public String getTipoUsuario() {
-        return TipoUsuario;
+    public Integer getIdTipoUsuario() {
+        return IdTipoUsuario;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        TipoUsuario = tipoUsuario;
+    public void setIdTipoUsuario(Integer idTipoUsuario) {
+        IdTipoUsuario = idTipoUsuario;
     }
 
-    public String getOcupacion() {
+    public Integer getIdOcupacion() {
+        return IdOcupacion;
+    }
+
+    public void setIdOcupacion(Integer idOcupacion) {
+        IdOcupacion = idOcupacion;
+    }
+
+    public Catalogo getOcupacion() {
         return Ocupacion;
     }
 
-    public void setOcupacion(String ocupacion) {
+    public void setOcupacion(Catalogo ocupacion) {
         Ocupacion = ocupacion;
     }
 
@@ -160,27 +183,27 @@ public class Usuario {
         Calle = calle;
     }
 
-    public String getEstado() {
+    public Estados getEstado() {
         return Estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estados estado) {
         Estado = estado;
     }
 
-    public String getMunicipio() {
+    public Municipios getMunicipio() {
         return Municipio;
     }
 
-    public void setMunicipio(String municipio) {
+    public void setMunicipio(Municipios municipio) {
         Municipio = municipio;
     }
 
-    public String getLocalidad() {
+    public com.hardbug.bibliotecatenango.Models.Localidad getLocalidad() {
         return Localidad;
     }
 
-    public void setLocalidad(String localidad) {
+    public void setLocalidad(com.hardbug.bibliotecatenango.Models.Localidad localidad) {
         Localidad = localidad;
     }
 

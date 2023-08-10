@@ -38,6 +38,11 @@ public class Municipios {
         Estado = estado;
     }
 
+    public Municipios(int id, String municipio) {
+        this.id = id;
+        Municipio = municipio;
+    }
+
     @Override
     public String toString() {
         return Municipio;

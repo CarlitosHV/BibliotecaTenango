@@ -48,6 +48,21 @@ public class EditBooksController implements Initializable {
 
     public static String clave_registro = "";
 
+    private BuscadorLibrosController buscadorLibrosController;
+    private MenuLibrosController menuLibrosController;
+    private Stage modalStage;
+
+    public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
+        this.buscadorLibrosController = buscadorLibrosController;
+    }
+
+    public void setMenuLibrosController(MenuLibrosController menuLibrosController){
+        this.menuLibrosController = menuLibrosController;
+    }
+    public void setModalStage(Stage modalStage) {
+        this.modalStage = modalStage;
+    }
+
 
     /* Variables de tipo integer para manejar los tipos de alertas */
     private static final int ALERTA_ERROR = 0, ALERTA_LIBRO_NO_ENCONTRADO = 2,
@@ -59,11 +74,6 @@ public class EditBooksController implements Initializable {
     private final Libro libro = new Libro();
     private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
-
-    private Stage modalStage;
-    public void setModalStage(Stage modalStage) {
-        this.modalStage = modalStage;
-    }
 
 
     /*
@@ -143,6 +153,7 @@ public class EditBooksController implements Initializable {
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (editado) {
                 CrearAlerta(ALERTA_LIBRO_EDITADO);
+                cerrarModalMenuLibros();
                 limpiarCampos();
             } else {
                 CrearAlerta(ALERTA_ERROR);
@@ -498,6 +509,13 @@ public class EditBooksController implements Initializable {
             }
             return change;
         }));
+    }
+
+    private void cerrarModalMenuLibros() {
+        if (modalStage != null) {
+            menuLibrosController.configurarLista();
+            modalStage.close();
+        }
     }
 }
 

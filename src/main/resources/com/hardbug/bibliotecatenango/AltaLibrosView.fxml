@@ -117,7 +117,7 @@
       <Separator id="Separators" fx:id="Separador_tres" layoutX="-1.0" layoutY="259.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Label id="Labels" fx:id="Label_cabecera" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="1.0" text="Registro de Libros" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="215.0">
          <font>
-            <Font size="24.0" />
+            <Font name="Roboto Light" size="24.0" />
          </font>
          <padding>
             <Insets left="20.0" right="20.0" />
@@ -125,7 +125,7 @@
       </Label>
       <Label id="Labels" fx:id="Label_datos_referencia" alignment="CENTER" layoutX="238.0" layoutY="65.0" text="Datos de referencia" AnchorPane.leftAnchor="238.0" AnchorPane.rightAnchor="238.0">
          <font>
-            <Font size="18.0" />
+            <Font name="Roboto Light" size="18.0" />
          </font>
          <padding>
             <Insets left="20.0" right="20.0" />

@@ -35,9 +35,14 @@ private static Scene scene;
     }
 
     private static BookDetailsController bookDetailsController;
+    private static UserDetailsController userDetailsController;
 
     public static BookDetailsController getBookDetailsController() {
         return bookDetailsController;
+    }
+
+    public static UserDetailsController getUserDetailsController() {
+        return userDetailsController;
     }
 
     public static void showTo(View view, int theme, BorderPane rootPane){
@@ -52,6 +57,10 @@ private static Scene scene;
                     case MENU_LATERAL -> rootPane.setLeft(root);
                     case DETALLES_LIBROS -> {
                         bookDetailsController = loader.getController();
+                        rootPane.setRight(root);
+                    }
+                    case DETALLES_USUARIOS -> {
+                        userDetailsController = loader.getController();
                         rootPane.setRight(root);
                     }
                     default -> rootPane.setCenter(root);

@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -17,53 +18,38 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class BookDetailsController implements Initializable {
+public class UserDetailsController implements Initializable {
     @FXML
-    private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar;
+    private Button ButtonCerrar, ButtonEliminar, ButtonEditar;
     @FXML
-    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClaveRegistro, LabelEstante, LabelClasificacion, LabelDisponibilidad;
-    @FXML
-    private TextArea TextAreaDescripcion;
+    private Label LabelNombre, LabelCorreo, LabelDireccion, LabelOcupacion, LabelGradoEscolar, LabelCurp, LabelEdad, LabelSexo;
     BDController bd = new BDController();
-    String Clave = "";
+    Usuario usuario = new Usuario();
     int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
 
-    public static int SOLICITAR = 0, OPERACION_CRUD = 1;
+    private MenuUsuariosController menuUsuariosController;
 
-    private BuscadorLibrosController buscadorLibrosController;
-    private MenuLibrosController menuLibrosController;
-
-    public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
-        this.buscadorLibrosController = buscadorLibrosController;
+    public void setMenuUsuariosController(MenuUsuariosController menuUsuariosController){
+        this.menuUsuariosController = menuUsuariosController;
     }
 
-    public void setmenuLibrosController(MenuLibrosController menuLibrosController){
-        this.menuLibrosController = menuLibrosController;
-    }
-
-    public void initData(String titulo, String autor, String editorial, String clave, String estante, String clasificacion, String descripcion, int existencias, int operacion) {
-        Clave = clave;
-        LabelTitulo.setText(titulo);
-        LabelAutor.setText("Autor: " + autor);
-        LabelEditorial.setText("Editorial: " + editorial);
-        LabelClaveRegistro.setText("Clave registro: " + clave);
-        LabelEstante.setText("Estante: " + estante);
-        LabelClasificacion.setText("Clasificación: " + clasificacion);
-        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(existencias));
-        TextAreaDescripcion.setText(descripcion);
-        if (SOLICITAR == operacion){
-            ButtonEditar.setVisible(false);
-            ButtonEliminar.setVisible(false);
-            ButtonSolicitar.setVisible(true);
-        }else{
-            ButtonEditar.setVisible(true);
-            ButtonEliminar.setVisible(true);
-            ButtonSolicitar.setVisible(false);
-        }
+    public void initData(Usuario mUsuario) {
+        LabelNombre.setText(mUsuario.nombre.GetNombreCompleto());
+        LabelCorreo.setText("Correo: " + mUsuario.getCorreo());
+        LabelDireccion.setText(mUsuario.direccion.getDireccionCompleta());
+        LabelOcupacion.setText("Ocupación: " + mUsuario.getOcupacion().getNombre());
+        LabelGradoEscolar.setText("Grado escolar: " + mUsuario.getGradoEscolar().getNombre());
+        LabelCurp.setText("CURP: " + mUsuario.getCurp());
+        LabelEdad.setText("Edad: " + mUsuario.getEdad());
+        LabelSexo.setText("Sexo: " + mUsuario.getSexo());
+        ButtonEditar.setVisible(true);
+        ButtonEliminar.setVisible(true);
+        usuario = mUsuario;
     }
 
     @Override
@@ -74,37 +60,29 @@ public class BookDetailsController implements Initializable {
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText(),  ALERTA_PRECAUCION);
+            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar",  ALERTA_PRECAUCION);
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alerta.close();
-                boolean eliminado = bd.BorrarLibro(Clave);
-                if (eliminado){
-                    Alert al = crearAlerta("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!", ALERTA_CONFIRMACION);
+                if (bd.EliminarUsuario(usuario.IdUsuario, usuario.getCorreo())){
+                    Alert al = crearAlerta("Eliminación correcta", "¡Haz eliminado a " + usuario.nombre.Nombre + " del sistema!", ALERTA_CONFIRMACION);
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
-                        menuLibrosController.configurarLista();
+                        menuUsuariosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText(), ALERTA_CONFIRMACION);
+                    Alert alertaR = crearAlerta("Error", "El usuario " +  usuario.nombre.Nombre + "no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar", ALERTA_CONFIRMACION);
                     alertaR.showAndWait();
                 }
             }
         });
 
         ButtonEditar.setOnAction(actionEvent -> {
-            CerrarVista();
-            EditBooksController.clave_registro = Clave;
+            AltasUsersController.editUsuario = usuario;
+            AltasUsersController.OPERACION = 2;
             Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
             mostrarVentanaModal(stage);
-        });
-
-        ButtonSolicitar.setOnAction(event -> {
-            /*
-            Falta la lógica pero ya se implementa la vista cerrada
-             */
-            CerrarVista();
         });
     }
 
@@ -121,14 +99,14 @@ public class BookDetailsController implements Initializable {
     }
 
     public void limpiar(){
-        LabelTitulo.setText("");
-        LabelAutor.setText("");
-        LabelEditorial.setText("");
-        LabelClaveRegistro.setText("");
-        LabelEstante.setText("");
-        LabelClasificacion.setText("");
-        LabelDisponibilidad.setText("");
-        TextAreaDescripcion.setText("");
+        LabelNombre.setText("");
+        LabelCorreo.setText("");
+        LabelDireccion.setText("");
+        LabelOcupacion.setText("");
+        LabelGradoEscolar.setText("");
+        LabelCurp.setText("");
+        LabelEdad.setText("");
+        LabelSexo.setText("");
     }
 
     public Alert crearAlerta(String titulo, String contenido, int tipo){
@@ -137,6 +115,15 @@ public class BookDetailsController implements Initializable {
             alerta = new Alert(Alert.AlertType.INFORMATION);
         }else{
             alerta = new Alert(Alert.AlertType.WARNING);
+            List<ButtonType> buttonTypes = alerta.getButtonTypes();
+
+            for (ButtonType buttonType : buttonTypes) {
+                if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                    Button button = (Button) alerta.getDialogPane().lookupButton(buttonType);
+                    button.setText("Eliminar");
+                    break;
+                }
+            }
         }
         DialogPane dialogPane = alerta.getDialogPane();
         Stage stage = (Stage) dialogPane.getScene().getWindow();
@@ -160,28 +147,26 @@ public class BookDetailsController implements Initializable {
         return alerta;
     }
 
+
     private void mostrarVentanaModal(Stage ownerStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditBooksView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
+            AltasUsersController controller = fxmlLoader.getController();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Datos del libro");
+            modalStage.setTitle("Datos a editar del usuario");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-            EditBooksController modalcontroller = fxmlLoader.getController();
-            modalcontroller.setModalStage(modalStage);
-            modalcontroller.setBuscadorLibrosController(buscadorLibrosController);
-            modalcontroller.setMenuLibrosController(menuLibrosController);
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -201,10 +186,14 @@ public class BookDetailsController implements Initializable {
 
             modalStage.setOnShowing(e -> scaleIn.play());
             modalStage.setOnCloseRequest(e -> {
-                EditBooksController.clave_registro = "";
                 e.consume();
                 scaleOut.play();
             });
+
+            controller.setModalStage(modalStage);
+            controller.setUserDetailsController(this);
+            controller.setMenuUsuariosController(menuUsuariosController);
+            CerrarVista();
 
             modalStage.showAndWait();
         } catch (Exception e) {

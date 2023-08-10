@@ -2,17 +2,20 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,9 +41,20 @@ public class MenuUsuariosController implements Initializable {
     private AnchorPane rootPane;
     private static ArrayList<Usuario> _usuarios = new ArrayList<>();
     private static FilteredList<Usuario> _usuariosfiltrados;
+    private MenuUsuariosController menuUsuariosController;
+
+    public MenuUsuariosController MenuUsuariosController(){
+        return menuUsuariosController;
+    }
     BDController bd = new BDController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        menuUsuariosController = this;
+        Parent bp = ViewSwitcher.getScene().getRoot();
+        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+        ViewSwitcher.showTo(View.DETALLES_USUARIOS, IndexApp.TEMA, pb);
+        Node contentNodeRight = pb.getRight();
+        contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
@@ -49,6 +63,7 @@ public class MenuUsuariosController implements Initializable {
             Search();
         });
         LabelCrearUsuario.setOnMouseClicked(event -> {
+            AltasUsersController.OPERACION = 1;
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
         });
@@ -57,13 +72,13 @@ public class MenuUsuariosController implements Initializable {
     private void Search() {
         IconoCarga.setVisible(true);
         String searchText = BuscadorUsuarios.getText().toLowerCase();
-        _usuariosfiltrados.setPredicate(libro -> {
-            boolean match = libro.getNombre().toLowerCase().contains(searchText)
-                    || libro.getCorreo().toLowerCase().contains(searchText)
-                    || libro.getCurp().toLowerCase().contains(searchText)
-                    || libro.getCalle().toLowerCase().contains(searchText)
-                    || libro.getOcupacion().toLowerCase().contains(searchText)
-                    || libro.getTelefono().toString().toLowerCase().contains(searchText);
+        _usuariosfiltrados.setPredicate(usuario -> {
+            boolean match = usuario.nombre.GetNombreCompleto().toLowerCase().contains(searchText)
+                    || usuario.getCorreo().toLowerCase().contains(searchText)
+                    || usuario.getCurp().toLowerCase().contains(searchText)
+                    || usuario.getCalle().toLowerCase().contains(searchText)
+                    || usuario.getOcupacion().getNombre().contains(searchText)
+                    || usuario.getTelefono().toString().toLowerCase().contains(searchText);
             Platform.runLater(() -> IconoCarga.setVisible(false));
             return match;
         });
@@ -72,6 +87,7 @@ public class MenuUsuariosController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AltaUsersView.fxml"));
             Parent root = fxmlLoader.load();
+            AltasUsersController controller = fxmlLoader.getController();
 
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
@@ -109,7 +125,9 @@ public class MenuUsuariosController implements Initializable {
                 e.consume();
                 scaleOut.play();
             });
-
+            controller.setModalStage(modalStage);
+            controller.setMenuUsuariosController(this);
+            CerrarVista();
             modalStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,19 +135,26 @@ public class MenuUsuariosController implements Initializable {
     }
 
     void configurarLista(){
-        //_usuarios = bd.TraerLibros();
+        _usuarios = bd.MostrarTodosUsuarios();
         IconoCarga.setVisible(false);
         if (!_usuarios.isEmpty()){
             LabelSinUsuarios.setVisible(false);
             UsuariosListView.setVisible(true);
             _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));;
-            /*UsuariosListView.setCellFactory(lv -> {
-                return new BookCrudController();
-            });*/
+            UsuariosListView.setCellFactory(lv -> new UserItemController(this));
             UsuariosListView.setItems(_usuariosfiltrados);
         }else{
             LabelSinUsuarios.setVisible(true);
             UsuariosListView.setVisible(false);
         }
+    }
+
+    private void CerrarVista() {
+        Parent bp = ViewSwitcher.getScene().getRoot();
+        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+        Node right = pb.getRight();
+        TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
+        menuTransition.setToX(400);
+        menuTransition.play();
     }
 }
