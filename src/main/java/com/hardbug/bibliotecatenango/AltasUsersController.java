@@ -294,6 +294,7 @@ public class AltasUsersController extends BDController implements Initializable 
     }
 
     private void ConfigurarCombos() throws SQLException {
+        _sexos.clear();
         _estados = bd.BuscarEstados();
         ConfigurarCellFactory();
         Combo_estado.getItems().addAll(_estados);
