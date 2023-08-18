@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class BookDetailsController implements Initializable {
+public class BookDetailsController extends BuscadorLibrosController implements Initializable{
     @FXML
     private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar;
     @FXML
@@ -36,6 +37,7 @@ public class BookDetailsController implements Initializable {
 
     private BuscadorLibrosController buscadorLibrosController;
     private MenuLibrosController menuLibrosController;
+    private Libro libroseleccionado = null;
 
     public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
         this.buscadorLibrosController = buscadorLibrosController;
@@ -45,16 +47,17 @@ public class BookDetailsController implements Initializable {
         this.menuLibrosController = menuLibrosController;
     }
 
-    public void initData(String titulo, String autor, String editorial, String clave, String estante, String clasificacion, String descripcion, int existencias, int operacion) {
-        Clave = clave;
-        LabelTitulo.setText(titulo);
-        LabelAutor.setText("Autor: " + autor);
-        LabelEditorial.setText("Editorial: " + editorial);
-        LabelClaveRegistro.setText("Clave registro: " + clave);
-        LabelEstante.setText("Estante: " + estante);
-        LabelClasificacion.setText("Clasificación: " + clasificacion);
-        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(existencias));
-        TextAreaDescripcion.setText(descripcion);
+    public void initData(Libro libro, int operacion) {
+        Clave = libro.getClave_registro();
+        LabelTitulo.setText(libro.getTitulo_libro());
+        LabelAutor.setText("Autor: " + libro.getNombre_autor());
+        LabelEditorial.setText("Editorial: " + libro.getEditorial());
+        LabelClaveRegistro.setText("Clave registro: " + libro.getClave_registro());
+        LabelEstante.setText("Estante: " + libro.getEstante());
+        LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
+        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(libro.getExistencias()));
+        TextAreaDescripcion.setText(libro.getDescripcion_libro());
+        libroseleccionado = libro;
         if (SOLICITAR == operacion){
             ButtonEditar.setVisible(false);
             ButtonEliminar.setVisible(false);
@@ -68,6 +71,7 @@ public class BookDetailsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         ButtonCerrar.setOnAction(actionEvent -> {
             CerrarVista();
         });
@@ -101,9 +105,9 @@ public class BookDetailsController implements Initializable {
         });
 
         ButtonSolicitar.setOnAction(event -> {
-            /*
-            Falta la lógica pero ya se implementa la vista cerrada
-             */
+            ContadorLibros += 1;
+            buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
+            _librosSeleccionados.add(libroseleccionado);
             CerrarVista();
         });
     }

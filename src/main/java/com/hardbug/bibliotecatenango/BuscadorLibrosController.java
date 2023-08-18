@@ -33,11 +33,16 @@ public class BuscadorLibrosController implements Initializable {
     @FXML
     private Button BotonBuscar;
     @FXML
+    protected Button PilaLibros;
+    @FXML
     private TextField Buscador;
     @FXML
     private AnchorPane Fondo;
     @FXML
     private Label LabelSinLibros;
+
+    protected static int ContadorLibros = 0;
+    protected static ArrayList<Libro> _librosSeleccionados = new ArrayList<>();
 
 
     @Override
@@ -49,6 +54,9 @@ public class BuscadorLibrosController implements Initializable {
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
             Search();
         });
+        if (ContadorLibros == 0){
+            PilaLibros.setText("");
+        }
     }
 
     private void Search() {
