@@ -20,7 +20,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label fx:id="LabelTitulo" prefHeight="20.0" prefWidth="260.0" text="Label" textFill="#433939" GridPane.columnSpan="3">
+                <Label fx:id="LabelTitulo" prefHeight="20.0" prefWidth="260.0" text="Label" textFill="#0d0a0a" GridPane.columnSpan="3">
                     <font>
                         <Font name="Roboto Light" size="14.0" />
                     </font>
@@ -40,7 +40,7 @@
                         <Font name="Roboto Light" size="10.0" />
                     </font>
                 </Button>
-            <Label fx:id="LabelAutor" text="Label" GridPane.rowIndex="1">
+            <Label fx:id="LabelAutor" prefHeight="17.0" prefWidth="266.0" text="Label" textFill="#0d0b0b" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
