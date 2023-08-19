@@ -67,8 +67,10 @@ public class BuscadorLibrosController implements Initializable {
         }
 
         PilaLibros.setOnAction(event -> {
-            Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
-            mostrarVentanaModal(stage);
+            if(!_librosSeleccionados.isEmpty()){
+                Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
+                mostrarVentanaModal(stage);
+            }
         });
     }
 
@@ -107,6 +109,7 @@ public class BuscadorLibrosController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VistaInterfazPila.fxml"));
             Parent root = fxmlLoader.load();
             InterfazPilaController controller = fxmlLoader.getController();
+            controller.getBuscadorLibrosController(this);
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -142,6 +145,7 @@ public class BuscadorLibrosController implements Initializable {
             modalStage.setOnCloseRequest(e -> {
                 e.consume();
                 scaleOut.play();
+                PilaLibros.setText(String.valueOf(_librosSeleccionados.size()));
             });
 
             modalStage.showAndWait();

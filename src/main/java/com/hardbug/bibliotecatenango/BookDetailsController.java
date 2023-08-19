@@ -105,10 +105,14 @@ public class BookDetailsController extends BuscadorLibrosController implements I
         });
 
         ButtonSolicitar.setOnAction(event -> {
-            ContadorLibros += 1;
-            buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
-            _librosSeleccionados.add(libroseleccionado);
-            CerrarVista();
+            if(_librosSeleccionados.size() < 5){
+                if(!_librosSeleccionados.contains(libroseleccionado)){
+                    ContadorLibros += 1;
+                    buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
+                    _librosSeleccionados.add(libroseleccionado);
+                    CerrarVista();
+                }
+            }
         });
     }
 

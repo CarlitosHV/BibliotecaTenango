@@ -1,29 +1,22 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Libro;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class ControladorPilaItem extends ListCell<Libro> {
-    private FXMLLoader fxmlLoader;
-    private AnchorPane fondoItem;
-    private Label LabelAutor, LabelTitulo;
-    private Button BotonEliminar;
+    private final AnchorPane fondoItem;
+    private final Label LabelAutor;
+    private final Label LabelTitulo;
+    private final Button BotonEliminar;
     private EventHandler<ActionEvent> onItemSelected;
     public EventHandler<ActionEvent> getOnItemSelected() {
         return onItemSelected;
@@ -33,9 +26,13 @@ public class ControladorPilaItem extends ListCell<Libro> {
         this.onItemSelected = onItemSelected;
     }
     private BuscadorLibrosController buscadorLibrosController;
+    private Stage modalStage;
+    public void setModalStage(Stage modalStage) {
+        this.modalStage = modalStage;
+    }
     public ControladorPilaItem(BuscadorLibrosController buscadorLibrosController) {
         super();
-        fxmlLoader = new FXMLLoader(getClass().getResource("VistaPila.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VistaPila.fxml"));
         this.buscadorLibrosController = buscadorLibrosController;
         try {
             fondoItem = fxmlLoader.load();
@@ -62,5 +59,25 @@ public class ControladorPilaItem extends ListCell<Libro> {
         setOnMouseClicked(event -> {
             BotonEliminar.setVisible(true);
         });
+
+        BotonEliminar.setOnAction(evt -> {
+            for (int i = 0; i <= buscadorLibrosController._librosSeleccionados.size(); i++) {
+                if (buscadorLibrosController._librosSeleccionados.get(i) == libro) {
+                    buscadorLibrosController._librosSeleccionados.remove(i);
+                    buscadorLibrosController.ContadorLibros = buscadorLibrosController.ContadorLibros - 1;
+                    getListView().getItems().remove(libro);
+                    if(buscadorLibrosController._librosSeleccionados.isEmpty()){
+                        buscadorLibrosController.PilaLibros.setText("");
+                        cerrarModalDetalles();
+                    }
+                }
+            }
+        });
+    }
+
+    private void cerrarModalDetalles() {
+        if (modalStage != null) {
+            modalStage.close();
+        }
     }
 }

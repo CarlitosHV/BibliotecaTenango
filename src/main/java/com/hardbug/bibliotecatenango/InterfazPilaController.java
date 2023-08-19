@@ -14,23 +14,47 @@ public class InterfazPilaController extends BuscadorLibrosController implements 
     @FXML
     private ListView<Libro> ListViewLibros;
     @FXML
-    private Button BotonAceptar, BotonCancelar;
+    private Button BotonAceptar, BotonCancelar, BotonEliminarTodos;
     private Stage modalStage;
+
+    private BuscadorLibrosController buscadorLibrosController;
+
+    public void getBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
+        this.buscadorLibrosController = buscadorLibrosController;
+    }
 
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        configurarLista();
-
+        this.configurarLista();
         BotonCancelar.setOnAction(event -> {
+            if(!_librosSeleccionados.isEmpty()){
+                buscadorLibrosController.PilaLibros.setText(String.valueOf(_librosSeleccionados.size()));
+                ContadorLibros = _librosSeleccionados.size();
+            }else{
+                buscadorLibrosController.PilaLibros.setText("");
+                ContadorLibros = 0;
+            }
             cerrarModalMenuLibros();
         });
+
+        BotonEliminarTodos.setOnAction(evt -> {
+            _librosSeleccionados.clear();
+            buscadorLibrosController.PilaLibros.setText("");
+            cerrarModalMenuLibros();
+            ContadorLibros = 0;
+        });
+
     }
 
     void configurarLista(){
-        ListViewLibros.setCellFactory(lv -> new ControladorPilaItem(this));
+        ListViewLibros.setCellFactory(lv -> {
+            ControladorPilaItem controladorPilaItem = new ControladorPilaItem(buscadorLibrosController);
+            controladorPilaItem.setModalStage(modalStage);
+            return controladorPilaItem;
+        });
         ListViewLibros.getItems().addAll(_librosSeleccionados);
     }
 
