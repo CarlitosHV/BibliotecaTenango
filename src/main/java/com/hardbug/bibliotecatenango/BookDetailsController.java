@@ -110,7 +110,17 @@ public class BookDetailsController extends BuscadorLibrosController implements I
                     ContadorLibros += 1;
                     buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
                     _librosSeleccionados.add(libroseleccionado);
-                    CerrarVista();
+                    ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                    scaleIn.setToX(1.5);
+                    scaleIn.setToY(1.5);
+                    ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                    scaleOut.setToX(1.0);
+                    scaleOut.setToY(1.0);
+                    scaleIn.setOnFinished(e -> {
+                        CerrarVista();
+                        scaleOut.play();
+                    });
+                    scaleIn.play();
                 }
             }
         });
