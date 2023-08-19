@@ -505,6 +505,9 @@ public class AltaLibrosController implements Initializable {
             modalStage.close();
         }
     }
+
+    public static class RegistroEntradaController {
+    }
 }
 
 
