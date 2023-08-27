@@ -57,10 +57,6 @@ public class RegistroVisitanteController extends BDController implements Initial
         Ingresar();
     }
 
-    /*
-      Método que aplica el tema dependiendo el seleccionado y también aplica el texto y la cabecera
-   */
-
 
     private void ConfigurarCombos () throws SQLException {
         _ocupaciones = bd.ConsultarOcupaciones(false);
@@ -102,8 +98,6 @@ public class RegistroVisitanteController extends BDController implements Initial
         }
     }
 
-
-
 //limpia los campos
     private void limpiarCampos() {
 
@@ -142,20 +136,5 @@ public class RegistroVisitanteController extends BDController implements Initial
         }
     }
 
-    private void llenarvisitante() {
-        int IdNombre = 0;
-        miVisitante = new Visitante();
-        miVisitante.nombre.setNombre(Campo_nombre.getText().trim());
-        miVisitante.nombre.setApellidoPaterno(Campo_Apellido_paterno.getText().trim());
-        miVisitante.nombre.setApellidoMaterno(Campo_Apellido_materno.getText().trim());
-        Nombres nombre = new  Nombres(IdNombre,miVisitante.nombre.getNombre(),miVisitante.nombre.getApellidoPaterno(),miVisitante.nombre.getApellidoMaterno());
-        miVisitante.nombre = nombre;
-
-        miVisitante.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
-        miVisitante.ocupacion = Combo_ocupacion.getValue();
-        miVisitante.grado_escolar = Combo_grado.getValue();
-        miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
-        miVisitante.setFecha(Date.from(Instant.now()));
-    }
 
 }
