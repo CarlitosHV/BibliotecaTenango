@@ -30,6 +30,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
     @FXML
     private TextArea TextAreaDescripcion;
     BDController bd = new BDController();
+    Alertas alerta = new Alertas();
     String Clave = "";
     int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
 
@@ -78,20 +79,20 @@ public class BookDetailsController extends BuscadorLibrosController implements I
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText(),  ALERTA_PRECAUCION);
-            Optional<ButtonType> result = alerta.showAndWait();
+            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText());
+            Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                alerta.close();
+                alert.close();
                 boolean eliminado = bd.BorrarLibro(Clave);
                 if (eliminado){
-                    Alert al = crearAlerta("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!", ALERTA_CONFIRMACION);
+                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
                         menuLibrosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText(), ALERTA_CONFIRMACION);
+                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText());
                     alertaR.showAndWait();
                 }
             }
@@ -121,7 +122,13 @@ public class BookDetailsController extends BuscadorLibrosController implements I
                         scaleOut.play();
                     });
                     scaleIn.play();
+                }else{
+                    Alert al = alerta.CrearAlertaError("Libro duplicado", "No puedes seleccionar el mismo libro más de una vez");
+                    al.showAndWait();
                 }
+            }else{
+                Alert alert = alerta.CrearAlertaError("Límite alcanzado", "Has alcanzado el límite de 5 libros por préstamo");
+                alert.showAndWait();
             }
         });
     }
@@ -147,35 +154,6 @@ public class BookDetailsController extends BuscadorLibrosController implements I
         LabelClasificacion.setText("");
         LabelDisponibilidad.setText("");
         TextAreaDescripcion.setText("");
-    }
-
-    public Alert crearAlerta(String titulo, String contenido, int tipo){
-        Alert alerta;
-        if(tipo == ALERTA_CONFIRMACION){
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }else{
-            alerta = new Alert(Alert.AlertType.WARNING);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        Button button = (Button) alerta.getDialogPane().lookupButton(ButtonType.OK);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white;");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: gray; -fx-text-fill: black; -fx-border-color: black");
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white");
-        }
-        return alerta;
     }
 
     private void mostrarVentanaModal(Stage ownerStage) {

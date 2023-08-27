@@ -32,6 +32,7 @@ public class BuscadorLibrosController implements Initializable {
     //Instanciamos al controlador de escenas para controlar la escena
 
     BDController bd = new BDController();
+    Alertas alerta = new Alertas();
     @FXML
     private ListView<Libro> LibrosListView;
     private static ArrayList<Libro> _libros = new ArrayList<>();
@@ -70,6 +71,9 @@ public class BuscadorLibrosController implements Initializable {
             if(!_librosSeleccionados.isEmpty()){
                 Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
                 mostrarVentanaModal(stage);
+            }else{
+                Alert alert = alerta.CrearAlertaError("Sin libros", "No hay ningún libro seleccionado para proceder con el préstamos");
+                alert.showAndWait();
             }
         });
     }
