@@ -3,81 +3,77 @@ package com.hardbug.bibliotecatenango.Models;
 import java.util.Date;
 
 public class Visitante {
-    int id_visitante;
-    String edad_visitante;
-    int id_grado_escolar;
-    String ocupacion;
-    boolean discapacidad;
-    int id_nombre;
-    String fecha_visita;
+    public int id=0;
+    public int edad=0;
+    public Catalogo grado_escolar=null;
+    public Catalogo ocupacion=null;
+    public boolean discapacidad=false;
+    public Nombres nombre=null;
+    public Date fecha=new Date();
+    public Direccion direccion=null;
 
-    public Visitante(){
+    public Visitante() {
 
     }
 
-    public Visitante(int id_visitante,String edad_visitante,int id_grado_escolar,String ocupacion,
-                     boolean discapaciad,int id_nombre,String fecha_visita){
-        this.id_visitante = id_visitante;
-        this.edad_visitante = edad_visitante;
-        this.id_grado_escolar = id_grado_escolar;
+    public Visitante(int id, int edad, Catalogo grado_escolar, Catalogo ocupacion, boolean discapacidad,
+                     Nombres nombre, Date fecha, Direccion direccion) {
+        this.id = id;
+        this.edad = edad;
+        this.grado_escolar = grado_escolar;
         this.ocupacion = ocupacion;
-        this.discapacidad = discapaciad;
-        this.id_nombre = id_nombre;
-        this.fecha_visita = fecha_visita;
-
-    }
-    public int getId_visitante() {
-        return id_visitante;
+        this.discapacidad = discapacidad;
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.direccion = direccion;
     }
 
-    public void setId_visitante(int id_visitante) {
-        this.id_visitante = id_visitante;
+    public int getId() {
+        return id;
     }
 
-    public String getEdad_visitante() {
-        return edad_visitante;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setEdad_visitante(String edad_visitante) {
-        this.edad_visitante = edad_visitante;
+    public int getEdad() {
+        return edad;
     }
 
-    public int getId_grado_escolar() {
-        return id_grado_escolar;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
-    public void setId_grado_escolar(int id_grado_escolar) {
-        this.id_grado_escolar = id_grado_escolar;
-    }
 
-    public String getOcupacion() {
-        return ocupacion;
-    }
-
-    public void setOcupacion(String ocupacion) {
-        this.ocupacion = ocupacion;
-    }
-
-    public boolean isDiscapaciad() {
+    public boolean isDiscapacidad() {
         return discapacidad;
     }
-    public void setDiscapaciad(boolean discapaciad) {
-        this.discapacidad = discapaciad;
+
+    public void setDiscapacidad(boolean discapacidad) {
+        this.discapacidad = discapacidad;
     }
 
-    public int getId_nombre() {
-        return id_nombre;
+    public Nombres getNombre() {
+        return nombre;
     }
 
-    public void setId_nombre(int id_nombre) {
-        this.id_nombre = id_nombre;
+    public void setNombre(Nombres nombre) {
+        this.nombre = nombre;
     }
 
-    public String getFecha_visita() {
-        return fecha_visita;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFecha_visita(String fecha_visita) {
-        this.fecha_visita = fecha_visita;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 }

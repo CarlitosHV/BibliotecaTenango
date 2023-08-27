@@ -19,9 +19,10 @@
           <RowConstraints maxHeight="90.0" minHeight="20.0" prefHeight="42.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="92.0" minHeight="20.0" prefHeight="40.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="92.0" minHeight="20.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="92.0" minHeight="20.0" prefHeight="40.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Nombre Completo:" />
+            <Label text="Nombre(s):" />
             <TextField fx:id="Campo_nombre" GridPane.columnIndex="1" />
             <TextField fx:id="Campo_direccion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Direccion:" GridPane.rowIndex="1" />
@@ -38,9 +39,13 @@
                   <RadioButton fx:id="Check_discapacidad_no" layoutX="433.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="41.0" text="No" AnchorPane.rightAnchor="46.0" />
                </children>
             </AnchorPane>
+            <Label text="Apellido Paterno;" GridPane.rowIndex="3" />
+            <Label text="Apellido Materno:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="Campo_Apellido_paterno" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="Campo_Apellido_materno" GridPane.columnIndex="4" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button onAction="#AccionBotonIngresar" layoutX="497.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />
+      <Button layoutX="497.0" layoutY="403.0" mnemonicParsing="false" onAction="#AccionBotonIngresar" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />
       <Label layoutX="289.0" layoutY="80.0" prefHeight="35.0" prefWidth="198.0" text="Registro de Visitas" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="288.0">
          <font>
             <Font size="24.0" />

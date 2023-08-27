@@ -1,6 +1,7 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.*;
+import org.postgresql.core.VisibleBufferedInputStream;
 
 import java.math.BigInteger;
 import java.sql.*;
@@ -491,32 +492,6 @@ public class BDController {
         }
     }
 
-    public boolean RegistarVisita(int id_visitante,String edad_visitante,int id_grado_escolar,String ocupacion,
-                                  boolean discapaciad,int id_nombre,String fecha_visita)throws Exception{
-        try{
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                    IndexApp.usuario, IndexApp.contrasenia);
-
-            CallableStatement stmt = conn.prepareCall("call spinsertarregistrovisitante(?, ?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1,id_visitante);
-            stmt.setString(2,edad_visitante);
-            stmt.setInt(3,id_grado_escolar);
-            stmt.setString(4,ocupacion);
-            stmt.setBoolean(5,discapaciad);
-            stmt.setInt(6,id_nombre);
-            stmt.setString(7,fecha_visita);
-            stmt.execute();
-
-            conn.close();
-            stmt.close();
-            return true;
-        }catch (SQLException e){
-            System.err.println(e.getMessage());
-            return false;
-        }
-
-    }
-
     public boolean InsertarActualizarUsuario(Usuario mUsuario) throws Exception {
         Integer IdNombre = 0;
         Integer IdDir = 0;
@@ -704,4 +679,69 @@ public class BDController {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean InsertarVisitante(Visitante miVisitante) throws Exception {
+        Integer IdNombre = 0;
+        Integer IdDir = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fninsertaractualizarnombre(?,?,?,?)");
+            stmt.setInt(1, miVisitante.nombre.IdNombre);
+            stmt.setString(2, miVisitante.nombre.Nombre);
+            stmt.setString(3, miVisitante.nombre.ApellidoPaterno);
+            stmt.setString(4, miVisitante.nombre.ApellidoMaterno);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                IdNombre = rs.getInt("fninsertaractualizarnombre");
+            }
+
+            if (IdNombre > 0){
+                stmt.close();
+                miVisitante.nombre.IdNombre = IdNombre;
+                PreparedStatement stmtDir = conn.prepareStatement("select * from fninsertaractualizardireccion(?,?,?,?,?,?)");
+                stmtDir.setInt(1, miVisitante.direccion.IdDireccion);
+                stmtDir.setString(2, miVisitante.direccion.Calle);
+                stmtDir.setString(3, miVisitante.direccion.CP);
+                stmtDir.setInt(4, miVisitante.direccion.IdMunicipio);
+                stmtDir.setInt(5, miVisitante.direccion.IdEstado);
+                stmtDir.setInt(6, miVisitante.direccion.IdLocalidad);
+                stmtDir.execute();
+                ResultSet rsDir = stmtDir.getResultSet();
+                while (rsDir.next()){
+                    IdDir = rsDir.getInt("fninsertaractualizardireccion");
+                }
+
+                if (IdDir > 0){
+                    stmtDir.close();
+                    miVisitante.direccion.IdDireccion = IdDir;
+                    PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrovisitante(?,?,?,?,?,?,?)");
+                    stmtVisita.setInt(1,miVisitante.edad);
+                    stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
+                    stmtVisita.setBoolean(3,miVisitante.discapacidad);
+                    stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
+                    stmtVisita.setDate(5, (Date) miVisitante.fecha);
+                    stmtVisita.setInt(6,miVisitante.direccion.IdDireccion);
+                    stmtVisita.setInt(7,miVisitante.ocupacion.getId());
+                    stmtVisita.execute();
+                    stmtVisita.close();
+                    conn.close();
+                    return true;
+                }else{
+                    conn.close();
+                    return false;
+                }
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
 }

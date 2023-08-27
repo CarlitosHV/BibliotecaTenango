@@ -27,28 +27,12 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     }
 
-    private void ConfigurarCombos () throws SQLException {
-        _ocupaciones = bd.ConsultarOcupaciones(false);
-        _grados = bd.ConsultarGradosEscolares(false);
-        Combo_grado.getItems().addAll(_grados);
-        Combo_ocupacion.getItems().addAll(_ocupaciones);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            ConfigurarCombos();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private int OPERACION;
 
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
-    private TextField Campo_nombre, Campo_direccion, Campo_edad;
+    private TextField Campo_nombre, Campo_direccion, Campo_edad, Campo_Apellido_materno,Campo_Apellido_paterno;
     @FXML
     private RadioButton Check_discapacidad_si, Check_discapacidad_no;
     @FXML
@@ -77,57 +61,78 @@ public class RegistroVisitanteController extends BDController implements Initial
     /*
       Método que aplica el tema dependiendo el seleccionado y también aplica el texto y la cabecera
    */
-    void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
-        Alert alerta;
-        if (tipo == 2) {
-            alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        } else {
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: white");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-        }
-        alerta.showAndWait();
+
+
+    private void ConfigurarCombos () throws SQLException {
+        _ocupaciones = bd.ConsultarOcupaciones(false);
+        _grados = bd.ConsultarGradosEscolares(false);
+        Combo_grado.getItems().addAll(_grados);
+        Combo_ocupacion.getItems().addAll(_ocupaciones);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Cargamos los combos de ocupacion y grado
+        try {
+            ConfigurarCombos();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Hacemos un toglegroup para que solo un radiobutton se active a la vez
+        ToggleGroup Si_No = new ToggleGroup();
+        Check_discapacidad_si.setToggleGroup(Si_No);
+        Check_discapacidad_no.setToggleGroup(Si_No);
+
+
+    }
+
+//creamos y usamos las alertas como en altaslibros
     void CrearAlerta(int TIPO_ALERTA) throws SQLException {
         switch (TIPO_ALERTA) {
             case 0 ->
-                    aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
+                    AltaLibrosController.aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
             case 1 ->
-                    aplicarTemaAlerta("¡Bienvenido!", "¡La visita ha sido registrada!", 0);
+                    AltaLibrosController.aplicarTemaAlerta("¡Bienvenido!", "¡La visita ha sido registrada!", 0);
             case 2 ->
-                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
+                    AltaLibrosController.aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
+
         }
     }
 
-    void Ingresar() throws Exception {
 
-        boolean visita = bd.RegistarVisita(visitante.getId_visitante(), visitante.getEdad_visitante(), visitante.getId_grado_escolar(), visitante.getOcupacion(),
-                visitante.isDiscapaciad(), visitante.getId_nombre(), visitante.getFecha_visita());
-        if (visita) {
+
+//limpia los campos
+    private void limpiarCampos() {
+        Campo_direccion.setText("");
+        Campo_edad.setText("");
+        Campo_nombre.setText("");
+        Combo_ocupacion.setValue(null);
+        Combo_grado.setValue(null);
+        Check_discapacidad_no.setSelected(false);
+        Check_discapacidad_si.setSelected(false);
+        Campo_Apellido_materno.setText("");
+        Campo_Apellido_paterno.setText("");
+    }
+    void Ingresar() throws Exception {
+        llenarvisitante();
+
+        if (bd.InsertarVisitante(visitante)) {
             CrearAlerta(ALERTA_VISITANTE_GUARDADO);
+            limpiarCampos();
 
         } else {
             CrearAlerta(ALERTA_ERROR);
+            limpiarCampos();
 
         }
+    }
 
+    private void llenarvisitante() {
 
 
 
     }
+
 }
