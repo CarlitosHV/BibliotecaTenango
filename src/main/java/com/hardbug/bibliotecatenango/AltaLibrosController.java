@@ -116,7 +116,7 @@ public class AltaLibrosController implements Initializable {
     /*
         Método que aplica el tema dependiendo el seleccionado y también aplica el texto y la cabecera
      */
-    static void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
+    static  void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
         Alert alerta;
         if (tipo == 2) {
             alerta = new Alert(Alert.AlertType.CONFIRMATION);

@@ -9,23 +9,29 @@ public class Visitante {
     public Catalogo ocupacion=null;
     public boolean discapacidad=false;
     public Nombres nombre=null;
+    public String nombres="";
+    public String ap_paterno="";
+    public String ap_materno="";
     public Date fecha=new Date();
-    public Direccion direccion=null;
 
     public Visitante() {
 
     }
 
-    public Visitante(int id, int edad, Catalogo grado_escolar, Catalogo ocupacion, boolean discapacidad,
-                     Nombres nombre, Date fecha, Direccion direccion) {
+    public Visitante(int id, int edad, Catalogo grado_escolar,
+                     Catalogo ocupacion, boolean discapacidad,
+                     com.hardbug.bibliotecatenango.Models.Nombres nombre, String nombres, String ap_paterno,
+                     String ap_materno, Date fecha) {
         this.id = id;
         this.edad = edad;
         this.grado_escolar = grado_escolar;
         this.ocupacion = ocupacion;
         this.discapacidad = discapacidad;
         this.nombre = nombre;
+        this.nombres = nombres;
+        this.ap_paterno = ap_paterno;
+        this.ap_materno = ap_materno;
         this.fecha = fecha;
-        this.direccion = direccion;
     }
 
     public int getId() {
@@ -44,6 +50,29 @@ public class Visitante {
         this.edad = edad;
     }
 
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getAp_paterno() {
+        return ap_paterno;
+    }
+
+    public void setAp_paterno(String ap_paterno) {
+        this.ap_paterno = ap_paterno;
+    }
+
+    public String getAp_materno() {
+        return ap_materno;
+    }
+
+    public void setAp_materno(String ap_materno) {
+        this.ap_materno = ap_materno;
+    }
 
     public boolean isDiscapacidad() {
         return discapacidad;
@@ -69,11 +98,5 @@ public class Visitante {
         this.fecha = fecha;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
-    }
 
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
 }

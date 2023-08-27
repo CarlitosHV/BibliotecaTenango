@@ -11,10 +11,9 @@ import javafx.stage.Stage;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.*;
 
 public class RegistroVisitanteController extends BDController implements Initializable {
 
@@ -32,7 +31,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
-    private TextField Campo_nombre, Campo_direccion, Campo_edad, Campo_Apellido_materno,Campo_Apellido_paterno;
+    private TextField Campo_nombre, Campo_edad, Campo_Apellido_materno,Campo_Apellido_paterno;
     @FXML
     private RadioButton Check_discapacidad_si, Check_discapacidad_no;
     @FXML
@@ -43,8 +42,8 @@ public class RegistroVisitanteController extends BDController implements Initial
     private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static ArrayList<Catalogo> _grados = new ArrayList<>();
 
+    Visitante miVisitante;
 
-    private final Visitante visitante = new Visitante();
     private final IndexApp indexApp = new IndexApp();
     BDController bd = new BDController();
 
@@ -72,6 +71,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         //Cargamos los combos de ocupacion y grado
         try {
             ConfigurarCombos();
@@ -84,6 +84,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         ToggleGroup Si_No = new ToggleGroup();
         Check_discapacidad_si.setToggleGroup(Si_No);
         Check_discapacidad_no.setToggleGroup(Si_No);
+        Check_discapacidad_no.setSelected(true);
 
 
     }
@@ -105,7 +106,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
 //limpia los campos
     private void limpiarCampos() {
-        Campo_direccion.setText("");
+
         Campo_edad.setText("");
         Campo_nombre.setText("");
         Combo_ocupacion.setValue(null);
@@ -116,9 +117,21 @@ public class RegistroVisitanteController extends BDController implements Initial
         Campo_Apellido_paterno.setText("");
     }
     void Ingresar() throws Exception {
-        llenarvisitante();
+        int IdNombre = 0;
+        miVisitante = new Visitante();
+        miVisitante.setNombres(Campo_nombre.getText().trim());
+        miVisitante.setAp_paterno(Campo_Apellido_paterno.getText().trim());
+        miVisitante.setAp_materno(Campo_Apellido_materno.getText().trim());
+        Nombres nombre = new  Nombres(IdNombre,miVisitante.getNombres(),miVisitante.getAp_paterno(),miVisitante.getAp_materno());
+        miVisitante.nombre = nombre;
 
-        if (bd.InsertarVisitante(visitante)) {
+        miVisitante.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
+        miVisitante.ocupacion = Combo_ocupacion.getValue();
+        miVisitante.grado_escolar = Combo_grado.getValue();
+        miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
+        miVisitante.setFecha(Date.from(Instant.now()));
+
+        if (bd.InsertarVisitante(miVisitante)) {
             CrearAlerta(ALERTA_VISITANTE_GUARDADO);
             limpiarCampos();
 
@@ -130,9 +143,19 @@ public class RegistroVisitanteController extends BDController implements Initial
     }
 
     private void llenarvisitante() {
+        int IdNombre = 0;
+        miVisitante = new Visitante();
+        miVisitante.nombre.setNombre(Campo_nombre.getText().trim());
+        miVisitante.nombre.setApellidoPaterno(Campo_Apellido_paterno.getText().trim());
+        miVisitante.nombre.setApellidoMaterno(Campo_Apellido_materno.getText().trim());
+        Nombres nombre = new  Nombres(IdNombre,miVisitante.nombre.getNombre(),miVisitante.nombre.getApellidoPaterno(),miVisitante.nombre.getApellidoMaterno());
+        miVisitante.nombre = nombre;
 
-
-
+        miVisitante.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
+        miVisitante.ocupacion = Combo_ocupacion.getValue();
+        miVisitante.grado_escolar = Combo_grado.getValue();
+        miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
+        miVisitante.setFecha(Date.from(Instant.now()));
     }
 
 }

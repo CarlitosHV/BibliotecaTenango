@@ -24,25 +24,23 @@
          <children>
             <Label text="Nombre(s):" />
             <TextField fx:id="Campo_nombre" GridPane.columnIndex="1" />
-            <TextField fx:id="Campo_direccion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Direccion:" GridPane.rowIndex="1" />
-            <Label text="Ocupación: " GridPane.columnIndex="3" />
-            <ComboBox fx:id="Combo_ocupacion" prefHeight="25.0" prefWidth="553.0" GridPane.columnIndex="4" />
-            <ComboBox fx:id="Combo_grado" prefHeight="25.0" prefWidth="556.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="79.0" text="Grado escolar:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="Ocupación: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="Combo_ocupacion" prefHeight="25.0" prefWidth="553.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <ComboBox fx:id="Combo_grado" prefHeight="25.0" prefWidth="556.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="79.0" text="Grado escolar:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Edad:" GridPane.rowIndex="2" />
             <TextField fx:id="Campo_edad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <AnchorPane prefHeight="112.0" prefWidth="219.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <AnchorPane prefHeight="80.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Label layoutY="14.0" prefHeight="23.0" prefWidth="191.0" text="¿Cuentas con alguna discapacidad?" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" />
-                  <RadioButton fx:id="Check_discapacidad_si" layoutX="351.0" layoutY="56.0" mnemonicParsing="false" text="Si" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="138.0" />
-                  <RadioButton fx:id="Check_discapacidad_no" layoutX="433.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="41.0" text="No" AnchorPane.rightAnchor="46.0" />
+                  <Label layoutX="108.0" layoutY="14.0" prefHeight="23.0" prefWidth="191.0" text="¿Cuentas con alguna discapacidad?" AnchorPane.leftAnchor="108.0" AnchorPane.rightAnchor="-82.0" />
+                  <RadioButton fx:id="Check_discapacidad_si" layoutX="143.0" layoutY="48.0" mnemonicParsing="false" text="Si" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="45.0" />
+                  <RadioButton fx:id="Check_discapacidad_no" layoutX="217.0" layoutY="48.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="41.0" text="No" AnchorPane.rightAnchor="-41.0" />
                </children>
             </AnchorPane>
-            <Label text="Apellido Paterno;" GridPane.rowIndex="3" />
-            <Label text="Apellido Materno:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField fx:id="Campo_Apellido_paterno" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="Campo_Apellido_materno" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Apellido Paterno:" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            <Label text="Apellido Materno:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="Campo_Apellido_paterno" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+            <TextField fx:id="Campo_Apellido_materno" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="497.0" layoutY="403.0" mnemonicParsing="false" onAction="#AccionBotonIngresar" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />

@@ -682,7 +682,6 @@ public class BDController {
 
     public boolean InsertarVisitante(Visitante miVisitante) throws Exception {
         Integer IdNombre = 0;
-        Integer IdDir = 0;
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
@@ -702,30 +701,14 @@ public class BDController {
             if (IdNombre > 0){
                 stmt.close();
                 miVisitante.nombre.IdNombre = IdNombre;
-                PreparedStatement stmtDir = conn.prepareStatement("select * from fninsertaractualizardireccion(?,?,?,?,?,?)");
-                stmtDir.setInt(1, miVisitante.direccion.IdDireccion);
-                stmtDir.setString(2, miVisitante.direccion.Calle);
-                stmtDir.setString(3, miVisitante.direccion.CP);
-                stmtDir.setInt(4, miVisitante.direccion.IdMunicipio);
-                stmtDir.setInt(5, miVisitante.direccion.IdEstado);
-                stmtDir.setInt(6, miVisitante.direccion.IdLocalidad);
-                stmtDir.execute();
-                ResultSet rsDir = stmtDir.getResultSet();
-                while (rsDir.next()){
-                    IdDir = rsDir.getInt("fninsertaractualizardireccion");
-                }
-
-                if (IdDir > 0){
-                    stmtDir.close();
-                    miVisitante.direccion.IdDireccion = IdDir;
-                    PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrovisitante(?,?,?,?,?,?,?)");
+                    PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?)");
                     stmtVisita.setInt(1,miVisitante.edad);
                     stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
                     stmtVisita.setBoolean(3,miVisitante.discapacidad);
                     stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
-                    stmtVisita.setDate(5, (Date) miVisitante.fecha);
-                    stmtVisita.setInt(6,miVisitante.direccion.IdDireccion);
-                    stmtVisita.setInt(7,miVisitante.ocupacion.getId());
+                    java.sql.Date sqlDate  = new java.sql.Date(miVisitante.fecha.getTime());
+                    stmtVisita.setDate(5,  sqlDate);
+                    stmtVisita.setInt(6,miVisitante.ocupacion.getId());
                     stmtVisita.execute();
                     stmtVisita.close();
                     conn.close();
@@ -734,10 +717,6 @@ public class BDController {
                     conn.close();
                     return false;
                 }
-            }else{
-                conn.close();
-                return false;
-            }
         }catch (SQLException e) {
             System.err.println(e.getMessage());
             return false;
