@@ -491,6 +491,32 @@ public class BDController {
         }
     }
 
+    public boolean RegistarVisita(int id_visitante,String edad_visitante,int id_grado_escolar,String ocupacion,
+                                  boolean discapaciad,int id_nombre,String fecha_visita)throws Exception{
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            CallableStatement stmt = conn.prepareCall("call spinsertarregistrovisitante(?, ?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1,id_visitante);
+            stmt.setString(2,edad_visitante);
+            stmt.setInt(3,id_grado_escolar);
+            stmt.setString(4,ocupacion);
+            stmt.setBoolean(5,discapaciad);
+            stmt.setInt(6,id_nombre);
+            stmt.setString(7,fecha_visita);
+            stmt.execute();
+
+            conn.close();
+            stmt.close();
+            return true;
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+    }
+
     public boolean InsertarActualizarUsuario(Usuario mUsuario) throws Exception {
         Integer IdNombre = 0;
         Integer IdDir = 0;

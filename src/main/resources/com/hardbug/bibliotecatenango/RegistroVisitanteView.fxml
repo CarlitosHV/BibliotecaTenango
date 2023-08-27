@@ -40,7 +40,7 @@
             </AnchorPane>
          </children>
       </GridPane>
-      <Button layoutX="497.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />
+      <Button onAction="#AccionBotonIngresar" layoutX="497.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />
       <Label layoutX="289.0" layoutY="80.0" prefHeight="35.0" prefWidth="198.0" text="Registro de Visitas" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="288.0">
          <font>
             <Font size="24.0" />
