@@ -8,10 +8,12 @@ En la aplicación se llevará un registro mensual de las visitas para poder real
 
 
 ***Desarrolladores***
-
+Edwin Adán Gómez Camacho
 Carlos Alberto Hernández Velázquez
 Jorge Arturo Rojas Martínez
-Edwin Adán Gómez Camacho
+Víctor Hugo Ghines Martínez
+Xochiketzalli González Hernández
 
 
-La aplicación desarrollada se conecta a una base de datos SQL Server de manera local
+
+La aplicación desarrollada se conecta a una base de datos PostgreSQL de manera local

@@ -81,8 +81,7 @@ public class BookCrudController extends ListCell<Libro> {
                 controller.setBuscadorLibrosController(buscadorLibrosController);
                 controller.setmenuLibrosController(menuLibrosController);
                 if (controller != null) {
-                    controller.initData(libro.getTitulo_libro(), libro.getNombre_autor(), libro.getEditorial(), libro.getClave_registro(),
-                            libro.getEstante(), libro.getClasificacion(), libro.getDescripcion_libro(), libro.getExistencias(), BookDetailsController.OPERACION_CRUD);
+                    controller.initData(libro, BookDetailsController.OPERACION_CRUD);
                 }
                 menuTransition.play();
             }

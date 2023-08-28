@@ -114,3 +114,7 @@
 #BotonMenu:pressed{
     -fx-background-color: gray;
 }
+
+#BtnPila{
+    -fx-background-color: none;
+}

@@ -5,6 +5,7 @@ import com.hardbug.bibliotecatenango.Models.*;
 import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class BDController {
 
@@ -676,6 +677,194 @@ public class BDController {
             return false;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Catalogo> ConsultarDocumentos(Boolean InsertBlank){
+        ArrayList<Catalogo> _documentos = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarTodosDocumentos()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            if (InsertBlank){
+                _documentos.add(new Catalogo("Selecciona un documento"));
+            }
+            while (rs.next()) {
+                Catalogo catalogo = new Catalogo();
+                catalogo.setId(rs.getInt("id_documento"));
+                catalogo.setNombre(rs.getString("nombre"));
+                _documentos.add(catalogo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _documentos;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public int InsertarActualizarPrestamo(Prestamo mPrestamo) throws Exception {
+        int IdPrestamo = 0;
+        StringJoiner joiner = new StringJoiner(",");
+        for (Libro libro : mPrestamo.libros) {
+            joiner.add(libro.getClave_registro());
+        }
+        String LibrosConcat = joiner.toString();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fninsertaractualizarprestamo(?,?,?,?,?,?,?)");
+            stmt.setInt(1, mPrestamo.IdPrestamo);
+            stmt.setInt(2, mPrestamo.Usuario.IdUsuario);
+            stmt.setDate(3, mPrestamo.FechaInicio);
+            stmt.setDate(4, mPrestamo.FechaFin);
+            stmt.setInt(5, 0);
+            stmt.setString(6, "");
+            stmt.setInt(7, mPrestamo.Documento.getId());
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                IdPrestamo = rs.getInt("fninsertaractualizarprestamo");
+            }
+
+            if(IdPrestamo == -2){
+                return -2;
+            }
+
+            if (IdPrestamo > 0){
+                stmt.close();
+                mPrestamo.IdPrestamo = IdPrestamo;
+                PreparedStatement stmtDir = conn.prepareStatement("call spInsertarLibrosPrestamo(?,?)");
+                stmtDir.setInt(1, mPrestamo.IdPrestamo);
+                stmtDir.setString(2, LibrosConcat);
+                stmtDir.execute();
+                return 0;
+            }else{
+                conn.close();
+                return -1;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+    public boolean InsertarVisitante(Visitante miVisitante) throws Exception {
+        Integer IdNombre = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fninsertaractualizarnombre(?,?,?,?)");
+            stmt.setInt(1, miVisitante.nombre.IdNombre);
+            stmt.setString(2, miVisitante.nombre.Nombre);
+            stmt.setString(3, miVisitante.nombre.ApellidoPaterno);
+            stmt.setString(4, miVisitante.nombre.ApellidoMaterno);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                IdNombre = rs.getInt("fninsertaractualizarnombre");
+            }
+
+            if (IdNombre > 0){
+                stmt.close();
+                miVisitante.nombre.IdNombre = IdNombre;
+                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?)");
+                stmtVisita.setInt(1,miVisitante.edad);
+                stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
+                stmtVisita.setBoolean(3,miVisitante.discapacidad);
+                stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
+                java.sql.Date sqlDate  = new java.sql.Date(miVisitante.fecha.getTime());
+                stmtVisita.setDate(5,  sqlDate);
+                stmtVisita.setInt(6,miVisitante.ocupacion.getId());
+                stmtVisita.setInt(7,miVisitante.Actividad.getId());
+                stmtVisita.execute();
+                stmtVisita.close();
+                conn.close();
+                return true;
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean InsertarEditarActividad(Catalogo Actividad){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarActividad(?,?)");
+            stmt.setInt(1, Actividad.getId());
+            stmt.setString(2, Actividad.getNombre());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean EliminarActividad(Catalogo Actividad){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spEliminarActividad(?)");
+            stmt.setInt(1, Actividad.getId());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public ArrayList<Catalogo> ConsultarActividades(Boolean InsertBlank){
+        ArrayList<Catalogo> _actividades = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarTodasActividades()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            if (InsertBlank){
+                _actividades.add(new Catalogo("Selecciona actividad"));
+            }
+            while (rs.next()) {
+                Catalogo catalogo = new Catalogo();
+                catalogo.setId(rs.getInt("id_actividad"));
+                catalogo.setNombre(rs.getString("nombre"));
+                _actividades.add(catalogo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _actividades;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 }

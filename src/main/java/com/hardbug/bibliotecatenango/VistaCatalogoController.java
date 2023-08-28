@@ -79,12 +79,12 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
             if (opcion == 1){
                 Catalogo gradoseleccionado = catalogo;
                 TextInputDialog dialog = new TextInputDialog();
-                dialog.setTitle("Editar el grado: " + catalogo.getNombre());
-                dialog.setHeaderText("Ingresa el nombre del grado");
+                dialog.setTitle("Editar la actividad: " + catalogo.getNombre());
+                dialog.setHeaderText("Ingresa el nombre de la actividad");
                 dialog.setContentText("Nombre: ");
                 Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
                 stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-                ImageView InformacionEditarGradosView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Preparatoria, Postgrado");
+                ImageView InformacionEditarGradosView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Café literario, Mesa de lectura");
                 dialog.setGraphic(InformacionEditarGradosView);
                 dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue.length() > 20) {
@@ -96,11 +96,11 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                         controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                     } else {
                         gradoseleccionado.setNombre(text);
-                        if(bd.InsertarEditarGrado(gradoseleccionado)){
-                            controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó el grado escolar: " + catalogo.getNombre());
+                        if(bd.InsertarEditarActividad(gradoseleccionado)){
+                            controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Editado con éxito", "Se editó la actividad: " + catalogo.getNombre());
                             controladorGradosEscolares.configurarLista();
                         }else{
-                            controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + catalogo.getNombre());
+                            controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la actividad: " + catalogo.getNombre());
                         }
                     }
                 });
@@ -146,16 +146,16 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 Catalogo gradoseleccionado = catalogo;
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("ATENCIÓN");
-                alert.setContentText("¿Estás seguro de eliminar el grado: " + gradoseleccionado.getNombre() + "?");
+                alert.setContentText("¿Estás seguro de eliminar la actividad: " + gradoseleccionado.getNombre() + "?");
                 Stage stagealert = (Stage) alert.getDialogPane().getScene().getWindow();
                 stagealert.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    if (bd.EliminarGrado(gradoseleccionado)){
-                        controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado el grado: " + gradoseleccionado.getNombre());
+                    if (bd.EliminarActividad(gradoseleccionado)){
+                        controladorGradosEscolares.Alerta(Alert.AlertType.INFORMATION, "Eliminación realizada", "Se ha eliminado la actividad: " + gradoseleccionado.getNombre());
                         controladorGradosEscolares.configurarLista();
                     }else{
-                        controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "No se puede eliminar un grado si algún usuario la tiene en su perfil");
+                        controladorGradosEscolares.Alerta(Alert.AlertType.WARNING, "Error", "No se puede eliminar una actividad si alguna visita la ha marcado");
                     }
                 }else{
                     alert.close();

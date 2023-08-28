@@ -144,7 +144,7 @@
             <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField id="Textfields" fx:id="Campo_codigo" layoutX="161.0" layoutY="307.0" onKeyTyped="#validar_codigo" prefHeight="38.0" prefWidth="145.0" promptText="Código Postal" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
+            <TextField id="Textfields" fx:id="Campo_codigo" onKeyTyped="#validar_codigo" layoutX="161.0" layoutY="307.0" prefHeight="38.0" prefWidth="145.0" promptText="Código Postal" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
@@ -163,7 +163,7 @@
             </TextField>
          </children>
       </GridPane>
-      <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="579.0" layoutY="628.0" mnemonicParsing="false" onAction="#AccionesBotonGuardar" text="Guardar" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="33.0">
+      <Button id="BotonGuardar" fx:id="BotonGuardar" contentDisplay="TOP" layoutX="579.0" layoutY="628.0" mnemonicParsing="false" text="Guardar" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="33.0">
          <effect>
             <Glow />
          </effect>

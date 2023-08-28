@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class BookDetailsController implements Initializable {
+public class BookDetailsController extends BuscadorLibrosController implements Initializable{
     @FXML
     private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar;
     @FXML
@@ -29,6 +30,7 @@ public class BookDetailsController implements Initializable {
     @FXML
     private TextArea TextAreaDescripcion;
     BDController bd = new BDController();
+    Alertas alerta = new Alertas();
     String Clave = "";
     int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
 
@@ -36,6 +38,7 @@ public class BookDetailsController implements Initializable {
 
     private BuscadorLibrosController buscadorLibrosController;
     private MenuLibrosController menuLibrosController;
+    private Libro libroseleccionado = null;
 
     public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
         this.buscadorLibrosController = buscadorLibrosController;
@@ -45,16 +48,17 @@ public class BookDetailsController implements Initializable {
         this.menuLibrosController = menuLibrosController;
     }
 
-    public void initData(String titulo, String autor, String editorial, String clave, String estante, String clasificacion, String descripcion, int existencias, int operacion) {
-        Clave = clave;
-        LabelTitulo.setText(titulo);
-        LabelAutor.setText("Autor: " + autor);
-        LabelEditorial.setText("Editorial: " + editorial);
-        LabelClaveRegistro.setText("Clave registro: " + clave);
-        LabelEstante.setText("Estante: " + estante);
-        LabelClasificacion.setText("Clasificación: " + clasificacion);
-        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(existencias));
-        TextAreaDescripcion.setText(descripcion);
+    public void initData(Libro libro, int operacion) {
+        Clave = libro.getClave_registro();
+        LabelTitulo.setText(libro.getTitulo_libro());
+        LabelAutor.setText("Autor: " + libro.getNombre_autor());
+        LabelEditorial.setText("Editorial: " + libro.getEditorial());
+        LabelClaveRegistro.setText("Clave registro: " + libro.getClave_registro());
+        LabelEstante.setText("Estante: " + libro.getEstante());
+        LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
+        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(libro.getExistencias()));
+        TextAreaDescripcion.setText(libro.getDescripcion_libro());
+        libroseleccionado = libro;
         if (SOLICITAR == operacion){
             ButtonEditar.setVisible(false);
             ButtonEliminar.setVisible(false);
@@ -68,26 +72,27 @@ public class BookDetailsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         ButtonCerrar.setOnAction(actionEvent -> {
             CerrarVista();
         });
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText(),  ALERTA_PRECAUCION);
-            Optional<ButtonType> result = alerta.showAndWait();
+            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText());
+            Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                alerta.close();
+                alert.close();
                 boolean eliminado = bd.BorrarLibro(Clave);
                 if (eliminado){
-                    Alert al = crearAlerta("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!", ALERTA_CONFIRMACION);
+                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
                         menuLibrosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText(), ALERTA_CONFIRMACION);
+                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText());
                     alertaR.showAndWait();
                 }
             }
@@ -101,10 +106,35 @@ public class BookDetailsController implements Initializable {
         });
 
         ButtonSolicitar.setOnAction(event -> {
-            /*
-            Falta la lógica pero ya se implementa la vista cerrada
-             */
-            CerrarVista();
+            if(libroseleccionado.getExistencias() > 0){
+                if(_librosSeleccionados.size() < 5){
+                    if(!_librosSeleccionados.contains(libroseleccionado)){
+                        ContadorLibros += 1;
+                        buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
+                        _librosSeleccionados.add(libroseleccionado);
+                        ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                        scaleIn.setToX(1.5);
+                        scaleIn.setToY(1.5);
+                        ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                        scaleOut.setToX(1.0);
+                        scaleOut.setToY(1.0);
+                        scaleIn.setOnFinished(e -> {
+                            CerrarVista();
+                            scaleOut.play();
+                        });
+                        scaleIn.play();
+                    }else{
+                        Alert al = alerta.CrearAlertaError("Libro duplicado", "No puedes seleccionar el mismo libro más de una vez");
+                        al.showAndWait();
+                    }
+                }else{
+                    Alert alert = alerta.CrearAlertaError("Límite alcanzado", "Has alcanzado el límite de 5 libros por préstamo");
+                    alert.showAndWait();
+                }
+            }else{
+                Alert a = alerta.CrearAlertaError("Libro sin existencias", "El libro que estás intentando solicitar no cuenta con inventario actualmente.");
+                a.showAndWait();
+            }
         });
     }
 
@@ -129,35 +159,6 @@ public class BookDetailsController implements Initializable {
         LabelClasificacion.setText("");
         LabelDisponibilidad.setText("");
         TextAreaDescripcion.setText("");
-    }
-
-    public Alert crearAlerta(String titulo, String contenido, int tipo){
-        Alert alerta;
-        if(tipo == ALERTA_CONFIRMACION){
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }else{
-            alerta = new Alert(Alert.AlertType.WARNING);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        Button button = (Button) alerta.getDialogPane().lookupButton(ButtonType.OK);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white;");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: gray; -fx-text-fill: black; -fx-border-color: black");
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white");
-        }
-        return alerta;
     }
 
     private void mostrarVentanaModal(Stage ownerStage) {

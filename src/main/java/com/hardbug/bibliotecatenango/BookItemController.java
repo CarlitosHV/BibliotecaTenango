@@ -91,8 +91,7 @@ public class BookItemController extends ListCell<Libro> {
                 controller.setmenuLibrosController(menuLibrosController);
                 controller.setBuscadorLibrosController(buscadorLibrosController);
                 if (controller != null) {
-                    controller.initData(libro.getTitulo_libro(), libro.getNombre_autor(), libro.getEditorial(), libro.getClave_registro(),
-                            libro.getEstante(), libro.getClasificacion(), libro.getDescripcion_libro(), libro.getExistencias(), BookDetailsController.SOLICITAR);
+                    controller.initData(libro, BookDetailsController.SOLICITAR);
                 }
                 menuTransition.play();
             }

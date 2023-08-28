@@ -13,13 +13,14 @@
   <rowConstraints>
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="57.0" valignment="CENTER" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button id="MenuItems" fx:id="ButtonHome" alignment="CENTER" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="63.0" prefWidth="194.0" text="Inicio" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+      <Button id="MenuItems" fx:id="ButtonHome" alignment="CENTER" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="81.0" prefWidth="194.0" text="Inicio" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
@@ -49,7 +50,23 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" fx:id="ButtonUsers" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="56.0" prefWidth="194.0" text="Usuarios" GridPane.rowIndex="2">
+      <Button id="MenuItems" fx:id="ButtonVisitors" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="81.0" prefWidth="194.0" text="Visitantes" GridPane.rowIndex="2">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/ico_visitors.png" />
+               </image>
+            </ImageView>
+
+         </graphic>
+         <font>
+            <Font name="Roboto Light" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="MenuItems" fx:id="ButtonUsers" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="56.0" prefWidth="194.0" text="Usuarios" GridPane.rowIndex="3">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
@@ -64,7 +81,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" fx:id="ButtonBooks" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="179.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Libros" GridPane.rowIndex="3">
+      <Button id="MenuItems" fx:id="ButtonBooks" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="179.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Libros" GridPane.rowIndex="4">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
@@ -79,7 +96,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="187.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Reportes" GridPane.rowIndex="4">
+      <Button id="MenuItems" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="187.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Reportes" GridPane.rowIndex="5">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
@@ -94,7 +111,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" fx:id="ButtonConfig" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="243.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="68.0" prefWidth="194.0" text="Configuración" GridPane.rowIndex="5">
+      <Button id="MenuItems" fx:id="ButtonConfig" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="243.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="68.0" prefWidth="194.0" text="Configuración" GridPane.rowIndex="6">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>

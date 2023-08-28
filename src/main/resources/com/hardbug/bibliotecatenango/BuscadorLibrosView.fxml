@@ -3,8 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
 <AnchorPane id="Fondo" prefHeight="424.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.BuscadorLibrosController">
    <children>
       <GridPane hgap="10.0" layoutX="48.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="158.0" prefWidth="382.0" AnchorPane.bottomAnchor="252.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="14.0">
@@ -27,6 +27,18 @@
                   </ImageView>
                </graphic>
             </Button>
+             <Button id="BtnPila" fx:id="PilaLibros" contentDisplay="TOP" mnemonicParsing="false" prefHeight="40.0" prefWidth="45.0" text="1" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                 <font>
+                     <Font name="Roboto Light" size="12.0" />
+                 </font>
+                 <graphic>
+                     <ImageView fitHeight="29.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@../../../assets/pilalibros.png" />
+                         </image>
+                     </ImageView>
+                 </graphic>
+             </Button>
          </children>
       </GridPane>
       <ListView fx:id="LibrosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
