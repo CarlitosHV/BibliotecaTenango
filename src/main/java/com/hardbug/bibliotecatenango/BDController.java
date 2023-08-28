@@ -757,4 +757,114 @@ public class BDController {
             return -1;
         }
     }
+    public boolean InsertarVisitante(Visitante miVisitante) throws Exception {
+        Integer IdNombre = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fninsertaractualizarnombre(?,?,?,?)");
+            stmt.setInt(1, miVisitante.nombre.IdNombre);
+            stmt.setString(2, miVisitante.nombre.Nombre);
+            stmt.setString(3, miVisitante.nombre.ApellidoPaterno);
+            stmt.setString(4, miVisitante.nombre.ApellidoMaterno);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                IdNombre = rs.getInt("fninsertaractualizarnombre");
+            }
+
+            if (IdNombre > 0){
+                stmt.close();
+                miVisitante.nombre.IdNombre = IdNombre;
+                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?)");
+                stmtVisita.setInt(1,miVisitante.edad);
+                stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
+                stmtVisita.setBoolean(3,miVisitante.discapacidad);
+                stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
+                java.sql.Date sqlDate  = new java.sql.Date(miVisitante.fecha.getTime());
+                stmtVisita.setDate(5,  sqlDate);
+                stmtVisita.setInt(6,miVisitante.ocupacion.getId());
+                stmtVisita.setInt(7,miVisitante.Actividad.getId());
+                stmtVisita.execute();
+                stmtVisita.close();
+                conn.close();
+                return true;
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean InsertarEditarActividad(Catalogo Actividad){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarActividad(?,?)");
+            stmt.setInt(1, Actividad.getId());
+            stmt.setString(2, Actividad.getNombre());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean EliminarActividad(Catalogo Actividad){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spEliminarActividad(?)");
+            stmt.setInt(1, Actividad.getId());
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public ArrayList<Catalogo> ConsultarActividades(Boolean InsertBlank){
+        ArrayList<Catalogo> _actividades = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarTodasActividades()");
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+
+            if (InsertBlank){
+                _actividades.add(new Catalogo("Selecciona actividad"));
+            }
+            while (rs.next()) {
+                Catalogo catalogo = new Catalogo();
+                catalogo.setId(rs.getInt("id_actividad"));
+                catalogo.setNombre(rs.getString("nombre"));
+                _actividades.add(catalogo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _actividades;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
 }

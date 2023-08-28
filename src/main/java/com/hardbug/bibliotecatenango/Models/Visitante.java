@@ -13,6 +13,7 @@ public class Visitante {
     public String ap_paterno="";
     public String ap_materno="";
     public Date fecha=new Date();
+    public Catalogo Actividad = null;
 
     public Visitante() {
 

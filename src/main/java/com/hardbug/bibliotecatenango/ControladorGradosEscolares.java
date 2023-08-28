@@ -25,8 +25,8 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     private ProgressIndicator IconoCarga;
     @FXML
     private TextField Buscador;
-    ArrayList<Catalogo> _grados = new ArrayList<>();
-    private static FilteredList<Catalogo> _gradosfiltrados;
+    ArrayList<Catalogo> _actividades = new ArrayList<>();
+    private static FilteredList<Catalogo> _actividadesfiltradas;
 
     public ListView<Catalogo> getLista(){
         return ListaGrados;
@@ -44,12 +44,12 @@ public class ControladorGradosEscolares extends BDController implements Initiali
         });
         LabelCrearGrado.setOnMouseClicked(event -> {
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Crear nuevo grado escolar");
-            dialog.setHeaderText("Ingresa el nombre del grado");
+            dialog.setTitle("Crear nueva actividad");
+            dialog.setHeaderText("Ingresa el nombre de la actividad");
             dialog.setContentText("Nombre: ");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-            ImageView InformacionView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Preparatoria, Postgrado");
+            ImageView InformacionView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Café literario, Mesa de lectura");
             dialog.setGraphic(InformacionView);
 
             dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -62,16 +62,16 @@ public class ControladorGradosEscolares extends BDController implements Initiali
                 if (text.isEmpty()) {
                     Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
                 } else {
-                    Catalogo grado = new Catalogo(text);
+                    Catalogo actividad = new Catalogo(text);
                     if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
-                        if(InsertarEditarGrado(grado)){
-                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó el grado escolar: " + text);
+                        if(InsertarEditarActividad(actividad)){
+                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la actividad: " + text);
                             configurarLista();
                         }else{
-                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar el grado: " + text);
+                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la actividad: " + text);
                         }
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "El grado escolar: " + text + " es inválido");
+                        Alerta(Alert.AlertType.WARNING, "Error", "La actividad: " + text + " es inválida");
                     }
 
                 }
@@ -97,7 +97,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     private void Search() {
         IconoCarga.setVisible(true);
         String searchText = Buscador.getText().toLowerCase();
-        _gradosfiltrados.setPredicate(catalogo -> {
+        _actividadesfiltradas.setPredicate(catalogo -> {
             boolean match = catalogo.getNombre().toLowerCase().contains(searchText);
             Platform.runLater(() -> IconoCarga.setVisible(false));
             return match;
@@ -105,16 +105,16 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     }
 
     protected void configurarLista(){
-        _grados = ConsultarGradosEscolares(false);
-        if (!_grados.isEmpty()){
+        _actividades = ConsultarActividades(false);
+        if (!_actividades.isEmpty()){
             LabelSinGrados.setVisible(false);
             ListaGrados.setVisible(true);
             IconoCarga.setVisible(false);
-            _gradosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_grados));;
+            _actividadesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_actividades));;
             ListaGrados.setCellFactory(lv -> {
                 return new VistaCatalogoController(1, this, new ControladorOcupaciones());
             });
-            ListaGrados.setItems(_gradosfiltrados);
+            ListaGrados.setItems(_actividadesfiltradas);
         }else{
             LabelSinGrados.setVisible(true);
             ListaGrados.setVisible(false);

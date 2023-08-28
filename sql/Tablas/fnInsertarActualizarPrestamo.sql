@@ -31,7 +31,7 @@ BEGIN
 				TRUE
             ) RETURNING id_prestamo INTO id_retorno;
         ELSE
-            id_retorno := -1;
+            id_retorno := -2;
         END IF;
     ELSE
         UPDATE prestamos 

@@ -7,12 +7,12 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.ControladorGradosEscolares">
    <children>
-      <Label layoutX="118.0" layoutY="22.0" text="Grados Escolares" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="118.0">
+      <Label layoutX="83.0" layoutY="21.0" prefHeight="25.0" prefWidth="227.0" text="Actividades de la biblioteca" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
          <font>
             <Font name="Roboto Light" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="LabelCrearGrado" layoutX="215.0" layoutY="65.0" text="Crear nuevo grado escolar" textFill="#3f81eb" underline="true" AnchorPane.rightAnchor="22.0">
+      <Label fx:id="LabelCrearGrado" layoutX="215.0" layoutY="65.0" text="Crear nueva actividad" textFill="#3f81eb" underline="true" AnchorPane.rightAnchor="22.0">
           <font>
               <Font name="Roboto Light" size="12.0" />
           </font>
@@ -21,7 +21,7 @@
          </cursor>
       </Label>
       <ListView fx:id="ListaGrados" layoutY="98.0" prefHeight="352.0" prefWidth="393.0" />
-      <Label fx:id="LabelSinGrados" layoutX="84.0" layoutY="262.0" text="No hay grados registrados" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="82.0">
+      <Label fx:id="LabelSinGrados" layoutX="67.0" layoutY="262.0" prefHeight="25.0" prefWidth="260.0" text="No hay actividades registradas" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="66.0">
          <font>
             <Font name="Roboto Light" size="18.0" />
          </font>

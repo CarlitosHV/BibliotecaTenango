@@ -38,9 +38,12 @@ public class RegistroVisitanteController extends BDController implements Initial
     private ComboBox<Catalogo> Combo_grado;
     @FXML
     private ComboBox<Catalogo> Combo_ocupacion;
+    @FXML
+    private ComboBox<Catalogo> Combo_actividad;
 
     private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static ArrayList<Catalogo> _grados = new ArrayList<>();
+    private static ArrayList<Catalogo> _actividades = new ArrayList<>();
 
     Visitante miVisitante;
 
@@ -61,8 +64,10 @@ public class RegistroVisitanteController extends BDController implements Initial
     private void ConfigurarCombos () throws SQLException {
         _ocupaciones = bd.ConsultarOcupaciones(false);
         _grados = bd.ConsultarGradosEscolares(false);
+        _actividades = bd.ConsultarActividades(false);
         Combo_grado.getItems().addAll(_grados);
         Combo_ocupacion.getItems().addAll(_ocupaciones);
+        Combo_actividad.getItems().addAll(_actividades);
     }
 
     @Override
@@ -105,6 +110,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         Campo_nombre.setText("");
         Combo_ocupacion.setValue(null);
         Combo_grado.setValue(null);
+        Combo_actividad.setValue(null);
         Check_discapacidad_no.setSelected(false);
         Check_discapacidad_si.setSelected(false);
         Campo_Apellido_materno.setText("");
@@ -124,6 +130,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         miVisitante.grado_escolar = Combo_grado.getValue();
         miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
         miVisitante.setFecha(Date.from(Instant.now()));
+        miVisitante.Actividad = Combo_actividad.getValue();
 
         if (bd.InsertarVisitante(miVisitante)) {
             CrearAlerta(ALERTA_VISITANTE_GUARDADO);

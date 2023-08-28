@@ -24,7 +24,7 @@ BEGIN
 			
 			UPDATE libros
             SET existencias = existencias - 1
-            WHERE clave_registro = clave_registro;
+            WHERE clave_registro = libro_clave;
         END IF;
     END LOOP;
 END;
