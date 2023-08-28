@@ -28,7 +28,7 @@
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="BotonConfirmUser" layoutX="483.0" layoutY="142.0" mnemonicParsing="false" text="Confirmar usuario">
+      <Button fx:id="BotonConfirmUser" layoutX="484.0" layoutY="155.0" mnemonicParsing="false" text="Confirmar usuario">
          <font>
             <Font name="Roboto Light" size="12.0" />
          </font>
@@ -38,31 +38,41 @@
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="145.0" layoutY="370.0" text="Fecha inicio:">
+      <Label fx:id="LabelHInicio" layoutX="145.0" layoutY="370.0" text="Fecha inicio:">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="LabelFechaInicio" layoutX="146.0" layoutY="312.0" prefHeight="25.0" prefWidth="125.0">
+      <Label fx:id="LabelFechaInicio" layoutX="147.0" layoutY="392.0" prefHeight="25.0" prefWidth="125.0">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="483.0" layoutY="372.0" text="Fecha devolución:">
+      <Label fx:id="LabelHFin" layoutX="483.0" layoutY="372.0" text="Fecha devolución:">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="LabelFechaFin" layoutX="484.0" layoutY="314.0" prefHeight="25.0" prefWidth="125.0">
+      <Label fx:id="LabelFechaFin" layoutX="484.0" layoutY="392.0" prefHeight="25.0" prefWidth="125.0">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="167.0" layoutY="178.0" prefHeight="50.0" prefWidth="405.0" text="Ingresa el documento que mostró el usuario para validarlo, verifica que coincida la CURP del sistema con el documento mostrado" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="LabelHeaderTres" layoutX="167.0" layoutY="178.0" prefHeight="50.0" prefWidth="405.0" text="Ingresa el documento que mostró el usuario para validarlo, verifica que la información del sistema coincida con el documento mostrado" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Roboto Light" size="13.0" />
          </font>
       </Label>
       <ComboBox fx:id="ComboDocumento" layoutX="279.0" layoutY="245.0" prefHeight="35.0" prefWidth="182.0" promptText="Selecciona el documento" />
+      <Label fx:id="LabelDir" layoutX="371.0" layoutY="120.0" prefHeight="20.0" prefWidth="339.0">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="ButtonPrestamo" layoutX="612.0" layoutY="440.0" mnemonicParsing="false" text="Crear préstamo">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

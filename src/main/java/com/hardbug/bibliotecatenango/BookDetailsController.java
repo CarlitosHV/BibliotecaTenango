@@ -106,29 +106,34 @@ public class BookDetailsController extends BuscadorLibrosController implements I
         });
 
         ButtonSolicitar.setOnAction(event -> {
-            if(_librosSeleccionados.size() < 5){
-                if(!_librosSeleccionados.contains(libroseleccionado)){
-                    ContadorLibros += 1;
-                    buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
-                    _librosSeleccionados.add(libroseleccionado);
-                    ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
-                    scaleIn.setToX(1.5);
-                    scaleIn.setToY(1.5);
-                    ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
-                    scaleOut.setToX(1.0);
-                    scaleOut.setToY(1.0);
-                    scaleIn.setOnFinished(e -> {
-                        CerrarVista();
-                        scaleOut.play();
-                    });
-                    scaleIn.play();
+            if(libroseleccionado.getExistencias() > 0){
+                if(_librosSeleccionados.size() < 5){
+                    if(!_librosSeleccionados.contains(libroseleccionado)){
+                        ContadorLibros += 1;
+                        buscadorLibrosController.PilaLibros.setText(String.valueOf(ContadorLibros));
+                        _librosSeleccionados.add(libroseleccionado);
+                        ScaleTransition scaleIn = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                        scaleIn.setToX(1.5);
+                        scaleIn.setToY(1.5);
+                        ScaleTransition scaleOut = new ScaleTransition(Duration.seconds(0.6), buscadorLibrosController.PilaLibros);
+                        scaleOut.setToX(1.0);
+                        scaleOut.setToY(1.0);
+                        scaleIn.setOnFinished(e -> {
+                            CerrarVista();
+                            scaleOut.play();
+                        });
+                        scaleIn.play();
+                    }else{
+                        Alert al = alerta.CrearAlertaError("Libro duplicado", "No puedes seleccionar el mismo libro más de una vez");
+                        al.showAndWait();
+                    }
                 }else{
-                    Alert al = alerta.CrearAlertaError("Libro duplicado", "No puedes seleccionar el mismo libro más de una vez");
-                    al.showAndWait();
+                    Alert alert = alerta.CrearAlertaError("Límite alcanzado", "Has alcanzado el límite de 5 libros por préstamo");
+                    alert.showAndWait();
                 }
             }else{
-                Alert alert = alerta.CrearAlertaError("Límite alcanzado", "Has alcanzado el límite de 5 libros por préstamo");
-                alert.showAndWait();
+                Alert a = alerta.CrearAlertaError("Libro sin existencias", "El libro que estás intentando solicitar no cuenta con inventario actualmente.");
+                a.showAndWait();
             }
         });
     }
