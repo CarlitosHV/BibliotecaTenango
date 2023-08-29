@@ -29,6 +29,10 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(Integer IdUsuario) {
+        this.IdUsuario = IdUsuario;
+    }
+
     public Usuario(int idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
                    String contrasenia, BigInteger telefono, int edad, String sexo, String curp, Integer idGradoEscolar,
                    Catalogo gradoEscolar, Integer idTipoUsuario, Integer idOcupacion, Catalogo ocupacion, String calle,

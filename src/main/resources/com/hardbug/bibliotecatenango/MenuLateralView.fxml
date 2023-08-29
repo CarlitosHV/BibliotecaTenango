@@ -35,7 +35,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="63.0" prefWidth="194.0" text="Préstamos" GridPane.rowIndex="1">
+      <Button id="MenuItems" fx:id="ButtonPrestamos" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="63.0" prefWidth="194.0" text="Préstamos" GridPane.rowIndex="1">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>

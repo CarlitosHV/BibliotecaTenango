@@ -18,7 +18,8 @@ public enum View {
     MENU_USUARIOS("MenuUsuarios.fxml"),
     ALTA_USUARIOS("AltaUsersView.fxml"),
     DETALLES_USUARIOS("ViewUserDetails.fxml"),
-    REGISTRO_VISITANTES("RegistroVisitanteView.fxml");
+    REGISTRO_VISITANTES("RegistroVisitanteView.fxml"),
+    PRESTAMOS("PrestamosView.fxml");
 
     private String fileName;
 

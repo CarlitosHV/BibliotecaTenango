@@ -7,6 +7,10 @@ public class Catalogo {
     public Catalogo() {
     }
 
+    public Catalogo(int id) {
+        this.id = id;
+    }
+
     public Catalogo(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;

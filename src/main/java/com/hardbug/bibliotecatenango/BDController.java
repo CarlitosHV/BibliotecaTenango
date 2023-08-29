@@ -867,4 +867,128 @@ public class BDController {
             return null;
         }
     }
+
+    public ArrayList<Prestamo> ConsultarPrestamos(){
+        ArrayList<Prestamo> _prestamos = new ArrayList<>();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarTodosPrestamos()");
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                Prestamo prestamo = new Prestamo();
+                prestamo.IdPrestamo = rs.getInt("id_prestamo");
+                prestamo.Usuario =  new Usuario(rs.getInt("id_usuario"));
+                prestamo.FechaInicio = rs.getDate("fecha_prestamo");
+                prestamo.FechaFin = rs.getDate("fecha_devolucion");
+                prestamo.Renovaciones = rs.getInt("renovaciones");
+                prestamo.ComentarioAtraso = rs.getString("comentario_atraso") != null ? rs.getString("comentario_atraso") : "";
+                prestamo.Documento = new Catalogo(rs.getInt("id_tipo_documento"));
+                PreparedStatement stmtU = conn.prepareStatement("SELECT * FROM fnSeleccionarTodosLibrosPrestamos(?)");
+                stmtU.setInt(1, prestamo.IdPrestamo);
+                stmtU.execute();
+                ResultSet rrs = stmtU.getResultSet();
+                ArrayList<Libro> _libros = new ArrayList<>();
+                while (rrs.next()){
+                    Libro libro = new Libro(rrs.getString("clave_registro"));
+                    _libros.add(libro);
+                }
+                prestamo.libros = _libros;
+                rrs.close();
+                stmtU.close();
+                Catalogo documento = ConsultarDocumentosPorId(prestamo.Documento.getId());
+                prestamo.Documento = documento;
+                Usuario usuario = MostrarUsuarioPorId(prestamo.Usuario.IdUsuario);
+                prestamo.Usuario = usuario;
+                _prestamos.add(prestamo);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return _prestamos;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Catalogo ConsultarDocumentosPorId(int IdDocumento){
+        Catalogo catalogo = new Catalogo();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnConsultarDocumentosPorId(?)");
+            stmt.setInt(1, IdDocumento);
+            stmt.execute();
+
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                catalogo.setId(rs.getInt("id_documento"));
+                catalogo.setNombre(rs.getString("nombre"));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return catalogo;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Usuario MostrarUsuarioPorId(int IdUsuario){
+        Usuario usuario = new Usuario();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnseleccionartodosusuariosporid(?)");
+            stmt.setInt(1, IdUsuario);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                usuario.IdUsuario = rs.getInt("id_usuario");
+                usuario.setTelefono(new BigInteger(String.valueOf(rs.getLong("telefono"))));
+                usuario.setEdad(rs.getInt("edad"));
+                usuario.sexo = rs.getString("sexo");
+                usuario.setCurp(rs.getString("curp").trim());
+                String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
+                usuario.Contrasenia = contradecifrada;
+                usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
+                usuario.setCorreo(rs.getString("correo"));
+                Nombres nombre = new Nombres();
+                nombre.IdNombre = rs.getInt("id_nombre");
+                nombre.Nombre = rs.getString("nombre");
+                nombre.ApellidoPaterno = rs.getString("apellido_paterno");
+                nombre.ApellidoMaterno = rs.getString("apellido_materno");
+                usuario.nombre = nombre;
+                usuario.TipoUsuario = new Catalogo(rs.getInt("id_tipo_usuario"), rs.getString("tipo_usuario"));
+                usuario.Ocupacion = new Catalogo(rs.getInt("id_ocupacion"), rs.getString("ocupacion"));
+                Direccion direccion = new Direccion();
+                direccion.IdDireccion = rs.getInt("id_direccion");
+                direccion.setCalle(rs.getString("calle"));
+                direccion.setCP(rs.getString("codigo_postal"));
+                direccion.IdMunicipio = rs.getInt("id_municipio");
+                direccion.Municipio = rs.getString("municipio");
+                direccion.IdEstado = rs.getInt("id_estado");
+                direccion.Estado = rs.getString("estado");
+                direccion.IdLocalidad = rs.getInt("id_localidad");
+                direccion.Localidad = rs.getString("localidad");
+                usuario.direccion = direccion;
+            }
+
+            stmt.close();
+            conn.close();
+            return usuario;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
