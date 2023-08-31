@@ -15,6 +15,7 @@ AS $$
 BEGIN
 	RETURN QUERY SELECT
 		pr.*
-	FROM PRESTAMOS pr;
+	FROM PRESTAMOS pr
+	WHERE pr.activo = true;
 END;
 $$;
