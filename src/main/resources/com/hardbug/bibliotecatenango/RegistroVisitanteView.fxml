@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Fondo" fx:id="Fondo" prefHeight="561.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.RegistroVisitanteController">
+<AnchorPane id="Fondo" fx:id="Fondo" prefHeight="561.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.RegistroVisitanteController">
    <children>
       <GridPane layoutX="35.0" layoutY="124.0" prefHeight="322.0" prefWidth="695.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="139.0">
         <columnConstraints>
@@ -30,11 +31,11 @@
             <Label prefHeight="17.0" prefWidth="79.0" text="Grado escolar:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Edad:" GridPane.rowIndex="2" />
             <TextField fx:id="Campo_edad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <AnchorPane prefHeight="80.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <AnchorPane prefHeight="80.0" prefWidth="246.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="108.0" layoutY="14.0" prefHeight="23.0" prefWidth="191.0" text="¿Cuentas con alguna discapacidad?" AnchorPane.leftAnchor="108.0" AnchorPane.rightAnchor="-82.0" />
-                  <RadioButton fx:id="Check_discapacidad_si" layoutX="143.0" layoutY="48.0" mnemonicParsing="false" text="Si" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="45.0" />
-                  <RadioButton fx:id="Check_discapacidad_no" layoutX="217.0" layoutY="48.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="41.0" text="No" AnchorPane.rightAnchor="-41.0" />
+                  <Label layoutY="21.0" prefHeight="23.0" prefWidth="191.0" text="¿Cuentas con alguna discapacidad?" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" />
+                  <RadioButton fx:id="Check_discapacidad_si" layoutX="47.0" layoutY="56.0" mnemonicParsing="false" text="Si" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="141.0" />
+                  <RadioButton fx:id="Check_discapacidad_no" layoutX="125.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="41.0" text="No" AnchorPane.rightAnchor="51.0" />
                </children>
             </AnchorPane>
             <Label text="Apellido Paterno:" GridPane.columnIndex="3" GridPane.rowIndex="0" />
@@ -42,7 +43,7 @@
             <TextField fx:id="Campo_Apellido_paterno" GridPane.columnIndex="4" GridPane.rowIndex="0" />
             <TextField fx:id="Campo_Apellido_materno" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="Combo_actividad" prefHeight="32.0" prefWidth="150.0" promptText="Selecciona una actividad" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <Label text="Actividad" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label text="Actividad" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <Button layoutX="497.0" layoutY="403.0" mnemonicParsing="false" onAction="#AccionBotonIngresar" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="45.0" />
