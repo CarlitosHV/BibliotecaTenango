@@ -36,6 +36,10 @@ private static Scene scene;
 
     private static BookDetailsController bookDetailsController;
     private static UserDetailsController userDetailsController;
+    private static PrestamoDetailController prestamoDetailController;
+    public static  PrestamoDetailController getPrestamoDetailController(){
+        return prestamoDetailController;
+    }
 
     public static BookDetailsController getBookDetailsController() {
         return bookDetailsController;
@@ -56,11 +60,18 @@ private static Scene scene;
                 switch (view) {
                     case MENU_LATERAL -> rootPane.setLeft(root);
                     case DETALLES_LIBROS -> {
+                        rootPane.setRight(null);
                         bookDetailsController = loader.getController();
                         rootPane.setRight(root);
                     }
                     case DETALLES_USUARIOS -> {
+                        rootPane.setRight(null);
                         userDetailsController = loader.getController();
+                        rootPane.setRight(root);
+                    }
+                    case PRESTAMO_DETAIL -> {
+                        rootPane.setRight(null);
+                        prestamoDetailController = loader.getController();
                         rootPane.setRight(root);
                     }
                     default -> rootPane.setCenter(root);

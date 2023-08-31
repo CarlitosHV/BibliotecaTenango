@@ -991,4 +991,62 @@ public class BDController {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean ExtenderPrestamo(Prestamo mPrestamo) throws Exception {
+        int response = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnActualizarPrestamo(?,?,?)");
+            stmt.setInt(1, mPrestamo.IdPrestamo);
+            stmt.setDate(2, mPrestamo.FechaFin);
+            stmt.setString(3, mPrestamo.ComentarioAtraso);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                response = rs.getInt("fnactualizarprestamo");
+            }
+            if (response == 1){
+                stmt.close();
+                conn.close();
+                return true;
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean FinalizarPrestamo(Prestamo mPrestamo) throws Exception {
+        int response = 0;
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnFinalizarPrestamo(?)");
+            stmt.setInt(1, mPrestamo.IdPrestamo);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                response = rs.getInt("fnfinalizarprestamo");
+            }
+            if (response == 1){
+                stmt.close();
+                conn.close();
+                return true;
+            }else{
+                conn.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
 }

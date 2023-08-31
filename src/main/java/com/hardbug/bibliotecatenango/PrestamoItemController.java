@@ -48,9 +48,9 @@ public class PrestamoItemController extends ListCell<Prestamo> {
         if (Empty || prestamo == null) {
             setGraphic(null);
         } else {
-            LabelFin.setText("Fecha devolución: " + prestamo.FechaFin.toString());
+            LabelInicio.setText("Fecha préstamo: " + Fechas.obtenerFechaInicio(prestamo.FechaInicio));
             LabelLibros.setText("Libros solicitados: " + prestamo.libros.size());
-            LabelInicio.setText("Fecha préstamo: " + prestamo.FechaInicio.toString());
+            LabelFin.setText("Fecha devolución: " + Fechas.obtenerFechaDevolucion(prestamo.FechaFin));
             LabelCURP.setText("CURP: " + prestamo.Usuario.getCurp());
             LabelNombre.setText("Usuario: " + prestamo.Usuario.nombre.GetNombreCompleto());
             setGraphic(fondoItem);

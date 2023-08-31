@@ -31,6 +31,7 @@ public class IndexController implements Initializable {
         ViewSwitcher.showTo(View.MENU_LATERAL, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, rootPane);
+        ViewSwitcher.showTo(View.PRESTAMO_DETAIL, IndexApp.TEMA, rootPane);
         Node contentNodeRight = rootPane.getRight();
         contentNodeRight.setTranslateX(400);
         Node contentNodeLeft = rootPane.getLeft();

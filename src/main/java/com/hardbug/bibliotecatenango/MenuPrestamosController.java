@@ -2,7 +2,9 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Libro;
 import com.hardbug.bibliotecatenango.Models.Prestamo;
+import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -14,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -41,15 +44,15 @@ public class MenuPrestamosController extends BDController implements Initializab
     private AnchorPane rootPane;
     private static ArrayList<Prestamo> _prestamos = new ArrayList<>();
     private static FilteredList<Prestamo> _prestamosfiltrados;
+    Prestamo prestamo = new Prestamo();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
-        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, pb);
+        ViewSwitcher.showTo(View.PRESTAMO_DETAIL, IndexApp.TEMA, pb);
         Node contentNodeRight = pb.getRight();
-        contentNodeRight.setTranslateX(400);*/
+        contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();
@@ -81,6 +84,26 @@ public class MenuPrestamosController extends BDController implements Initializab
             _prestamosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_prestamos));;
             PrestamosListView.setCellFactory(lv -> new PrestamoItemController());
             PrestamosListView.setItems(_prestamosfiltrados);
+            PrestamosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    PrestamosListView.setOnMouseClicked(mouseEvent -> {
+                        if(mouseEvent.getButton() == MouseButton.PRIMARY){
+                            Parent bp = ViewSwitcher.getScene().getRoot();
+                            BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
+                            Node right = pb.getRight();
+                            TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
+                            menuTransition.setToX(0);
+                            PrestamoDetailController cont = ViewSwitcher.getPrestamoDetailController();
+                            cont.setMenuPrestamosController(this);
+                            if (cont != null) {
+                                prestamo = newValue;
+                                cont.initData(prestamo);
+                            }
+                            menuTransition.play();
+                        }
+                    });
+                }
+            });
         }else{
             LabelSinPrestamos.setVisible(true);
             PrestamosListView.setVisible(false);

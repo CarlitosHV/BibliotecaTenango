@@ -19,7 +19,8 @@ public enum View {
     ALTA_USUARIOS("AltaUsersView.fxml"),
     DETALLES_USUARIOS("ViewUserDetails.fxml"),
     REGISTRO_VISITANTES("RegistroVisitanteView.fxml"),
-    PRESTAMOS("PrestamosView.fxml");
+    PRESTAMOS("PrestamosView.fxml"),
+    PRESTAMO_DETAIL("ViewPrestamoDetail.fxml");
 
     private String fileName;
 
