@@ -16,6 +16,10 @@ public class Libro {
     public Libro() {
     }
 
+    public Libro(String clave_registro) {
+        this.clave_registro = clave_registro;
+    }
+
     public Libro(String clave_registro, String clasificacion, String anio_edicion, String registro_clasificacion, String estante, int existencias,
                  String editorial, String lugar_edicion, String titulo_libro, String nombre_autor, String descripcion_libro) {
         this.clave_registro = clave_registro;

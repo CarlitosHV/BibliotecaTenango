@@ -34,4 +34,26 @@ public class Fechas {
         long milisegundos = calendario.getTimeInMillis();
         return new Date(milisegundos);
     }
+
+    public static Date obtenerFechaDevolucionSqlDate(Date fecha) {
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fecha);
+        calendario.add(Calendar.DAY_OF_MONTH, 5);
+        long milisegundos = calendario.getTimeInMillis();
+        return new Date(milisegundos);
+    }
+
+    public static String obtenerFechaInicio(Date fecha) {
+        LocalDate fechaActual = fecha.toLocalDate();
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        return fechaActual.format(formatoFecha);
+    }
+
+    public static String obtenerFechaDevolucion(Date fecha) {
+        LocalDate fechaActual = fecha.toLocalDate();
+        LocalDate fechaConSuma = fechaActual.plusDays(5);
+
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        return fechaConSuma.format(formatoFecha);
+    }
 }

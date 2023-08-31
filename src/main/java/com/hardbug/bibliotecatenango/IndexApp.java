@@ -37,6 +37,7 @@ public class IndexApp extends Application {
         stage.setMinHeight(600);
         stage.setMaximized(true);
         stage.show();
+        new BDController().ConsultarPrestamos();
     }
 
     public void ObtenerPropiedades() {
