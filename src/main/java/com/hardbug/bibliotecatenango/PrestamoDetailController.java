@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -43,9 +44,15 @@ public class PrestamoDetailController extends BDController implements Initializa
             mprestamo.ComentarioAtraso = TextComentario.getText();
             try {
                 if(ExtenderPrestamo(mprestamo)){
-                    //alerta de si
+                    Alert alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta "  + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
+                    alert.showAndWait();
+                    CerrarVista();
+                    menuPrestamosController.configurarLista();
                 }else{
-                    //alerta de nel
+                    Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
+                    alert.showAndWait();
+                    CerrarVista();
+                    menuPrestamosController.configurarLista();
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -55,9 +62,15 @@ public class PrestamoDetailController extends BDController implements Initializa
         ButtonFinalizar.setOnAction(evt -> {
             try{
                 if(FinalizarPrestamo(mprestamo)){
-                    //Se hizo
+                    Alert alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
+                    alert.showAndWait();
+                    CerrarVista();
+                    menuPrestamosController.configurarLista();
                 }else{
-                    //Nel we xd
+                    Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
+                    alert.showAndWait();
+                    CerrarVista();
+                    menuPrestamosController.configurarLista();
                 }
             }catch(Exception e){
                 throw new RuntimeException(e);
