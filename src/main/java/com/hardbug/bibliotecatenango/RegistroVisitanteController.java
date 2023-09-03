@@ -31,7 +31,9 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
-    private TextField Campo_nombre, Campo_edad, Campo_Apellido_materno,Campo_Apellido_paterno;
+    private TextField Campo_nombre, Campo_edad, Campo_Apellido_materno, Campo_Apellido_paterno;
+    private boolean Campo_nombre_bol, Campo_edad_bol, Campo_Apellido_materno_bol, Campo_Apellido_paterno_bol,
+            Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol;
     @FXML
     private RadioButton Check_discapacidad_si, Check_discapacidad_no;
     @FXML
@@ -57,11 +59,17 @@ public class RegistroVisitanteController extends BDController implements Initial
     @FXML
     void AccionBotonIngresar() throws Exception {
 
-        Ingresar();
+        Validar_todo();
+        if (todo_valido()) {
+            Ingresar();
+        } else {
+            Alert alert = new Alertas().CrearAlertaError("Error", "Favor de verificar los campos ingresados");
+            alert.showAndWait();
+        }
     }
 
 
-    private void ConfigurarCombos () throws SQLException {
+    private void ConfigurarCombos() throws SQLException {
         _ocupaciones = bd.ConsultarOcupaciones(false);
         _grados = bd.ConsultarGradosEscolares(false);
         _actividades = bd.ConsultarActividades(false);
@@ -88,6 +96,26 @@ public class RegistroVisitanteController extends BDController implements Initial
         Check_discapacidad_no.setSelected(true);
 
 
+    }
+
+    boolean todo_valido() {
+        if (Campo_nombre_bol && Campo_edad_bol && Campo_Apellido_materno_bol && Campo_Apellido_paterno_bol &&
+                Combo_grado_bol && Combo_ocupacion_bol && Combo_actividad_bol) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public void Validar_todo() {
+        validar_edad();
+        validar_apellido_materno();
+        validar_apellido_paterno();
+        validar_nombre();
+        validar_grado();
+        validar_actividad();
+        validar_ocupacion();
     }
 
     public void validar_nombre() {
@@ -222,11 +250,13 @@ public class RegistroVisitanteController extends BDController implements Initial
         miVisitante.Actividad = Combo_actividad.getValue();
 
         if (bd.InsertarVisitante(miVisitante)) {
-            CrearAlerta(ALERTA_VISITANTE_GUARDADO);
+            Alert alerta = new Alertas().CrearAlertaConfirmacion("Bienvenido", "Visitante registrado correctamente");
+            alerta.showAndWait();
             limpiarCampos();
 
         } else {
-            CrearAlerta(ALERTA_ERROR);
+            Alert alerta = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al intertar insertar el visitante" + "Favor de intentar de nuevo");
+            alerta.showAndWait();
             limpiarCampos();
 
         }
