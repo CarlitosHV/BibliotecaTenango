@@ -56,6 +56,9 @@ public class BuscadorLibrosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, IndexController.getRootPane);
+        Node contentNodeRight = IndexController.getRootPane.getRight();
+        contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
             Search();

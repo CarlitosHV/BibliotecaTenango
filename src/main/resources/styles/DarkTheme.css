@@ -74,6 +74,20 @@
     -fx-background-color: gray;
 }
 
+#BotonesBuscar{
+    -fx-background-color: #118511;
+    -fx-border-color: none;
+    -fx-text-fill: white;
+    -fx-border-radius: 3px;
+}
+
+#BotonesBuscar:hover{
+    -fx-background-color: #7f8c40;
+    -fx-text-fill: black;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
 #comboBox {
     -fx-background-color: white;
     -fx-text-fill: white;
@@ -98,7 +112,7 @@
 }
 
 #MenuItems:hover{
-    -fx-background-color: #3636f6;
+    -fx-background-color: #30cc30;
     -fx-text-fill: white;
 }
 
@@ -114,4 +128,60 @@
 #BtnPila{
     -fx-background-color: none;
     -fx-text-fill: white;
+}
+
+#BtnPila:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#Listas{
+    -fx-background-color: #118511;
+    -fx-border-radius: none;
+}
+
+#Listas .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:selected .cell {
+    -fx-background-insets: 0, 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:hover .cell {
+    -fx-background-insets: 0, 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.ElementoLista:hover{
+    -fx-background-color: #3db93d;
+    -fx-border-color: transparent;
+}
+
+.LabelsLista{
+    -fx-text-fill: white;
+}
+
+.Toggles{
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: #595b5d;
+}
+
+.Toggles:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.Toggles:pressed{
+    -fx-background-color: #232425;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: #595b5d;
 }

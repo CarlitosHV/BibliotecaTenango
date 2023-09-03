@@ -655,7 +655,7 @@ public class BDController {
                                 *Este mensaje ha sido generado automáticamente*
 
                                 Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""", mPrestamo.Usuario.nombre.GetNombreCompleto(),
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""", mPrestamo.Usuario.nombre.Nombre,
                         Fechas.obtenerFechaInicio(mPrestamo.FechaInicio), Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
                 new EmailSender().emailSender("Tu préstamo solicitado se ha generado", mPrestamo.Usuario.Correo, mensaje);
                 return 0;
@@ -931,7 +931,7 @@ public class BDController {
                         *Este mensaje ha sido generado automáticamente*
 
                         Biblioteca Pública Municipal Lic. Abel C. Salazar
-                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
                 new EmailSender().emailSender("Tu préstamo solicitado se ha extendido", mPrestamo.Usuario.Correo, mensaje);
                 return true;
             }else{
@@ -961,7 +961,7 @@ public class BDController {
             if (response == 1){
                 stmt.close();
                 conn.close();
-                new EmailSender().emailSender("Tu préstamo solicitado ha finalizado, " + mPrestamo.Usuario.Nombre, mPrestamo.Usuario.Correo, """
+                new EmailSender().emailSender("Tu préstamo solicitado ha finalizado, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, """
                                 ¡Ahora puedes volver a solicitar un nuevo préstamo de libros!
                                 Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
                                 mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx

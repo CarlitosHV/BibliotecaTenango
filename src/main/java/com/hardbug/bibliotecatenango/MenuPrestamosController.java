@@ -49,9 +49,8 @@ public class MenuPrestamosController extends BDController implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
-        ViewSwitcher.showTo(View.PRESTAMO_DETAIL, IndexApp.TEMA, pb);
-        Node contentNodeRight = pb.getRight();
+        ViewSwitcher.showTo(View.PRESTAMO_DETAIL, IndexApp.TEMA, IndexController.getRootPane);
+        Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {

@@ -68,6 +68,20 @@
     -fx-text-fill: white;
 }
 
+#BotonesBuscar{
+    -fx-background-color: #118511;
+    -fx-border-color: none;
+    -fx-text-fill: white;
+    -fx-border-radius: 3px;
+}
+
+#BotonesBuscar:hover{
+    -fx-background-color: #7f8c40;
+    -fx-text-fill: black;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
 #Buttons:hover{
     -fx-background-color: #7f8c40;
     -fx-scale-x: 1.1;
@@ -102,7 +116,7 @@
 }
 
 #MenuItems:hover{
-    -fx-background-color: #2929f1;
+    -fx-background-color: #30cc30;
     -fx-text-fill: white;
 }
 
@@ -117,4 +131,58 @@
 
 #BtnPila{
     -fx-background-color: none;
+}
+
+#BtnPila:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#Listas{
+    -fx-background-color: #118511;
+    -fx-border-radius: none;
+}
+
+#Listas .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:selected .cell {
+    -fx-background-insets: 0, 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+#Listas .list-cell:hover .cell {
+    -fx-background-insets: 0, 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.ElementoLista:hover{
+    -fx-background-color: #3db93d;
+    -fx-border-color: transparent;
+}
+
+.LabelsLista{
+    -fx-text-fill: white;
+}
+
+.Toggles{
+    -fx-background-color: #118511;
+    -fx-text-fill: white;
+}
+
+.Toggles:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.Toggles:pressed{
+    -fx-background-color: #118511;
+    -fx-text-fill: white;
 }

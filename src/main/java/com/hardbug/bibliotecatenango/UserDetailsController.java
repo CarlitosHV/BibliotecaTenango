@@ -72,7 +72,7 @@ public class UserDetailsController implements Initializable {
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "El usuario " +  usuario.nombre.Nombre + "no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar", ALERTA_CONFIRMACION);
+                    Alert alertaR = crearAlerta("Error", "El usuario " +  usuario.nombre.Nombre + " no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar", ALERTA_CONFIRMACION);
                     alertaR.showAndWait();
                 }
             }

@@ -50,10 +50,8 @@ public class MenuUsuariosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuUsuariosController = this;
-        Parent bp = ViewSwitcher.getScene().getRoot();
-        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
-        ViewSwitcher.showTo(View.DETALLES_USUARIOS, IndexApp.TEMA, pb);
-        Node contentNodeRight = pb.getRight();
+        ViewSwitcher.showTo(View.DETALLES_USUARIOS, IndexApp.TEMA, IndexController.getRootPane);
+        Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {

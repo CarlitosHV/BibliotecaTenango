@@ -1,9 +1,7 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.*;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,14 +16,15 @@ import javafx.util.Callback;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -70,17 +68,17 @@ public class AltasUsersController extends BDController implements Initializable 
     private MenuUsuariosController menuUsuariosController;
     private UserDetailsController userDetailsController;
 
-    public void setUserDetailsController(UserDetailsController userDetailsController){
+    public void setUserDetailsController(UserDetailsController userDetailsController) {
         this.userDetailsController = userDetailsController;
     }
 
-    public void setMenuUsuariosController(MenuUsuariosController menuUsuariosController){
+    public void setMenuUsuariosController(MenuUsuariosController menuUsuariosController) {
         this.menuUsuariosController = menuUsuariosController;
     }
 
     private boolean isTextFieldAction = false;
-    Estados estados = new Estados();
-    Municipios municipios = new Municipios();
+    Estados estado = new Estados();
+    Municipios municipio = new Municipios();
     BDController bd = new BDController();
 
     Alertas alertas = new Alertas();
@@ -108,6 +106,7 @@ public class AltasUsersController extends BDController implements Initializable 
         }
 
     }
+
     public void validar_correo() {
         if (Campo_correo.isEditable()) {
             if (Campo_correo.getText().matches("\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b")
@@ -258,14 +257,15 @@ public class AltasUsersController extends BDController implements Initializable 
 
     public void validar_calle() {
         if (Campo_calle.isEditable()) {
-            if (Campo_calle.getText().matches("^[A-Z][a-záéíóúñ]+(\\s[A-Z][a-záéíóúñ]+){1,4}$")
-                    && !Campo_calle.getText().isEmpty())
-            {
-                Calle_bol = true; if (IndexApp.TEMA == 1) {
-                Campo_calle.setStyle("-fx-border-color: #595b5d");
+            if (Campo_calle.getText().matches("[A-Z][a-záéíóúñ]+\\s*([A-Z][a-záéíóúñ]*\\s?){0,8}#*[0-9]*")
+                    && !Campo_calle.getText().isEmpty()) {
+                Calle_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_calle.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_calle.setStyle("-fx-border-color: black");
+                }
             } else {
-                Campo_calle.setStyle("-fx-border-color: black");
-            }   } else{
                 Campo_calle.setStyle("-fx-border-color: red");
                 Calle_bol = false;
 
@@ -276,13 +276,9 @@ public class AltasUsersController extends BDController implements Initializable 
     public void validar_codigo() {
         if (Campo_codigo.isEditable()) {
             if (Campo_codigo.getText().matches("^\\d{4,5}$")
-                    && !Campo_codigo.getText().isEmpty())
-            {
-                Codigo_bol = true; if (IndexApp.TEMA == 1) {
-                Campo_codigo.setStyle("-fx-border-color: #595b5d");
+                    && !Campo_codigo.getText().isEmpty()) {
+                Codigo_bol = true;
             } else {
-                Campo_codigo.setStyle("-fx-border-color: black");
-            }   } else {
                 Campo_codigo.setStyle("-fx-border-color: red");
                 Codigo_bol = false;
             }
@@ -370,7 +366,6 @@ public class AltasUsersController extends BDController implements Initializable 
         });
 
 
-
         //crea un hipervinculo para buscar en curp
         Hyperlink_curp.setOnAction(actionEvent -> {
             Desktop desktop = Desktop.getDesktop();
@@ -393,7 +388,6 @@ public class AltasUsersController extends BDController implements Initializable 
                 if (Campo_codigo.getLength() == 4 || Campo_codigo.getLength() == 5) {
                     try {
                         TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
-                        Combo_localidad.setDisable(false);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -404,7 +398,7 @@ public class AltasUsersController extends BDController implements Initializable 
         });
 
         BotonGuardar.setOnAction(event -> {
-            if(camposValidos()){
+            if (camposValidos()) {
                 int IdNombre = 0;
                 int IdDir = 0;
                 mUsuario = new Usuario();
@@ -453,7 +447,7 @@ public class AltasUsersController extends BDController implements Initializable 
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }else{
+            } else {
                 Alert alert = alertas.CrearAlertaError("Campos inválidos", "Verifica la información de los campos");
                 alert.showAndWait();
             }

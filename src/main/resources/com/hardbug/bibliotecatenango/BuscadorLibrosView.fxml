@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -17,33 +18,45 @@
           <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField id="TextFields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa título de libro, autor o editorial" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-            <Button id="BotonMenu" fx:id="BotonBuscar" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+            <TextField id="Textfields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa título de libro, autor o editorial" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font></TextField>
+            <Button id="BotonesBuscar" fx:id="BotonBuscar" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                <graphic>
-                  <ImageView fitHeight="79.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="Imagen1" fitHeight="79.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/ico_search.png" />
                      </image>
                   </ImageView>
                </graphic>
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
              <Button id="BtnPila" fx:id="PilaLibros" contentDisplay="TOP" mnemonicParsing="false" prefHeight="40.0" prefWidth="45.0" text="1" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                  <font>
                      <Font name="Roboto Light" size="12.0" />
                  </font>
                  <graphic>
-                     <ImageView fitHeight="29.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView id="Imagen1" fitHeight="29.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                          <image>
                              <Image url="@../../../assets/pilalibros.png" />
                          </image>
                      </ImageView>
                  </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
              </Button>
          </children>
       </GridPane>
-      <ListView fx:id="LibrosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
-      <ProgressIndicator fx:id="IconoCarga" layoutX="203.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="225.0" />
-       <Label fx:id="LabelSinLibros" layoutX="128.0" layoutY="234.0" text="No hay libros registrados" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="234.0">
+      <ListView id="Listas" fx:id="LibrosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
+      <ProgressIndicator id="IconoCarga" fx:id="IconoCarga" layoutX="203.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="225.0" />
+       <Label id="Labels" fx:id="LabelSinLibros" layoutX="128.0" layoutY="234.0" text="No hay libros registrados" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="234.0">
            <font>
                <Font name="Roboto Light" size="16.0" />
            </font>

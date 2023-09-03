@@ -90,20 +90,108 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     }
 
-//creamos y usamos las alertas como en altaslibros
-    void CrearAlerta(int TIPO_ALERTA) throws SQLException {
-        switch (TIPO_ALERTA) {
-            case 0 ->
-                    AltaLibrosController.aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
-            case 1 ->
-                    AltaLibrosController.aplicarTemaAlerta("¡Bienvenido!", "¡La visita ha sido registrada!", 0);
-            case 2 ->
-                    AltaLibrosController.aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
+    public void validar_nombre() {
+        if (Campo_nombre.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_nombre.getText().isEmpty()) {
+            Campo_nombre_bol = true;
+            if (IndexApp.TEMA == 1) {
+                Campo_nombre.setStyle("-fx-border-color: #595b5d");
+            } else {
+                Campo_nombre.setStyle("-fx-border-color: black");
+            }
+        } else {
+            Campo_nombre.setStyle("-fx-border-color: red");
+            Campo_nombre_bol = false;
+        }
 
+    }
+
+    public void validar_apellido_paterno() {
+        if (Campo_Apellido_paterno.isEditable()) {
+            if (Campo_Apellido_paterno.getText().matches("^[A-Z][a-záéíóúñ]+(\\s[A-Z][a-záéíóúñ]+){0,4}$")
+                    && !Campo_Apellido_paterno.getText().isEmpty()) {
+                Campo_Apellido_paterno_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_Apellido_paterno.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_Apellido_paterno.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_Apellido_paterno.setStyle("-fx-border-color: red");
+                Campo_Apellido_paterno_bol = false;
+
+
+            }
         }
     }
 
-//limpia los campos
+    public void validar_apellido_materno() {
+        if (Campo_Apellido_materno.isEditable()) {
+            if (Campo_Apellido_materno.getText().matches("^[A-Z][a-záéíóúñ]+(\\s[A-Z][a-záéíóúñ]+){0,4}$")
+                    && !Campo_Apellido_materno.getText().isEmpty()) {
+                Campo_Apellido_materno_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_Apellido_materno.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_Apellido_materno.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_Apellido_materno.setStyle("-fx-border-color: red");
+                Campo_Apellido_materno_bol = false;
+
+
+            }
+        }
+    }
+
+    public void validar_edad() {
+        if (Campo_edad.isEditable()) {
+            if (Campo_edad.getText().matches("^(?:[1-9][0-9]?|100)$")
+                    && !Campo_edad.getText().isEmpty()) {
+                Campo_edad_bol = true;
+                if (IndexApp.TEMA == 1) {
+                    Campo_edad.setStyle("-fx-border-color: #595b5d");
+                } else {
+                    Campo_edad.setStyle("-fx-border-color: black");
+                }
+            } else {
+                Campo_edad.setStyle("-fx-border-color: red");
+                Campo_edad_bol = false;
+            }
+        }
+    }
+
+    public void validar_grado() {
+        if (Combo_grado.getValue() == null) {
+            Combo_grado_bol = false;
+            Combo_grado.setStyle("-fx-border-color: red");
+        } else {
+            Combo_grado.setStyle("-fx-border-color: transparent");
+            Combo_grado_bol = true;
+        }
+    }
+
+    public void validar_actividad() {
+        if (Combo_actividad.getValue() == null) {
+            Combo_actividad_bol = false;
+            Combo_actividad.setStyle("-fx-border-color: red");
+        } else {
+            Combo_actividad.setStyle("-fx-border-color: transparent");
+            Combo_actividad_bol = true;
+        }
+    }
+
+    public void validar_ocupacion() {
+        if (Combo_ocupacion.getValue() == null) {
+            Combo_ocupacion_bol = false;
+            Combo_ocupacion.setStyle("-fx-border-color: red");
+        } else {
+            Combo_ocupacion.setStyle("-fx-border-color: transparent");
+            Combo_ocupacion_bol = true;
+        }
+    }
+
+
+    //limpia los campos
     private void limpiarCampos() {
 
         Campo_edad.setText("");
@@ -116,13 +204,14 @@ public class RegistroVisitanteController extends BDController implements Initial
         Campo_Apellido_materno.setText("");
         Campo_Apellido_paterno.setText("");
     }
+
     void Ingresar() throws Exception {
         int IdNombre = 0;
         miVisitante = new Visitante();
         miVisitante.setNombres(Campo_nombre.getText().trim());
         miVisitante.setAp_paterno(Campo_Apellido_paterno.getText().trim());
         miVisitante.setAp_materno(Campo_Apellido_materno.getText().trim());
-        Nombres nombre = new  Nombres(IdNombre,miVisitante.getNombres(),miVisitante.getAp_paterno(),miVisitante.getAp_materno());
+        Nombres nombre = new Nombres(IdNombre, miVisitante.getNombres(), miVisitante.getAp_paterno(), miVisitante.getAp_materno());
         miVisitante.nombre = nombre;
 
         miVisitante.setEdad(Integer.parseInt(Campo_edad.getText().trim()));

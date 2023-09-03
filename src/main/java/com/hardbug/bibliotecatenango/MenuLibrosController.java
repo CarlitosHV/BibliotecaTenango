@@ -45,10 +45,8 @@ public class MenuLibrosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Parent bp = ViewSwitcher.getScene().getRoot();
-        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
-        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, pb);
-        Node contentNodeRight = pb.getRight();
+        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, IndexController.getRootPane);
+        Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> {
