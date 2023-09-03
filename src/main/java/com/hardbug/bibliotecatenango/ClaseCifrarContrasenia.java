@@ -29,8 +29,6 @@ public class ClaseCifrarContrasenia {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, aesKey, val);
 
-        String decrypted = new String(cipher.doFinal(encryptedBytes));
-
-        return decrypted;
+        return new String(cipher.doFinal(encryptedBytes));
     }
 }

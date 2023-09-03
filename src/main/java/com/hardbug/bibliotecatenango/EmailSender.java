@@ -1,8 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -17,21 +15,18 @@ import com.google.api.services.gmail.model.Message;
 import com.hardbug.bibliotecatenango.Models.UndertowVerificationCodeReceiver;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.security.auth.Subject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Properties;
 
 import static com.google.api.services.gmail.GmailScopes.GMAIL_SEND;
 import static javax.mail.Message.RecipientType.TO;
@@ -77,7 +72,7 @@ public class EmailSender {
     }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
-            throws IOException, InterruptedException {
+            throws IOException {
         // Load client secrets.
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(Objects.requireNonNull(EmailSender.class.getResourceAsStream("/client_secret_1077629672794-dkktlgf9ill6o06vhoah9tl0bt5o3b39.apps.googleusercontent.com.json"))));
 

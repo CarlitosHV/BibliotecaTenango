@@ -1,8 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Libro;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,14 +15,6 @@ public class ControladorPilaItem extends ListCell<Libro> {
     private final Label LabelAutor;
     private final Label LabelTitulo;
     private final Button BotonEliminar;
-    private EventHandler<ActionEvent> onItemSelected;
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
     private BuscadorLibrosController buscadorLibrosController;
     private Stage modalStage;
     public void setModalStage(Stage modalStage) {
@@ -56,9 +46,7 @@ public class ControladorPilaItem extends ListCell<Libro> {
             setGraphic(fondoItem);
         }
 
-        setOnMouseClicked(event -> {
-            BotonEliminar.setVisible(true);
-        });
+        setOnMouseClicked(event -> BotonEliminar.setVisible(true));
 
         BotonEliminar.setOnAction(evt -> {
             for (int i = 0; i <= buscadorLibrosController._librosSeleccionados.size(); i++) {

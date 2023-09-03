@@ -1,38 +1,20 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Usuario;
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class ComboUser  extends ListCell<Usuario> {
-    private FXMLLoader fxmlLoader;
-    private AnchorPane fondoItem;
-    private Label LabelNombre, LabelCurp, LabelCorreo;
-    private EventHandler<ActionEvent> onItemSelected;
-    BDController bd = new BDController();
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
+    private final AnchorPane fondoItem;
+    private final Label LabelNombre, LabelCurp, LabelCorreo;
 
     public ComboUser() {
         super();
-        fxmlLoader = new FXMLLoader(getClass().getResource("ComboUser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ComboUser.fxml"));
         try {
             fondoItem = fxmlLoader.load();
             LabelNombre = (Label) fxmlLoader.getNamespace().get("LabelNombre");

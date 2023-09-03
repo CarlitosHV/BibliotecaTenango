@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -23,7 +21,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,9 +45,7 @@ public class AltasUsersController extends BDController implements Initializable 
     @FXML
     private Button BotonGuardar;
     @FXML
-    private Separator Separador_dos, Separador_tres, Separador_cuatro;
-    @FXML
-    private Label Label_datos_del_libro, Label_cabecera, Label_datos_referencia;
+    private Label Label_cabecera;
     @FXML
     private Hyperlink Hyperlink_curp;
     @FXML
@@ -61,9 +56,7 @@ public class AltasUsersController extends BDController implements Initializable 
     private static ArrayList<Municipios> _municipios = new ArrayList<>();
     private static ArrayList<Localidad> _localidades = new ArrayList<>();
     private static ArrayList<Estados> _estados = new ArrayList<>();
-    private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
-    private static ArrayList<Catalogo> _grados = new ArrayList<>();
-    private static ArrayList<String> _sexos = new ArrayList<>();
+    private static final ArrayList<String> _sexos = new ArrayList<>();
 
     private MenuUsuariosController menuUsuariosController;
     private UserDetailsController userDetailsController;
@@ -77,8 +70,6 @@ public class AltasUsersController extends BDController implements Initializable 
     }
 
     private boolean isTextFieldAction = false;
-    Estados estado = new Estados();
-    Municipios municipio = new Municipios();
     BDController bd = new BDController();
 
     Alertas alertas = new Alertas();
@@ -96,14 +87,8 @@ public class AltasUsersController extends BDController implements Initializable 
             Apellido_paterno_bol, Apellido_materno_bol, Calle_bol, Codigo_bol;
 
     boolean camposValidos() {
-        if (Titulo_correo_bol && Contrasenia_bol && Curp_bol && Telefono_bol && Nombre_bol && Edad_bol &&
-                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol && Codigo_bol
-        ) {
-
-            return true;
-        } else {
-            return false;
-        }
+        return Titulo_correo_bol && Contrasenia_bol && Curp_bol && Telefono_bol && Nombre_bol && Edad_bol &&
+                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol && Codigo_bol;
 
     }
 
@@ -399,6 +384,7 @@ public class AltasUsersController extends BDController implements Initializable 
 
         BotonGuardar.setOnAction(event -> {
             if (camposValidos()) {
+                Alert alert;
                 int IdNombre = 0;
                 int IdDir = 0;
                 mUsuario = new Usuario();
@@ -413,8 +399,7 @@ public class AltasUsersController extends BDController implements Initializable 
                 mUsuario.setSexo(Combo_sexo.getValue());
                 mUsuario.setEdad(Integer.parseInt(Campo_edad.getText().trim()));
                 mUsuario.setCorreo(Campo_correo.getText().trim());
-                Nombres nombre = new Nombres(IdNombre, mUsuario.getNombre(), mUsuario.getApellidoPaterno(), mUsuario.getApellidoMaterno());
-                mUsuario.nombre = nombre;
+                mUsuario.nombre = new Nombres(IdNombre, mUsuario.getNombre(), mUsuario.getApellidoPaterno(), mUsuario.getApellidoMaterno());
                 try {
                     String contraseniacifrada = ClaseCifrarContrasenia.encript(Campo_contrasenia.getText().trim());
                     mUsuario.setContrasenia(contraseniacifrada);
@@ -430,19 +415,21 @@ public class AltasUsersController extends BDController implements Initializable 
                 mUsuario.setMunicipio(Combo_municipio.getValue());
                 mUsuario.setLocalidad(Combo_localidad.getValue());
                 mUsuario.setCalle(Campo_calle.getText().trim());
-                Direccion direccion = new Direccion(IdDir, mUsuario.getCalle(), Campo_codigo.getText().trim(), mUsuario.Municipio.getId(), mUsuario.Estado.getId(), mUsuario.Localidad.Id);
-                mUsuario.direccion = direccion;
+                mUsuario.direccion = new Direccion(IdDir, mUsuario.getCalle(), Campo_codigo.getText().trim(), mUsuario.Municipio.getId(), mUsuario.Estado.getId(), mUsuario.Localidad.Id);
                 try {
                     if (InsertarActualizarUsuario(mUsuario)) {
                         if (OPERACION == 2) {
-                            CrearAlerta("¡Usuario actualizado!", "El usuario: " + mUsuario.getNombre() + " ha sido actualizado", Alert.AlertType.INFORMATION);
+                            alert = new Alertas().CrearAlertaInformativa("¡Usuario actualizado!", "El usuario: " + mUsuario.getNombre() + " ha sido actualizado");
+                            alert.showAndWait();
                         } else {
-                            CrearAlerta("¡Usuario registrado!", "El usuario: " + mUsuario.getNombre() + " ha sido registrado", Alert.AlertType.INFORMATION);
+                            alert = new Alertas().CrearAlertaInformativa("¡Usuario registrado!", "El usuario: " + mUsuario.getNombre() + " ha sido registrado");
+                            alert.showAndWait();
                         }
                         OPERACION = 0;
                         cerrarModalMenuUsuarios();
                     } else {
-                        CrearAlerta("Error", "Ha ocurrido un error al registrar al usuario", Alert.AlertType.WARNING);
+                        alert = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al registrar al usuario");
+                        alert.showAndWait();
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -540,8 +527,8 @@ public class AltasUsersController extends BDController implements Initializable 
         _estados = bd.BuscarEstados();
         ConfigurarCellFactory();
         Combo_estado.getItems().addAll(_estados);
-        _ocupaciones = bd.ConsultarOcupaciones(false);
-        _grados = bd.ConsultarGradosEscolares(false);
+        ArrayList<Catalogo> _ocupaciones = bd.ConsultarOcupaciones(false);
+        ArrayList<Catalogo> _grados = bd.ConsultarGradosEscolares(false);
         Combo_grado.getItems().addAll(_grados);
         Combo_ocupacion.getItems().addAll(_ocupaciones);
         _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
@@ -552,7 +539,7 @@ public class AltasUsersController extends BDController implements Initializable 
         Estados estado = Combo_estado.getValue();
         Task<ArrayList<Municipios>> traer_municipios = new Task<>() {
             @Override
-            protected ArrayList<Municipios> call() throws SQLException {
+            protected ArrayList<Municipios> call() {
                 return bd.BuscarMunicipios(estado.getEstado());
             }
         };
@@ -622,7 +609,7 @@ public class AltasUsersController extends BDController implements Initializable 
 
     //Carga los estados en el combo estados
     private void ConfigurarCellFactory() {
-        Combo_estado.setCellFactory(new Callback<ListView<Estados>, ListCell<Estados>>() {
+        Combo_estado.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Estados> call(ListView<Estados> listView) {
                 return new ListCell<Estados>() {
@@ -639,7 +626,7 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         });
 
-        Combo_municipio.setCellFactory(new Callback<ListView<Municipios>, ListCell<Municipios>>() {
+        Combo_municipio.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Municipios> call(ListView<Municipios> listView) {
                 return new ListCell<Municipios>() {
@@ -656,7 +643,7 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         });
 
-        Combo_localidad.setCellFactory(new Callback<ListView<Localidad>, ListCell<Localidad>>() {
+        Combo_localidad.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Localidad> call(ListView<Localidad> listView) {
                 return new ListCell<Localidad>() {
@@ -672,32 +659,6 @@ public class AltasUsersController extends BDController implements Initializable 
                 };
             }
         });
-    }
-
-    void CrearAlerta(String titulo, String contenido, Alert.AlertType tipo) throws SQLException {
-        Alert alerta;
-        if (tipo == Alert.AlertType.WARNING) {
-            alerta = new Alert(Alert.AlertType.WARNING);
-        } else {
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: white");
-            content.setTextFill(javafx.scene.paint.Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-        }
-        alerta.showAndWait();
     }
 
     private void cerrarModalMenuUsuarios() {

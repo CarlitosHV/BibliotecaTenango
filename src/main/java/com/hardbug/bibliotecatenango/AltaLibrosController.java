@@ -9,14 +9,11 @@ import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /* Clase AltaLibros:
@@ -35,8 +32,6 @@ public class AltaLibrosController implements Initializable {
 
     private int OPERACION;
 
-    private static final int INSERTAR = 0, EDITAR = 1, ELIMINAR = 2;
-
 
     /* Este arraylist almacena la información del libro consultado */
     public static ArrayList<Object> datosLibro = new ArrayList<>();
@@ -45,24 +40,12 @@ public class AltaLibrosController implements Initializable {
     private static boolean Clasificacion_bol, Anio_edicion_bol, Descripcion_libro_bol, Nombre_autor_bol,
             Titulo_libro_bol, Lugar_edicion_bol, Editorial_bol, Registro_clasificacion_bol, Estante_bol,
             Existencias_bol, Clave_registro_bol;
-
-    /* Variables traidas desde le FXML y que se necesitan*/
-    @FXML
-    private Separator Separador_dos, Separador_tres, Separador_cuatro;
-    @FXML
-    private Label Label_cabecera, Label_datos_del_libro, Label_datos_referencia;
     @FXML
     private Button BotonGuardar;
     @FXML
     private TextField Campo_clasificacion, Campo_anio_edicion, Campo_registro_clasificacion, Campo_estante,
             Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro,
             Campo_clave_registro;
-
-
-    /* Variables de tipo integer para manejar los tipos de alertas */
-    private static final int ALERTA_ERROR = 0, ALERTA_LIBRO_GUARDADO = 1, ALERTA_LIBRO_NO_ENCONTRADO = 2,
-            ALERTA_CAMPOS_INVALIDOS = 3, ALERTA_ELIMINAR_LIBRO = 4, ALERTA_LIBRO_ELIMINADO = 5,
-            ALERTA_LIBRO_EDITADO = 6;
 
 
     /* Instancias de las clases necesarias para funcionar el código */
@@ -97,70 +80,29 @@ public class AltaLibrosController implements Initializable {
         GuardarLibro();
     }
 
-    /*
-        Método que crea la alerta, dependiendo el tipo de alerta que recibe es la información que muestra
-     */
-    void CrearAlerta(int TIPO_ALERTA) throws SQLException {
-        switch (TIPO_ALERTA) {
-            case 0 -> aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
-            case 1 ->
-                    aplicarTemaAlerta("¡Libro guardado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido registrado :)", 0);
-            case 2 ->
-                    aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 0);
-            case 3 ->
-                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 0);
-        }
-    }
-
-
-    /*
-        Método que aplica el tema dependiendo el seleccionado y también aplica el texto y la cabecera
-     */
-    static  void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
-        Alert alerta;
-        if (tipo == 2) {
-            alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        } else {
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: white");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-        }
-        alerta.showAndWait();
-    }
-
 
     /*
         Método que manda guardar a Base de Datos el libro, y valida los campos
      */
     @FXML
-    void GuardarLibro() throws SQLException {
+    void GuardarLibro() {
+        Alert alert;
         if (camposValidos()) {
             boolean guardado = bdController.InsertarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
                     libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (guardado) {
-                CrearAlerta(ALERTA_LIBRO_GUARDADO);
+                 alert  = new Alertas().CrearAlertaInformativa("Libro guardado", "El libro " + libro.getTitulo_libro() + " se ha giardado con éxito en el sistema");
+                 alert.showAndWait();
                 cerrarModalMenuLibros();
                 limpiarCampos();
             } else {
-                CrearAlerta(ALERTA_ERROR);
+                alert = new Alertas().CrearAlertaError("Error al guardar", "Ha ocurrido un error al guardar el libro");
+                alert.showAndWait();
             }
         } else {
-            CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
+            alert = new Alertas().CrearAlertaError("Campos inválidos", "Campos inválidos, revisa que estés generando la información correctamente");
+            alert.showAndWait();
         }
     }
     /*
@@ -504,9 +446,6 @@ public class AltaLibrosController implements Initializable {
             menuLibrosController.configurarLista();
             modalStage.close();
         }
-    }
-
-    public static class RegistroEntradaController {
     }
 }
 

@@ -54,25 +54,23 @@ public class UserDetailsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ButtonCerrar.setOnAction(actionEvent -> {
-            CerrarVista();
-        });
+        ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alerta = crearAlerta("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar",  ALERTA_PRECAUCION);
+            Alert alerta = new Alertas().CrearAlertaPrecaucion("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar");
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alerta.close();
                 if (bd.EliminarUsuario(usuario.IdUsuario, usuario.getCorreo())){
-                    Alert al = crearAlerta("Eliminación correcta", "¡Haz eliminado a " + usuario.nombre.Nombre + " del sistema!", ALERTA_CONFIRMACION);
+                    Alert al = new Alertas().CrearAlertaInformativa("Eliminación correcta", "¡Haz eliminado a " + usuario.nombre.Nombre + " del sistema!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
                         menuUsuariosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = crearAlerta("Error", "El usuario " +  usuario.nombre.Nombre + " no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar", ALERTA_CONFIRMACION);
+                    Alert alertaR = new Alertas().CrearAlertaError("Error", "El usuario " +  usuario.nombre.Nombre + " no ha podido eliminarse. \n Verifica que no tenga préstamos activos antes de eliminar");
                     alertaR.showAndWait();
                 }
             }
@@ -87,14 +85,11 @@ public class UserDetailsController implements Initializable {
     }
 
     private void CerrarVista() {
-        Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
         Node right = pb.getRight();
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
         menuTransition.setToX(400);
-        menuTransition.setOnFinished(actionEvent1 -> {
-            limpiar();
-        });
+        menuTransition.setOnFinished(actionEvent1 -> limpiar());
         menuTransition.play();
     }
 
@@ -108,45 +103,6 @@ public class UserDetailsController implements Initializable {
         LabelEdad.setText("");
         LabelSexo.setText("");
     }
-
-    public Alert crearAlerta(String titulo, String contenido, int tipo){
-        Alert alerta;
-        if(tipo == ALERTA_CONFIRMACION){
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }else{
-            alerta = new Alert(Alert.AlertType.WARNING);
-            List<ButtonType> buttonTypes = alerta.getButtonTypes();
-
-            for (ButtonType buttonType : buttonTypes) {
-                if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                    Button button = (Button) alerta.getDialogPane().lookupButton(buttonType);
-                    button.setText("Eliminar");
-                    break;
-                }
-            }
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        Button button = (Button) alerta.getDialogPane().lookupButton(ButtonType.OK);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white;");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: gray; -fx-text-fill: black; -fx-border-color: black");
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white");
-        }
-        return alerta;
-    }
-
 
     private void mostrarVentanaModal(Stage ownerStage) {
         try {
@@ -163,10 +119,10 @@ public class UserDetailsController implements Initializable {
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuUsuariosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 

@@ -28,9 +28,6 @@ public class ControladorGradosEscolares extends BDController implements Initiali
     ArrayList<Catalogo> _actividades = new ArrayList<>();
     private static FilteredList<Catalogo> _actividadesfiltradas;
 
-    public ListView<Catalogo> getLista(){
-        return ListaGrados;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,39 +56,28 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             });
 
             dialog.showAndWait().ifPresent(text -> {
+                Alert alert;
                 if (text.isEmpty()) {
-                    Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese un valor válido");
+                    alert = new Alertas().CrearAlertaPrecaucion("Campo vacío", "Por favor, ingrese un valor válido");
+                    alert.showAndWait();
                 } else {
                     Catalogo actividad = new Catalogo(text);
                     if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
                         if(InsertarEditarActividad(actividad)){
-                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la actividad: " + text);
+                            alert = new Alertas().CrearAlertaInformativa("Guardado con éxito", "Se guardó la actividad: " + text);
+                            alert.showAndWait();
                             configurarLista();
                         }else{
-                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la actividad: " + text);
+                            alert = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al guardar la actividad: " + text);
+                            alert.showAndWait();
                         }
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "La actividad: " + text + " es inválida");
+                        alert = new Alertas().CrearAlertaError("Error", "La actividad: " + text + " es inválida");
+                        alert.showAndWait();
                     }
-
                 }
             });
         });
-    }
-
-    public void Alerta (Alert.AlertType TipoAlerta, String Titulo, String Contenido){
-        Alert alert;
-        if (TipoAlerta == Alert.AlertType.WARNING){
-             alert = new Alert(Alert.AlertType.WARNING);
-        }else{
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-        }
-        alert.setTitle(Titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(Contenido);
-        Stage stagealert = (Stage) alert.getDialogPane().getScene().getWindow();
-        stagealert.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-        alert.showAndWait();
     }
 
     private void Search() {
@@ -110,10 +96,8 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             LabelSinGrados.setVisible(false);
             ListaGrados.setVisible(true);
             IconoCarga.setVisible(false);
-            _actividadesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_actividades));;
-            ListaGrados.setCellFactory(lv -> {
-                return new VistaCatalogoController(1, this, new ControladorOcupaciones());
-            });
+            _actividadesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_actividades));
+            ListaGrados.setCellFactory(lv -> new VistaCatalogoController(1, this, new ControladorOcupaciones()));
             ListaGrados.setItems(_actividadesfiltradas);
         }else{
             LabelSinGrados.setVisible(true);

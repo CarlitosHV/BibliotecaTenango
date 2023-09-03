@@ -1,12 +1,10 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Prestamo;
-import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,9 +33,7 @@ public class PrestamoDetailController extends BDController implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ButtonCerrar.setOnAction(actionEvent -> {
-            CerrarVista();
-        });
+        ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 
         ButtonExtender.setOnAction(evt -> {
             mprestamo.FechaFin = Fechas.obtenerFechaDevolucionSqlDate(mprestamo.FechaFin);
@@ -80,14 +76,11 @@ public class PrestamoDetailController extends BDController implements Initializa
     }
 
     private void CerrarVista() {
-        Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
         Node right = pb.getRight();
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
         menuTransition.setToX(400);
-        menuTransition.setOnFinished(actionEvent1 -> {
-            limpiar();
-        });
+        menuTransition.setOnFinished(actionEvent1 -> limpiar());
         menuTransition.play();
     }
 
@@ -95,11 +88,11 @@ public class PrestamoDetailController extends BDController implements Initializa
         LabelNombre.setText(prestamo.Usuario.nombre.GetNombreCompleto());
         LabelCorreo.setText("Correo: " +prestamo.Usuario.Correo);
         if(prestamo.Renovaciones != 0){
-            LabelRenovaciones.setText("Renovaciones:" + prestamo.Renovaciones.toString());
+            LabelRenovaciones.setText("Renovaciones:" + prestamo.Renovaciones);
         }else{
             LabelRenovaciones.setText("Renovaciones:" + "Ninguna");
         }
-        LabelLibros.setText("Libros solicitados: " + String.valueOf(prestamo.libros.size()));
+        LabelLibros.setText("Libros solicitados: " + prestamo.libros.size());
         LabelCurp.setText("CURP: " +prestamo.Usuario.getCurp());
         LabelFechaInicio.setText("Fecha préstamo: " + Fechas.obtenerFechaInicio(prestamo.FechaInicio));
         LabelFechaDevolucion.setText("Fecha devolución: " + Fechas.obtenerFechaDevolucion(prestamo.FechaFin));

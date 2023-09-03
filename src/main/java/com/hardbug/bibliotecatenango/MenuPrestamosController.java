@@ -1,31 +1,20 @@
 package com.hardbug.bibliotecatenango;
 
-import com.hardbug.bibliotecatenango.Models.Libro;
 import com.hardbug.bibliotecatenango.Models.Prestamo;
-import com.hardbug.bibliotecatenango.Models.Usuario;
-import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MenuPrestamosController extends BDController implements Initializable {
@@ -40,9 +29,6 @@ public class MenuPrestamosController extends BDController implements Initializab
     private Button BotonBuscar;
     @FXML
     private TextField Buscador;
-    @FXML
-    private AnchorPane rootPane;
-    private static ArrayList<Prestamo> _prestamos = new ArrayList<>();
     private static FilteredList<Prestamo> _prestamosfiltrados;
     Prestamo prestamo = new Prestamo();
 
@@ -53,12 +39,8 @@ public class MenuPrestamosController extends BDController implements Initializab
         Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
-        BotonBuscar.setOnAction(actionEvent -> {
-            Search();
-        });
-        Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
-            Search();
-        });
+        BotonBuscar.setOnAction(actionEvent -> Search());
+        Buscador.textProperty().addListener((observable, oldValue, newValue) -> Search());
     }
 
     private void Search() {
@@ -75,29 +57,26 @@ public class MenuPrestamosController extends BDController implements Initializab
     }
 
     void configurarLista(){
-        _prestamos = ConsultarPrestamos();
+        ArrayList<Prestamo> _prestamos = ConsultarPrestamos();
         IconoCarga.setVisible(false);
         if (!_prestamos.isEmpty()){
             LabelSinPrestamos.setVisible(false);
             PrestamosListView.setVisible(true);
-            _prestamosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_prestamos));;
+            _prestamosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_prestamos));
             PrestamosListView.setCellFactory(lv -> new PrestamoItemController());
             PrestamosListView.setItems(_prestamosfiltrados);
             PrestamosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     PrestamosListView.setOnMouseClicked(mouseEvent -> {
                         if(mouseEvent.getButton() == MouseButton.PRIMARY){
-                            Parent bp = ViewSwitcher.getScene().getRoot();
                             BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
                             Node right = pb.getRight();
                             TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
                             menuTransition.setToX(0);
                             PrestamoDetailController cont = ViewSwitcher.getPrestamoDetailController();
                             cont.setMenuPrestamosController(this);
-                            if (cont != null) {
-                                prestamo = newValue;
-                                cont.initData(prestamo);
-                            }
+                            prestamo = newValue;
+                            cont.initData(prestamo);
                             menuTransition.play();
                         }
                     });

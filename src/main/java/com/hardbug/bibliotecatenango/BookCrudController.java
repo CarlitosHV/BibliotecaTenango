@@ -2,8 +2,6 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,29 +15,18 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class BookCrudController extends ListCell<Libro> {
-    private FXMLLoader fxmlLoader;
-    private GridPane fondoItem;
-    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
-    private EventHandler<ActionEvent> onItemSelected;
-    BDController bd = new BDController();
-    private boolean isMenuOpen = false;
+    private final GridPane fondoItem;
+    private final Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
     private BuscadorLibrosController buscadorLibrosController;
     private MenuLibrosController menuLibrosController;
 
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
 
 
     public BookCrudController(BuscadorLibrosController buscadorLibrosController, MenuLibrosController menuLibrosController) {
         super();
         this.buscadorLibrosController = buscadorLibrosController;
         this.menuLibrosController = menuLibrosController;
-        fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
         try {
             fondoItem = fxmlLoader.load();
             LabelAutor = (Label) fxmlLoader.getNamespace().get("LabelAutor");
@@ -72,7 +59,6 @@ public class BookCrudController extends ListCell<Libro> {
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && !Empty) {
-                Parent bp = ViewSwitcher.getScene().getRoot();
                 BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
                 Node right = pb.getRight();
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
@@ -80,9 +66,7 @@ public class BookCrudController extends ListCell<Libro> {
                 BookDetailsController controller = ViewSwitcher.getBookDetailsController();
                 controller.setBuscadorLibrosController(buscadorLibrosController);
                 controller.setmenuLibrosController(menuLibrosController);
-                if (controller != null) {
-                    controller.initData(libro, BookDetailsController.OPERACION_CRUD);
-                }
+                controller.initData(libro, BookDetailsController.OPERACION_CRUD);
                 menuTransition.play();
             }
         });

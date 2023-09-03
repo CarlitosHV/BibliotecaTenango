@@ -1,19 +1,15 @@
 package com.hardbug.bibliotecatenango;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -81,10 +77,10 @@ public class ConfigController extends BDController implements Initializable {
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -128,10 +124,10 @@ public class ConfigController extends BDController implements Initializable {
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 

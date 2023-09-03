@@ -6,13 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
-
-import static com.hardbug.bibliotecatenango.View.*;
 
 /* Clase ViewSwitcher:
     su funcionalidad es recibir la vista que va a mostrar en la ventana, a su vez, recibe el tema seleccionado
@@ -113,7 +110,6 @@ private static Scene scene;
         }
         BorderPane rootPane = (BorderPane) scene.getRoot();
         Node newView = rootPane.getCenter();
-        Node VieRight = rootPane.getLeft();
         FadeTransition transition = new FadeTransition(Duration.millis(200), newView);
         transition.setFromValue(1);
         transition.setToValue(0);

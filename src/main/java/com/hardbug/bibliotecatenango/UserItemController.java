@@ -3,11 +3,8 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseButton;
@@ -16,25 +13,17 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class UserItemController extends ListCell<Usuario> {
-    private FXMLLoader fxmlLoader;
-    private GridPane fondoItem;
-    private Label LabelNombre, LabelEdad, LabelCurp, LabelCorreo, LabelTelefono;
-    private EventHandler<ActionEvent> onItemSelected;
-    private MenuUsuariosController menuUsuariosController;
-    BDController bd = new BDController();
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
+    private final GridPane fondoItem;
+    private final Label LabelNombre, LabelEdad, LabelCurp, LabelCorreo, LabelTelefono;
+    private final MenuUsuariosController menuUsuariosController;
 
     public UserItemController(MenuUsuariosController menuUsuariosController) {
         super();
         this.menuUsuariosController = menuUsuariosController;
-        fxmlLoader = new FXMLLoader(getClass().getResource("UserView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserView.fxml"));
         try {
             fondoItem = fxmlLoader.load();
             LabelNombre = (Label) fxmlLoader.getNamespace().get("LabelNombre");
@@ -63,16 +52,13 @@ public class UserItemController extends ListCell<Usuario> {
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && !Empty) {
-                Parent bp = ViewSwitcher.getScene().getRoot();
                 BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
                 Node right = pb.getRight();
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
                 menuTransition.setToX(0);
                 UserDetailsController cont = ViewSwitcher.getUserDetailsController();
                 cont.setMenuUsuariosController(menuUsuariosController);
-                if (cont != null) {
-                    cont.initData(usuario);
-                }
+                cont.initData(Objects.requireNonNull(usuario));
                 menuTransition.play();
             }
         });

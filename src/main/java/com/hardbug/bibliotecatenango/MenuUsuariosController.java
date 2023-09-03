@@ -39,7 +39,6 @@ public class MenuUsuariosController implements Initializable {
     private TextField BuscadorUsuarios;
     @FXML
     private AnchorPane rootPane;
-    private static ArrayList<Usuario> _usuarios = new ArrayList<>();
     private static FilteredList<Usuario> _usuariosfiltrados;
     private MenuUsuariosController menuUsuariosController;
 
@@ -54,12 +53,8 @@ public class MenuUsuariosController implements Initializable {
         Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
-        BotonBuscar.setOnAction(actionEvent -> {
-            Search();
-        });
-        BuscadorUsuarios.textProperty().addListener((observable, oldValue, newValue) -> {
-            Search();
-        });
+        BotonBuscar.setOnAction(actionEvent -> Search());
+        BuscadorUsuarios.textProperty().addListener((observable, oldValue, newValue) -> Search());
         LabelCrearUsuario.setOnMouseClicked(event -> {
             AltasUsersController.OPERACION = 1;
             Stage stage = (Stage) rootPane.getScene().getWindow();
@@ -96,10 +91,10 @@ public class MenuUsuariosController implements Initializable {
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuUsuariosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuUsuariosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuUsuariosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -133,12 +128,12 @@ public class MenuUsuariosController implements Initializable {
     }
 
     void configurarLista(){
-        _usuarios = bd.MostrarTodosUsuarios();
+        ArrayList<Usuario> _usuarios = bd.MostrarTodosUsuarios();
         IconoCarga.setVisible(false);
         if (!_usuarios.isEmpty()){
             LabelSinUsuarios.setVisible(false);
             UsuariosListView.setVisible(true);
-            _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));;
+            _usuariosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_usuarios));
             UsuariosListView.setCellFactory(lv -> new UserItemController(this));
             UsuariosListView.setItems(_usuariosfiltrados);
         }else{
@@ -148,7 +143,6 @@ public class MenuUsuariosController implements Initializable {
     }
 
     private void CerrarVista() {
-        Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
         Node right = pb.getRight();
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
