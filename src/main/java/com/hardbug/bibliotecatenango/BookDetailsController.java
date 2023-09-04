@@ -75,20 +75,20 @@ public class BookDetailsController extends BuscadorLibrosController implements I
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText());
+            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + libroseleccionado.getTitulo_libro());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alert.close();
                 boolean eliminado = bd.BorrarLibro(Clave);
                 if (eliminado){
-                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!");
+                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + libroseleccionado.getTitulo_libro() + "!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
                         menuLibrosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText());
+                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + libroseleccionado.getTitulo_libro());
                     alertaR.showAndWait();
                 }
             }

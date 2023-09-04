@@ -5,65 +5,63 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="679.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="655.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="237.0" />
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="184.0" />
     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="47.0" valignment="CENTER" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="46.0" valignment="CENTER" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="43.0" minHeight="0.0" prefHeight="39.0" valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="19.0" valignment="CENTER" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label styleClass="LabelsLista" fx:id="LabelTitulo" prefHeight="20.0" prefWidth="309.0" text="Título:" GridPane.columnSpan="2">
+      <Label id="Labels" fx:id="LabelTitulo" prefHeight="25.0" prefWidth="511.0" text="Título:" GridPane.columnSpan="3">
          <font>
             <Font name="Roboto Light" size="18.0" />
          </font>
       </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelClave" prefHeight="17.0" prefWidth="204.0" text="Clave registro: " GridPane.rowIndex="2">
+      <Label id="Labels" fx:id="LabelClave" prefHeight="17.0" prefWidth="204.0" text="Clave registro: " GridPane.rowIndex="2">
           <font>
               <Font name="Roboto Light" size="14.0" />
           </font>
       </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelAutor" prefHeight="17.0" prefWidth="241.0" text="Nombre autor:" GridPane.rowIndex="1">
+      <Label id="Labels" fx:id="LabelAutor" prefHeight="17.0" prefWidth="241.0" styleClass="LabelsLista" text="Nombre autor:" GridPane.rowIndex="1">
           <font>
               <Font name="Roboto Light" size="14.0" />
           </font>
       </Label>
-      <Label styleClass="LabelsLista" text="ESTANTE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-          <font>
-              <Font name="Roboto Light" size="12.0" />
-          </font>
-      </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelEstante" prefHeight="11.0" prefWidth="33.0" text="NUM" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+      <Label id="Labels" fx:id="LabelEstante" prefHeight="29.0" prefWidth="143.0" text="NUM" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
           <font>
               <Font name="Roboto Light" size="12.0" />
           </font>
          <GridPane.margin>
-            <Insets bottom="-5.0" />
+            <Insets />
          </GridPane.margin>
       </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelClasificacion" prefHeight="17.0" prefWidth="219.0" text="Clasificación:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label id="Labels" fx:id="LabelClasificacion" prefHeight="17.0" prefWidth="219.0" text="Clasificación:" GridPane.columnIndex="1" GridPane.rowIndex="2">
           <font>
               <Font name="Roboto Light" size="14.0" />
           </font>
       </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelEditorial" prefHeight="17.0" prefWidth="216.0" text="Editorial" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label id="Labels" fx:id="LabelEditorial" prefHeight="17.0" prefWidth="216.0" text="Editorial" GridPane.columnIndex="1" GridPane.rowIndex="1">
           <font>
               <Font name="Roboto Light" size="14.0" />
           </font>
       </Label>
-      <Label styleClass="LabelsLista" layoutX="468.0" layoutY="10.0" text="DISPONIBLES" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP">
+      <Label id="Labels" fx:id="LabelExistencias" layoutX="480.0" layoutY="25.0" prefHeight="34.0" prefWidth="143.0" text="NUM" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
           <font>
               <Font name="Roboto Light" size="12.0" />
           </font>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
       </Label>
-      <Label styleClass="LabelsLista" fx:id="LabelExistencias" layoutX="480.0" layoutY="25.0" prefHeight="11.0" prefWidth="33.0" text="NUM" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-          <font>
-              <Font name="Roboto Light" size="12.0" />
-          </font>
-      </Label>
+      <Separator id="Separator" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin></Separator>
    </children>
 </GridPane>

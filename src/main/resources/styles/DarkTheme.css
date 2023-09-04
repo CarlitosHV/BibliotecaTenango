@@ -75,15 +75,16 @@
 }
 
 #BotonesBuscar{
-    -fx-background-color: #118511;
-    -fx-border-color: none;
-    -fx-text-fill: white;
+    -fx-background-color: #3c3f41;
+    -fx-border-color: #595b5d;
+    -fx-text-fill: #aaacae;
     -fx-border-radius: 3px;
 }
 
 #BotonesBuscar:hover{
-    -fx-background-color: #7f8c40;
-    -fx-text-fill: black;
+    -fx-background-color: #232425;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: #595b5d;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
@@ -112,7 +113,7 @@
 }
 
 #MenuItems:hover{
-    -fx-background-color: #30cc30;
+    -fx-background-color: #595b5d;
     -fx-text-fill: white;
 }
 
@@ -135,40 +136,6 @@
     -fx-scale-y: 1.1;
 }
 
-#Listas{
-    -fx-background-color: #118511;
-    -fx-border-radius: none;
-}
-
-#Listas .list-cell:selected {
-    -fx-background-color: transparent;
-}
-
-#Listas .list-cell:hover {
-    -fx-background-color: transparent;
-}
-
-#Listas .list-cell:selected .cell {
-    -fx-background-insets: 0, 0;
-    -fx-background-radius: 0;
-    -fx-background-color: transparent;
-}
-
-#Listas .list-cell:hover .cell {
-    -fx-background-insets: 0, 0;
-    -fx-background-radius: 0;
-    -fx-background-color: transparent;
-}
-
-.ElementoLista:hover{
-    -fx-background-color: #3db93d;
-    -fx-border-color: transparent;
-}
-
-.LabelsLista{
-    -fx-text-fill: white;
-}
-
 .Toggles{
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
@@ -185,3 +152,116 @@
     -fx-text-fill: #aaacae;
     -fx-border-color: #595b5d;
 }
+
+#Listas{
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: none;
+}
+
+.ElementoLista{
+    -fx-background-color: none;
+    -fx-text-fill: #aaacae;
+}
+
+.ElementoLista:hover{
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+}
+
+.ElementoLista:selected{
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+}
+
+#Listas .list-cell {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #aaacae;
+}
+
+#Listas .list-cell:selected {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+}
+
+#Listas .list-cell:hover {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color:  #2b2b2b;
+    -fx-background-radius: 5px;
+}
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 5px;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-background-color:  #2b2b2b;
+    -fx-background-radius: 5px;
+}
+
+.list-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 5px;
+}
+
+.BotonClose{
+    -fx-background-color: transparent;
+}
+
+.BotonClose:hover{
+    -fx-background-color: gray;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.BotonDelete{
+    -fx-background-color: #7d0707;
+    -fx-text-fill: white;
+}
+
+.BotonDelete:hover{
+    -fx-background-color: #7d0707;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.BotonEditar{
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: #595b5d;
+}
+
+.BotonEditar:hover{
+    -fx-background-color: #3c3f41;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.BotonSolicitar{
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: #595b5d;
+}
+
+.BotonSolicitar:hover{
+    -fx-background-color: #3c3f41;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#TextAreaField {
+    -fx-control-inner-background: #3c3f41;
+    -fx-border-color: #595b5d;
+    -fx-text-fill: #aaacae;
+    fx-prompt-text-fill: white;
+}
+
+#Separator {
+    -fx-background-color: #aaacae;
+    -fx-border-color: none;
+}
+

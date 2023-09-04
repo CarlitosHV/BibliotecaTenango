@@ -33,8 +33,8 @@ public class IndexApp extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png"))));
         stage.setTitle("Biblioteca Pública Municipal Lic. Abel C. Salazar");
-        stage.setMinWidth(850);
-        stage.setMinHeight(600);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(700);
         stage.setMaximized(true);
         stage.show();
         new BDController().ConsultarPrestamos();

@@ -4,32 +4,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="128.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="128.0" prefWidth="663.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="LabelNombre" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="382.0" text="Nombre:">
+      <Label id="Labels" fx:id="LabelNombre" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="382.0" text="Nombre:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="LabelCURP" layoutX="14.0" layoutY="42.0" prefHeight="22.0" prefWidth="382.0" text="CURP:">
+      <Label id="Labels" fx:id="LabelCURP" layoutX="14.0" layoutY="42.0" prefHeight="22.0" prefWidth="382.0" text="CURP:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="LabelInicio" layoutX="14.0" layoutY="83.0" prefHeight="22.0" prefWidth="242.0" text="FECHA PRÉSTAMO:">
+      <Label id="Labels" fx:id="LabelInicio" layoutX="14.0" layoutY="83.0" prefHeight="22.0" prefWidth="311.0" text="FECHA PRÉSTAMO:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="LabelFin" layoutX="344.0" layoutY="83.0" prefHeight="22.0" prefWidth="242.0" text="FECHA VENCIMIENTO:">
+      <Label id="Labels" fx:id="LabelFin" layoutX="344.0" layoutY="83.0" prefHeight="22.0" prefWidth="321.0" text="FECHA VENCIMIENTO:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="LabelLibros" layoutX="344.0" layoutY="42.0" prefHeight="22.0" prefWidth="242.0" text="LIBROS SOLICITADOS:">
+      <Label id="Labels" fx:id="LabelLibros" layoutX="344.0" layoutY="42.0" prefHeight="22.0" prefWidth="242.0" text="LIBROS SOLICITADOS:">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Label>
+      <Separator id="Separator" layoutY="125.0" prefHeight="0.0" prefWidth="665.0" />
    </children>
 </AnchorPane>

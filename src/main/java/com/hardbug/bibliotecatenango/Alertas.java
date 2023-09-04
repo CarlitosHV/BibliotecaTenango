@@ -74,16 +74,23 @@ public class Alertas {
     }
 
     private static void setThemeAlert(Alert alerta, DialogPane dialogPane, Label content, Button button) {
+        Button buttonCancel = (Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL);
         if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white;");
             content.setTextFill(Color.BLACK);
             alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: gray; -fx-text-fill: black; -fx-border-color: black");
+            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            if (buttonCancel != null) {
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+            }
         } else {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
             content.setTextFill(Color.WHITESMOKE);
             alerta.getDialogPane().setContent(content);
             button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white");
+            if (buttonCancel != null) {
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+            }
         }
     }
 }

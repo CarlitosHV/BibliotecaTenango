@@ -66,7 +66,7 @@ public class BuscadorLibrosController implements Initializable {
                 Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
                 mostrarVentanaModal(stage);
             }else{
-                Alert alert = alerta.CrearAlertaError("Sin libros", "No hay ningún libro seleccionado para proceder con el préstamos");
+                Alert alert = alerta.CrearAlertaError("Sin libros", "No hay ningún libro seleccionado para proceder con el préstamo");
                 alert.showAndWait();
             }
         });

@@ -60,8 +60,8 @@ public class BookItemController extends ListCell<Libro> {
             LabelClave.setText("Clave registro: " + libro.getClave_registro());
             LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
             LabelEditorial.setText("Editorial: " + libro.getEditorial());
-            LabelEstante.setText(libro.getEstante());
-            LabelExistencias.setText(String.valueOf(libro.getExistencias()));
+            LabelEstante.setText("Estante: " + libro.getEstante());
+            LabelExistencias.setText("Disponibles: " + libro.getExistencias());
             setGraphic(fondoItem);
         }
 

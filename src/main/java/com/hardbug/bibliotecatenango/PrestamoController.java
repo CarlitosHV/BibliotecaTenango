@@ -139,7 +139,7 @@ public class PrestamoController extends BDController implements Initializable {
                 Alert al;
                 int result = InsertarActualizarPrestamo(prestamo);
                 if (result == 0){
-                     al = alertas.CrearAlertaConfirmacion("¡Préstamo creado!", "El préstamo se ha creado de manera satisfactoria");
+                     al = alertas.CrearAlertaInformativa("¡Préstamo creado!", "El préstamo se ha creado de manera satisfactoria");
                      al.showAndWait();
                      cerrarModal();
                 }else if(result == -2){
