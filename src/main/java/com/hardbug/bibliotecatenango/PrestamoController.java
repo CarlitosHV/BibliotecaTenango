@@ -50,6 +50,10 @@ public class PrestamoController extends BDController implements Initializable {
     private Button BotonConfirmUser, ButtonPrestamo;
     @FXML
     private ComboBox<Catalogo> ComboDocumento;
+    @FXML
+    private ProgressIndicator IconoCarga;
+    @FXML
+    private AnchorPane Fondo;
 
     private static ArrayList<Usuario> _usuarios = new ArrayList<>();
     private static Usuario usuario;
@@ -58,6 +62,8 @@ public class PrestamoController extends BDController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        IconoCarga.setVisible(false);
+        IconoCarga.setProgress(-1.0);
         _usuarios = MostrarTodosUsuarios();
         _documentos = ConsultarDocumentos(false);
         ComboDocumento.getItems().addAll(FXCollections.observableArrayList(_documentos));
@@ -129,6 +135,8 @@ public class PrestamoController extends BDController implements Initializable {
         });
 
         ButtonPrestamo.setOnAction(evt -> {
+            IconoCarga.setVisible(true);
+            Fondo.setOpacity(0.5);
             Prestamo prestamo = new Prestamo();
             prestamo.FechaInicio = Fechas.obtenerFechaInicioSqlDate();
             prestamo.FechaFin = Fechas.obtenerFechaDevolucionSqlDate();
@@ -139,13 +147,19 @@ public class PrestamoController extends BDController implements Initializable {
                 Alert al;
                 int result = InsertarActualizarPrestamo(prestamo);
                 if (result == 0){
+                    IconoCarga.setVisible(false);
+                    Fondo.setOpacity(1);
                      al = alertas.CrearAlertaInformativa("¡Préstamo creado!", "El préstamo se ha creado de manera satisfactoria");
                      al.showAndWait();
                      cerrarModal();
                 }else if(result == -2){
+                    IconoCarga.setVisible(false);
+                    Fondo.setOpacity(1);
                     al = alertas.CrearAlertaError("Error", "El usuario ya cuenta con un préstamo activo");
                     al.showAndWait();
                 }else{
+                    IconoCarga.setVisible(false);
+                    Fondo.setOpacity(1);
                     al = alertas.CrearAlertaError("Error", "Ha ocurrido un error al generar el préstamo");
                     al.showAndWait();
                 }

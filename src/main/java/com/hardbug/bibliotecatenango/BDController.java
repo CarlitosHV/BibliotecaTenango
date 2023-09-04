@@ -946,12 +946,18 @@ public class BDController {
 
     public boolean FinalizarPrestamo(Prestamo mPrestamo) throws Exception {
         int response = 0;
+        StringJoiner joiner = new StringJoiner(",");
+        for (Libro libro : mPrestamo.libros) {
+            joiner.add(libro.getClave_registro());
+        }
+        String LibrosConcat = joiner.toString();
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
 
-            PreparedStatement stmt = conn.prepareStatement("select * from fnFinalizarPrestamo(?)");
+            PreparedStatement stmt = conn.prepareStatement("select * from fnFinalizarPrestamo(?,?)");
             stmt.setInt(1, mPrestamo.IdPrestamo);
+            stmt.setString(2, LibrosConcat);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
 
