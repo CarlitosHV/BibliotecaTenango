@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
@@ -23,12 +24,12 @@ public class MenuPrestamosController extends BDController implements Initializab
     private Label LabelSinPrestamos;
     @FXML
     private ListView<Prestamo> PrestamosListView;
-    @FXML
-    private ProgressIndicator IconoCarga;
+    public ProgressIndicator IconoCarga;
     @FXML
     private Button BotonBuscar;
     @FXML
     private TextField Buscador;
+    public AnchorPane rootPane;
     private static FilteredList<Prestamo> _prestamosfiltrados;
     Prestamo prestamo = new Prestamo();
 
@@ -59,6 +60,7 @@ public class MenuPrestamosController extends BDController implements Initializab
     void configurarLista(){
         ArrayList<Prestamo> _prestamos = ConsultarPrestamos();
         IconoCarga.setVisible(false);
+        IconoCarga.setProgress(-1.0);
         if (!_prestamos.isEmpty()){
             LabelSinPrestamos.setVisible(false);
             PrestamosListView.setVisible(true);

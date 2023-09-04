@@ -232,10 +232,20 @@
 #Separator {
     -fx-background-color: black;
 }
+
 #TextAreaField {
     -fx-control-inner-background: white;
     -fx-border-color: black;
     -fx-text-fill: black;
     -fx-border-radius: 3px;
+}
+
+.Radios{
+    -fx-text-fill: black;
+}
+
+.Radios .radio-button .radio:selected{
+    -fx-background-color: #118511;
+    -fx-border-color: white;
 }
 

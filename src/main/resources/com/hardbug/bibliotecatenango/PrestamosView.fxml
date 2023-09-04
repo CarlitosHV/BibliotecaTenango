@@ -30,7 +30,7 @@
             </children>
         </GridPane>
         <ListView id="Listas" fx:id="PrestamosListView" layoutX="53.0" layoutY="131.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="227.0" prefWidth="372.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="131.0" />
-        <ProgressIndicator id="IconoCarga" fx:id="IconoCarga" layoutX="203.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="225.0" />
+        <ProgressIndicator id="IconoCarga" fx:id="IconoCarga" layoutX="203.0" layoutY="225.0" progress="0.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0" />
         <Label id="Labels" fx:id="LabelSinPrestamos" layoutX="128.0" layoutY="234.0" text="No hay préstamos registrados" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="234.0">
             <font>
                 <Font name="Roboto Light" size="16.0" />

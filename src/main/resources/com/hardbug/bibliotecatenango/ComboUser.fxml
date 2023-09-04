@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="75.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane styleClass="ElementoLista" prefHeight="75.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="LabelNombre" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="179.0" text="Nombre" />
-      <Label fx:id="LabelCorreo" layoutX="14.0" layoutY="31.0" prefHeight="17.0" prefWidth="179.0" text="Correo" />
-      <Label fx:id="LabelCURP" layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="179.0" text="CURP" />
+      <Label id="Labels" fx:id="LabelNombre" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="179.0" text="Nombre" />
+      <Label id="Labels" fx:id="LabelCorreo" layoutX="14.0" layoutY="31.0" prefHeight="17.0" prefWidth="179.0" text="Correo" />
+      <Label id="Labels" fx:id="LabelCURP" layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="179.0" text="CURP" />
    </children>
 </AnchorPane>

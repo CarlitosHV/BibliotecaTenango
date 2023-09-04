@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
@@ -36,15 +37,21 @@ public class PrestamoDetailController extends BDController implements Initializa
         ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 
         ButtonExtender.setOnAction(evt -> {
+            menuPrestamosController.IconoCarga.setVisible(true);
+            menuPrestamosController.rootPane.setOpacity(0.5);
             mprestamo.FechaFin = Fechas.obtenerFechaDevolucionSqlDate(mprestamo.FechaFin);
             mprestamo.ComentarioAtraso = TextComentario.getText();
             try {
                 if(ExtenderPrestamo(mprestamo)){
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
                     Alert alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta "  + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }else{
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
                     Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();
@@ -56,13 +63,19 @@ public class PrestamoDetailController extends BDController implements Initializa
         });
 
         ButtonFinalizar.setOnAction(evt -> {
+            menuPrestamosController.IconoCarga.setVisible(true);
+            menuPrestamosController.rootPane.setOpacity(0.5);
             try{
                 if(FinalizarPrestamo(mprestamo)){
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
                     Alert alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }else{
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
                     Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();

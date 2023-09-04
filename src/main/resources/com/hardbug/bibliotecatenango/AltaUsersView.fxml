@@ -8,8 +8,8 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="Fondo" fx:id="Fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.AltasUsersController">
-   <AnchorPane layoutX="13.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="671.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
-      <GridPane layoutX="150.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="134.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+   <AnchorPane id="Fondo" layoutX="13.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="671.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
+      <GridPane id="Fondo" layoutX="150.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="134.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" />
@@ -37,14 +37,14 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <ComboBox fx:id="Combo_sexo" prefHeight="42.0" prefWidth="150.0" promptText="Sexo" GridPane.rowIndex="4" />
+         <ComboBox id="comboBox" fx:id="Combo_sexo" prefHeight="42.0" prefWidth="150.0" promptText="Sexo" GridPane.rowIndex="4" />
          <TextField id="Textfields" fx:id="Campo_edad" nodeOrientation="LEFT_TO_RIGHT" onKeyTyped="#validar_edad" prefHeight="38.0" prefWidth="145.0" promptText="Edad" GridPane.columnIndex="2" GridPane.rowIndex="4">
             <font>
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
       </GridPane>
-      <GridPane layoutX="150.0" layoutY="284.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+      <GridPane id="Fondo" layoutX="150.0" layoutY="284.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" />
@@ -65,7 +65,7 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
+         <AnchorPane id="Fondo" prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
          <TextField id="Textfields" fx:id="Campo_curp" onKeyTyped="#validar_curp" prefHeight="38.0" prefWidth="150.0" promptText="CURP" GridPane.rowIndex="2">
             <font>
                <Font name="Roboto Light" size="12.0" />
@@ -106,17 +106,17 @@
             <Insets left="20.0" right="20.0" />
          </padding>
       </Label>
-      <Label layoutX="150.0" layoutY="376.0" text="Consulta tu CURP">
+      <Label id="Labels" layoutX="150.0" layoutY="376.0" text="Consulta tu CURP">
          <font>
             <Font name="Roboto Light" size="9.0" />
          </font>
       </Label>
-      <Hyperlink fx:id="Hyperlink_curp" layoutX="221.0" layoutY="372.0" text="dando clic aquí">
+      <Hyperlink id="Labels" fx:id="Hyperlink_curp" layoutX="221.0" layoutY="372.0" text="dando clic aquí" underline="true">
          <font>
             <Font name="Roboto Light" size="10.0" />
          </font>
       </Hyperlink>
-      <GridPane layoutX="150.0" layoutY="393.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0">
+      <GridPane id="Fondo" layoutX="150.0" layoutY="393.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="145.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" />
@@ -128,8 +128,8 @@
          </rowConstraints>
          <children>
             <AnchorPane prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="Combo_ocupacion" layoutX="228.0" layoutY="19.0" prefHeight="42.0" prefWidth="150.0" promptText="Ocupación" />
-            <ComboBox fx:id="Combo_grado" prefHeight="42.0" prefWidth="150.0" promptText="Grado escolar" GridPane.columnIndex="2" />
+            <ComboBox id="comboBox" fx:id="Combo_ocupacion" layoutX="228.0" layoutY="19.0" prefHeight="42.0" prefWidth="150.0" promptText="Ocupación" />
+            <ComboBox id="comboBox" fx:id="Combo_grado" prefHeight="42.0" prefWidth="150.0" promptText="Grado escolar" GridPane.columnIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="150.0" layoutY="458.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="371.0" vgap="12.0">
@@ -144,7 +144,7 @@
             <RowConstraints minHeight="38.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField id="Textfields" fx:id="Campo_codigo" onKeyTyped="#validar_codigo" layoutX="161.0" layoutY="307.0" prefHeight="38.0" prefWidth="145.0" promptText="Código Postal" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
+            <TextField id="Textfields" fx:id="Campo_codigo" layoutX="161.0" layoutY="307.0" onKeyTyped="#validar_codigo" prefHeight="38.0" prefWidth="145.0" promptText="Código Postal" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="365.0">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
@@ -153,9 +153,9 @@
                <children>
                   <ProgressIndicator fx:id="IconoCarga" layoutX="17.0" layoutY="13.0" prefHeight="40.0" prefWidth="43.0" progress="0.0" />
                </children></AnchorPane>
-            <ComboBox fx:id="Combo_estado" prefHeight="42.0" prefWidth="150.0" promptText="Estado" GridPane.columnIndex="2" />
-            <ComboBox fx:id="Combo_municipio" layoutX="228.0" layoutY="10.0" prefHeight="42.0" prefWidth="150.0" promptText="Municipio" GridPane.rowIndex="1" />
-            <ComboBox fx:id="Combo_localidad" layoutX="10.0" layoutY="58.0" prefHeight="42.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox id="comboBox" fx:id="Combo_estado" prefHeight="42.0" prefWidth="150.0" promptText="Estado" GridPane.columnIndex="2" />
+            <ComboBox id="comboBox" fx:id="Combo_municipio" layoutX="228.0" layoutY="10.0" prefHeight="42.0" prefWidth="150.0" promptText="Municipio" GridPane.rowIndex="1" />
+            <ComboBox id="comboBox" fx:id="Combo_localidad" layoutX="10.0" layoutY="58.0" prefHeight="42.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField id="Textfields" fx:id="Campo_calle" nodeOrientation="LEFT_TO_RIGHT" onKeyTyped="#validar_calle" prefHeight="38.0" prefWidth="145.0" promptText="Calle" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <font>
                   <Font name="Roboto Light" size="12.0" />
