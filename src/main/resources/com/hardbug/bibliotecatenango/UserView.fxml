@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="666.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="237.0" />
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="136.0" />
@@ -14,31 +14,33 @@
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label fx:id="LabelNombre" prefHeight="28.0" prefWidth="541.0" text="Usuario:" GridPane.columnSpan="3">
+        <Label id="Labels" fx:id="LabelNombre" prefHeight="28.0" prefWidth="541.0" text="Usuario:" GridPane.columnSpan="3">
             <font>
                 <Font name="Roboto Light" size="20.0" />
             </font>
         </Label>
-        <Label fx:id="LabelTelefono" prefHeight="17.0" prefWidth="204.0" text="Teléfono" GridPane.rowIndex="2">
+        <Label id="Labels" fx:id="LabelTelefono" prefHeight="17.0" prefWidth="204.0" text="Teléfono" GridPane.rowIndex="2">
             <font>
                 <Font name="Roboto Light" size="12.0" />
             </font>
         </Label>
-        <Label fx:id="LabelCorreo" prefHeight="17.0" prefWidth="241.0" text="Correo:" GridPane.rowIndex="1">
+        <Label id="Labels" fx:id="LabelCorreo" prefHeight="17.0" prefWidth="241.0" text="Correo:" GridPane.rowIndex="1">
             <font>
                 <Font name="Roboto Light" size="12.0" />
             </font>
         </Label>
-        <Label fx:id="LabelCurp" prefHeight="17.0" prefWidth="226.0" text="Curp:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+        <Label id="Labels" fx:id="LabelCurp" prefHeight="17.0" prefWidth="226.0" text="Curp:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font name="Roboto Light" size="12.0" />
          </font></Label>
-        <Label fx:id="LabelEdad" prefHeight="17.0" prefWidth="227.0" text="Edad:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" >
+        <Label id="Labels" fx:id="LabelEdad" prefHeight="17.0" prefWidth="227.0" text="Edad:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <font>
                 <Font name="Roboto Light" size="12.0" />
             </font>
         </Label>
+      <Separator id="Separator" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
     </children>
 </GridPane>

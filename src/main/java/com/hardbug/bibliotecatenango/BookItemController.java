@@ -2,11 +2,8 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseButton;
@@ -17,12 +14,8 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class BookItemController extends ListCell<Libro> {
-    private FXMLLoader fxmlLoader;
-    private GridPane fondoItem;
-    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
-    private EventHandler<ActionEvent> onItemSelected;
-    BDController bd = new BDController();
-    private boolean isMenuOpen = false;
+    private final GridPane fondoItem;
+    private final Label LabelTitulo, LabelAutor, LabelEditorial, LabelClave, LabelEstante, LabelClasificacion, LabelExistencias;
 
     private BuscadorLibrosController buscadorLibrosController;
 
@@ -36,20 +29,12 @@ public class BookItemController extends ListCell<Libro> {
         this.menuLibrosController = menuLibrosController;
     }
 
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
-
 
     public BookItemController(BuscadorLibrosController buscadorLibrosController, MenuLibrosController menuLibrosController) {
         super();
         this.buscadorLibrosController = buscadorLibrosController;
         this.menuLibrosController = menuLibrosController;
-        fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BookItem.fxml"));
         try {
             fondoItem = fxmlLoader.load();
             LabelAutor = (Label) fxmlLoader.getNamespace().get("LabelAutor");
@@ -75,14 +60,13 @@ public class BookItemController extends ListCell<Libro> {
             LabelClave.setText("Clave registro: " + libro.getClave_registro());
             LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
             LabelEditorial.setText("Editorial: " + libro.getEditorial());
-            LabelEstante.setText(libro.getEstante());
-            LabelExistencias.setText(String.valueOf(libro.getExistencias()));
+            LabelEstante.setText("Estante: " + libro.getEstante());
+            LabelExistencias.setText("Disponibles: " + libro.getExistencias());
             setGraphic(fondoItem);
         }
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && !Empty) {
-                Parent bp = ViewSwitcher.getScene().getRoot();
                 BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
                 Node right = pb.getRight();
                 TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
@@ -90,9 +74,7 @@ public class BookItemController extends ListCell<Libro> {
                 BookDetailsController controller = ViewSwitcher.getBookDetailsController();
                 controller.setmenuLibrosController(menuLibrosController);
                 controller.setBuscadorLibrosController(buscadorLibrosController);
-                if (controller != null) {
-                    controller.initData(libro, BookDetailsController.SOLICITAR);
-                }
+                controller.initData(libro, BookDetailsController.SOLICITAR);
                 menuTransition.play();
             }
         });

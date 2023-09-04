@@ -111,46 +111,9 @@ public class BDController {
     }
 
 
-    public ArrayList<Libro> BusquedaGeneral (String palabra) throws SQLException{
-        ArrayList<Libro> _libros = new ArrayList<>();
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                    IndexApp.usuario, IndexApp.contrasenia);
-
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnbusquedageneral(?)");
-            stmt.setString(1, palabra);
-            stmt.execute();
-
-            ResultSet rs = stmt.getResultSet();
-
-            while (rs.next()) {
-                Libro libro = new Libro();
-                libro.setClave_registro(rs.getString("clave_registro"));
-                libro.setEstante(rs.getString("Estante"));
-                libro.setDescripcion_libro(rs.getString("descripcion_libro"));
-                libro.setExistencias(rs.getInt("existencias"));
-                libro.setTitulo_libro(rs.getString("titulo_libro"));
-                libro.setAnio_edicion(rs.getString("anio_edicion"));
-                libro.setNombre_autor(rs.getString("nombre_autor"));
-                libro.setClasificacion(rs.getString("clasificacion"));
-                libro.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
-                libro.setEditorial(rs.getString("editorial"));
-                libro.setLugar_edicion(rs.getString("lugar_edicion"));
-                _libros.add(libro);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-            return _libros;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
     public boolean InsertarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
                                  String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
-                                 String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
+                                 String Registro_clasificacion, String Editorial, String Lugar_edicion) {
 
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
@@ -181,7 +144,7 @@ public class BDController {
 
     public boolean EditarLibro(String Clave_registro, String Estante, String Descripcion_libro, int Existencias,
                                String Titulo_libro, String Anio_edicion, String Nombre_autor, String Clasificacion,
-                               String Registro_clasificacion, String Editorial, String Lugar_edicion) throws SQLException {
+                               String Registro_clasificacion, String Editorial, String Lugar_edicion) {
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                 IndexApp.usuario, IndexApp.contrasenia);
              CallableStatement stmt = conn.prepareCall("CALL spEditarLibro(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
@@ -209,37 +172,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<Localidad> BuscarLocalidades (int CP) throws SQLException{
-        ArrayList<Localidad> _localidades = new ArrayList<>();
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                    IndexApp.usuario, IndexApp.contrasenia);
-
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fnSeleccionarLocalidadPorCP(?)");
-            stmt.setInt(1, CP);
-            stmt.execute();
-
-            ResultSet rs = stmt.getResultSet();
-
-            while (rs.next()) {
-                Localidad localidad = new Localidad();
-                localidad.setId(rs.getInt("id"));
-                localidad.setLocalidad(rs.getString("nombre_localidad"));
-                localidad.setMunicipio(rs.getString("nombre_municipio"));
-                localidad.setEstado(rs.getString("nombre_estado"));
-                _localidades.add(localidad);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-            return _localidades;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
-    public ArrayList<Estados> BuscarEstados () throws SQLException{
+    public ArrayList<Estados> BuscarEstados () {
         ArrayList<Estados> _estados = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -266,7 +199,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<Municipios> BuscarMunicipios (String Estado) throws SQLException{
+    public ArrayList<Municipios> BuscarMunicipios (String Estado) {
         ArrayList<Municipios> _municipios = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -295,7 +228,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<Localidad> BuscarLocalidades (String Municipio, String Estado) throws SQLException{
+    public ArrayList<Localidad> BuscarLocalidades (String Municipio, String Estado) {
         ArrayList<Localidad> _localidades = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -325,7 +258,7 @@ public class BDController {
         }
     }
 
-    public ArrayList<Localidad> BuscarCodigoPostal (int cp) throws SQLException{
+    public ArrayList<Localidad> BuscarCodigoPostal (int cp) {
         ArrayList<Localidad> _localidades = new ArrayList<>();
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -437,43 +370,6 @@ public class BDController {
         }
     }
 
-    public boolean InsertarEditarGrado(Catalogo Grado){
-        try{
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                    IndexApp.usuario, IndexApp.contrasenia);
-
-            PreparedStatement stmt = conn.prepareStatement("call spInsertarActualizarGrado(?,?)");
-            stmt.setInt(1, Grado.getId());
-            stmt.setString(2, Grado.getNombre());
-            stmt.execute();
-
-            stmt.close();
-            conn.close();
-            return true;
-        }catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-    }
-
-    public boolean EliminarGrado(Catalogo Grado){
-        try{
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
-                    IndexApp.usuario, IndexApp.contrasenia);
-
-            PreparedStatement stmt = conn.prepareStatement("call spEliminarGrado(?)");
-            stmt.setInt(1, Grado.getId());
-            stmt.execute();
-
-            stmt.close();
-            conn.close();
-            return true;
-        }catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-    }
-
     public boolean EliminarOcupacion(Catalogo Ocupacion){
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -493,8 +389,8 @@ public class BDController {
     }
 
     public boolean InsertarActualizarUsuario(Usuario mUsuario) throws Exception {
-        Integer IdNombre = 0;
-        Integer IdDir = 0;
+        int IdNombre = 0;
+        int IdDir = 0;
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
@@ -559,10 +455,10 @@ public class BDController {
                             """);
                     }else{
                         new EmailSender().emailSender("Actualización de cuenta", mUsuario.getCorreo(), """
-                                Tu cuenta ha sido actualizada 
+                                Tu cuenta ha sido actualizada\s
                                 Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
                                 mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje                              
+                                De lo contrario, haz caso omiso a este mensaje                             \s
                                 
                                 *Este mensaje ha sido generado automáticamente*
                                 
@@ -602,8 +498,7 @@ public class BDController {
                 usuario.setEdad(rs.getInt("edad"));
                 usuario.sexo = rs.getString("sexo");
                 usuario.setCurp(rs.getString("curp"));
-                String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
-                usuario.Contrasenia = contradecifrada;
+                usuario.Contrasenia = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
                 usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
                 usuario.setCorreo(rs.getString("correo"));
                 Nombres nombre = new Nombres();
@@ -660,10 +555,10 @@ public class BDController {
             }else{
                 conn.close();
                 new EmailSender().emailSender("Cuenta eliminada del sistema", Correo, """
-                                Tu cuenta ha sido eliminada del sistema. Esperamos verte pronto :( 
+                                Tu cuenta ha sido eliminada del sistema. Esperamos verte pronto :(\s
                                 Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
                                 mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje 
+                                De lo contrario, haz caso omiso a este mensaje\s
                                 
                                 *Este mensaje ha sido generado automáticamente*
                                 
@@ -747,6 +642,22 @@ public class BDController {
                 stmtDir.setInt(1, mPrestamo.IdPrestamo);
                 stmtDir.setString(2, LibrosConcat);
                 stmtDir.execute();
+                String mensaje = String.format("""
+                                ¡Se ha generado tu préstamo, %s!
+                                Tu fecha de préstamo es: %s
+                                Tu fecha de devolución es: %s
+                                Es necesario que cumplas con tu fecha de devolución o si necesitas más tiempo, antes del vencimiento puedes extender el periodo\s
+                                solicitándolo en la biblioteca\s
+                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
+                                De lo contrario, haz caso omiso a este mensaje
+
+                                *Este mensaje ha sido generado automáticamente*
+
+                                Biblioteca Pública Municipal Lic. Abel C. Salazar
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""", mPrestamo.Usuario.nombre.Nombre,
+                        Fechas.obtenerFechaInicio(mPrestamo.FechaInicio), Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                new EmailSender().emailSender("Tu préstamo solicitado se ha generado", mPrestamo.Usuario.Correo, mensaje);
                 return 0;
             }else{
                 conn.close();
@@ -757,8 +668,8 @@ public class BDController {
             return -1;
         }
     }
-    public boolean InsertarVisitante(Visitante miVisitante) throws Exception {
-        Integer IdNombre = 0;
+    public boolean InsertarVisitante(Visitante miVisitante) {
+        int IdNombre = 0;
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
@@ -898,10 +809,8 @@ public class BDController {
                 prestamo.libros = _libros;
                 rrs.close();
                 stmtU.close();
-                Catalogo documento = ConsultarDocumentosPorId(prestamo.Documento.getId());
-                prestamo.Documento = documento;
-                Usuario usuario = MostrarUsuarioPorId(prestamo.Usuario.IdUsuario);
-                prestamo.Usuario = usuario;
+                prestamo.Documento = ConsultarDocumentosPorId(prestamo.Documento.getId());
+                prestamo.Usuario = MostrarUsuarioPorId(prestamo.Usuario.IdUsuario);
                 _prestamos.add(prestamo);
             }
             rs.close();
@@ -956,8 +865,7 @@ public class BDController {
                 usuario.setEdad(rs.getInt("edad"));
                 usuario.sexo = rs.getString("sexo");
                 usuario.setCurp(rs.getString("curp").trim());
-                String contradecifrada = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
-                usuario.Contrasenia = contradecifrada;
+                usuario.Contrasenia = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
                 usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
                 usuario.setCorreo(rs.getString("correo"));
                 Nombres nombre = new Nombres();
@@ -1011,6 +919,20 @@ public class BDController {
             if (response == 1){
                 stmt.close();
                 conn.close();
+
+                String mensaje = String.format("""
+                        ¡Hola, %s!
+                        ¡Tu préstamo se ha extendido hasta la fecha %s!
+                        Favor de cumplir con la nueva fecha de devolución
+                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                        mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
+                        De lo contrario, haz caso omiso a este mensaje
+
+                        *Este mensaje ha sido generado automáticamente*
+
+                        Biblioteca Pública Municipal Lic. Abel C. Salazar
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                new EmailSender().emailSender("Tu préstamo solicitado se ha extendido", mPrestamo.Usuario.Correo, mensaje);
                 return true;
             }else{
                 conn.close();
@@ -1039,6 +961,17 @@ public class BDController {
             if (response == 1){
                 stmt.close();
                 conn.close();
+                new EmailSender().emailSender("Tu préstamo solicitado ha finalizado, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, """
+                                ¡Ahora puedes volver a solicitar un nuevo préstamo de libros!
+                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
+                                De lo contrario, haz caso omiso a este mensaje\s
+                                
+                                *Este mensaje ha sido generado automáticamente*
+                                
+                                Biblioteca Pública Municipal Lic. Abel C. Salazar
+                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                """);
                 return true;
             }else{
                 conn.close();

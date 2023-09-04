@@ -10,15 +10,14 @@ public class Fechas {
 
     public static String ObtenerFechaInicio(){
         LocalDate fechaActual = LocalDate.now();
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("es-ES"));
         return fechaActual.format(formatoFecha);
     }
 
     public static String ObtenerFechaDevolucion() {
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaConSuma = fechaActual.plusDays(5);
-
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("es-ES"));
         return fechaConSuma.format(formatoFecha);
     }
 
@@ -45,15 +44,14 @@ public class Fechas {
 
     public static String obtenerFechaInicio(Date fecha) {
         LocalDate fechaActual = fecha.toLocalDate();
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("es-ES"));
         return fechaActual.format(formatoFecha);
     }
 
     public static String obtenerFechaDevolucion(Date fecha) {
         LocalDate fechaActual = fecha.toLocalDate();
         LocalDate fechaConSuma = fechaActual.plusDays(5);
-
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("es-ES"));
         return fechaConSuma.format(formatoFecha);
     }
 }

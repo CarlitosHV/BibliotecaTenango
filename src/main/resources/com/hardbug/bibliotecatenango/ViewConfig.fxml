@@ -21,17 +21,20 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ToggleButton fx:id="ToggleActivar" mnemonicParsing="false" text="Activar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <ToggleButton fx:id="ToggleActivar" mnemonicParsing="false" styleClass="Toggles" text="Activar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                 <font>
                     <Font name="Roboto Light" size="12.0" />
                 </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ToggleButton>
-            <Label text="Modo oscuro" GridPane.rowIndex="2">
+            <Label id="Labels" text="Modo oscuro" GridPane.rowIndex="2">
                <font>
                   <Font name="Roboto Light" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="LabelOcupaciones" layoutX="10.0" layoutY="26.0" text="Administrar ocupaciones" underline="true" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <Label id="Labels" fx:id="LabelOcupaciones" layoutX="10.0" layoutY="26.0" text="Administrar ocupaciones" underline="true" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <font>
                    <Font name="Roboto Light" size="16.0" />
                </font>
@@ -39,7 +42,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label fx:id="LabelGrados" layoutX="10.0" layoutY="82.0" text="Administrar actividades" underline="true" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <Label id="Labels" fx:id="LabelGrados" layoutX="10.0" layoutY="82.0" text="Administrar actividades" underline="true" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <font>
                    <Font name="Roboto Light" size="16.0" />
                </font>
@@ -47,16 +50,16 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label text="APARIENCIA" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label id="Labels" text="APARIENCIA" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font>
             </Label>
-            <Label text="CONFIGURACIÓN FORMULARIOS" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <Label id="Labels" text="CONFIGURACIÓN FORMULARIOS" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font></Label>
-            <Label text="CONFIGURACIÓN">
+            <Label id="Labels" text="CONFIGURACIÓN">
                <font>
                   <Font name="Arial Bold" size="22.0" />
                </font>

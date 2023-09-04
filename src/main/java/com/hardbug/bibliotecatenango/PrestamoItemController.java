@@ -1,8 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Prestamo;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -11,25 +9,13 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class PrestamoItemController extends ListCell<Prestamo> {
-    private FXMLLoader fxmlLoader;
-    private AnchorPane fondoItem;
-    private Label LabelNombre, LabelCURP, LabelInicio, LabelLibros, LabelFin;
-    private EventHandler<ActionEvent> onItemSelected;
-    BDController bd = new BDController();
-    private boolean isMenuOpen = false;
-
-    public EventHandler<ActionEvent> getOnItemSelected() {
-        return onItemSelected;
-    }
-
-    public void setOnItemSelected(EventHandler<ActionEvent> onItemSelected) {
-        this.onItemSelected = onItemSelected;
-    }
+    private final AnchorPane fondoItem;
+    private final Label LabelNombre, LabelCURP, LabelInicio, LabelLibros, LabelFin;
 
 
     public PrestamoItemController() {
         super();
-        fxmlLoader = new FXMLLoader(getClass().getResource("PrestamoItemView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrestamoItemView.fxml"));
         try {
             fondoItem = fxmlLoader.load();
             LabelFin = (Label) fxmlLoader.getNamespace().get("LabelFin");

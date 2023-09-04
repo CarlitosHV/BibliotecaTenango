@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,25 +37,18 @@ public class MenuLibrosController implements Initializable {
     private TextField Buscador;
     @FXML
     private AnchorPane rootPane;
-    private static ArrayList<Libro> _libros = new ArrayList<>();
     private static FilteredList<Libro> _librosfiltrados;
     BDController bd = new BDController();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Parent bp = ViewSwitcher.getScene().getRoot();
-        BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
-        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, pb);
-        Node contentNodeRight = pb.getRight();
+        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, IndexController.getRootPane);
+        Node contentNodeRight = IndexController.getRootPane.getRight();
         contentNodeRight.setTranslateX(400);
         configurarLista();
-        BotonBuscar.setOnAction(actionEvent -> {
-            Search();
-        });
-        Buscador.textProperty().addListener((observable, oldValue, newValue) -> {
-            Search();
-        });
+        BotonBuscar.setOnAction(actionEvent -> Search());
+        Buscador.textProperty().addListener((observable, oldValue, newValue) -> Search());
         LabelCrearLibro.setOnMouseClicked(event -> {
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
@@ -92,10 +84,10 @@ public class MenuLibrosController implements Initializable {
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 
@@ -132,12 +124,12 @@ public class MenuLibrosController implements Initializable {
     }
 
     void configurarLista(){
-        _libros = bd.TraerLibros();
+        ArrayList<Libro> _libros = bd.TraerLibros();
         IconoCarga.setVisible(false);
         if (!_libros.isEmpty()){
             LabelSinLibros.setVisible(false);
             LibrosListView.setVisible(true);
-            _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));;
+            _librosfiltrados = new FilteredList<>(FXCollections.observableArrayList(_libros));
             LibrosListView.setCellFactory(lv -> new BookCrudController(new BuscadorLibrosController() ,this));
             LibrosListView.setItems(_librosfiltrados);
         }else{

@@ -8,31 +8,31 @@
 
 <BorderPane id="Fondo" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.IndexController">
    <top>
-      <AnchorPane prefHeight="89.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="Fondo" prefHeight="89.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="LabelSaludo" layoutX="14.0" layoutY="14.0" text="Buenos días" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+            <Label id="Labels" fx:id="LabelSaludo" layoutX="14.0" layoutY="14.0" text="Buenos días" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                <font>
                   <Font name="Roboto Light" size="16.0" />
                </font>
             </Label>
-            <ImageView fitHeight="45.0" fitWidth="57.0" layoutX="516.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="19.0">
+            <ImageView id="Imagen1" fitHeight="45.0" fitWidth="57.0" layoutX="516.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="19.0">
                <image>
                   <Image url="@../../../assets/conacultalogo.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="71.0" layoutX="453.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="15.0">
+            <ImageView id="Imagen1" fitHeight="50.0" fitWidth="71.0" layoutX="453.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="15.0">
                <image>
                   <Image url="@../../../assets/logotenangoNR.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="71.0" layoutX="391.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="15.0">
+            <ImageView id="Imagen1" fitHeight="50.0" fitWidth="71.0" layoutX="391.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="15.0">
                <image>
                   <Image url="@../../../assets/logotenango.png" />
                </image>
             </ImageView>
             <Button id="BotonMenu" fx:id="BotonMenu" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Menu" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0">
                <graphic>
-                  <ImageView fitHeight="82.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="Imagen1" fitHeight="82.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/ico_menu.png" />
                      </image>

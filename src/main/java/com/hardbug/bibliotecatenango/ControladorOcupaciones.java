@@ -27,8 +27,6 @@ public class ControladorOcupaciones extends BDController implements Initializabl
     private ProgressIndicator IconoCarga;
     @FXML
     private TextField Buscador;
-
-    private TextField nombrefield;
     ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static FilteredList<Catalogo> _ocupacionesfiltradas;
     @Override
@@ -62,39 +60,28 @@ public class ControladorOcupaciones extends BDController implements Initializabl
                 }
             });
             dialog.showAndWait().ifPresent(text -> {
+                Alert alert;
                 if (text.isEmpty()) {
-                    Alerta(Alert.AlertType.WARNING, "Campo vacío", "Por favor, ingrese una ocpación válida");
+                    alert = new Alertas().CrearAlertaPrecaucion("Campo vacío", "Por favor, ingrese una ocpación válida");
+                    alert.showAndWait();
                 } else {
                     Catalogo ocupacion = new Catalogo(text);
                     if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
                         if(InsertarEditarOcupacion(ocupacion)){
-                            Alerta(Alert.AlertType.INFORMATION, "Guardado con éxito", "Se guardó la ocupación: " + text);
+                            alert = new Alertas().CrearAlertaInformativa("Guardado con éxito", "Se guardó la ocupación: " + text);
+                            alert.showAndWait();
                             configurarLista();
                         }else{
-                            Alerta(Alert.AlertType.WARNING, "Error", "Ha ocurrido un error al guardar la ocupación: " + text);
+                            alert = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al guardar la ocupación: " + text);
+                            alert.showAndWait();
                         }
                     }else{
-                        Alerta(Alert.AlertType.WARNING, "Error", "La ocupación: " + text +" es inválida");
-
+                        alert = new Alertas().CrearAlertaError("Error", "La ocupación: " + text +" es inválida");
+                        alert.showAndWait();
                     }
                 }
             });
         });
-    }
-
-    public void Alerta (Alert.AlertType TipoAlerta, String Titulo, String Contenido){
-        Alert alert;
-        if (TipoAlerta == Alert.AlertType.WARNING){
-            alert = new Alert(Alert.AlertType.WARNING);
-        }else{
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-        }
-        alert.setTitle(Titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(Contenido);
-        Stage stagealert = (Stage) alert.getDialogPane().getScene().getWindow();
-        stagealert.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
-        alert.showAndWait();
     }
 
     private void Search() {
@@ -113,10 +100,8 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             LabelSinOcupaciones.setVisible(false);
             ListaOcupaciones.setVisible(true);
             IconoCarga.setVisible(false);
-            _ocupacionesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_ocupaciones));;
-            ListaOcupaciones.setCellFactory(lv -> {
-                return new VistaCatalogoController(2, new ControladorGradosEscolares(), this);
-            });
+            _ocupacionesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_ocupaciones));
+            ListaOcupaciones.setCellFactory(lv -> new VistaCatalogoController(2, new ControladorGradosEscolares(), this));
             ListaOcupaciones.setItems(_ocupacionesfiltradas);
         }else{
             LabelSinOcupaciones.setVisible(true);
@@ -137,5 +122,4 @@ public class ControladorOcupaciones extends BDController implements Initializabl
         Tooltip.install(InformacionView, tooltip);
         return InformacionView;
     }
-
 }

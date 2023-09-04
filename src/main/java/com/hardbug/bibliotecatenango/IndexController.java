@@ -4,14 +4,12 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -26,14 +24,13 @@ public class IndexController implements Initializable {
     private Label LabelSaludo;
     private boolean isMenuOpen = false;
 
+    public static BorderPane getRootPane;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        getRootPane = rootPane;
         ViewSwitcher.showTo(View.MENU_LATERAL, IndexApp.TEMA, rootPane);
         ViewSwitcher.showTo(View.BUSCADOR_LIBROS, IndexApp.TEMA, rootPane);
-        ViewSwitcher.showTo(View.DETALLES_LIBROS, IndexApp.TEMA, rootPane);
-        ViewSwitcher.showTo(View.PRESTAMO_DETAIL, IndexApp.TEMA, rootPane);
-        Node contentNodeRight = rootPane.getRight();
-        contentNodeRight.setTranslateX(400);
         Node contentNodeLeft = rootPane.getLeft();
         contentNodeLeft.setTranslateX(-250);
         ObtenerFecha();

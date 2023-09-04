@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -25,57 +27,76 @@
                 <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label fx:id="LabelNombre" alignment="CENTER" prefHeight="27.0" prefWidth="335.0" text="USUARIO" textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label id="Labels" fx:id="LabelNombre" alignment="CENTER" prefHeight="27.0" prefWidth="335.0" text="USUARIO" textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
                         <Font name="Roboto Light" size="18.0" />
                     </font>
                 </Label>
-                <Label fx:id="LabelCorreo" prefHeight="17.0" prefWidth="334.0" text="Correo" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                <Label id="Labels" fx:id="LabelCorreo" prefHeight="17.0" prefWidth="334.0" text="Correo" GridPane.columnSpan="2" GridPane.rowIndex="1">
                     <font>
                         <Font name="Roboto Light" size="12.0" />
                     </font></Label>
-                <Label fx:id="LabelLibros" prefHeight="17.0" prefWidth="307.0" text="Libros solicitados:" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                <Label id="Labels" fx:id="LabelLibros" prefHeight="17.0" prefWidth="307.0" text="Libros solicitados:" GridPane.columnSpan="2" GridPane.rowIndex="3">
                     <font>
                         <Font name="Roboto Light" size="12.0" />
                     </font>
                 </Label>
-                <Label fx:id="LabelCurp" prefHeight="17.0" prefWidth="323.0" text="CURP" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                <Label id="Labels" fx:id="LabelCurp" prefHeight="17.0" prefWidth="323.0" text="CURP" GridPane.columnSpan="2" GridPane.rowIndex="2">
                     <font>
                         <Font name="Roboto Light" size="12.0" />
                     </font>
                 </Label>
-                <Label fx:id="LabelFechaInicio" prefHeight="17.0" prefWidth="286.0" text="Fecha préstamo:" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                <Label id="Labels" fx:id="LabelFechaInicio" prefHeight="17.0" prefWidth="286.0" text="Fecha préstamo:" GridPane.columnSpan="2" GridPane.rowIndex="4">
                     <font>
                         <Font name="Roboto Light" size="12.0" />
                     </font>
                 </Label>
-                <Button fx:id="ButtonFinalizar" mnemonicParsing="false" text="Finalizar" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+                <Button fx:id="ButtonFinalizar" mnemonicParsing="false" styleClass="BotonSolicitar" text="Finalizar" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
                     <GridPane.margin>
                         <Insets right="35.0" />
                     </GridPane.margin>
                <font>
                   <Font name="Roboto Light" size="12.0" />
-               </font></Button>
-                <Button fx:id="ButtonExtender" mnemonicParsing="false" text="Extender" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="ButtonExtender" mnemonicParsing="false" styleClass="BotonSolicitar" text="Extender" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
                     <GridPane.margin>
                         <Insets left="35.0" />
                     </GridPane.margin>
                <font>
                   <Font name="Roboto Light" size="12.0" />
-               </font></Button>
-                <Label fx:id="LabelFechaDevolucion" layoutX="10.0" layoutY="302.0" prefHeight="17.0" prefWidth="292.0" text="Fecha devolución:" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-            <Label fx:id="LabelRenovaciones" layoutX="34.0" layoutY="148.0" prefHeight="17.0" prefWidth="307.0" text="Renovaciones:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Label id="Labels" fx:id="LabelFechaDevolucion" layoutX="10.0" layoutY="302.0" prefHeight="17.0" prefWidth="292.0" text="Fecha devolución:" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <Label id="Labels" fx:id="LabelRenovaciones" layoutX="34.0" layoutY="148.0" prefHeight="17.0" prefWidth="307.0" text="Renovaciones:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="TextComentario" prefHeight="200.0" prefWidth="200.0" promptText="Agregar comentario atraso" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="2">
+            <TextArea id="TextAreaField" fx:id="TextComentario" prefHeight="200.0" prefWidth="200.0" promptText="Agregar comentario atraso" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="2">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </TextArea>
             </children>
         </GridPane>
-        <Button fx:id="ButtonCerrar" layoutX="20.0" layoutY="28.0" mnemonicParsing="false" text="Cerrar" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="28.0" />
+        <Button fx:id="ButtonCerrar" contentDisplay="GRAPHIC_ONLY" layoutX="20.0" layoutY="28.0" mnemonicParsing="false" styleClass="BotonClose" text="Cerrar" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="28.0">
+            <font>
+                <Font name="Roboto Light" size="12.0" />
+            </font>
+            <graphic>
+                <ImageView id="Imagen1" fitHeight="31.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../assets/cerrar.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
     </children>
 </AnchorPane>

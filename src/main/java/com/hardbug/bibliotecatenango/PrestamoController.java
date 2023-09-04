@@ -5,7 +5,6 @@ import com.hardbug.bibliotecatenango.Models.Libro;
 import com.hardbug.bibliotecatenango.Models.Prestamo;
 import com.hardbug.bibliotecatenango.Models.Usuario;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -17,10 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -34,7 +30,6 @@ public class PrestamoController extends BDController implements Initializable {
     public void setLibros(ArrayList<Libro> libros){
         this._libros = libros;
     }
-    Alertas alerta = new Alertas();
     private Stage modalStage;
 
     public void setBuscadorLibrosController(BuscadorLibrosController buscadorLibrosController){
@@ -53,8 +48,6 @@ public class PrestamoController extends BDController implements Initializable {
     private TextField InputUser;
     @FXML
     private Button BotonConfirmUser, ButtonPrestamo;
-    @FXML
-    private AnchorPane Fondo;
     @FXML
     private ComboBox<Catalogo> ComboDocumento;
 
@@ -146,7 +139,7 @@ public class PrestamoController extends BDController implements Initializable {
                 Alert al;
                 int result = InsertarActualizarPrestamo(prestamo);
                 if (result == 0){
-                     al = alertas.CrearAlertaConfirmacion("¡Préstamo creado!", "El préstamo se ha creado de manera satisfactoria");
+                     al = alertas.CrearAlertaInformativa("¡Préstamo creado!", "El préstamo se ha creado de manera satisfactoria");
                      al.showAndWait();
                      cerrarModal();
                 }else if(result == -2){

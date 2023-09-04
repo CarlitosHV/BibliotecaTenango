@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,7 +31,6 @@ public class BookDetailsController extends BuscadorLibrosController implements I
     BDController bd = new BDController();
     Alertas alerta = new Alertas();
     String Clave = "";
-    int ALERTA_CONFIRMACION = 1, ALERTA_PRECAUCION = 2;
 
     public static int SOLICITAR = 0, OPERACION_CRUD = 1;
 
@@ -56,7 +54,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
         LabelClaveRegistro.setText("Clave registro: " + libro.getClave_registro());
         LabelEstante.setText("Estante: " + libro.getEstante());
         LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
-        LabelDisponibilidad.setText("Disponibles: " + String.valueOf(libro.getExistencias()));
+        LabelDisponibilidad.setText("Disponibles: " + libro.getExistencias());
         TextAreaDescripcion.setText(libro.getDescripcion_libro());
         libroseleccionado = libro;
         if (SOLICITAR == operacion){
@@ -73,26 +71,24 @@ public class BookDetailsController extends BuscadorLibrosController implements I
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ButtonCerrar.setOnAction(actionEvent -> {
-            CerrarVista();
-        });
+        ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + LabelTitulo.getText());
+            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + libroseleccionado.getTitulo_libro());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alert.close();
                 boolean eliminado = bd.BorrarLibro(Clave);
                 if (eliminado){
-                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + LabelTitulo.getText() + "!");
+                    Alert al = alerta.CrearAlertaInformativa("Eliminación correcta", "¡Se ha eliminado el libro el libro " + libroseleccionado.getTitulo_libro() + "!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {
                         menuLibrosController.configurarLista();
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + LabelTitulo.getText());
+                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + libroseleccionado.getTitulo_libro());
                     alertaR.showAndWait();
                 }
             }
@@ -139,14 +135,11 @@ public class BookDetailsController extends BuscadorLibrosController implements I
     }
 
     private void CerrarVista() {
-        Parent bp = ViewSwitcher.getScene().getRoot();
         BorderPane pb = (BorderPane) ViewSwitcher.getScene().getRoot();
         Node right = pb.getRight();
         TranslateTransition menuTransition = new TranslateTransition(Duration.seconds(0.3), right);
         menuTransition.setToX(400);
-        menuTransition.setOnFinished(actionEvent1 -> {
-            limpiar();
-        });
+        menuTransition.setOnFinished(actionEvent1 -> limpiar());
         menuTransition.play();
     }
 
@@ -179,10 +172,10 @@ public class BookDetailsController extends BuscadorLibrosController implements I
             Scene modalScene = new Scene(root);
             if (IndexApp.TEMA == 0){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/WhiteTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/WhiteTheme.css")).toExternalForm());
             }else if (IndexApp.TEMA == 1){
                 modalScene.getStylesheets().clear();
-                modalScene.getStylesheets().add(MenuLibrosController.class.getResource("/styles/DarkTheme.css").toExternalForm());
+                modalScene.getStylesheets().add(Objects.requireNonNull(MenuLibrosController.class.getResource("/styles/DarkTheme.css")).toExternalForm());
             }
             modalStage.setScene(modalScene);
 

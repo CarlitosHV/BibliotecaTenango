@@ -8,15 +8,14 @@ package com.hardbug.bibliotecatenango;
 import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /* Clase AltaLibros:
@@ -27,18 +26,12 @@ public class EditBooksController implements Initializable {
 
     private int OPERACION;
 
-    private static final int INSERTAR = 0, EDITAR = 1, ELIMINAR = 2;
-
     /* Variables booleanas que marcan si los campos están correctos */
     private static boolean Clasificacion_bol = true, Anio_edicion_bol = true, Descripcion_libro_bol = true, Nombre_autor_bol = true,
             Titulo_libro_bol = true, Lugar_edicion_bol = true, Editorial_bol = true, Registro_clasificacion_bol = true, Estante_bol = true,
             Existencias_bol = true, Clave_registro_bol = true;
 
     /* Variables traidas desde le FXML y que se necesitan*/
-    @FXML
-    private Separator Separador_dos, Separador_tres, Separador_cuatro;
-    @FXML
-    private Label Label_cabecera, Label_datos_del_libro, Label_datos_referencia;
     @FXML
     private Button BotonGuardar;
     @FXML
@@ -64,15 +57,8 @@ public class EditBooksController implements Initializable {
     }
 
 
-    /* Variables de tipo integer para manejar los tipos de alertas */
-    private static final int ALERTA_ERROR = 0, ALERTA_LIBRO_NO_ENCONTRADO = 2,
-            ALERTA_CAMPOS_INVALIDOS = 3, ALERTA_ELIMINAR_LIBRO = 4, ALERTA_LIBRO_ELIMINADO = 5,
-            ALERTA_LIBRO_EDITADO = 1;
-
-
     /* Instancias de las clases necesarias para funcionar el código */
     private final Libro libro = new Libro();
-    private final IndexApp indexApp = new IndexApp();
     private final BDController bdController = new BDController();
 
 
@@ -83,83 +69,32 @@ public class EditBooksController implements Initializable {
         Buscar otro, Editar libro, Eliminar otro: Revierten la interfaz para visualizar la información
      */
     @FXML
-    void AccionesBotonGuardar() throws SQLException {
+    void AccionesBotonGuardar() {
         EditarLibro();
     }
-
-    /*
-        Método que crea la alerta, dependiendo el tipo de alerta que recibe es la información que muestra
-     */
-    void CrearAlerta(int TIPO_ALERTA) throws SQLException {
-        switch (TIPO_ALERTA) {
-            case 0 -> aplicarTemaAlerta("¡Ocurrió un error!", "Error al guardar en base de datos", 0);
-            case 1 ->
-                    aplicarTemaAlerta("¡Libro editado con éxito!", "El libro " + libro.getTitulo_libro() + " ha sido editado", 0);
-            case 2 ->
-                    aplicarTemaAlerta("¡Libro no encontrado!", "No se encontró el libro, prueba checando la ortografía :)", 1);
-            case 3 ->
-                    aplicarTemaAlerta("¡Campos inválidos!", "Error en procesar la información, verifica que los campos estén llenados de forma correcta", 1);
-        }
-    }
-
-
-    /*
-        Método que aplica el tema dependiendo el seleccionado y también aplica el texto y la cabecera
-     */
-    void aplicarTemaAlerta(String titulo, String contenido, int tipo) throws SQLException {
-        Alert alerta;
-        if (tipo == 2) {
-            alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        } else {
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-        }
-        DialogPane dialogPane = alerta.getDialogPane();
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
-        Label content = new Label(alerta.getContentText());
-        alerta.setHeaderText(null);
-        alerta.setTitle(titulo);
-        content.setText(contenido);
-        if (IndexApp.TEMA == 0) {
-            dialogPane.setStyle("-fx-background-color: white; -fx-text-fill: white");
-            content.setTextFill(Color.BLACK);
-            alerta.getDialogPane().setContent(content);
-        } else {
-            dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
-            content.setTextFill(Color.WHITESMOKE);
-            alerta.getDialogPane().setContent(content);
-        }
-        if(tipo == 0){
-            Optional<ButtonType> result = alerta.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                alerta.close();
-                modalStage.close();
-                ViewSwitcher.buttonAction(View.MENU_LIBROS);
-            }
-        }else{
-            alerta.showAndWait();
-        }
-    }
-
 
     /*
         Método que manda guardar a Base de Datos el libro, y valida los campos
      */
     @FXML
-    void EditarLibro() throws SQLException {
+    void EditarLibro() {
+        Alert alert;
         if (camposValidos()) {
             boolean editado = bdController.EditarLibro(libro.getClave_registro(), libro.getEstante(), libro.getDescripcion_libro(), libro.getExistencias(),
                     libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (editado) {
-                CrearAlerta(ALERTA_LIBRO_EDITADO);
+                alert = new Alertas().CrearAlertaInformativa("Libro editado", "El libro " + libro.getTitulo_libro() + " ha sido editado con éxito");
+                alert.showAndWait();
                 cerrarModalMenuLibros();
                 limpiarCampos();
             } else {
-                CrearAlerta(ALERTA_ERROR);
+                alert = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al editar el libro " + libro.getTitulo_libro());
+                alert.showAndWait();
             }
         } else {
-            CrearAlerta(ALERTA_CAMPOS_INVALIDOS);
+            alert = new Alertas().CrearAlertaError("Error en campos", "Error en los campos, verifica la información que se está ingresando");
+            alert.showAndWait();
         }
     }
     /*
