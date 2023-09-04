@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.math.BigInteger;
 import java.net.URL;
@@ -32,6 +35,8 @@ public class RegistroVisitanteController extends BDController implements Initial
     /* Variables traidas desde le FXML y que se necesitan*/
     @FXML
     private TextField Campo_nombre, Campo_edad, Campo_Apellido_materno, Campo_Apellido_paterno;
+    @FXML
+    private  ImageView nombre_information, Ap_paterno_information, Ap_materno_information, edad_information;
     private boolean Campo_nombre_bol, Campo_edad_bol, Campo_Apellido_materno_bol, Campo_Apellido_paterno_bol,
             Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol;
     @FXML
@@ -80,7 +85,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        tooltipsfalse();
         //Cargamos los combos de ocupacion y grado
         try {
             ConfigurarCombos();
@@ -118,9 +123,25 @@ public class RegistroVisitanteController extends BDController implements Initial
         validar_ocupacion();
     }
 
+    public void tooltipsfalse(){
+        nombre_information.setVisible(false);
+        Ap_paterno_information.setVisible(false);
+        Ap_materno_information.setVisible(false);
+        edad_information.setVisible(false);
+    }
+
+    public Tooltip crearTooltip(String mensaje){
+        Tooltip tooltip = new Tooltip(mensaje);
+        tooltip.setShowDuration(Duration.INDEFINITE);
+        tooltip.setShowDelay(Duration.millis(500));
+        tooltip.setFont(new Font("Roboto Light", 14));
+        return tooltip;
+    }
+
     public void validar_nombre() {
-        if (Campo_nombre.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_nombre.getText().isEmpty()) {
+        if (Campo_nombre.getText().matches("[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){0,3}") && !Campo_nombre.getText().isEmpty()) {
             Campo_nombre_bol = true;
+            nombre_information.setVisible(false);
             if (IndexApp.TEMA == 1) {
                 Campo_nombre.setStyle("-fx-border-color: #595b5d");
             } else {
@@ -129,9 +150,14 @@ public class RegistroVisitanteController extends BDController implements Initial
         } else {
             Campo_nombre.setStyle("-fx-border-color: red");
             Campo_nombre_bol = false;
+            Tooltip.install(nombre_information,crearTooltip("El nombre debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Juan Carlos, María"));
+            nombre_information.setVisible(true);
+            nombre_information.setPickOnBounds(true);
         }
 
     }
+
+
 
     public void validar_apellido_paterno() {
         if (Campo_Apellido_paterno.isEditable()) {
@@ -146,8 +172,9 @@ public class RegistroVisitanteController extends BDController implements Initial
             } else {
                 Campo_Apellido_paterno.setStyle("-fx-border-color: red");
                 Campo_Apellido_paterno_bol = false;
-
-
+                Tooltip.install(Ap_paterno_information,crearTooltip("El apellido debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Pérez, López"));
+                Ap_paterno_information.setVisible(true);
+                Ap_paterno_information.setPickOnBounds(true);
             }
         }
     }
@@ -165,7 +192,9 @@ public class RegistroVisitanteController extends BDController implements Initial
             } else {
                 Campo_Apellido_materno.setStyle("-fx-border-color: red");
                 Campo_Apellido_materno_bol = false;
-
+                Tooltip.install(Ap_materno_information,crearTooltip("El apellido debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Pérez, López"));
+                Ap_materno_information.setVisible(true);
+                Ap_materno_information.setPickOnBounds(true);
 
             }
         }
@@ -184,6 +213,9 @@ public class RegistroVisitanteController extends BDController implements Initial
             } else {
                 Campo_edad.setStyle("-fx-border-color: red");
                 Campo_edad_bol = false;
+                Tooltip.install(edad_information,crearTooltip("La edad debe de ser un número entre 1 y 100"));
+                edad_information.setVisible(true);
+                edad_information.setPickOnBounds(true);
             }
         }
     }
