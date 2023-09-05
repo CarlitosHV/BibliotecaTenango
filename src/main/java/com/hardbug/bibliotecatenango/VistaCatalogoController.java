@@ -69,12 +69,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
         ButtonEdit.setOnAction(event -> {
             if (opcion == 1){
                 Catalogo gradoseleccionado = catalogo;
-                TextInputDialog dialog = new TextInputDialog();
-                dialog.setTitle("Editar la actividad: " + catalogo.getNombre());
-                dialog.setHeaderText("Ingresa el nombre de la actividad");
-                dialog.setContentText("Nombre: ");
-                Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+                TextInputDialog dialog = new Alertas().CrearAlertaInput("Editar la actividad: " + catalogo.getNombre());
                 ImageView InformacionEditarGradosView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Café literario, Mesa de lectura");
                 dialog.setGraphic(InformacionEditarGradosView);
                 dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -101,12 +96,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                 });
             }else if (opcion == 2){
                 Catalogo ocupacionseleccionada = catalogo;
-                TextInputDialog dialog = new TextInputDialog();
-                dialog.setTitle("Editar la ocupación: " + catalogo.getNombre());
-                dialog.setHeaderText("Ingresa el nombre de la ocupación");
-                dialog.setContentText("Nombre: ");
-                Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+                TextInputDialog dialog = new Alertas().CrearAlertaInput("Editar la ocupación: " + catalogo.getNombre());
                 ImageView InformacionEditarOcupacionesView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Estudiante, Ingeriero Industrial");
                 dialog.setGraphic(InformacionEditarOcupacionesView);
                 dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {

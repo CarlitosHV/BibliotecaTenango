@@ -28,8 +28,10 @@ import java.util.concurrent.Executors;
 
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
-    private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
+    private TextField Campo_correo, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
             Campo_apellido_materno, Campo_codigo, Campo_calle;
+    @FXML
+    private PasswordField Campo_contrasenia;
     @FXML
     private ComboBox<String> Combo_sexo;
     @FXML

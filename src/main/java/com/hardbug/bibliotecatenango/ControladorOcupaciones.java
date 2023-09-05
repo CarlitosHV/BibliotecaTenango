@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -42,14 +43,10 @@ public class ControladorOcupaciones extends BDController implements Initializabl
         });
         LabelCrearOcupacion.setOnMouseClicked(event -> {
 
-           TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Crear nueva ocupación");
-            dialog.setHeaderText("Ingresa el nombre de la ocupación");
-            dialog.setContentText("Nombre: ");
-            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+           TextInputDialog dialog = new Alertas().CrearAlertaInput("Ingresa el nombre de la ocupación: ");
             ImageView InformacionView = CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Estudiante, Ingeriero Industrial");
             dialog.setGraphic(InformacionView);
+            Label content = new Label(dialog.getContentText());
 
             //limitar el campo a 20 caracteres
             dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -62,7 +59,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             dialog.showAndWait().ifPresent(text -> {
                 Alert alert;
                 if (text.isEmpty()) {
-                    alert = new Alertas().CrearAlertaPrecaucion("Campo vacío", "Por favor, ingrese una ocpación válida");
+                    alert = new Alertas().CrearAlertaPrecaucion("Campo vacío", "Por favor, ingrese una ocupación válida");
                     alert.showAndWait();
                 } else {
                     Catalogo ocupacion = new Catalogo(text);

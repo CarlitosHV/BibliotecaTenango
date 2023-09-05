@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="Fondo" prefHeight="73.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="81.0" prefWidth="364.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane layoutX="14.0" layoutY="13.0" prefHeight="47.0" prefWidth="346.0">
+      <GridPane layoutX="14.0" layoutY="13.0" prefHeight="47.0" prefWidth="346.0" styleClass="ElementoLista">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,17 +19,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="LabelNombre" prefHeight="20.0" prefWidth="130.0" text="Label" textFill="#433939" GridPane.columnSpan="2">
+            <Label id="Labels" fx:id="LabelNombre" prefHeight="20.0" prefWidth="130.0" text="Label" textFill="#433939" GridPane.columnSpan="2">
                <font>
                   <Font name="Roboto Light" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="ButtonEdit" contentDisplay="TOP" mnemonicParsing="false" prefHeight="39.0" prefWidth="51.0" text="Editar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button fx:id="ButtonEdit" contentDisplay="TOP" mnemonicParsing="false" prefHeight="39.0" prefWidth="51.0" styleClass="BotonEditar" text="Editar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <graphic>
-                  <ImageView fitHeight="21.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="Imagen1" fitHeight="21.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/ico_edit.png" />
                      </image>
@@ -39,12 +39,12 @@
                   <Font name="Roboto Light" size="10.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonDelete" contentDisplay="TOP" layoutX="198.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Eliminar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button fx:id="ButtonDelete" contentDisplay="TOP" layoutX="198.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" styleClass="BotonDelete" text="Eliminar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="Imagen1" fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/ico_delete.png" />
                      </image>
@@ -56,5 +56,6 @@
             </Button>
          </children>
       </GridPane>
+      <Separator id="Separator" layoutY="66.0" prefHeight="6.0" prefWidth="364.0" />
    </children>
 </AnchorPane>

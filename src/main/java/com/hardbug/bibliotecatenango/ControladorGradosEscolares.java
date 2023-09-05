@@ -40,12 +40,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
             Search();
         });
         LabelCrearGrado.setOnMouseClicked(event -> {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Crear nueva actividad");
-            dialog.setHeaderText("Ingresa el nombre de la actividad");
-            dialog.setContentText("Nombre: ");
-            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+            TextInputDialog dialog = new Alertas().CrearAlertaInput("Ingresa el nombre de la actividad: ");
             ImageView InformacionView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Café literario, Mesa de lectura");
             dialog.setGraphic(InformacionView);
 

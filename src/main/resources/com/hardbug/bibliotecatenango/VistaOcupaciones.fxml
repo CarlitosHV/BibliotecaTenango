@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.ControladorOcupaciones">
+<AnchorPane id="Fondo" prefHeight="450.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.ControladorOcupaciones">
     <children>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="118.0" layoutY="22.0" text="Ocupaciones" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="118.0">
+        <Label id="Labels" alignment="CENTER" contentDisplay="CENTER" layoutX="118.0" layoutY="22.0" text="Ocupaciones" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="118.0">
             <font>
                 <Font name="Roboto Light" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="LabelCrearOcupacion" layoutX="215.0" layoutY="65.0" text="Crear nueva ocupación" textFill="#3f81eb" underline="true" AnchorPane.rightAnchor="22.0">
+        <Label id="Labels" fx:id="LabelCrearOcupacion" layoutX="215.0" layoutY="65.0" text="Crear nueva ocupación" textFill="#3f81eb" underline="true" AnchorPane.rightAnchor="22.0">
             <font>
                 <Font name="Roboto Light" size="12.0" />
             </font>
@@ -20,14 +20,14 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Label>
-        <ListView fx:id="ListaOcupaciones" layoutY="98.0" prefHeight="352.0" prefWidth="393.0" />
-        <Label fx:id="LabelSinOcupaciones" layoutX="63.0" layoutY="262.0" prefHeight="25.0" prefWidth="267.0" text="No hay ocupaciones registradas" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0">
+        <ListView id="Listas" fx:id="ListaOcupaciones" layoutY="98.0" prefHeight="352.0" prefWidth="393.0" />
+        <Label id="Labels" fx:id="LabelSinOcupaciones" layoutX="63.0" layoutY="262.0" prefHeight="25.0" prefWidth="267.0" text="No hay ocupaciones registradas" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0">
             <font>
                 <Font name="Roboto Light" size="18.0" />
             </font>
         </Label>
-        <ProgressIndicator fx:id="IconoCarga" layoutX="175.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="174.0" AnchorPane.topAnchor="225.0" />
-        <TextField fx:id="Buscador" layoutX="13.0" layoutY="61.0" prefHeight="25.0" prefWidth="168.0" promptText="Ingresa el nombre" AnchorPane.leftAnchor="13.0">
+        <ProgressIndicator id="IconoCarga" fx:id="IconoCarga" layoutX="175.0" layoutY="225.0" progress="0.0" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="174.0" AnchorPane.topAnchor="225.0" />
+        <TextField id="Textfields" fx:id="Buscador" layoutX="13.0" layoutY="61.0" prefHeight="25.0" prefWidth="168.0" promptText="Ingresa el nombre" AnchorPane.leftAnchor="13.0">
             <font>
                 <Font name="Roboto Light" size="12.0" />
             </font>
