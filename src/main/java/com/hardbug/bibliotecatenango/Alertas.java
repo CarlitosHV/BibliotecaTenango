@@ -2,7 +2,9 @@ package com.hardbug.bibliotecatenango;
 
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -56,6 +58,38 @@ public class Alertas {
         configAlert(alerta, titulo, contenido, cabecera);
         return alerta;
     }
+
+    public TextInputDialog CrearAlertaInput(String titulo) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(titulo);
+        dialog.setHeaderText(null);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
+
+        setThemeTextInputDialog(dialog, dialog.getDialogPane(), dialog.getEditor(), (Button) dialog.getDialogPane().lookupButton(ButtonType.OK));
+
+        return dialog;
+    }
+
+    private void setThemeTextInputDialog(TextInputDialog dialog, DialogPane dialogPane, TextField field, Button button) {
+        Button buttonCancel = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        if (IndexApp.TEMA == 0) {
+            dialogPane.setStyle("-fx-background-color: white;");
+            field.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-border-radius: 3px;");
+            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            if (buttonCancel != null) {
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+            }
+        } else {
+            dialogPane.setStyle("-fx-background-color: #3c3f41;");
+            field.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: #aaacae; -fx-border-color: #595b5d; -fx-border-radius: 3px;");
+            button.setStyle("-fx-background-color: #3c3f41; -fx-text-fill: #aaacae; -fx-border-color: #595b5d");
+            if (buttonCancel != null) {
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+            }
+        }
+    }
+
 
     private static void configAlert(Alert alerta, String titulo, String contenido, String cabecera){
         DialogPane dialogPane = alerta.getDialogPane();

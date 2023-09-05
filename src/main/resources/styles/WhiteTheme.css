@@ -249,3 +249,7 @@
     -fx-border-color: white;
 }
 
+.label{
+    -fx-text-fill: black;
+}
+

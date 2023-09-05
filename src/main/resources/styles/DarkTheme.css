@@ -278,3 +278,13 @@
     -fx-border-color: #595b5d;
 }
 
+.label{
+    -fx-text-fill: #aaacae;
+}
+
+.myDialog > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
+

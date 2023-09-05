@@ -60,11 +60,6 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <TextField id="Textfields" fx:id="Campo_contrasenia" onKeyTyped="#validar_contrasenia" prefHeight="38.0" prefWidth="143.0" promptText="Contraseña" GridPane.columnIndex="2">
-            <font>
-               <Font name="Roboto Light" size="12.0" />
-            </font>
-         </TextField>
          <AnchorPane id="Fondo" prefHeight="40.0" prefWidth="65.0" GridPane.columnIndex="1" />
          <TextField id="Textfields" fx:id="Campo_curp" onKeyTyped="#validar_curp" prefHeight="38.0" prefWidth="150.0" promptText="CURP" GridPane.rowIndex="2">
             <font>
@@ -76,6 +71,11 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
+         <PasswordField id="Textfields" fx:id="Campo_contrasenia" prefHeight="42.0" prefWidth="151.0" promptText="Contraseña" GridPane.columnIndex="2">
+            <font>
+               <Font name="Roboto Light" size="12.0" />
+            </font>
+         </PasswordField>
       </GridPane>
       <Separator id="Separators" fx:id="Separador_dos" layoutY="73.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Separator id="Separators" layoutY="40.0" prefHeight="5.0" prefWidth="671.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
