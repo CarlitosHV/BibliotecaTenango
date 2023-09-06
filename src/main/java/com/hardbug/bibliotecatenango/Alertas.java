@@ -113,17 +113,17 @@ public class Alertas {
             dialogPane.setStyle("-fx-background-color: white;");
             content.setTextFill(Color.BLACK);
             alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
             }
         } else {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
             content.setTextFill(Color.WHITESMOKE);
             alerta.getDialogPane().setContent(content);
-            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white");
+            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
             }
         }
     }

@@ -96,7 +96,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="MenuItems" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="187.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Reportes" GridPane.rowIndex="5">
+      <Button id="MenuItems" fx:id="ButtonReporte" alignment="CENTER" contentDisplay="RIGHT" layoutX="10.0" layoutY="187.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="194.0" text="Reportes" GridPane.rowIndex="5">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>

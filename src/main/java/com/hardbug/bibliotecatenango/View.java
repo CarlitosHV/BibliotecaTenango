@@ -20,7 +20,8 @@ public enum View {
     DETALLES_USUARIOS("ViewUserDetails.fxml"),
     REGISTRO_VISITANTES("RegistroVisitanteView.fxml"),
     PRESTAMOS("PrestamosView.fxml"),
-    PRESTAMO_DETAIL("ViewPrestamoDetail.fxml");
+    PRESTAMO_DETAIL("ViewPrestamoDetail.fxml"),
+    REPORTE("ReporteView.fxml");
 
     private String fileName;
 

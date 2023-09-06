@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="Fondo" prefHeight="458.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.ReporteController">
+   <children>
+      <Label id="Labels" layoutX="456.0" layoutY="76.0" text="Generar reporte" AnchorPane.leftAnchor="456.0" AnchorPane.rightAnchor="169.0">
+         <font>
+            <Font name="Roboto Light" size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="DateFechaInicio" editable="false" layoutX="266.0" layoutY="199.0" prefHeight="36.0" prefWidth="174.0" styleClass="date_picker">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></DatePicker>
+      <Label layoutX="214.0" layoutY="208.0" prefHeight="17.0" prefWidth="52.0" text="Desde:">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="DateFechaFin" editable="false" layoutX="634.0" layoutY="199.0" prefHeight="36.0" prefWidth="174.0" styleClass="date_picker">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></DatePicker>
+      <Label id="Labels" layoutX="582.0" layoutY="209.0" prefHeight="17.0" prefWidth="52.0" text="Hasta:">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="BotonDescargar" layoutX="482.0" layoutY="348.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="107.0" styleClass="BotonSolicitar" text="Descargar">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label id="Labels" layoutX="252.0" layoutY="119.0" prefWidth="531.0" text="Para generar un reporte, debes ingresar la fecha de inicio y la fecha de fin que se tomarán para crear la información entre esas fechas que contendrá el reporte" wrapText="true">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Label>
+      <ProgressIndicator fx:id="IconoCarga" layoutX="504.0" layoutY="215.0" progress="0.0" />
+   </children>
+</AnchorPane>
