@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class MenuLateralController implements Initializable {
     @FXML
-    private Button ButtonBooks, ButtonHome, ButtonConfig, ButtonUsers, ButtonVisitors, ButtonPrestamos;
+    private Button ButtonBooks, ButtonHome, ButtonConfig, ButtonUsers, ButtonVisitors, ButtonPrestamos, ButtonReporte;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonBooks.setOnAction(evt -> {
@@ -44,6 +44,11 @@ public class MenuLateralController implements Initializable {
         ButtonPrestamos.setOnAction(evt -> {
             cerrarVistaDerecha();
             ViewSwitcher.buttonAction(View.PRESTAMOS);
+        });
+
+        ButtonReporte.setOnAction(evt -> {
+            cerrarVistaDerecha();
+            ViewSwitcher.buttonAction(View.REPORTE);
         });
     }
 
