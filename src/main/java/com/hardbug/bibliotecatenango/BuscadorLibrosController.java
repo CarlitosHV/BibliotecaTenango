@@ -90,6 +90,7 @@ public class BuscadorLibrosController implements Initializable {
     void configurarLista(){
         ArrayList<Libro> _libros = bd.TraerLibros();
         IconoCarga.setVisible(false);
+        IconoCarga.setProgress(-1.0);
         if (!_libros.isEmpty()){
             LabelSinLibros.setVisible(false);
             LibrosListView.setVisible(true);

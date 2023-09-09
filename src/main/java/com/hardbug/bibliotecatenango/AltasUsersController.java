@@ -596,6 +596,10 @@ public class AltasUsersController extends BDController implements Initializable 
             }
 
             Combo_localidad.setDisable(false);
+        }else{
+            Combo_localidad.setPromptText("Localidad");
+            Combo_estado.setPromptText("Estado");
+            Combo_municipio.setPromptText("Municipio");
         }
     }
 
