@@ -988,4 +988,25 @@ public class BDController {
             return false;
         }
     }
+
+    public boolean ValidarPrestamo(int IdUsuario) throws Exception {
+        boolean response = false;
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnValidarPrestamo(?)");
+            stmt.setInt(1, IdUsuario);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                response = rs.getBoolean("fnValidarPrestamo");
+            }
+            return response;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
 }
