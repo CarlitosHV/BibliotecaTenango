@@ -338,4 +338,8 @@
     -fx-background-color: #3c3f41;
 }
 
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: white;
+}
+
 

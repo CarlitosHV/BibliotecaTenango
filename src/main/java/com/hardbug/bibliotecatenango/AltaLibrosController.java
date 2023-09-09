@@ -92,7 +92,7 @@ public class AltaLibrosController implements Initializable {
                     libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (guardado) {
-                 alert  = new Alertas().CrearAlertaInformativa("Libro guardado", "El libro " + libro.getTitulo_libro() + " se ha giardado con éxito en el sistema");
+                 alert  = new Alertas().CrearAlertaInformativa("Libro guardado", "El libro <" + libro.getTitulo_libro() + "> se ha guardado con éxito en el sistema");
                  alert.showAndWait();
                 cerrarModalMenuLibros();
                 limpiarCampos();

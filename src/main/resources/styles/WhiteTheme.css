@@ -312,3 +312,6 @@
 .progress-indicator:indeterminate .segment {
     -fx-background-color: #118511;
 }
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: #118511;
+}

@@ -84,7 +84,7 @@ public class EditBooksController implements Initializable {
                     libro.getTitulo_libro(), libro.getAnio_edicion(), libro.getNombre_autor(), libro.getClasificacion(),
                     libro.getRegistro_clasificacion(), libro.getEditorial(), libro.getLugar_edicion());
             if (editado) {
-                alert = new Alertas().CrearAlertaInformativa("Libro editado", "El libro " + libro.getTitulo_libro() + " ha sido editado con éxito");
+                alert = new Alertas().CrearAlertaInformativa("Libro editado", "El libro <" + libro.getTitulo_libro() + "> ha sido editado con éxito");
                 alert.showAndWait();
                 cerrarModalMenuLibros();
                 limpiarCampos();

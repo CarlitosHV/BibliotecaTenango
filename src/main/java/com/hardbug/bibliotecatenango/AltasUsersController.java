@@ -86,11 +86,11 @@ public class AltasUsersController extends BDController implements Initializable 
     public static int OPERACION = 1;
     /* Variables booleanas que marcan si los campos están correctos */
     private static boolean Titulo_correo_bol, Contrasenia_bol, Curp_bol, Telefono_bol, Nombre_bol, Edad_bol,
-            Apellido_paterno_bol, Apellido_materno_bol, Calle_bol, Codigo_bol;
+            Apellido_paterno_bol, Apellido_materno_bol, Calle_bol;
 
     boolean camposValidos() {
         return Titulo_correo_bol && Contrasenia_bol && Curp_bol && Telefono_bol && Nombre_bol && Edad_bol &&
-                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol && Codigo_bol;
+                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol;
 
     }
 
@@ -260,18 +260,6 @@ public class AltasUsersController extends BDController implements Initializable 
         }
     }
 
-    public void validar_codigo() {
-        if (Campo_codigo.isEditable()) {
-            if (Campo_codigo.getText().matches("^\\d{4,5}$")
-                    && !Campo_codigo.getText().isEmpty()) {
-                Codigo_bol = true;
-            } else {
-                Campo_codigo.setStyle("-fx-border-color: red");
-                Codigo_bol = false;
-            }
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IconoCarga.setVisible(false);
@@ -380,6 +368,7 @@ public class AltasUsersController extends BDController implements Initializable 
                     }
                 }
             } else {
+                Combo_estado.setValue(null);
                 Combo_estado.setDisable(false);
             }
         });
@@ -535,6 +524,8 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_ocupacion.getItems().addAll(_ocupaciones);
         _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
         Combo_sexo.getItems().addAll(_sexos);
+        Combo_localidad.setDisable(true);
+        Combo_municipio.setDisable(true);
     }
 
     private void TareaMunicipios() {
@@ -546,7 +537,6 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         };
         IconoCarga.setVisible(true);
-        Fondo.setOpacity(0.5);
 
         traer_municipios.setOnSucceeded(event -> {
             IconoCarga.setVisible(false);
@@ -568,7 +558,6 @@ public class AltasUsersController extends BDController implements Initializable 
         Estados estado = Combo_estado.getValue();
         Municipios municipio = Combo_municipio.getValue();
         IconoCarga.setVisible(true);
-        Fondo.setOpacity(0.5);
         _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
         Combo_localidad.setPromptText("Localidad");
         Combo_localidad.getItems().setAll(_localidades);
@@ -576,7 +565,6 @@ public class AltasUsersController extends BDController implements Initializable 
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
         }
-
     }
 
     private void TareaCodigoPostal(int CP) throws SQLException {
@@ -606,6 +594,8 @@ public class AltasUsersController extends BDController implements Initializable 
                     break;
                 }
             }
+
+            Combo_localidad.setDisable(false);
         }
     }
 

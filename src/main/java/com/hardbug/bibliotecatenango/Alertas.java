@@ -76,16 +76,16 @@ public class Alertas {
         if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white;");
             field.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-border-radius: 3px;");
-            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             }
         } else {
             dialogPane.setStyle("-fx-background-color: #3c3f41;");
             field.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: #aaacae; -fx-border-color: #595b5d; -fx-border-radius: 3px;");
-            button.setStyle("-fx-background-color: #3c3f41; -fx-text-fill: #aaacae; -fx-border-color: #595b5d");
+            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             }
         }
     }
@@ -115,7 +115,7 @@ public class Alertas {
             alerta.getDialogPane().setContent(content);
             button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
+                buttonCancel.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             }
         } else {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
@@ -123,7 +123,7 @@ public class Alertas {
             alerta.getDialogPane().setContent(content);
             button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
+                buttonCancel.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             }
         }
     }

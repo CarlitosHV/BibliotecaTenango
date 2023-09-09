@@ -57,7 +57,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
                     alert.showAndWait();
                 } else {
                     Catalogo actividad = new Catalogo(text);
-                    if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                    if (text.matches("^(?:[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]\\s?){1,20}$")){
                         if(InsertarEditarActividad(actividad)){
                             alert = new Alertas().CrearAlertaInformativa("Guardado con éxito", "Se guardó la actividad: " + text);
                             alert.showAndWait();

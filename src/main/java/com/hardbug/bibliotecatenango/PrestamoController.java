@@ -109,28 +109,38 @@ public class PrestamoController extends BDController implements Initializable {
             Alert alert = alertas.CrearAlertaConfirmacion("Confirmar usuario", "Una vez seleccionado el usuario ya no se puede cambiar.\n ¿Estás seguro de confirmar al usuario con CURP: " + usuario.getCurp().trim() + "?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                BotonConfirmUser.setVisible(false);
-                InputUser.setText("");
-                InputUser.setVisible(false);
-                ListViewUser.setVisible(false);
-                LabelNombre.setText("Nombre: " +usuario.nombre.GetNombreCompleto());
-                LabelCurp.setText("CURP: " + usuario.Curp);
-                LabelCorreo.setText("Correo: " + usuario.Correo);
-                LabelDir.setText("Dirección: " + usuario.direccion.getDireccionCompleta());
-                Animar(LabelNombre);
-                Animar(LabelCorreo);
-                Animar(LabelCurp);
-                Animar(LabelHeader);
-                Animar(LabelDir);
-                LabelFechaInicio.setText(Fechas.ObtenerFechaInicio());
-                LabelFechaFin.setText(Fechas.ObtenerFechaDevolucion());
-                LabelFechaInicio.setVisible(true);
-                LabelFechaFin.setVisible(true);
-                LabelHeaderTwo.setVisible(true);
-                LabelHeaderTres.setVisible(true);
-                ComboDocumento.setVisible(true);
-                LabelHInicio.setVisible(true);
-                LabelHFin.setVisible(true);
+                try {
+                    if(ValidarPrestamo(usuario.IdUsuario)){
+                        BotonConfirmUser.setVisible(false);
+                        InputUser.setText("");
+                        InputUser.setVisible(false);
+                        ListViewUser.setVisible(false);
+                        LabelNombre.setText("Nombre: " +usuario.nombre.GetNombreCompleto());
+                        LabelCurp.setText("CURP: " + usuario.Curp);
+                        LabelCorreo.setText("Correo: " + usuario.Correo);
+                        LabelDir.setText("Dirección: " + usuario.direccion.getDireccionCompleta());
+                        Animar(LabelNombre);
+                        Animar(LabelCorreo);
+                        Animar(LabelCurp);
+                        Animar(LabelHeader);
+                        Animar(LabelDir);
+                        LabelFechaInicio.setText(Fechas.ObtenerFechaInicio());
+                        LabelFechaFin.setText(Fechas.ObtenerFechaDevolucion());
+                        LabelFechaInicio.setVisible(true);
+                        LabelFechaFin.setVisible(true);
+                        LabelHeaderTwo.setVisible(true);
+                        LabelHeaderTres.setVisible(true);
+                        ComboDocumento.setVisible(true);
+                        LabelHInicio.setVisible(true);
+                        LabelHFin.setVisible(true);
+                    }else{
+                        Alert al = alertas.CrearAlertaError("Error", "El usuario ya cuenta con un préstamo activo\n La operación se cancelará y regresará a la pantalla de inicio");
+                        al.showAndWait();
+                        cerrarModal();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

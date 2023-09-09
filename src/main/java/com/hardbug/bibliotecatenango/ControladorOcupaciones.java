@@ -63,7 +63,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
                     alert.showAndWait();
                 } else {
                     Catalogo ocupacion = new Catalogo(text);
-                    if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                    if (text.matches("^(?:[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]\\s?){1,20}$")){
                         if(InsertarEditarOcupacion(ocupacion)){
                             alert = new Alertas().CrearAlertaInformativa("Guardado con éxito", "Se guardó la ocupación: " + text);
                             alert.showAndWait();

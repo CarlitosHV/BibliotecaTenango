@@ -159,7 +159,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                         alerta.showAndWait();
                         controladorOcupaciones.configurarLista();
                     }else{
-                        alerta = new Alertas().CrearAlertaError("Error", "Error", "No se puede eliminar una ocupación si algún usuario la tiene en su perfil");
+                        alerta = new Alertas().CrearAlertaError("Error", "No se puede eliminar una ocupación si algún usuario la tiene en su perfil");
                         alerta.showAndWait();
                     }
                 }else{
