@@ -689,7 +689,7 @@ public class BDController {
             if (IdNombre > 0){
                 stmt.close();
                 miVisitante.nombre.IdNombre = IdNombre;
-                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?)");
+                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?,?)");
                 stmtVisita.setInt(1,miVisitante.edad);
                 stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
                 stmtVisita.setBoolean(3,miVisitante.discapacidad);
@@ -698,6 +698,7 @@ public class BDController {
                 stmtVisita.setDate(5,  sqlDate);
                 stmtVisita.setInt(6,miVisitante.ocupacion.getId());
                 stmtVisita.setInt(7,miVisitante.Actividad.getId());
+                stmtVisita.setString(8,miVisitante.sexo);
                 stmtVisita.execute();
                 stmtVisita.close();
                 conn.close();
