@@ -38,7 +38,7 @@ public class RegistroVisitanteController extends BDController implements Initial
     @FXML
     private  ImageView nombre_information, Ap_paterno_information, Ap_materno_information, edad_information;
     private boolean Campo_nombre_bol, Campo_edad_bol, Campo_Apellido_materno_bol, Campo_Apellido_paterno_bol,
-            Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol;
+            Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol,Combo_sexo_bol;
     @FXML
     private RadioButton Check_discapacidad_si, Check_discapacidad_no;
     @FXML
@@ -47,20 +47,15 @@ public class RegistroVisitanteController extends BDController implements Initial
     private ComboBox<Catalogo> Combo_ocupacion;
     @FXML
     private ComboBox<Catalogo> Combo_actividad;
+    @FXML
+    private ComboBox<String> Combo_sexo;
 
     private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static ArrayList<Catalogo> _grados = new ArrayList<>();
     private static ArrayList<Catalogo> _actividades = new ArrayList<>();
-
+    private static ArrayList<String> _sexos = new ArrayList<>();
     Visitante miVisitante;
-
-    private final IndexApp indexApp = new IndexApp();
     BDController bd = new BDController();
-
-    private static final int ALERTA_ERROR = 0, ALERTA_VISITANTE_GUARDADO = 1, ALERTA_CAMPOS_INVALIDOS = 2;
-
-    private Stage modalStage;
-
     @FXML
     void AccionBotonIngresar() throws Exception {
 
@@ -75,6 +70,8 @@ public class RegistroVisitanteController extends BDController implements Initial
 
 
     private void ConfigurarCombos() throws SQLException {
+        _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
+        Combo_sexo.getItems().addAll(_sexos);
         _ocupaciones = bd.ConsultarOcupaciones(false);
         _grados = bd.ConsultarGradosEscolares(false);
         _actividades = bd.ConsultarActividades(false);
@@ -105,7 +102,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     boolean todo_valido() {
         if (Campo_nombre_bol && Campo_edad_bol && Campo_Apellido_materno_bol && Campo_Apellido_paterno_bol &&
-                Combo_grado_bol && Combo_ocupacion_bol && Combo_actividad_bol) {
+                Combo_grado_bol && Combo_ocupacion_bol && Combo_actividad_bol && Combo_sexo_bol) {
             return true;
         } else {
             return false;
@@ -121,6 +118,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         validar_grado();
         validar_actividad();
         validar_ocupacion();
+        validar_sexo();
     }
 
     public void tooltipsfalse(){
@@ -250,16 +248,26 @@ public class RegistroVisitanteController extends BDController implements Initial
         }
     }
 
+    public void validar_sexo(){
+        if (Combo_sexo.getValue() == null) {
+            Combo_sexo_bol = false;
+            Combo_sexo.setStyle("-fx-border-color: red");
+        } else {
+            Combo_sexo.setStyle("-fx-border-color: transparent");
+            Combo_sexo_bol = true;
+        }
+    }
+
 
     //limpia los campos
     private void limpiarCampos() {
-
+        Combo_sexo.setValue(null);
         Campo_edad.setText("");
         Campo_nombre.setText("");
         Combo_ocupacion.setValue(null);
         Combo_grado.setValue(null);
         Combo_actividad.setValue(null);
-        Check_discapacidad_no.setSelected(false);
+        Check_discapacidad_no.setSelected(true);
         Check_discapacidad_si.setSelected(false);
         Campo_Apellido_materno.setText("");
         Campo_Apellido_paterno.setText("");
@@ -280,6 +288,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
         miVisitante.setFecha(Date.from(Instant.now()));
         miVisitante.Actividad = Combo_actividad.getValue();
+        miVisitante.sexo = Combo_sexo.getValue();
 
         if (bd.InsertarVisitante(miVisitante)) {
             Alert alerta = new Alertas().CrearAlertaConfirmacion("Bienvenido", "Visitante registrado correctamente");

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="Fondo" fx:id="Fondo" prefHeight="561.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.RegistroVisitanteController">
+<AnchorPane id="Fondo" fx:id="Fondo" prefHeight="561.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.RegistroVisitanteController">
     <children>
         <GridPane layoutX="150.0" layoutY="138.0" prefHeight="322.0" prefWidth="585.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="138.0">
             <columnConstraints>
@@ -36,7 +37,7 @@
                 </AnchorPane>
                 <TextField fx:id="Campo_Apellido_paterno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Paterno" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                 <TextField fx:id="Campo_Apellido_materno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Materno" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <ComboBox fx:id="Combo_actividad" prefHeight="38.0" prefWidth="400.0" promptText="Selecciona una actividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <ComboBox fx:id="Combo_actividad" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione una actividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ImageView fx:id="Ap_paterno_information" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <image>
                   <Image url="@../../../assets/informacion.png" />
@@ -67,6 +68,7 @@
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin></ImageView>
+            <ComboBox fx:id="Combo_sexo" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione un género" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             </children>
         </GridPane>
         <Button layoutX="669.0" layoutY="454.0" mnemonicParsing="false" onAction="#AccionBotonIngresar" prefHeight="25.0" prefWidth="66.0" text="Ingresar" AnchorPane.bottomAnchor="82.0" AnchorPane.rightAnchor="40.0" />
