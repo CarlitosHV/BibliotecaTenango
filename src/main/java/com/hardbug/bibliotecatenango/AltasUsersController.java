@@ -260,6 +260,8 @@ public class AltasUsersController extends BDController implements Initializable 
         }
     }
 
+    private boolean selected = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IconoCarga.setVisible(false);
@@ -299,7 +301,7 @@ public class AltasUsersController extends BDController implements Initializable 
 
         Combo_estado.setOnAction(actionEvent -> {
             Combo_localidad.setDisable(true);
-            if (Combo_estado.getValue() != null && !isTextFieldAction) {
+            if (Combo_estado.getValue() != null) {
                 Combo_municipio.setDisable(false);
                 Combo_municipio.getItems().clear();
                 _municipios.clear();
@@ -318,27 +320,25 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_municipio.setOnAction(actionEvent -> {
             Combo_localidad.setDisable(true);
             Combo_municipio.setPromptText("Municipio");
-            if (Combo_municipio.getValue() != null && !isTextFieldAction) {
+            if (Combo_municipio.getValue() != null && Combo_estado.getValue() != null) {
                 Combo_localidad.setDisable(false);
                 Combo_localidad.getItems().clear();
                 _localidades.clear();
                 Combo_localidad.setPromptText("Localidad");
-                Campo_codigo.setText("");
+                if (Campo_codigo.getText().isEmpty()){
+                    Campo_codigo.setText("");
+                }
                 IconoCarga.setVisible(true);
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
-                try {
-                    TareaLocalidades();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                TareaLocalidades();
             }
         });
 
         Combo_localidad.setOnAction(actionEvent -> {
             Combo_localidad.setPromptText("Localidad");
             Localidad localidad = Combo_localidad.getValue();
-            if (localidad != null && Campo_codigo.getText().isEmpty()){
+            if (localidad != null){
                 Campo_codigo.setText(localidad.getCP().toString());
             }
         });
@@ -362,6 +362,7 @@ public class AltasUsersController extends BDController implements Initializable 
             if (Campo_codigo.getLength() > 0) {
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
+                Combo_localidad.getItems().clear();
                 Combo_estado.setDisable(true);
                 if (Campo_codigo.getLength() == 4 || Campo_codigo.getLength() == 5) {
                     try {
@@ -568,19 +569,21 @@ public class AltasUsersController extends BDController implements Initializable 
     }
 
 
-    private void TareaLocalidades() throws SQLException {
+    private void TareaLocalidades() {
         Estados estado = Combo_estado.getValue();
         Municipios municipio = Combo_municipio.getValue();
-        IconoCarga.setVisible(true);
-        _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
-        Combo_localidad.setPromptText("Localidad");
-        Combo_localidad.getItems().setAll(_localidades);
-        if (!_localidades.isEmpty()) {
-            IconoCarga.setVisible(false);
-            Fondo.setOpacity(1.0);
+        if(estado != null && municipio != null){
+            IconoCarga.setVisible(true);
+            _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
             Combo_localidad.setPromptText("Localidad");
-        }else{
-            Combo_localidad.setPromptText("Localidad");
+            Combo_localidad.getItems().setAll(_localidades);
+            if (!_localidades.isEmpty()) {
+                IconoCarga.setVisible(false);
+                Fondo.setOpacity(1.0);
+                Combo_localidad.setPromptText("Localidad");
+            }else{
+                Combo_localidad.setPromptText("Localidad");
+            }
         }
     }
 
@@ -591,6 +594,7 @@ public class AltasUsersController extends BDController implements Initializable 
         _localidades.clear();
         _municipios.clear();
         _localidades = BuscarCodigoPostal(CP);
+        ConfigurarCombos();
         if (!_localidades.isEmpty()) {
             Estados IdEstado = new Estados(_localidades.get(0).IdEstado, _localidades.get(0).Estado);
             Combo_localidad.setPromptText("Localidad");

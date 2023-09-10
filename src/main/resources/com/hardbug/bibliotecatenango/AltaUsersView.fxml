@@ -71,7 +71,7 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <PasswordField id="Textfields" onKeyTyped="#validar_contrasenia" fx:id="Campo_contrasenia" prefHeight="42.0" prefWidth="151.0" promptText="Contraseña" GridPane.columnIndex="2">
+         <PasswordField id="Textfields" fx:id="Campo_contrasenia" onKeyTyped="#validar_contrasenia" prefHeight="42.0" prefWidth="151.0" promptText="Contraseña" GridPane.columnIndex="2">
             <font>
                <Font name="Roboto Light" size="12.0" />
             </font>
@@ -155,7 +155,7 @@
                </children></AnchorPane>
             <ComboBox id="comboBox" fx:id="Combo_estado" prefHeight="42.0" prefWidth="150.0" promptText="Estado" GridPane.columnIndex="2" />
             <ComboBox id="comboBox" fx:id="Combo_municipio" layoutX="228.0" layoutY="10.0" prefHeight="42.0" prefWidth="150.0" promptText="Municipio" GridPane.rowIndex="1" />
-            <ComboBox id="comboBox" fx:id="Combo_localidad" layoutX="10.0" layoutY="58.0" prefHeight="42.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox id="comboBox" fx:id="Combo_localidad" blendMode="SRC_ATOP" cache="true" layoutX="10.0" layoutY="58.0" prefHeight="42.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField id="Textfields" fx:id="Campo_calle" nodeOrientation="LEFT_TO_RIGHT" onKeyTyped="#validar_calle" prefHeight="38.0" prefWidth="145.0" promptText="Calle" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <font>
                   <Font name="Roboto Light" size="12.0" />

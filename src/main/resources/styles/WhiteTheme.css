@@ -106,6 +106,30 @@
     -fx-cursor: hand;
 }
 
+comboBox .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-radius: 3px;
+}
+
+#comboBox .arrow-button {
+    -fx-background-color: #0c710c;
+    -fx-background-radius: 0;
+}
+
+#comboBox .arrow-button:hover {
+    -fx-background-color: #118511;
+}
+
+#comboBox .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+#comboBox:empty{
+    -fx-prompt-text-fill: red;
+}
+
 #comboBox .list-cell:selected {
     -fx-background-color:   #118511;
     -fx-text-fill: white;
