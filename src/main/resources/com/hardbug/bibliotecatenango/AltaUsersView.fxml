@@ -71,7 +71,7 @@
                <Font name="Roboto Light" size="12.0" />
             </font>
          </TextField>
-         <PasswordField id="Textfields" fx:id="Campo_contrasenia" prefHeight="42.0" prefWidth="151.0" promptText="Contraseña" GridPane.columnIndex="2">
+         <PasswordField id="Textfields" onKeyTyped="#validar_contrasenia" fx:id="Campo_contrasenia" prefHeight="42.0" prefWidth="151.0" promptText="Contraseña" GridPane.columnIndex="2">
             <font>
                <Font name="Roboto Light" size="12.0" />
             </font>

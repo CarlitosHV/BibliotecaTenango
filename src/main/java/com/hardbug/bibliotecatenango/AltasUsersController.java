@@ -1,6 +1,7 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.*;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -255,7 +256,6 @@ public class AltasUsersController extends BDController implements Initializable 
             } else {
                 Campo_calle.setStyle("-fx-border-color: red");
                 Calle_bol = false;
-
             }
         }
     }
@@ -308,6 +308,8 @@ public class AltasUsersController extends BDController implements Initializable 
                 Fondo.setOpacity(0.5);
                 TareaMunicipios();
             } else {
+                Combo_municipio.setPromptText("Municipio");
+                Combo_estado.setPromptText("Estado");
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
             }
@@ -334,8 +336,9 @@ public class AltasUsersController extends BDController implements Initializable 
         });
 
         Combo_localidad.setOnAction(actionEvent -> {
+            Combo_localidad.setPromptText("Localidad");
             Localidad localidad = Combo_localidad.getValue();
-            if (localidad != null) {
+            if (localidad != null && Campo_codigo.getText().isEmpty()){
                 Campo_codigo.setText(localidad.getCP().toString());
             }
         });
@@ -356,20 +359,30 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_estado.setOnMouseClicked(event -> isTextFieldAction = false);
 
         Campo_codigo.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (isTextFieldAction && Campo_codigo.getLength() > 0) {
+            if (Campo_codigo.getLength() > 0) {
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
                 Combo_estado.setDisable(true);
                 if (Campo_codigo.getLength() == 4 || Campo_codigo.getLength() == 5) {
                     try {
                         TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
+                        Combo_localidad.setPromptText("Localidad");
+                        Combo_localidad.setValue(null);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                }else{
+                    Combo_estado.setValue(null);
+                    Combo_municipio.setValue(null);
+                    Combo_localidad.setPromptText("Localidad");
+                    Combo_localidad.setValue(null);
                 }
             } else {
                 Combo_estado.setValue(null);
+                Combo_municipio.setValue(null);
+                Combo_localidad.setValue(null);
                 Combo_estado.setDisable(false);
+                Combo_localidad.setPromptText("Localidad");
             }
         });
 
@@ -506,6 +519,7 @@ public class AltasUsersController extends BDController implements Initializable 
 
         Campo_codigo.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
+            Combo_localidad.setPromptText("Localidad");
             if (newText.length() > 5) {
                 return null;
             }
@@ -564,6 +578,9 @@ public class AltasUsersController extends BDController implements Initializable 
         if (!_localidades.isEmpty()) {
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
+            Combo_localidad.setPromptText("Localidad");
+        }else{
+            Combo_localidad.setPromptText("Localidad");
         }
     }
 
@@ -576,15 +593,17 @@ public class AltasUsersController extends BDController implements Initializable 
         _localidades = BuscarCodigoPostal(CP);
         if (!_localidades.isEmpty()) {
             Estados IdEstado = new Estados(_localidades.get(0).IdEstado, _localidades.get(0).Estado);
+            Combo_localidad.setPromptText("Localidad");
             Combo_municipio.getItems().addAll(_municipios);
+            Combo_localidad.getItems().addAll(_localidades);
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
-            Combo_localidad.getItems().addAll(_localidades);
             for (Estados estado : _estados) {
                 if (estado.getId() == IdEstado.getId()) {
                     Combo_estado.setValue(IdEstado);
                     _municipios = BuscarMunicipios(IdEstado.getEstado());
                     IdMuni = new Municipios(_localidades.get(0).IdMunicipio, _localidades.get(0).Municipio);
+                    break;
                 }
             }
 
@@ -594,65 +613,55 @@ public class AltasUsersController extends BDController implements Initializable 
                     break;
                 }
             }
-
+            Combo_localidad.setPromptText("Localidad");
             Combo_localidad.setDisable(false);
         }else{
             Combo_localidad.setPromptText("Localidad");
             Combo_estado.setPromptText("Estado");
             Combo_municipio.setPromptText("Municipio");
+            Combo_localidad.getItems().clear();
         }
+        Platform.runLater(() -> {
+            Combo_localidad.setPromptText("Localidad");
+        });
     }
 
     //Carga los estados en el combo estados
     private void ConfigurarCellFactory() {
-        Combo_estado.setCellFactory(new Callback<>() {
+
+        Combo_estado.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Estados> call(ListView<Estados> listView) {
-                return new ListCell<Estados>() {
-                    @Override
-                    protected void updateItem(Estados estado, boolean empty) {
-                        super.updateItem(estado, empty);
-                        if (estado != null) {
-                            setText(estado.getEstado());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Estados estado, boolean empty) {
+                super.updateItem(estado, empty);
+                if (estado != null) {
+                    setText(estado.getEstado());
+                } else {
+                    setText(null);
+                }
             }
         });
 
-        Combo_municipio.setCellFactory(new Callback<>() {
+        Combo_municipio.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Municipios> call(ListView<Municipios> listView) {
-                return new ListCell<Municipios>() {
-                    @Override
-                    protected void updateItem(Municipios municipio, boolean empty) {
-                        super.updateItem(municipio, empty);
-                        if (municipio != null) {
-                            setText(municipio.getMunicipio());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Municipios municipio, boolean empty) {
+                super.updateItem(municipio, empty);
+                if (municipio != null) {
+                    setText(municipio.getMunicipio());
+                } else {
+                    setText(null);
+                }
             }
         });
 
-        Combo_localidad.setCellFactory(new Callback<>() {
+        Combo_localidad.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Localidad> call(ListView<Localidad> listView) {
-                return new ListCell<Localidad>() {
-                    @Override
-                    protected void updateItem(Localidad localidad, boolean empty) {
-                        super.updateItem(localidad, empty);
-                        if (localidad != null) {
-                            setText(localidad.getLocalidad());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Localidad localidad, boolean empty) {
+                super.updateItem(localidad, empty);
+                if (localidad != null) {
+                    setText(localidad.getLocalidad());
+                } else {
+                    setText(null);
+                }
             }
         });
     }

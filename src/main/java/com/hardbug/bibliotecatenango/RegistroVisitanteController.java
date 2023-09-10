@@ -291,7 +291,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         miVisitante.sexo = Combo_sexo.getValue();
 
         if (bd.InsertarVisitante(miVisitante)) {
-            Alert alerta = new Alertas().CrearAlertaConfirmacion("Bienvenido", "Visitante registrado correctamente");
+            Alert alerta = new Alertas().CrearAlertaInformativa("Bienvenido", "Visitante registrado correctamente");
             alerta.showAndWait();
             limpiarCampos();
 

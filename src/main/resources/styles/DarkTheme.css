@@ -12,6 +12,7 @@
     -fx-border-color: #595b5d;
     -fx-text-fill: #aaacae;
     -fx-border-radius: 3px;
+    -fx-font-family: "Roboto Light";
 }
 
 #Textfields:focused{
@@ -23,6 +24,8 @@
 #BotonGuardar{
     -fx-background-color: #118511;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonGuardar:hover{
@@ -62,6 +65,8 @@
 #Buttons{
     -fx-background-color: black;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #Buttons:hover{
@@ -79,6 +84,8 @@
     -fx-border-color: #595b5d;
     -fx-text-fill: #aaacae;
     -fx-border-radius: 3px;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonesBuscar:hover{
@@ -93,6 +100,8 @@
     -fx-background-color: #232425;
     -fx-text-fill: #aaacae;
     -fx-border-color: #595b5d;
+    -fx-cursor: hand;
+    -fx-font-family: "Roboto Light";
 }
 
 #comboBox .list-cell {
@@ -114,6 +123,7 @@
     -fx-border-color: none;
     -fx-background-color: #2b2b2b;
     -fx-text-fill: white;
+    -fx-cursor: hand;
 }
 
 #MenuItems:hover{
@@ -124,6 +134,8 @@
 #BotonMenu{
     -fx-border-color: none;
     -fx-background-color: #2b2b2b;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonMenu:pressed{
@@ -133,6 +145,7 @@
 #BtnPila{
     -fx-background-color: none;
     -fx-text-fill: white;
+    -fx-cursor: hand;
 }
 
 #BtnPila:hover{
@@ -144,6 +157,7 @@
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
     -fx-border-color: #595b5d;
+    -fx-cursor: hand;
 }
 
 .Toggles:hover{
@@ -160,36 +174,43 @@
 #Listas{
     -fx-background-color: #2b2b2b;
     -fx-border-color: none;
+    -fx-font-family: "Roboto Light";
 }
 
 .ElementoLista{
     -fx-background-color: none;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 .ElementoLista:hover{
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 .ElementoLista:selected{
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 #Listas .list-cell {
     -fx-background-color: #2b2b2b;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 #Listas .list-cell:selected {
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 #Listas .list-cell:hover {
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 .list-view .scroll-bar:vertical {
@@ -214,6 +235,7 @@
 
 .BotonClose{
     -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
 
 .BotonClose:hover{
@@ -225,6 +247,8 @@
 .BotonDelete{
     -fx-background-color: #7d0707;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonDelete:hover{
@@ -237,6 +261,8 @@
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
     -fx-border-color: #595b5d;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonEditar:hover{
@@ -249,6 +275,8 @@
     -fx-background-color: #3c3f41;
     -fx-text-fill: #aaacae;
     -fx-border-color: #595b5d;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonSolicitar:hover{
@@ -262,6 +290,8 @@
     -fx-border-color: #595b5d;
     -fx-text-fill: #aaacae;
     -fx-prompt-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #Separator {
@@ -271,6 +301,7 @@
 
 .Radios{
     -fx-text-fill: #aaacae;
+    -fx-cursor: hand;
 }
 
 .Radios .radio-button .radio{
@@ -292,6 +323,7 @@
     -fx-background-color: #3c3f41;
     -fx-border-color: #595b5d;
     -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 .date-picker .arrow-button {
