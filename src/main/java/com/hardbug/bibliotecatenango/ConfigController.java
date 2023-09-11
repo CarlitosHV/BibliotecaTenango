@@ -71,7 +71,7 @@ public class ConfigController extends BDController implements Initializable {
             Stage modalStage = new Stage();
             modalStage.initOwner(ownerStage);
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Grados Escolares");
+            modalStage.setTitle("Actividades");
             modalStage.setResizable(false);
             modalStage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(IndexApp.class.getResourceAsStream("/assets/logotenangoNR.png")))));
             Scene modalScene = new Scene(root);

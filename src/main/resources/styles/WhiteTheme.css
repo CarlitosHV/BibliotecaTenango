@@ -4,7 +4,6 @@
 }
 #Imagen1{
     -fx-image-rendering: optimizeQuality;
-
 }
 #Labels{
     -fx-text-fill:  black;
@@ -15,6 +14,7 @@
     -fx-border-color: black;
     -fx-text-fill: black;
     -fx-border-radius: 3px;
+    -fx-font-family: "Roboto Light";
 }
 
 #Textfields:focused{
@@ -26,6 +26,8 @@
 #BotonGuardar{
     -fx-background-color: #118511;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonGuardar:hover{
@@ -65,6 +67,8 @@
 #Buttons{
     -fx-background-color: black;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonesBuscar{
@@ -72,6 +76,8 @@
     -fx-border-color: none;
     -fx-text-fill: white;
     -fx-border-radius: 3px;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonesBuscar:hover{
@@ -96,6 +102,32 @@
     -fx-text-fill: white;
     -fx-border-color: black;
     -fx-fill: red;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
+}
+
+comboBox .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-border-radius: 3px;
+}
+
+#comboBox .arrow-button {
+    -fx-background-color: #0c710c;
+    -fx-background-radius: 0;
+}
+
+#comboBox .arrow-button:hover {
+    -fx-background-color: #118511;
+}
+
+#comboBox .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+#comboBox:empty{
+    -fx-prompt-text-fill: red;
 }
 
 #comboBox .list-cell:selected {
@@ -112,6 +144,7 @@
     -fx-border-color: none;
     -fx-background-color: white;
     -fx-text-fill: black;
+    -fx-cursor: hand;
 }
 
 #MenuItems:hover{
@@ -122,6 +155,8 @@
 #BotonMenu{
     -fx-border-color: none;
     -fx-background-color: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BotonMenu:pressed{
@@ -130,6 +165,8 @@
 
 #BtnPila{
     -fx-background-color: none;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 #BtnPila:hover{
@@ -139,6 +176,8 @@
 .Toggles{
     -fx-background-color: #118511;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .Toggles:hover{
@@ -199,6 +238,8 @@
 .BotonDelete{
     -fx-background-color: #bc0909;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonDelete:hover{
@@ -210,6 +251,8 @@
 .BotonEditar{
     -fx-background-color: #118511;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonEditar:hover{
@@ -221,6 +264,8 @@
 .BotonSolicitar{
     -fx-background-color: #118511;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .BotonSolicitar:hover{
@@ -238,10 +283,14 @@
     -fx-border-color: black;
     -fx-text-fill: black;
     -fx-border-radius: 3px;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .Radios{
     -fx-text-fill: black;
+    -fx-font-family: "Roboto Light";
+    -fx-cursor: hand;
 }
 
 .Radios .radio-button .radio:selected{
@@ -257,6 +306,7 @@
     -fx-background-color: #118511;
     -fx-border-color: white;
     -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
 }
 
 .date-picker .arrow-button {
@@ -303,3 +353,15 @@
     -fx-background-color: #3c3f41;
 }
 
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: #118511;
+}
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: #118511;
+}
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: #118511;
+}
+.progress-indicator:indeterminate .segment {
+    -fx-background-color: #118511;
+}

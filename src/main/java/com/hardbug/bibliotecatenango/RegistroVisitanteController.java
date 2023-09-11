@@ -38,7 +38,7 @@ public class RegistroVisitanteController extends BDController implements Initial
     @FXML
     private  ImageView nombre_information, Ap_paterno_information, Ap_materno_information, edad_information;
     private boolean Campo_nombre_bol, Campo_edad_bol, Campo_Apellido_materno_bol, Campo_Apellido_paterno_bol,
-            Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol;
+            Combo_grado_bol, Combo_ocupacion_bol, Combo_actividad_bol,Combo_sexo_bol;
     @FXML
     private RadioButton Check_discapacidad_si, Check_discapacidad_no;
     @FXML
@@ -47,20 +47,15 @@ public class RegistroVisitanteController extends BDController implements Initial
     private ComboBox<Catalogo> Combo_ocupacion;
     @FXML
     private ComboBox<Catalogo> Combo_actividad;
+    @FXML
+    private ComboBox<String> Combo_sexo;
 
     private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
     private static ArrayList<Catalogo> _grados = new ArrayList<>();
     private static ArrayList<Catalogo> _actividades = new ArrayList<>();
-
+    private static ArrayList<String> _sexos = new ArrayList<>();
     Visitante miVisitante;
-
-    private final IndexApp indexApp = new IndexApp();
     BDController bd = new BDController();
-
-    private static final int ALERTA_ERROR = 0, ALERTA_VISITANTE_GUARDADO = 1, ALERTA_CAMPOS_INVALIDOS = 2;
-
-    private Stage modalStage;
-
     @FXML
     void AccionBotonIngresar() throws Exception {
 
@@ -74,7 +69,9 @@ public class RegistroVisitanteController extends BDController implements Initial
     }
 
 
-    private void ConfigurarCombos() throws SQLException {
+    private void ConfigurarCombos() {
+        _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
+        Combo_sexo.getItems().addAll(_sexos);
         _ocupaciones = bd.ConsultarOcupaciones(false);
         _grados = bd.ConsultarGradosEscolares(false);
         _actividades = bd.ConsultarActividades(false);
@@ -86,13 +83,9 @@ public class RegistroVisitanteController extends BDController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tooltipsfalse();
+        ConfigurarCellFactory();
         //Cargamos los combos de ocupacion y grado
-        try {
-            ConfigurarCombos();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConfigurarCombos();
 
         //Hacemos un toglegroup para que solo un radiobutton se active a la vez
         ToggleGroup Si_No = new ToggleGroup();
@@ -105,7 +98,7 @@ public class RegistroVisitanteController extends BDController implements Initial
 
     boolean todo_valido() {
         if (Campo_nombre_bol && Campo_edad_bol && Campo_Apellido_materno_bol && Campo_Apellido_paterno_bol &&
-                Combo_grado_bol && Combo_ocupacion_bol && Combo_actividad_bol) {
+                Combo_grado_bol && Combo_ocupacion_bol && Combo_actividad_bol && Combo_sexo_bol) {
             return true;
         } else {
             return false;
@@ -121,6 +114,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         validar_grado();
         validar_actividad();
         validar_ocupacion();
+        validar_sexo();
     }
 
     public void tooltipsfalse(){
@@ -150,7 +144,7 @@ public class RegistroVisitanteController extends BDController implements Initial
         } else {
             Campo_nombre.setStyle("-fx-border-color: red");
             Campo_nombre_bol = false;
-            Tooltip.install(nombre_information,crearTooltip("El nombre debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Juan Carlos, María"));
+            Tooltip.install(nombre_information,crearTooltip("El nombre debe de empezar con mayúscula y no debe de contener números"+" \n"+"Ejemplos: Juan Carlos, María"));
             nombre_information.setVisible(true);
             nombre_information.setPickOnBounds(true);
         }
@@ -172,7 +166,7 @@ public class RegistroVisitanteController extends BDController implements Initial
             } else {
                 Campo_Apellido_paterno.setStyle("-fx-border-color: red");
                 Campo_Apellido_paterno_bol = false;
-                Tooltip.install(Ap_paterno_information,crearTooltip("El apellido debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Pérez, López"));
+                Tooltip.install(Ap_paterno_information,crearTooltip("El apellido debe de empezar con mayúscula y no debe de contener números"+" \n"+"Ejemplos: Pérez, López"));
                 Ap_paterno_information.setVisible(true);
                 Ap_paterno_information.setPickOnBounds(true);
             }
@@ -192,7 +186,7 @@ public class RegistroVisitanteController extends BDController implements Initial
             } else {
                 Campo_Apellido_materno.setStyle("-fx-border-color: red");
                 Campo_Apellido_materno_bol = false;
-                Tooltip.install(Ap_materno_information,crearTooltip("El apellido debe de empezar con mayuscula y no debe de contener numeros"+" \n"+"Ejemplos: Pérez, López"));
+                Tooltip.install(Ap_materno_information,crearTooltip("El apellido debe de empezar con mayúscula y no debe de contener números"+" \n"+"Ejemplos: Pérez, López"));
                 Ap_materno_information.setVisible(true);
                 Ap_materno_information.setPickOnBounds(true);
 
@@ -250,19 +244,30 @@ public class RegistroVisitanteController extends BDController implements Initial
         }
     }
 
+    public void validar_sexo(){
+        if (Combo_sexo.getValue() == null) {
+            Combo_sexo_bol = false;
+            Combo_sexo.setStyle("-fx-border-color: red");
+        } else {
+            Combo_sexo.setStyle("-fx-border-color: transparent");
+            Combo_sexo_bol = true;
+        }
+    }
+
 
     //limpia los campos
     private void limpiarCampos() {
-
+        Combo_sexo.setValue(null);
         Campo_edad.setText("");
         Campo_nombre.setText("");
         Combo_ocupacion.setValue(null);
         Combo_grado.setValue(null);
         Combo_actividad.setValue(null);
-        Check_discapacidad_no.setSelected(false);
+        Check_discapacidad_no.setSelected(true);
         Check_discapacidad_si.setSelected(false);
         Campo_Apellido_materno.setText("");
         Campo_Apellido_paterno.setText("");
+        ConfigurarCellFactory();
     }
 
     void Ingresar() throws Exception {
@@ -278,11 +283,12 @@ public class RegistroVisitanteController extends BDController implements Initial
         miVisitante.ocupacion = Combo_ocupacion.getValue();
         miVisitante.grado_escolar = Combo_grado.getValue();
         miVisitante.setDiscapacidad(Check_discapacidad_si.selectedProperty().get());
-        miVisitante.setFecha(Date.from(Instant.now()));
+        miVisitante.setFecha(Fechas.obtenerFechaActual());
         miVisitante.Actividad = Combo_actividad.getValue();
+        miVisitante.sexo = Combo_sexo.getValue();
 
         if (bd.InsertarVisitante(miVisitante)) {
-            Alert alerta = new Alertas().CrearAlertaConfirmacion("Bienvenido", "Visitante registrado correctamente");
+            Alert alerta = new Alertas().CrearAlertaInformativa("Bienvenido", "Visitante registrado correctamente");
             alerta.showAndWait();
             limpiarCampos();
 
@@ -294,5 +300,54 @@ public class RegistroVisitanteController extends BDController implements Initial
         }
     }
 
+    private void ConfigurarCellFactory() {
 
+        Combo_ocupacion.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Catalogo catalogo, boolean empty) {
+                super.updateItem(catalogo, empty);
+                if (catalogo != null) {
+                    setText(catalogo.getNombre());
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        Combo_grado.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Catalogo catalogo, boolean empty) {
+                super.updateItem(catalogo, empty);
+                if (catalogo != null) {
+                    setText(catalogo.getNombre());
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        Combo_actividad.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Catalogo catalogo, boolean empty) {
+                super.updateItem(catalogo, empty);
+                if (catalogo != null) {
+                    setText(catalogo.getNombre());
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        Combo_sexo.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String sexo, boolean empty) {
+                super.updateItem(sexo, empty);
+                if (sexo != null) {
+                    setText(sexo);
+                } else {
+                    setText(null);
+                }
+            }
+        });
+    }
 }

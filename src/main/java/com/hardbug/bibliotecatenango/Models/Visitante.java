@@ -1,6 +1,6 @@
 package com.hardbug.bibliotecatenango.Models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Visitante {
     public int id=0;
@@ -12,8 +12,9 @@ public class Visitante {
     public String nombres="";
     public String ap_paterno="";
     public String ap_materno="";
-    public Date fecha=new Date();
+    public Date fecha = null;
     public Catalogo Actividad = null;
+    public String sexo = "";
 
     public Visitante() {
 
@@ -22,7 +23,7 @@ public class Visitante {
     public Visitante(int id, int edad, Catalogo grado_escolar,
                      Catalogo ocupacion, boolean discapacidad,
                      com.hardbug.bibliotecatenango.Models.Nombres nombre, String nombres, String ap_paterno,
-                     String ap_materno, Date fecha) {
+                     String ap_materno, Date fecha, String sexo) {
         this.id = id;
         this.edad = edad;
         this.grado_escolar = grado_escolar;
@@ -33,6 +34,7 @@ public class Visitante {
         this.ap_paterno = ap_paterno;
         this.ap_materno = ap_materno;
         this.fecha = fecha;
+        this.sexo = sexo;
     }
 
     public int getId() {
@@ -99,5 +101,12 @@ public class Visitante {
         this.fecha = fecha;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 
 }

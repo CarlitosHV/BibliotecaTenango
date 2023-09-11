@@ -1,5 +1,8 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Reporte;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -8,9 +11,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ProgressIndicator;
 
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class ReporteController extends BDController implements Initializable {
 
@@ -21,6 +27,9 @@ public class ReporteController extends BDController implements Initializable {
     @FXML
     private ProgressIndicator IconoCarga;
     Alert alert;
+
+    Reporte reporte;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         IconoCarga.setVisible(false);
@@ -50,12 +59,42 @@ public class ReporteController extends BDController implements Initializable {
         });
 
         BotonDescargar.setOnAction(evt -> {
-            if(DateFechaInicio.getValue() == null || DateFechaFin.getValue() == null) {
+            if (DateFechaInicio.getValue() == null || DateFechaFin.getValue() == null) {
                 alert = new Alertas().CrearAlertaError("Error", "Debe seleccionar un rango de fechas");
                 alert.showAndWait();
-            }else{
+            } else {
+                Date fechaInicio = Date.valueOf(DateFechaInicio.getValue());
+                Date fechaFin = Date.valueOf(DateFechaFin.getValue());
+                Callable<Reporte> miCallable = () -> {
+                    Platform.runLater(() -> {
+                        IconoCarga.setVisible(true);
+                        IconoCarga.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+                    });
+                    Thread.sleep(2000);
+                    return GenerarReporte(fechaInicio, fechaFin);
+                };
 
+                FutureTask<Reporte> futureTask = new FutureTask<>(miCallable);
+                Thread thread = new Thread(futureTask);
+                thread.start();
+                try {
+                    reporte = futureTask.get();
+                    Platform.runLater(() -> {
+                        IconoCarga.setVisible(false);
+                        IconoCarga.setProgress(0);
+                        if (reporte != null) {
+                            alert = new Alertas().CrearAlertaInformativa("Reporte", "Reporte generado con éxito");
+                            alert.showAndWait();
+                        } else {
+                            alert = new Alertas().CrearAlertaError("Error", "No se pudo generar el reporte");
+                            alert.showAndWait();
+                        }
+                    });
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 }
+

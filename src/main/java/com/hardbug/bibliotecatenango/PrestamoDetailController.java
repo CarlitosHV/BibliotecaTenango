@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
@@ -21,7 +20,7 @@ public class PrestamoDetailController extends BDController implements Initializa
     private Label LabelNombre, LabelCorreo, LabelRenovaciones, LabelLibros,
             LabelCurp, LabelFechaInicio, LabelFechaDevolucion;
     @FXML
-    private Button ButtonExtender, ButtonCerrar, ButtonFinalizar;
+    private Button ButtonExtender, ButtonCerrar, ButtonFinalizar, ButtonReminder;
     @FXML
     private TextArea TextComentario;
     Prestamo mprestamo = new Prestamo();
@@ -39,7 +38,7 @@ public class PrestamoDetailController extends BDController implements Initializa
         ButtonExtender.setOnAction(evt -> {
             menuPrestamosController.IconoCarga.setVisible(true);
             menuPrestamosController.rootPane.setOpacity(0.5);
-            mprestamo.FechaFin = Fechas.obtenerFechaDevolucionSqlDate(mprestamo.FechaFin);
+            mprestamo.FechaFin = Fechas.extenderFechaDevolucion(mprestamo.FechaFin);
             mprestamo.ComentarioAtraso = TextComentario.getText();
             try {
                 if(ExtenderPrestamo(mprestamo)){
@@ -57,6 +56,16 @@ public class PrestamoDetailController extends BDController implements Initializa
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        ButtonReminder.setOnAction(evt -> {
+            try {
+                EnviarRecordatorio(mprestamo);
+                Alert alert = new Alertas().CrearAlertaInformativa("Recordatorio enviado", "Se ha enviado un recordatorio al correo del usuario");
+                alert.showAndWait();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

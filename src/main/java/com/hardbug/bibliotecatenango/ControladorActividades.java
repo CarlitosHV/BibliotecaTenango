@@ -7,16 +7,13 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ControladorGradosEscolares extends BDController implements Initializable {
+public class ControladorActividades extends BDController implements Initializable {
     @FXML
     private Label LabelCrearGrado, LabelSinGrados;
     @FXML
@@ -57,7 +54,7 @@ public class ControladorGradosEscolares extends BDController implements Initiali
                     alert.showAndWait();
                 } else {
                     Catalogo actividad = new Catalogo(text);
-                    if (text.matches("^(?:[a-zA-Z]\\s?){1,20}$")){
+                    if (text.matches("^(?:[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]\\s?){1,20}$")){
                         if(InsertarEditarActividad(actividad)){
                             alert = new Alertas().CrearAlertaInformativa("Guardado con éxito", "Se guardó la actividad: " + text);
                             alert.showAndWait();

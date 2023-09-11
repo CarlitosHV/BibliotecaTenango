@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -76,16 +77,16 @@ public class Alertas {
         if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white;");
             field.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-border-color: black; -fx-border-radius: 3px;");
-            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             }
         } else {
             dialogPane.setStyle("-fx-background-color: #3c3f41;");
             field.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: #aaacae; -fx-border-color: #595b5d; -fx-border-radius: 3px;");
-            button.setStyle("-fx-background-color: #3c3f41; -fx-text-fill: #aaacae; -fx-border-color: #595b5d");
+            button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white;");
+                buttonCancel.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             }
         }
     }
@@ -96,6 +97,7 @@ public class Alertas {
         Stage stage = (Stage) dialogPane.getScene().getWindow();
         stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
         Label content = new Label(alerta.getContentText());
+        content.setWrapText(true);
         if(cabecera != null){
             alerta.setHeaderText(cabecera);
         }else{
@@ -108,22 +110,29 @@ public class Alertas {
     }
 
     private static void setThemeAlert(Alert alerta, DialogPane dialogPane, Label content, Button button) {
+        Node header = dialogPane.lookup(".header-panel");
         Button buttonCancel = (Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL);
         if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white;");
             content.setTextFill(Color.BLACK);
             alerta.getDialogPane().setContent(content);
+            if(header != null){
+                header.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            }
             button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
+                buttonCancel.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             }
         } else {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
             content.setTextFill(Color.WHITESMOKE);
             alerta.getDialogPane().setContent(content);
+            if (header != null) {
+                header.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white;");
+            }
             button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
-                buttonCancel.setStyle("-fx-background-color: #bc0909; -fx-text-fill: white; -fx-cursor: hand;");
+                buttonCancel.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             }
         }
     }

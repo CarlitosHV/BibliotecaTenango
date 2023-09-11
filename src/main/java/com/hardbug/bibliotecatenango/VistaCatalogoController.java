@@ -4,14 +4,11 @@ import com.hardbug.bibliotecatenango.Models.Catalogo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 public class VistaCatalogoController extends ListCell<Catalogo> {
@@ -25,15 +22,15 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
     private final AnchorPane Fondo;
     private final FXMLLoader fxmlLoader;
     BDController bd = new BDController();
-    private ControladorGradosEscolares controladorGradosEscolares;
+    private ControladorActividades controladorActividades;
     private ControladorOcupaciones controladorOcupaciones;
 
-    public VistaCatalogoController(int Opcion, ControladorGradosEscolares controladorGradosEscolares,
+    public VistaCatalogoController(int Opcion, ControladorActividades controladorActividades,
                                    ControladorOcupaciones controladorOcupaciones) {
         super();
         fxmlLoader = new FXMLLoader(getClass().getResource("VistaCatalogo.fxml"));
         opcion = Opcion;
-        this.controladorGradosEscolares = controladorGradosEscolares;
+        this.controladorActividades = controladorActividades;
         this.controladorOcupaciones = controladorOcupaciones;
         try {
             Fondo = fxmlLoader.load();
@@ -87,7 +84,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                         if(bd.InsertarEditarActividad(gradoseleccionado)){
                             alert = new Alertas().CrearAlertaInformativa("Editado con éxito", "Se editó la actividad: " + catalogo.getNombre());
                             alert.showAndWait();
-                            controladorGradosEscolares.configurarLista();
+                            controladorActividades.configurarLista();
                         }else{
                             alert = new Alertas().CrearAlertaError("Error", "Ha ocurrido un error al guardar la actividad: " + catalogo.getNombre());
                             alert.showAndWait();
@@ -140,7 +137,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                     if (bd.EliminarActividad(gradoseleccionado)){
                         alerta = new Alertas().CrearAlertaInformativa( "Eliminación realizada", "Se ha eliminado la actividad: " + gradoseleccionado.getNombre());
                         alerta.showAndWait();
-                        controladorGradosEscolares.configurarLista();
+                        controladorActividades.configurarLista();
                     }else{
                         alerta = new Alertas().CrearAlertaError("Error", "No se puede eliminar una actividad si alguna visita la ha marcado");
                         alerta.showAndWait();
@@ -159,7 +156,7 @@ public class VistaCatalogoController extends ListCell<Catalogo> {
                         alerta.showAndWait();
                         controladorOcupaciones.configurarLista();
                     }else{
-                        alerta = new Alertas().CrearAlertaError("Error", "Error", "No se puede eliminar una ocupación si algún usuario la tiene en su perfil");
+                        alerta = new Alertas().CrearAlertaError("Error", "No se puede eliminar una ocupación si algún usuario la tiene en su perfil");
                         alerta.showAndWait();
                     }
                 }else{

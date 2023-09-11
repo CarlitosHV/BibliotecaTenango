@@ -28,10 +28,8 @@ import java.util.concurrent.Executors;
 
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
-    private TextField Campo_correo, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
+    private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
             Campo_apellido_materno, Campo_codigo, Campo_calle;
-    @FXML
-    private PasswordField Campo_contrasenia;
     @FXML
     private ComboBox<String> Combo_sexo;
     @FXML
@@ -310,6 +308,7 @@ public class AltasUsersController extends BDController implements Initializable 
         }
 
         Combo_estado.setOnAction(actionEvent -> {
+            ConfigurarCellFactory();
             Combo_localidad.setDisable(true);
             if (Combo_estado.getValue() != null && !isTextFieldAction) {
                 Combo_municipio.setDisable(false);
@@ -326,6 +325,7 @@ public class AltasUsersController extends BDController implements Initializable 
         });
 
         Combo_municipio.setOnAction(actionEvent -> {
+            ConfigurarCellFactory();
             Combo_localidad.setDisable(true);
             Combo_municipio.setPromptText("Municipio");
             if (Combo_municipio.getValue() != null && !isTextFieldAction) {
@@ -346,6 +346,7 @@ public class AltasUsersController extends BDController implements Initializable 
         });
 
         Combo_localidad.setOnAction(actionEvent -> {
+            ConfigurarCellFactory();
             Localidad localidad = Combo_localidad.getValue();
             if (localidad != null) {
                 Campo_codigo.setText(localidad.getCP().toString());
@@ -378,6 +379,10 @@ public class AltasUsersController extends BDController implements Initializable 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                }else{
+                    Combo_estado.setValue(null);
+                    Combo_municipio.setValue(null);
+                    Combo_localidad.setValue(null);
                 }
             } else {
                 Combo_estado.setDisable(false);
@@ -606,59 +611,51 @@ public class AltasUsersController extends BDController implements Initializable 
                     break;
                 }
             }
+            ConfigurarCellFactory();
+
+            Combo_localidad.setDisable(false);
+        }else{
+            Combo_estado.setValue(null);
+            Combo_municipio.setValue(null);
         }
     }
 
     //Carga los estados en el combo estados
     private void ConfigurarCellFactory() {
-        Combo_estado.setCellFactory(new Callback<>() {
+
+        Combo_estado.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Estados> call(ListView<Estados> listView) {
-                return new ListCell<Estados>() {
-                    @Override
-                    protected void updateItem(Estados estado, boolean empty) {
-                        super.updateItem(estado, empty);
-                        if (estado != null) {
-                            setText(estado.getEstado());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Estados estado, boolean empty) {
+                super.updateItem(estado, empty);
+                if (estado != null) {
+                    setText(estado.getEstado());
+                } else {
+                    setText(null);
+                }
             }
         });
 
-        Combo_municipio.setCellFactory(new Callback<>() {
+        Combo_municipio.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Municipios> call(ListView<Municipios> listView) {
-                return new ListCell<Municipios>() {
-                    @Override
-                    protected void updateItem(Municipios municipio, boolean empty) {
-                        super.updateItem(municipio, empty);
-                        if (municipio != null) {
-                            setText(municipio.getMunicipio());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Municipios municipio, boolean empty) {
+                super.updateItem(municipio, empty);
+                if (municipio != null) {
+                    setText(municipio.getMunicipio());
+                } else {
+                    setText(null);
+                }
             }
         });
 
-        Combo_localidad.setCellFactory(new Callback<>() {
+        Combo_localidad.setButtonCell(new ListCell<>() {
             @Override
-            public ListCell<Localidad> call(ListView<Localidad> listView) {
-                return new ListCell<Localidad>() {
-                    @Override
-                    protected void updateItem(Localidad localidad, boolean empty) {
-                        super.updateItem(localidad, empty);
-                        if (localidad != null) {
-                            setText(localidad.getLocalidad());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Localidad localidad, boolean empty) {
+                super.updateItem(localidad, empty);
+                if (localidad != null) {
+                    setText(localidad.Localidad);
+                } else {
+                    setText(null);
+                }
             }
         });
     }

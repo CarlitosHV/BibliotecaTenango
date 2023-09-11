@@ -689,15 +689,15 @@ public class BDController {
             if (IdNombre > 0){
                 stmt.close();
                 miVisitante.nombre.IdNombre = IdNombre;
-                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?)");
+                PreparedStatement stmtVisita = conn.prepareStatement("call spinsertarregistrarvisitante(?,?,?,?,?,?,?,?)");
                 stmtVisita.setInt(1,miVisitante.edad);
                 stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
                 stmtVisita.setBoolean(3,miVisitante.discapacidad);
                 stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
-                java.sql.Date sqlDate  = new java.sql.Date(miVisitante.fecha.getTime());
-                stmtVisita.setDate(5,  sqlDate);
+                stmtVisita.setDate(5,miVisitante.fecha);
                 stmtVisita.setInt(6,miVisitante.ocupacion.getId());
                 stmtVisita.setInt(7,miVisitante.Actividad.getId());
+                stmtVisita.setString(8,miVisitante.sexo);
                 stmtVisita.execute();
                 stmtVisita.close();
                 conn.close();
@@ -986,6 +986,107 @@ public class BDController {
         }catch (SQLException e) {
             System.err.println(e.getMessage());
             return false;
+        }
+    }
+
+    public boolean ValidarPrestamo(int IdUsuario) throws Exception {
+        boolean response = false;
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnValidarPrestamo(?)");
+            stmt.setInt(1, IdUsuario);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                response = rs.getBoolean("fnValidarPrestamo");
+            }
+            return response;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public void EnviarRecordatorio(Prestamo mPrestamo) throws Exception {
+        java.sql.Date fechaFin = mPrestamo.FechaFin;
+        java.sql.Date fechaActual = Fechas.obtenerFechaActual();
+        if (fechaFin.compareTo(fechaActual) < 0){
+            String mensaje = String.format("""
+                        ¡Hola, %s!
+                        ¡Este es un mensaje para recordarte que tu fecha de devolución es el día %s!
+                        Si existe algún problema en la fecha de devolución, puedes extender el periodo
+                        acudiendo a la Biblioteca.
+                             
+                        *Este mensaje ha sido generado automáticamente*
+                                
+                        Biblioteca Pública Municipal Lic. Abel C. Salazar
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+            new EmailSender().emailSender("Recordatorio de préstamo, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
+        }else{
+            String mensaje = String.format("""
+                        ¡Hola, %s!
+                        Tu préstamo excede la fecha límite de devolución, por lo que te recordamos que tu fecha de devolución es el día %s.
+                        Se solicita devolver los libros en el menor tiempo posible, si existe algún problema, acude a la Biblioteca para resolver la situación.
+                             
+                        *Este mensaje ha sido generado automáticamente*
+                                
+                        Biblioteca Pública Municipal Lic. Abel C. Salazar
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+            new EmailSender().emailSender("Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
+        }
+    }
+
+    public Reporte GenerarReporte(Date inicio, Date fin){
+        Reporte reporte = new Reporte();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnConteoVisitas(?,?)");
+            stmt.setDate(1, inicio);
+            stmt.setDate(2, fin);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                reporte.Masculinos60 = rs.getInt("Masculinos60");
+                reporte.Masculinos3059 = rs.getInt("Masculinos3059");
+                reporte.Masculinos1829 = rs.getInt("Masculinos1829");
+                reporte.Masculinos1317 = rs.getInt("Masculinos1317");
+                reporte.Masculinos012 = rs.getInt("Masculinos012");
+                reporte.MasculinosDis60 = rs.getInt("MasculinosDis60");
+                reporte.MasculinosDis3059 = rs.getInt("MasculinosDis3059");
+                reporte.MasculinosDis1829 = rs.getInt("MasculinosDis1829");
+                reporte.MasculinosDis1317 = rs.getInt("MasculinosDis1317");
+                reporte.MasculinosDis012 = rs.getInt("MasculinosDis012");
+                reporte.MasculinosTotales = rs.getInt("MasculinosTotales");
+                reporte.MasculinosDiscTotales = rs.getInt("MasculinosDiscTotales");
+                reporte.FEM60 = rs.getInt("FEM60");
+                reporte.FEM3059 = rs.getInt("FEM3059");
+                reporte.FEM1829 = rs.getInt("FEM1829");
+                reporte.FEM1317 = rs.getInt("FEM1317");
+                reporte.FEM012 = rs.getInt("FEM012");
+                reporte.FEMDis60 = rs.getInt("FEMDis60");
+                reporte.FEMDis3059 = rs.getInt("FEMDis3059");
+                reporte.FEMDis1829 = rs.getInt("FEMDis1829");
+                reporte.FEMDis1317 = rs.getInt("FEMDis1317");
+                reporte.FEMDis012 = rs.getInt("FEMDis012");
+                reporte.FEMTotales = rs.getInt("FEMTotales");
+                reporte.FEMDiscTotales = rs.getInt("FEMDisTotales");
+                reporte.TotalUsers = rs.getInt("TotalUsers");
+            }
+
+            stmt.close();
+            conn.close();
+            return reporte;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
