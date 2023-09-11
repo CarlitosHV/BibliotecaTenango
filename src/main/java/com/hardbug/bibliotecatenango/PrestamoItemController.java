@@ -40,8 +40,6 @@ public class PrestamoItemController extends ListCell<Prestamo> {
             LabelCURP.setText("CURP: " + prestamo.Usuario.getCurp());
             LabelNombre.setText("Usuario: " + prestamo.Usuario.nombre.GetNombreCompleto());
             if (prestamo.FechaFin.compareTo(Fechas.obtenerFechaActual()) < 0) {
-                fondoItem.setStyle("-fx-background-color: #be1313");
-            } else {
                 fondoItem.setStyle("-fx-background-color: #ff0000");
             }
             setGraphic(fondoItem);
