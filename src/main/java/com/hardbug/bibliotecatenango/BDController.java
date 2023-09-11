@@ -1038,4 +1038,55 @@ public class BDController {
             new EmailSender().emailSender("Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
         }
     }
+
+    public Reporte GenerarReporte(Date inicio, Date fin){
+        Reporte reporte = new Reporte();
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("select * from fnConteoVisitas(?,?)");
+            stmt.setDate(1, inicio);
+            stmt.setDate(2, fin);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+
+            while(rs.next()){
+                reporte.Masculinos60 = rs.getInt("Masculinos60");
+                reporte.Masculinos3059 = rs.getInt("Masculinos3059");
+                reporte.Masculinos1829 = rs.getInt("Masculinos1829");
+                reporte.Masculinos1317 = rs.getInt("Masculinos1317");
+                reporte.Masculinos012 = rs.getInt("Masculinos012");
+                reporte.MasculinosDis60 = rs.getInt("MasculinosDis60");
+                reporte.MasculinosDis3059 = rs.getInt("MasculinosDis3059");
+                reporte.MasculinosDis1829 = rs.getInt("MasculinosDis1829");
+                reporte.MasculinosDis1317 = rs.getInt("MasculinosDis1317");
+                reporte.MasculinosDis012 = rs.getInt("MasculinosDis012");
+                reporte.MasculinosTotales = rs.getInt("MasculinosTotales");
+                reporte.MasculinosDiscTotales = rs.getInt("MasculinosDiscTotales");
+                reporte.FEM60 = rs.getInt("FEM60");
+                reporte.FEM3059 = rs.getInt("FEM3059");
+                reporte.FEM1829 = rs.getInt("FEM1829");
+                reporte.FEM1317 = rs.getInt("FEM1317");
+                reporte.FEM012 = rs.getInt("FEM012");
+                reporte.FEMDis60 = rs.getInt("FEMDis60");
+                reporte.FEMDis3059 = rs.getInt("FEMDis3059");
+                reporte.FEMDis1829 = rs.getInt("FEMDis1829");
+                reporte.FEMDis1317 = rs.getInt("FEMDis1317");
+                reporte.FEMDis012 = rs.getInt("FEMDis012");
+                reporte.FEMTotales = rs.getInt("FEMTotales");
+                reporte.FEMDiscTotales = rs.getInt("FEMDisTotales");
+                reporte.TotalUsers = rs.getInt("TotalUsers");
+            }
+
+            stmt.close();
+            conn.close();
+            return reporte;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

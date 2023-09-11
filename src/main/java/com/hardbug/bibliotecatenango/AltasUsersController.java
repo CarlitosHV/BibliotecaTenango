@@ -1,7 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.*;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,10 +28,8 @@ import java.util.concurrent.Executors;
 
 public class AltasUsersController extends BDController implements Initializable {
     @FXML
-    private TextField Campo_correo, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
+    private TextField Campo_correo, Campo_contrasenia, Campo_curp, Campo_telefono, Campo_nombre, Campo_edad, Campo_apellido_paterno,
             Campo_apellido_materno, Campo_codigo, Campo_calle;
-    @FXML
-    private PasswordField Campo_contrasenia;
     @FXML
     private ComboBox<String> Combo_sexo;
     @FXML
@@ -87,11 +84,11 @@ public class AltasUsersController extends BDController implements Initializable 
     public static int OPERACION = 1;
     /* Variables booleanas que marcan si los campos están correctos */
     private static boolean Titulo_correo_bol, Contrasenia_bol, Curp_bol, Telefono_bol, Nombre_bol, Edad_bol,
-            Apellido_paterno_bol, Apellido_materno_bol, Calle_bol;
+            Apellido_paterno_bol, Apellido_materno_bol, Calle_bol, Codigo_bol;
 
     boolean camposValidos() {
         return Titulo_correo_bol && Contrasenia_bol && Curp_bol && Telefono_bol && Nombre_bol && Edad_bol &&
-                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol;
+                Apellido_paterno_bol && Apellido_materno_bol && Calle_bol && Codigo_bol;
 
     }
 
@@ -256,11 +253,22 @@ public class AltasUsersController extends BDController implements Initializable 
             } else {
                 Campo_calle.setStyle("-fx-border-color: red");
                 Calle_bol = false;
+
             }
         }
     }
 
-    private boolean selected = false;
+    public void validar_codigo() {
+        if (Campo_codigo.isEditable()) {
+            if (Campo_codigo.getText().matches("^\\d{4,5}$")
+                    && !Campo_codigo.getText().isEmpty()) {
+                Codigo_bol = true;
+            } else {
+                Campo_codigo.setStyle("-fx-border-color: red");
+                Codigo_bol = false;
+            }
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -300,8 +308,9 @@ public class AltasUsersController extends BDController implements Initializable 
         }
 
         Combo_estado.setOnAction(actionEvent -> {
+            ConfigurarCellFactory();
             Combo_localidad.setDisable(true);
-            if (Combo_estado.getValue() != null) {
+            if (Combo_estado.getValue() != null && !isTextFieldAction) {
                 Combo_municipio.setDisable(false);
                 Combo_municipio.getItems().clear();
                 _municipios.clear();
@@ -310,35 +319,36 @@ public class AltasUsersController extends BDController implements Initializable 
                 Fondo.setOpacity(0.5);
                 TareaMunicipios();
             } else {
-                Combo_municipio.setPromptText("Municipio");
-                Combo_estado.setPromptText("Estado");
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
             }
         });
 
         Combo_municipio.setOnAction(actionEvent -> {
+            ConfigurarCellFactory();
             Combo_localidad.setDisable(true);
             Combo_municipio.setPromptText("Municipio");
-            if (Combo_municipio.getValue() != null && Combo_estado.getValue() != null) {
+            if (Combo_municipio.getValue() != null && !isTextFieldAction) {
                 Combo_localidad.setDisable(false);
                 Combo_localidad.getItems().clear();
                 _localidades.clear();
                 Combo_localidad.setPromptText("Localidad");
-                if (Campo_codigo.getText().isEmpty()){
-                    Campo_codigo.setText("");
-                }
+                Campo_codigo.setText("");
                 IconoCarga.setVisible(true);
                 IconoCarga.setProgress(-1.0);
                 Fondo.setOpacity(0.5);
-                TareaLocalidades();
+                try {
+                    TareaLocalidades();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
         Combo_localidad.setOnAction(actionEvent -> {
-            Combo_localidad.setPromptText("Localidad");
+            ConfigurarCellFactory();
             Localidad localidad = Combo_localidad.getValue();
-            if (localidad != null){
+            if (localidad != null) {
                 Campo_codigo.setText(localidad.getCP().toString());
             }
         });
@@ -359,31 +369,23 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_estado.setOnMouseClicked(event -> isTextFieldAction = false);
 
         Campo_codigo.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Campo_codigo.getLength() > 0) {
+            if (isTextFieldAction && Campo_codigo.getLength() > 0) {
                 Combo_municipio.setDisable(true);
                 Combo_localidad.setDisable(true);
-                Combo_localidad.getItems().clear();
                 Combo_estado.setDisable(true);
                 if (Campo_codigo.getLength() == 4 || Campo_codigo.getLength() == 5) {
                     try {
                         TareaCodigoPostal(Integer.parseInt(Campo_codigo.getText()));
-                        Combo_localidad.setPromptText("Localidad");
-                        Combo_localidad.setValue(null);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }else{
                     Combo_estado.setValue(null);
                     Combo_municipio.setValue(null);
-                    Combo_localidad.setPromptText("Localidad");
                     Combo_localidad.setValue(null);
                 }
             } else {
-                Combo_estado.setValue(null);
-                Combo_municipio.setValue(null);
-                Combo_localidad.setValue(null);
                 Combo_estado.setDisable(false);
-                Combo_localidad.setPromptText("Localidad");
             }
         });
 
@@ -520,7 +522,6 @@ public class AltasUsersController extends BDController implements Initializable 
 
         Campo_codigo.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            Combo_localidad.setPromptText("Localidad");
             if (newText.length() > 5) {
                 return null;
             }
@@ -539,8 +540,6 @@ public class AltasUsersController extends BDController implements Initializable 
         Combo_ocupacion.getItems().addAll(_ocupaciones);
         _sexos.addAll(Arrays.asList("Masculino", "Femenino", "Otro"));
         Combo_sexo.getItems().addAll(_sexos);
-        Combo_localidad.setDisable(true);
-        Combo_municipio.setDisable(true);
     }
 
     private void TareaMunicipios() {
@@ -552,6 +551,7 @@ public class AltasUsersController extends BDController implements Initializable 
             }
         };
         IconoCarga.setVisible(true);
+        Fondo.setOpacity(0.5);
 
         traer_municipios.setOnSucceeded(event -> {
             IconoCarga.setVisible(false);
@@ -569,22 +569,19 @@ public class AltasUsersController extends BDController implements Initializable 
     }
 
 
-    private void TareaLocalidades() {
+    private void TareaLocalidades() throws SQLException {
         Estados estado = Combo_estado.getValue();
         Municipios municipio = Combo_municipio.getValue();
-        if(estado != null && municipio != null){
-            IconoCarga.setVisible(true);
-            _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
-            Combo_localidad.setPromptText("Localidad");
-            Combo_localidad.getItems().setAll(_localidades);
-            if (!_localidades.isEmpty()) {
-                IconoCarga.setVisible(false);
-                Fondo.setOpacity(1.0);
-                Combo_localidad.setPromptText("Localidad");
-            }else{
-                Combo_localidad.setPromptText("Localidad");
-            }
+        IconoCarga.setVisible(true);
+        Fondo.setOpacity(0.5);
+        _localidades = BuscarLocalidades(municipio.getMunicipio(), estado.getEstado());
+        Combo_localidad.setPromptText("Localidad");
+        Combo_localidad.getItems().setAll(_localidades);
+        if (!_localidades.isEmpty()) {
+            IconoCarga.setVisible(false);
+            Fondo.setOpacity(1.0);
         }
+
     }
 
     private void TareaCodigoPostal(int CP) throws SQLException {
@@ -594,20 +591,17 @@ public class AltasUsersController extends BDController implements Initializable 
         _localidades.clear();
         _municipios.clear();
         _localidades = BuscarCodigoPostal(CP);
-        ConfigurarCombos();
         if (!_localidades.isEmpty()) {
             Estados IdEstado = new Estados(_localidades.get(0).IdEstado, _localidades.get(0).Estado);
-            Combo_localidad.setPromptText("Localidad");
             Combo_municipio.getItems().addAll(_municipios);
-            Combo_localidad.getItems().addAll(_localidades);
             IconoCarga.setVisible(false);
             Fondo.setOpacity(1.0);
+            Combo_localidad.getItems().addAll(_localidades);
             for (Estados estado : _estados) {
                 if (estado.getId() == IdEstado.getId()) {
                     Combo_estado.setValue(IdEstado);
                     _municipios = BuscarMunicipios(IdEstado.getEstado());
                     IdMuni = new Municipios(_localidades.get(0).IdMunicipio, _localidades.get(0).Municipio);
-                    break;
                 }
             }
 
@@ -617,17 +611,13 @@ public class AltasUsersController extends BDController implements Initializable 
                     break;
                 }
             }
-            Combo_localidad.setPromptText("Localidad");
+            ConfigurarCellFactory();
+
             Combo_localidad.setDisable(false);
         }else{
-            Combo_localidad.setPromptText("Localidad");
-            Combo_estado.setPromptText("Estado");
-            Combo_municipio.setPromptText("Municipio");
-            Combo_localidad.getItems().clear();
+            Combo_estado.setValue(null);
+            Combo_municipio.setValue(null);
         }
-        Platform.runLater(() -> {
-            Combo_localidad.setPromptText("Localidad");
-        });
     }
 
     //Carga los estados en el combo estados
@@ -662,7 +652,7 @@ public class AltasUsersController extends BDController implements Initializable 
             protected void updateItem(Localidad localidad, boolean empty) {
                 super.updateItem(localidad, empty);
                 if (localidad != null) {
-                    setText(localidad.getLocalidad());
+                    setText(localidad.Localidad);
                 } else {
                     setText(null);
                 }
