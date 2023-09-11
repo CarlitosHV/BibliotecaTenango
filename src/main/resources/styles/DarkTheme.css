@@ -105,6 +105,12 @@
     -fx-legend-visible: true;
 }
 
+#comboBox:focused {
+    -fx-background-color: #595b5d;
+    -fx-text-fill: #aaacae;
+    -fx-border-color: black;
+}
+
 #comboBox .arrow-button {
     -fx-background-color: #595b5d;
     -fx-background-radius: 0;
@@ -386,6 +392,24 @@
 
 .progress-indicator:indeterminate .segment {
     -fx-background-color: white;
+}
+
+.ElementoListaRojo{
+    -fx-background-color: #7d0707;
+    -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
+}
+
+.ElementoListaRojo:hover{
+    -fx-background-color: gray;
+    -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
+}
+
+.ElementoListaRojo:selected{
+    -fx-background-color: #c70a0a;
+    -fx-text-fill: #aaacae;
+    -fx-font-family: "Roboto Light";
 }
 
 

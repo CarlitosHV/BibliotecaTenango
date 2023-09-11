@@ -28,15 +28,24 @@
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></TextField>
+                <TextField id="Textfields" fx:id="Campo_Apellido_paterno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Paterno" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                    <font>
+                        <Font name="Roboto Light" size="12.0" />
+                    </font></TextField>
+                <TextField id="Textfields" fx:id="Campo_Apellido_materno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Materno" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font name="Roboto Light" size="12.0" />
+                    </font></TextField>
                 <ComboBox id="comboBox" fx:id="Combo_ocupacion" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione una ocupación" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>
-                <ComboBox id="comboBox" fx:id="Combo_grado" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione un grado" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                 <TextField id="Textfields" fx:id="Campo_edad" prefHeight="38.0" prefWidth="400.0" promptText="Edad" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></TextField>
+                <ComboBox id="comboBox" fx:id="Combo_grado" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione un grado" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <ComboBox id="comboBox" fx:id="Combo_actividad" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione una actividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <AnchorPane id="Fondo" prefHeight="80.0" prefWidth="246.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                     <children>
                         <Label id="Labels" layoutX="47.0" layoutY="14.0" prefHeight="23.0" prefWidth="191.0" text="¿Cuentas con alguna discapacidad?" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="-21.0">
@@ -53,15 +62,6 @@
                      </font></RadioButton>
                     </children>
                 </AnchorPane>
-                <TextField id="Textfields" fx:id="Campo_Apellido_paterno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Paterno" GridPane.columnIndex="3" GridPane.rowIndex="0">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font></TextField>
-                <TextField id="Textfields" fx:id="Campo_Apellido_materno" prefHeight="38.0" prefWidth="400.0" promptText="Apellido Materno" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Roboto Light" size="12.0" />
-               </font></TextField>
-                <ComboBox id="comboBox" fx:id="Combo_actividad" prefHeight="38.0" prefWidth="400.0" promptText="Seleccione una actividad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ImageView id="Imagen1" fx:id="Ap_paterno_information" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <image>
                   <Image url="@../../../assets/informacion.png" />

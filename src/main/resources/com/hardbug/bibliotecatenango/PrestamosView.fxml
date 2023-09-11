@@ -17,7 +17,7 @@
                 <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField id="Textfields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa el usuario" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                <TextField id="Textfields" fx:id="Buscador" maxHeight="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="Ingresa CURP, correo o nombre del usuario" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
                 <Button id="BotonesBuscar" fx:id="BotonBuscar" contentDisplay="RIGHT" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                     <graphic>
                         <ImageView fitHeight="79.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">

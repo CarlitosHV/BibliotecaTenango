@@ -9,8 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -98,7 +97,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             ListaOcupaciones.setVisible(true);
             IconoCarga.setVisible(false);
             _ocupacionesfiltradas = new FilteredList<>(FXCollections.observableArrayList(_ocupaciones));
-            ListaOcupaciones.setCellFactory(lv -> new VistaCatalogoController(2, new ControladorGradosEscolares(), this));
+            ListaOcupaciones.setCellFactory(lv -> new VistaCatalogoController(2, new ControladorActividades(), this));
             ListaOcupaciones.setItems(_ocupacionesfiltradas);
         }else{
             LabelSinOcupaciones.setVisible(true);
@@ -114,6 +113,7 @@ public class ControladorOcupaciones extends BDController implements Initializabl
         InformacionView .setFitHeight(32);
         InformacionView.setPickOnBounds(true);
         Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setFont(new Font("Roboto Light", 14));
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setShowDelay(Duration.millis(500));
         Tooltip.install(InformacionView, tooltip);

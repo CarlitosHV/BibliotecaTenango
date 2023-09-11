@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class PrestamoItemController extends ListCell<Prestamo> {
-    private final AnchorPane fondoItem;
+    private AnchorPane fondoItem;
     private final Label LabelNombre, LabelCURP, LabelInicio, LabelLibros, LabelFin;
 
 
@@ -39,6 +39,11 @@ public class PrestamoItemController extends ListCell<Prestamo> {
             LabelFin.setText("Fecha devolución: " + Fechas.obtenerFechaDevolucion(prestamo.FechaFin));
             LabelCURP.setText("CURP: " + prestamo.Usuario.getCurp());
             LabelNombre.setText("Usuario: " + prestamo.Usuario.nombre.GetNombreCompleto());
+            if (prestamo.FechaFin.compareTo(Fechas.obtenerFechaActual()) < 0) {
+                fondoItem.setStyle("-fx-background-color: #be1313");
+            } else {
+                fondoItem.setStyle("-fx-background-color: #ff0000");
+            }
             setGraphic(fondoItem);
         }
     }

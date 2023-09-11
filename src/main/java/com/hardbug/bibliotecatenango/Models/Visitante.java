@@ -1,6 +1,6 @@
 package com.hardbug.bibliotecatenango.Models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Visitante {
     public int id=0;
@@ -12,7 +12,7 @@ public class Visitante {
     public String nombres="";
     public String ap_paterno="";
     public String ap_materno="";
-    public Date fecha=new Date();
+    public Date fecha = null;
     public Catalogo Actividad = null;
     public String sexo = "";
 

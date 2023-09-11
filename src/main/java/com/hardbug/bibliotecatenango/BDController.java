@@ -694,8 +694,7 @@ public class BDController {
                 stmtVisita.setInt(2,miVisitante.grado_escolar.getId());
                 stmtVisita.setBoolean(3,miVisitante.discapacidad);
                 stmtVisita.setInt(4,miVisitante.nombre.IdNombre);
-                java.sql.Date sqlDate  = new java.sql.Date(miVisitante.fecha.getTime());
-                stmtVisita.setDate(5,  sqlDate);
+                stmtVisita.setDate(5,miVisitante.fecha);
                 stmtVisita.setInt(6,miVisitante.ocupacion.getId());
                 stmtVisita.setInt(7,miVisitante.Actividad.getId());
                 stmtVisita.setString(8,miVisitante.sexo);
@@ -1008,6 +1007,35 @@ public class BDController {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return false;
+        }
+    }
+
+    public void EnviarRecordatorio(Prestamo mPrestamo) throws Exception {
+        java.sql.Date fechaFin = mPrestamo.FechaFin;
+        java.sql.Date fechaActual = Fechas.obtenerFechaActual();
+        if (fechaFin.compareTo(fechaActual) < 0){
+            String mensaje = String.format("""
+                        ¡Hola, %s!
+                        ¡Este es un mensaje para recordarte que tu fecha de devolución es el día %s!
+                        Si existe algún problema en la fecha de devolución, puedes extender el periodo
+                        acudiendo a la Biblioteca.
+                             
+                        *Este mensaje ha sido generado automáticamente*
+                                
+                        Biblioteca Pública Municipal Lic. Abel C. Salazar
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+            new EmailSender().emailSender("Recordatorio de préstamo, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
+        }else{
+            String mensaje = String.format("""
+                        ¡Hola, %s!
+                        Tu préstamo excede la fecha límite de devolución, por lo que te recordamos que tu fecha de devolución es el día %s.
+                        Se solicita devolver los libros en el menor tiempo posible, si existe algún problema, acude a la Biblioteca para resolver la situación.
+                             
+                        *Este mensaje ha sido generado automáticamente*
+                                
+                        Biblioteca Pública Municipal Lic. Abel C. Salazar
+                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+            new EmailSender().emailSender("Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
         }
     }
 }

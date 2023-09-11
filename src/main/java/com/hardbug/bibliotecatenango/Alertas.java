@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,6 +97,7 @@ public class Alertas {
         Stage stage = (Stage) dialogPane.getScene().getWindow();
         stage.getIcons().add(new Image(Objects.requireNonNull(BookDetailsController.class.getResourceAsStream("/assets/logotenangoNR.png"))));
         Label content = new Label(alerta.getContentText());
+        content.setWrapText(true);
         if(cabecera != null){
             alerta.setHeaderText(cabecera);
         }else{
@@ -108,11 +110,15 @@ public class Alertas {
     }
 
     private static void setThemeAlert(Alert alerta, DialogPane dialogPane, Label content, Button button) {
+        Node header = dialogPane.lookup(".header-panel");
         Button buttonCancel = (Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL);
         if (IndexApp.TEMA == 0) {
             dialogPane.setStyle("-fx-background-color: white;");
             content.setTextFill(Color.BLACK);
             alerta.getDialogPane().setContent(content);
+            if(header != null){
+                header.setStyle("-fx-background-color: #118511; -fx-text-fill: white;");
+            }
             button.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
                 buttonCancel.setStyle("-fx-background-color: #118511; -fx-text-fill: white; -fx-cursor: hand;");
@@ -121,6 +127,9 @@ public class Alertas {
             dialogPane.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white");
             content.setTextFill(Color.WHITESMOKE);
             alerta.getDialogPane().setContent(content);
+            if (header != null) {
+                header.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white;");
+            }
             button.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");
             if (buttonCancel != null) {
                 buttonCancel.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white; -fx-border-color: white; -fx-cursor: hand;");

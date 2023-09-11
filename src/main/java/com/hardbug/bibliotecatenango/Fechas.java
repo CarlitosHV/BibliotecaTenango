@@ -34,7 +34,7 @@ public class Fechas {
         return new Date(milisegundos);
     }
 
-    public static Date obtenerFechaDevolucionSqlDate(Date fecha) {
+    public static Date extenderFechaDevolucion(Date fecha) {
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
         calendario.add(Calendar.DAY_OF_MONTH, 5);
@@ -50,8 +50,12 @@ public class Fechas {
 
     public static String obtenerFechaDevolucion(Date fecha) {
         LocalDate fechaActual = fecha.toLocalDate();
-        LocalDate fechaConSuma = fechaActual.plusDays(5);
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("es-ES"));
-        return fechaConSuma.format(formatoFecha);
+        return fechaActual.format(formatoFecha);
+    }
+
+    public static Date obtenerFechaActual(){
+        long milisegundos = Calendar.getInstance().getTimeInMillis();
+        return new Date(milisegundos);
     }
 }

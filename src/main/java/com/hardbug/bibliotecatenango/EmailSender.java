@@ -84,7 +84,7 @@ public class EmailSender {
                 .build();
 
         Credential credential = flow.loadCredential("user");
-        if (credential == null) {
+        if (!isTokenValid(credential)) {
             UndertowVerificationCodeReceiver receiver = new UndertowVerificationCodeReceiver();
             receiver.startServer();
             String authorizationUrl = flow.newAuthorizationUrl().setRedirectUri(receiver.getRedirectUri()).build();
@@ -98,15 +98,17 @@ public class EmailSender {
             credential = flow.createAndStoreCredential(tokenResponse, "user");
         }
 
+
         return credential;
     }
 
     private static boolean showAuthorizationUrlAlert(String authorizationUrl) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Autorización");
-        alert.setHeaderText("Por favor, continúa el proceso desde el navegador:");
-        alert.setContentText(authorizationUrl);
+        Alert alert = new Alertas().CrearAlertaConfirmacion("Autorización o renovación de Token", "Renovando Token.....\nPor favor, continúa el proceso desde el navegador:");
         alert.showAndWait();
+
+        if(alert.getResult() == ButtonType.CANCEL){
+            System.exit(0);
+        }
 
         return alert.getResult() == ButtonType.OK;
     }
@@ -117,5 +119,16 @@ public class EmailSender {
         } catch (java.io.IOException | java.net.URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean isTokenValid(Credential credential) {
+        if (credential == null) {
+            return false;
+        }
+        Long tokenExpiresTime = credential.getExpiresInSeconds();
+        if (tokenExpiresTime == null || tokenExpiresTime <= 0) {
+            return false;
+        }
+        return true;
     }
 }
