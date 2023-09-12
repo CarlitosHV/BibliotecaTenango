@@ -48,7 +48,7 @@ public class EmailSender {
         email.setFrom(new InternetAddress(Email));
         email.addRecipient(TO, new InternetAddress(Correo));
         email.setSubject(subject);
-        email.setText(Mensaje);
+        email.setContent(Mensaje, "text/html; charset=utf-8");
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         email.writeTo(buffer);
@@ -71,6 +71,7 @@ public class EmailSender {
         }
     }
 
+
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
             throws IOException {
         // Load client secrets.
@@ -81,6 +82,7 @@ public class EmailSender {
                 httpTransport, jsonFactory, clientSecrets, Collections.singleton(GMAIL_SEND))
                 .setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile()))
                 .setAccessType("offline")
+                .setApprovalPrompt("force")
                 .build();
 
         Credential credential = flow.loadCredential("user");

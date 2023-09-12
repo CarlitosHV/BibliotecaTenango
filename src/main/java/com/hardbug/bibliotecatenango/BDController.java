@@ -443,28 +443,45 @@ public class BDController {
                     stmtUser.close();
                     conn.close();
                     if (mUsuario.IdUsuario == 0){
-                        new EmailSender().emailSender("Registro de cuenta", mUsuario.getCorreo(),
-                                "Bienvenido, " + mUsuario.getNombre() + "\n" + """
-                                Tu correo ha sido registrado en el sistema de Biblioteca Pública Municipal Lic. Abel C. Salazar.
-                                ¡Ahora puedes solicitar libros con tu cuenta al proporcionar tu CURP!
-                                Dudas o sugerencias al correo: direccion.educacion@tenangodelvalle.gob.mx
-                                
-                                *Este mensaje ha sido generado automáticamente*
-                                Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
-                            """);
+                        String mensaje = String.format("""
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">¡Bienvenido, %s!</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Tu correo ha sido registrado en el sistema de <strong>Biblioteca Pública Municipal Lic. Abel C. Salazar</strong>.
+                                        ¡Ahora puedes solicitar libros con tu cuenta al proporcionar tu CURP!
+                                    </p>
+                                    <p style="font-size: 1.2em;">
+                                        Dudas o sugerencias al correo: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """, mUsuario.getNombre());
+                        new EmailSender().emailSender("Registro de cuenta", mUsuario.getCorreo(), mensaje);
                     }else{
-                        new EmailSender().emailSender("Actualización de cuenta", mUsuario.getCorreo(), """
-                                Tu cuenta ha sido actualizada\s
-                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
-                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje                             \s
-                                
-                                *Este mensaje ha sido generado automáticamente*
-                                
-                                Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
-                                """);
+                        String mensaje = String.format("""
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">Tu cuenta ha sido actualizada, %s</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                        mandando un correo a la dirección: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                        De lo contrario, haz caso omiso a este mensaje
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """, mUsuario.getNombre());
+                        new EmailSender().emailSender("Actualización de cuenta", mUsuario.getCorreo(), mensaje);
                     }
                     return true;
                 }else{
@@ -534,18 +551,18 @@ public class BDController {
         }
     }
 
-    public boolean EliminarUsuario(Integer IdUsuario, String Correo){
+    public boolean EliminarUsuario(Usuario usuario, String Correo){
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
                     IndexApp.usuario, IndexApp.contrasenia);
 
             PreparedStatement stmt = conn.prepareStatement("call spEliminarUsuario(?)");
-            stmt.setInt(1, IdUsuario);
+            stmt.setInt(1, usuario.IdUsuario);
             stmt.execute();
             stmt.close();
 
             PreparedStatement statement = conn.prepareStatement("select * from fnseleccionartodosusuariosporid(?)");
-            statement.setInt(1, IdUsuario);
+            statement.setInt(1, usuario.IdUsuario);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
 
@@ -554,17 +571,25 @@ public class BDController {
                 return false;
             }else{
                 conn.close();
-                new EmailSender().emailSender("Cuenta eliminada del sistema", Correo, """
-                                Tu cuenta ha sido eliminada del sistema. Esperamos verte pronto :(\s
-                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
-                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje\s
-                                
-                                *Este mensaje ha sido generado automáticamente*
-                                
-                                Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
-                                """);
+                String mensaje = String.format("""
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">Hola, %s</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Tu cuenta ha sido eliminada del sistema. Esperamos verte pronto :(
+                                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                        mandando un correo a la dirección: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                        De lo contrario, haz caso omiso a este mensaje
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """, usuario.getNombre());
+                new EmailSender().emailSender("Cuenta eliminada del sistema", Correo, mensaje);
                 return true;
             }
         }catch (SQLException e) {
@@ -643,21 +668,30 @@ public class BDController {
                 stmtDir.setString(2, LibrosConcat);
                 stmtDir.execute();
                 String mensaje = String.format("""
-                                ¡Se ha generado tu préstamo, %s!
-                                Tu fecha de préstamo es: %s
-                                Tu fecha de devolución es: %s
-                                Es necesario que cumplas con tu fecha de devolución o si necesitas más tiempo, antes del vencimiento puedes extender el periodo\s
-                                solicitándolo en la biblioteca\s
-                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
-                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje
-
-                                *Este mensaje ha sido generado automáticamente*
-
-                                Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""", mPrestamo.Usuario.nombre.Nombre,
-                        Fechas.obtenerFechaInicio(mPrestamo.FechaInicio), Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
-                new EmailSender().emailSender("Tu préstamo solicitado se ha generado", mPrestamo.Usuario.Correo, mensaje);
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">¡Se ha generado tu préstamo, %s!</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Tu fecha de préstamo es: %s<br>
+                                        Tu fecha de devolución es: %s<br>
+                                        Es necesario que cumplas con tu fecha de devolución o si necesitas más tiempo, antes del vencimiento puedes extender el periodo
+                                        solicitándolo en la biblioteca.
+                                    </p>
+                                    <p style="font-size: 1.2em;">
+                                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                        mandando un correo a la dirección: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                        De lo contrario, haz caso omiso a este mensaje
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """, mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaInicio(mPrestamo.FechaInicio),
+                        Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                new EmailSender().emailSender("Préstamo generado", mPrestamo.Usuario.Correo, mensaje);
                 return 0;
             }else{
                 conn.close();
@@ -921,17 +955,27 @@ public class BDController {
                 conn.close();
 
                 String mensaje = String.format("""
-                        ¡Hola, %s!
-                        ¡Tu préstamo se ha extendido hasta la fecha %s!
-                        Favor de cumplir con la nueva fecha de devolución
-                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
-                        mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                        De lo contrario, haz caso omiso a este mensaje
-
-                        *Este mensaje ha sido generado automáticamente*
-
-                        Biblioteca Pública Municipal Lic. Abel C. Salazar
-                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">¡Hola, %s!</h2>
+                                    <p style="font-size: 1.2em;">
+                                        ¡Tu préstamo se ha extendido hasta la fecha %s!.
+                                        Favor de cumplir con la nueva fecha de devolución
+                                    </p>
+                                    <p style="font-size: 1.2em;">
+                                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                        mandando un correo a la dirección: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                        De lo contrario, haz caso omiso a este mensaje
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """,mPrestamo.Usuario.nombre.Nombre,
+                        Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
                 new EmailSender().emailSender("Tu préstamo solicitado se ha extendido", mPrestamo.Usuario.Correo, mensaje);
                 return true;
             }else{
@@ -967,17 +1011,28 @@ public class BDController {
             if (response == 1){
                 stmt.close();
                 conn.close();
-                new EmailSender().emailSender("Tu préstamo solicitado ha finalizado, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, """
-                                ¡Ahora puedes volver a solicitar un nuevo préstamo de libros!
-                                Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
-                                mandando un correo a la dirección: direccion.educacion@tenangodelvalle.gob.mx
-                                De lo contrario, haz caso omiso a este mensaje\s
-                                
-                                *Este mensaje ha sido generado automáticamente*
-                                
-                                Biblioteca Pública Municipal Lic. Abel C. Salazar
-                                Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
-                                """);
+                String mensaje = String.format("""
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">Hola, %s</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Nos complace anunciarte que el préstamo que habías solicitado ha terminado de manera satisfactoria
+                                        ¡Ahora puedes volver a solicitar un nuevo préstamo de libros!
+                                    </p>
+                                    <p style="font-size: 1.2em;">
+                                        Si no reconoces este movimiento, favor de reportarlo en la Biblioteca o
+                                        mandando un correo a la dirección: <a href="mailto:direccion.educacion@tenangodelvalle.gob.mx">direccion.educacion@tenangodelvalle.gob.mx</a>
+                                        De lo contrario, haz caso omiso a este mensaje
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """,mPrestamo.Usuario.nombre.Nombre);
+                new EmailSender().emailSender("Finalización de préstamo", mPrestamo.Usuario.Correo, mensaje);
                 return true;
             }else{
                 conn.close();
@@ -1015,26 +1070,45 @@ public class BDController {
         java.sql.Date fechaActual = Fechas.obtenerFechaActual();
         if (fechaFin.compareTo(fechaActual) < 0){
             String mensaje = String.format("""
-                        ¡Hola, %s!
-                        ¡Este es un mensaje para recordarte que tu fecha de devolución es el día %s!
-                        Si existe algún problema en la fecha de devolución, puedes extender el periodo
-                        acudiendo a la Biblioteca.
-                             
-                        *Este mensaje ha sido generado automáticamente*
-                                
-                        Biblioteca Pública Municipal Lic. Abel C. Salazar
-                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">¡Hola, %s!</h2>
+                                    <p style="font-size: 1.2em;">
+                                        ¡Este es un mensaje para recordarte que tu fecha de devolución es el día %s!
+                                        Si existe algún problema en la fecha de devolución, puedes extender el periodo
+                                        acudiendo a la Biblioteca.
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """,mPrestamo.Usuario.nombre.Nombre,
+                    Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
             new EmailSender().emailSender("Recordatorio de préstamo, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
         }else{
             String mensaje = String.format("""
-                        ¡Hola, %s!
-                        Tu préstamo excede la fecha límite de devolución, por lo que te recordamos que tu fecha de devolución es el día %s.
-                        Se solicita devolver los libros en el menor tiempo posible, si existe algún problema, acude a la Biblioteca para resolver la situación.
-                             
-                        *Este mensaje ha sido generado automáticamente*
-                                
-                        Biblioteca Pública Municipal Lic. Abel C. Salazar
-                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.""",mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+                                <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
+                                    <h2 style="color: #2F4F4F;">¡Hola, %s!</h2>
+                                    <p style="font-size: 1.2em;">
+                                        Tu préstamo excede la fecha límite de devolución
+                                        por lo que te recordamos que tu fecha de devolución es el día %s.
+                                        Se solicita devolver los libros en el menor tiempo posible.
+                                        Si existe algún problema, acude a la Biblioteca para resolver la situación.
+                                    </p>
+                                    <p style="color: #696969;">
+                                        *Este mensaje ha sido generado automáticamente*
+                                    </p>
+                                    <p style="color: #696969;">
+                                        Biblioteca Pública Municipal Lic. Abel C. Salazar<br>
+                                        Lic. Abel C. Salazar #201, Tenango del Valle. Edoméx.
+                                    </p>
+                                </div>
+                            """,mPrestamo.Usuario.nombre.Nombre,
+                    Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
+
             new EmailSender().emailSender("Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
         }
     }
