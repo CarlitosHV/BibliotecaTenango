@@ -62,7 +62,7 @@ public class UserDetailsController implements Initializable {
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alerta.close();
-                if (bd.EliminarUsuario(usuario.IdUsuario, usuario.getCorreo())){
+                if (bd.EliminarUsuario(usuario, usuario.getCorreo())){
                     Alert al = new Alertas().CrearAlertaInformativa("Eliminación correcta", "¡Haz eliminado a " + usuario.nombre.Nombre + " del sistema!");
                     Optional<ButtonType> result1 = al.showAndWait();
                     if (result1.isPresent() && result1.get() == ButtonType.OK) {

@@ -2,6 +2,7 @@ package com.hardbug.bibliotecatenango;
 
 import com.hardbug.bibliotecatenango.Models.Prestamo;
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -36,29 +37,48 @@ public class PrestamoDetailController extends BDController implements Initializa
         ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 
         ButtonExtender.setOnAction(evt -> {
-            menuPrestamosController.IconoCarga.setVisible(true);
-            menuPrestamosController.rootPane.setOpacity(0.5);
-            mprestamo.FechaFin = Fechas.extenderFechaDevolucion(mprestamo.FechaFin);
-            mprestamo.ComentarioAtraso = TextComentario.getText();
-            try {
-                if(ExtenderPrestamo(mprestamo)){
-                    menuPrestamosController.IconoCarga.setVisible(false);
-                    menuPrestamosController.rootPane.setOpacity(1);
-                    Alert alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta "  + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    mprestamo.FechaFin = Fechas.extenderFechaDevolucion(mprestamo.FechaFin);
+                    mprestamo.ComentarioAtraso = TextComentario.getText();
+                    return ExtenderPrestamo(mprestamo);
+                }
+            };
+
+            task.setOnRunning((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(true);
+                menuPrestamosController.rootPane.setOpacity(0.5);
+            });
+
+            task.setOnSucceeded((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(false);
+                menuPrestamosController.rootPane.setOpacity(1);
+                Alert alert;
+                if (task.getValue()){
+                    alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta "  + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }else{
-                    menuPrestamosController.IconoCarga.setVisible(false);
-                    menuPrestamosController.rootPane.setOpacity(1);
-                    Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
+                    alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            });
+
+            task.setOnFailed((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(false);
+                menuPrestamosController.rootPane.setOpacity(1);
+                Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
+                alert.showAndWait();
+                CerrarVista();
+                menuPrestamosController.configurarLista();
+            });
+
+            new Thread(task).start();
+
         });
 
         ButtonReminder.setOnAction(evt -> {
@@ -72,27 +92,46 @@ public class PrestamoDetailController extends BDController implements Initializa
         });
 
         ButtonFinalizar.setOnAction(evt -> {
-            menuPrestamosController.IconoCarga.setVisible(true);
-            menuPrestamosController.rootPane.setOpacity(0.5);
-            try{
-                if(FinalizarPrestamo(mprestamo)){
-                    menuPrestamosController.IconoCarga.setVisible(false);
-                    menuPrestamosController.rootPane.setOpacity(1);
-                    Alert alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    return FinalizarPrestamo(mprestamo);
+                }
+            };
+
+            task.setOnRunning((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(true);
+                menuPrestamosController.rootPane.setOpacity(0.5);
+            });
+
+            task.setOnSucceeded((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(false);
+                menuPrestamosController.rootPane.setOpacity(1);
+                Alert alert;
+                if (task.getValue()){
+                    alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }else{
-                    menuPrestamosController.IconoCarga.setVisible(false);
-                    menuPrestamosController.rootPane.setOpacity(1);
-                    Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
+                    alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
                 }
-            }catch(Exception e){
-                throw new RuntimeException(e);
-            }
+            });
+
+            task.setOnFailed((e) -> {
+                menuPrestamosController.IconoCarga.setVisible(false);
+                menuPrestamosController.rootPane.setOpacity(1);
+                Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
+                alert.showAndWait();
+                CerrarVista();
+                menuPrestamosController.configurarLista();
+            });
+
+            new Thread(task).start();
+
         });
 
     }
