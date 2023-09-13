@@ -75,7 +75,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alert = alerta.CrearAlertaInformativa("Precaución", "¿Estás seguro de eliminar el libro? " + libroseleccionado.getTitulo_libro());
+            Alert alert = alerta.CrearAlertaConfirmacion("Precaución", "¿Estás seguro de eliminar el libro? " + libroseleccionado.getTitulo_libro());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alert.close();
@@ -88,7 +88,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
                         CerrarVista();
                     }
                 }else{
-                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n" + libroseleccionado.getTitulo_libro());
+                    Alert alertaR = alerta.CrearAlertaError("Error", "Ocurrió un error al eliminar el libro \n El libro se encuentra en un préstamo activo" + libroseleccionado.getTitulo_libro());
                     alertaR.showAndWait();
                 }
             }

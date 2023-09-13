@@ -36,6 +36,9 @@ public class IndexApp extends Application {
         stage.setMinWidth(1000);
         stage.setMinHeight(700);
         stage.setMaximized(true);
+        stage.setOnCloseRequest(evt -> {
+            System.exit(0);
+        });
         stage.show();
         new BDController().ConsultarPrestamos();
     }

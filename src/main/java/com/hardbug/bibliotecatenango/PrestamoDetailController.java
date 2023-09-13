@@ -1,15 +1,13 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.Libro;
 import com.hardbug.bibliotecatenango.Models.Prestamo;
 import javafx.animation.TranslateTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
@@ -28,7 +26,7 @@ public class PrestamoDetailController extends BDController implements Initializa
 
     private MenuPrestamosController menuPrestamosController;
 
-    public void setMenuPrestamosController(MenuPrestamosController menuPrestamosController){
+    public void setMenuPrestamosController(MenuPrestamosController menuPrestamosController) {
         this.menuPrestamosController = menuPrestamosController;
     }
 
@@ -55,12 +53,12 @@ public class PrestamoDetailController extends BDController implements Initializa
                 menuPrestamosController.IconoCarga.setVisible(false);
                 menuPrestamosController.rootPane.setOpacity(1);
                 Alert alert;
-                if (task.getValue()){
-                    alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta "  + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
+                if (task.getValue()) {
+                    alert = new Alertas().CrearAlertaInformativa("Préstamo extendido", "Se ha extendido la fecha límite del préstamo hasta " + Fechas.obtenerFechaDevolucion(mprestamo.FechaFin) + " \n Ahora lo puedes visualizar en el apartado de préstamos");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
-                }else{
+                } else {
                     alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al extender el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();
@@ -92,48 +90,64 @@ public class PrestamoDetailController extends BDController implements Initializa
         });
 
         ButtonFinalizar.setOnAction(evt -> {
-            Task<Boolean> task = new Task<Boolean>() {
-                @Override
-                protected Boolean call() throws Exception {
-                    return FinalizarPrestamo(mprestamo);
-                }
-            };
+            StringBuilder librosBuilder = new StringBuilder();
+            for (Libro libro : mprestamo.libros) {
+                librosBuilder
+                        .append("Clave: ")
+                        .append(libro.getClave_registro())
+                        .append("   --->    ")
+                        .append("Título: ")
+                        .append(libro.getTitulo_libro())
+                        .append("\n");
+            }
+            String libros = librosBuilder.toString();
 
-            task.setOnRunning((e) -> {
-                menuPrestamosController.IconoCarga.setVisible(true);
-                menuPrestamosController.rootPane.setOpacity(0.5);
-            });
+            Alert alertR = new Alertas().CrearAlertaConfirmacion("Verifica los libros", "Libros: \n" + libros + "\n ¿Estás seguro de que el usuario ha devuelto todos los libros?\n Esta acción no se puede deshacer\n");
+            alertR.showAndWait();
+            if (alertR.getResult() == ButtonType.OK) {
+                Task<Boolean> task = new Task<Boolean>() {
+                    @Override
+                    protected Boolean call() throws Exception {
+                        return FinalizarPrestamo(mprestamo);
+                    }
+                };
 
-            task.setOnSucceeded((e) -> {
-                menuPrestamosController.IconoCarga.setVisible(false);
-                menuPrestamosController.rootPane.setOpacity(1);
-                Alert alert;
-                if (task.getValue()){
-                    alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
+                task.setOnRunning((e) -> {
+                    menuPrestamosController.IconoCarga.setVisible(true);
+                    menuPrestamosController.rootPane.setOpacity(0.5);
+                });
+
+                task.setOnSucceeded((e) -> {
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
+                    Alert alert;
+                    if (task.getValue()) {
+                        alert = new Alertas().CrearAlertaInformativa("Préstamo terminado", "El préstamo ha terminado de manera correcta\n El usuario puede volver a generar otro préstamo");
+                        alert.showAndWait();
+                        CerrarVista();
+                        menuPrestamosController.configurarLista();
+                    } else {
+                        alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
+                        alert.showAndWait();
+                        CerrarVista();
+                        menuPrestamosController.configurarLista();
+                    }
+                });
+
+                task.setOnFailed((e) -> {
+                    menuPrestamosController.IconoCarga.setVisible(false);
+                    menuPrestamosController.rootPane.setOpacity(1);
+                    Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
                     alert.showAndWait();
                     CerrarVista();
                     menuPrestamosController.configurarLista();
-                }else{
-                    alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
-                    alert.showAndWait();
-                    CerrarVista();
-                    menuPrestamosController.configurarLista();
-                }
-            });
+                });
 
-            task.setOnFailed((e) -> {
-                menuPrestamosController.IconoCarga.setVisible(false);
-                menuPrestamosController.rootPane.setOpacity(1);
-                Alert alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al terminar el préstamo, inténtalo después");
-                alert.showAndWait();
-                CerrarVista();
-                menuPrestamosController.configurarLista();
-            });
-
-            new Thread(task).start();
-
+                new Thread(task).start();
+            }else{
+                alertR.close();
+            }
         });
-
     }
 
     private void CerrarVista() {
@@ -147,23 +161,23 @@ public class PrestamoDetailController extends BDController implements Initializa
 
     public void initData(Prestamo prestamo) {
         LabelNombre.setText(prestamo.Usuario.nombre.GetNombreCompleto());
-        LabelCorreo.setText("Correo: " +prestamo.Usuario.Correo);
-        if(prestamo.Renovaciones != 0){
-            LabelRenovaciones.setText("Renovaciones:" + prestamo.Renovaciones);
-        }else{
-            LabelRenovaciones.setText("Renovaciones:" + "Ninguna");
+        LabelCorreo.setText("Correo: " + prestamo.Usuario.Correo);
+        if (prestamo.Renovaciones != 0) {
+            LabelRenovaciones.setText("Renovaciones: " + prestamo.Renovaciones);
+        } else {
+            LabelRenovaciones.setText("Renovaciones: " + "Ninguna");
         }
         LabelLibros.setText("Libros solicitados: " + prestamo.libros.size());
-        LabelCurp.setText("CURP: " +prestamo.Usuario.getCurp());
+        LabelCurp.setText("CURP: " + prestamo.Usuario.getCurp());
         LabelFechaInicio.setText("Fecha préstamo: " + Fechas.obtenerFechaInicio(prestamo.FechaInicio));
         LabelFechaDevolucion.setText("Fecha devolución: " + Fechas.obtenerFechaDevolucion(prestamo.FechaFin));
-        if(!prestamo.ComentarioAtraso.isEmpty()){
+        if (!prestamo.ComentarioAtraso.isEmpty()) {
             TextComentario.setText(prestamo.ComentarioAtraso);
         }
         mprestamo = prestamo;
     }
 
-    private void limpiar(){
+    private void limpiar() {
         LabelNombre.setText("");
         LabelCorreo.setText("");
         LabelRenovaciones.setText("");

@@ -58,7 +58,7 @@ public class UserDetailsController implements Initializable {
 
         ButtonEliminar.setOnAction(actionEvent -> {
             CerrarVista();
-            Alert alerta = new Alertas().CrearAlertaPrecaucion("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar");
+            Alert alerta = new Alertas().CrearAlertaConfirmacion("Precaución", "¿Estás seguro de eliminar a " + usuario.nombre.Nombre + "? \n Esta acción es irreversible a menos que lo vuelvas a registrar");
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 alerta.close();

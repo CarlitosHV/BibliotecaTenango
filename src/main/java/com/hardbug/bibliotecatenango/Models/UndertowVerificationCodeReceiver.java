@@ -44,7 +44,6 @@ public class UndertowVerificationCodeReceiver implements VerificationCodeReceive
                 .build();
 
         server.start();
-        System.out.println("Server started at http://localhost:8888");
     }
 
     private void handleCallback(HttpServerExchange exchange) {

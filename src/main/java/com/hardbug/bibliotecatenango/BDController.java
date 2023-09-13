@@ -837,7 +837,7 @@ public class BDController {
                 ResultSet rrs = stmtU.getResultSet();
                 ArrayList<Libro> _libros = new ArrayList<>();
                 while (rrs.next()){
-                    Libro libro = new Libro(rrs.getString("clave_registro"));
+                    Libro libro = new Libro(rrs.getString("clave_registro"), rrs.getString("titulo_libro"));
                     _libros.add(libro);
                 }
                 prestamo.libros = _libros;
