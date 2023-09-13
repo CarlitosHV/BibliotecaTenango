@@ -1,5 +1,6 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.GenerarPdf;
 import com.hardbug.bibliotecatenango.Models.Reporte;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -79,9 +80,11 @@ public class ReporteController extends BDController implements Initializable {
                 thread.start();
                 try {
                     reporte = futureTask.get();
+
                     Platform.runLater(() -> {
                         IconoCarga.setVisible(false);
                         IconoCarga.setProgress(0);
+                        GenerarPdf.GenerarReporte(Fechas.obtenerFechaActual(),reporte);
                         if (reporte != null) {
                             alert = new Alertas().CrearAlertaInformativa("Reporte", "Reporte generado con éxito");
                             alert.showAndWait();
