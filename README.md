@@ -1,19 +1,17 @@
-***Proyecto del servicio social***
+# Proyecto del Servicio Social: Sistema Bibliotecario
 
-***Sistema Bibliotecario***
+## Propósito
 
-En el propósito de este proyecto se busca hacer una aplicación que reduzca los tiempos de búsqueda de los libros, a su vez, llevar en la propia aplicación el registro de las visitas y los préstamos, agilizando el proceso del bibliotecario y con acceso a toda la información desde la computadora.
-A partir de la creación de este sistema que estará en una computadora principal en donde el bibliotecario de ésta podrá navegar por un menú intuitivo y poder realizar consultas o préstamos de una manera rápida.
-En la aplicación se llevará un registro mensual de las visitas para poder realizar los reportes.
+El propósito de este proyecto es desarrollar una aplicación que agilice la búsqueda de libros y gestione el registro de visitas y préstamos. Esto permitirá al bibliotecario tener acceso a toda la información desde la computadora y reducirá los tiempos de búsqueda.
 
+La aplicación estará instalada en una computadora principal. El bibliotecario podrá navegar por un menú intuitivo y realizar consultas o préstamos de manera rápida. Además, la aplicación llevará un registro mensual de las visitas para facilitar la generación de informes.
 
-***Desarrolladores***
-Edwin Adán Gómez Camacho
-Carlos Alberto Hernández Velázquez
-Jorge Arturo Rojas Martínez
-Víctor Hugo Ghines Martínez
-Xochiketzalli González Hernández
+## Desarrolladores
 
+- Edwin Adán Gómez Camacho
+- Carlos Alberto Hernández Velázquez
+- Jorge Arturo Rojas Martínez
 
+## Base de Datos
 
-La aplicación desarrollada se conecta a una base de datos PostgreSQL de manera local
+La aplicación se conecta a una base de datos PostgreSQL de manera local, las consultas se manejan desde Stored Porcedures y Functions, a su vez, se debe crear un perfil de usuario dentro del gestor.

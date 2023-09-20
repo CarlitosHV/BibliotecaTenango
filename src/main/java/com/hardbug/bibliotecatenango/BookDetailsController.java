@@ -25,7 +25,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
     @FXML
     private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar;
     @FXML
-    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClaveRegistro, LabelEstante, LabelClasificacion, LabelDisponibilidad;
+    private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClaveRegistro, LabelEstante, LabelClasificacion, LabelDisponibilidad, LabelRegClas;
     @FXML
     private TextArea TextAreaDescripcion;
     BDController bd = new BDController();
@@ -56,6 +56,7 @@ public class BookDetailsController extends BuscadorLibrosController implements I
         LabelClasificacion.setText("Clasificación: " + libro.getClasificacion());
         LabelDisponibilidad.setText("Disponibles: " + libro.getExistencias());
         TextAreaDescripcion.setText(libro.getDescripcion_libro());
+        LabelRegClas.setText("(" + libro.getRegistro_clasificacion() + ")");
         libroseleccionado = libro;
         if (SOLICITAR == operacion){
             ButtonEditar.setVisible(false);

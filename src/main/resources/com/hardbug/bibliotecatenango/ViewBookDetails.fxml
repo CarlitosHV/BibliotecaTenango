@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -29,6 +30,9 @@
                <font>
                   <Font name="Roboto Light" size="18.0" />
                </font>
+               <GridPane.margin>
+                  <Insets bottom="25.0" />
+               </GridPane.margin>
             </Label>
             <Label id="Labels" fx:id="LabelAutor" prefHeight="17.0" prefWidth="201.0" text="Autor" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <font>
@@ -79,6 +83,14 @@
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font></Button>
+            <Label id="Labels" fx:id="LabelRegClas" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="102.0" prefHeight="17.0" prefWidth="99.0" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Roboto Light" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
       <Button fx:id="ButtonCerrar" contentDisplay="GRAPHIC_ONLY" layoutX="20.0" layoutY="28.0" mnemonicParsing="false" styleClass="BotonClose" text="Cerrar" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="28.0">
