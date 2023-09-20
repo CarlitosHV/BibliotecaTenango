@@ -21,6 +21,7 @@ module com.hardbug.bibliotecatenango {
     requires com.google.api.client.extensions.jetty.auth;
     requires mail;
     requires undertow.core;
+    requires itextpdf;
 
 
     opens com.hardbug.bibliotecatenango to javafx.fxml;

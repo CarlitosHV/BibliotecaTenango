@@ -9,7 +9,10 @@ import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -46,6 +49,10 @@ public class AltaLibrosController implements Initializable {
     private TextField Campo_clasificacion, Campo_anio_edicion, Campo_registro_clasificacion, Campo_estante,
             Campo_existencias, Campo_editorial, Campo_lugar_edicion, Campo_titulo_libro, Campo_nombre_autor, Campo_descripcion_libro,
             Campo_clave_registro;
+    @FXML
+    private ImageView Clasificacion_info, Estante_info, Clave_registro_info, Existencias_info, Editorial_info,
+            Lugar_edicion_info, Anio_edicion_info, Nombre_autor_info, Titulo_info, Descripcion_info,
+            Registro_clasificacion_info;
 
 
     /* Instancias de las clases necesarias para funcionar el código */
@@ -77,6 +84,7 @@ public class AltaLibrosController implements Initializable {
      */
     @FXML
     void AccionesBotonGuardar() throws SQLException {
+        validar_todo();
         GuardarLibro();
     }
 
@@ -143,6 +151,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_clasificacion.isEditable()) {
             if (Campo_clasificacion.getText().matches("^[A-Z. ][A-Za-z áéíóúñ]{4,15}") && !Campo_clasificacion.getText().isEmpty()) {
                 Clasificacion_bol = true;
+                Clasificacion_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_clasificacion.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -151,8 +160,48 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_clasificacion.setStyle("-fx-border-color: red");
                 Clasificacion_bol = false;
+                Tooltip.install(Clasificacion_info,crearTooltip("La clasificación debe empezar con mayuscula y no debe de contener números"+" \n"+"Ejemplos: Historia, Ciencias, Matemáticas, etc."));
+                Clasificacion_info.setVisible(true);
+                Clasificacion_info.setPickOnBounds(true);
+
             }
         }
+    }
+
+    public Tooltip crearTooltip(String mensaje){
+        Tooltip tooltip = new Tooltip(mensaje);
+        tooltip.setShowDuration(Duration.INDEFINITE);
+        tooltip.setShowDelay(Duration.millis(500));
+        tooltip.setFont(new Font("Roboto Light", 14));
+        return tooltip;
+    }
+
+    public void Tooltipfalse(){
+        Nombre_autor_info.setVisible(false);
+        Clasificacion_info.setVisible(false);
+        Anio_edicion_info.setVisible(false);
+        Clave_registro_info.setVisible(false);
+        Descripcion_info.setVisible(false);
+        Editorial_info.setVisible(false);
+        Existencias_info.setVisible(false);
+        Estante_info.setVisible(false);
+        Lugar_edicion_info.setVisible(false);
+        Titulo_info.setVisible(false);
+        Registro_clasificacion_info.setVisible(false);
+    }
+
+    public void validar_todo(){
+        validar_clasificacion();
+        validar_anio_edicion();
+        validar_clave_registro();
+        validar_descripcion_libro();
+        validar_editorial();
+        validar_existencias();
+        validar_estante();
+        validar_lugar_edicion();
+        validar_nombre_autor();
+        validar_registro_clasificacion();
+        validar_titulo_libro();
     }
 
     //Campo Registro de clasificación: Del 000 al 900 o S/C
@@ -161,6 +210,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_registro_clasificacion.isEditable()) {
             if (Campo_registro_clasificacion.getText().matches("S/C") || Campo_registro_clasificacion.getText().matches("^\\d{3}$") && !Campo_registro_clasificacion.getText().isEmpty()) {
                 Registro_clasificacion_bol = true;
+                Registro_clasificacion_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_registro_clasificacion.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -169,6 +219,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_registro_clasificacion.setStyle("-fx-border-color: red");
                 Registro_clasificacion_bol = false;
+                Tooltip.install(Registro_clasificacion_info,crearTooltip("El registro de clasificación debe de ser de 3 digitos"+" \n"+"Ejemplos: 000, 100, 200, 300, 400, 500, 600, 700, 800, 900"));
+                Registro_clasificacion_info.setVisible(true);
+                Registro_clasificacion_info.setPickOnBounds(true);
             }
         }
     }
@@ -178,6 +231,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_clave_registro.isEditable()) {
             if (Campo_clave_registro.getText().matches("^[a-zA-Z0-9.-]{2,10}$") && !Campo_clave_registro.getText().isEmpty()) {
                 Clave_registro_bol = true;
+                Clave_registro_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_clave_registro.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -186,6 +240,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_clave_registro.setStyle("-fx-border-color: red");
                 Clave_registro_bol = false;
+                Tooltip.install(Clave_registro_info,crearTooltip("La clave de registro puede contener una letra (mayúscula o minúscula) puntos,guiones medios y numeros ademas de que debe de ser de 2 a 10 caracteres"+" \n"+"Ejemplos: A-30, AZ-2, aX-01"));
+                Clave_registro_info.setVisible(true);
+                Clave_registro_info.setPickOnBounds(true);
             }
         }
     }
@@ -197,6 +254,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_estante.isEditable()) {
             if (Campo_estante.getText().matches("^[A-Z]{1,2}-[1-5]$") && !Campo_estante.getText().isEmpty()) {
                 Estante_bol = true;
+                Estante_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_estante.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -205,6 +263,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_estante.setStyle("-fx-border-color: red");
                 Estante_bol = false;
+                Tooltip.install(Estante_info,crearTooltip("El estante debe de ser de 1 a 2 letras mayúsculas seguidas de un guión medio y un numero del 1 al 5"+" \n"+"Ejemplos: A-1, B-2, AA-3, ZZ-5"));
+                Estante_info.setVisible(true);
+                Estante_info.setPickOnBounds(true);
             }
         }
     }
@@ -214,6 +275,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_existencias.isEditable()) {
             if (Campo_existencias.getText().matches("^[1-9][0-9]{0,4}$") && !Campo_existencias.getText().isEmpty()) {
                 Existencias_bol = true;
+                Existencias_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_existencias.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -222,6 +284,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_existencias.setStyle("-fx-border-color: red");
                 Existencias_bol = false;
+                Tooltip.install(Existencias_info,crearTooltip("Las existencias deben de ser de 1 a 4 digitos y no puede empezar con 0"+" \n"+"Ejemplos: 1, 10, 100, 1000, 9999"));
+                Existencias_info.setVisible(true);
+                Existencias_info.setPickOnBounds(true);
             }
         }
     }
@@ -231,6 +296,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_editorial.isEditable()) {
             if (Campo_editorial.getText().matches("^[A-Za-z\\s&.-áéíóúñ]{1,30}$") && !Campo_editorial.getText().isEmpty()) {
                 Editorial_bol = true;
+                Editorial_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_editorial.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -239,6 +305,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_editorial.setStyle("-fx-border-color: red");
                 Editorial_bol = false;
+                Tooltip.install(Editorial_info,crearTooltip("La editorial debe de ser de 1 a n palabras con un margnen de 30 caracteres incluiodos los simbolos &.- y espacios con vocales con acentos"+" \n"+"Ejemplos: Editorial & Co, Editorial & Co. S.A., Editorial & Co. S.A. de C.V."));
+                Editorial_info.setVisible(true);
+                Editorial_info.setPickOnBounds(true);
             }
         }
     }
@@ -247,8 +316,8 @@ public class AltaLibrosController implements Initializable {
     public void validar_lugar_edicion() {
         if (Campo_lugar_edicion.isEditable()) {
             if (Campo_lugar_edicion.getText().matches("^[A-Z][a-záéíóú]+([,.]?\\s[A-Z][a-záéíóú,.]+){0,3}$") && !Campo_lugar_edicion.getText().isEmpty()) {
-
                 Lugar_edicion_bol = true;
+                Lugar_edicion_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_lugar_edicion.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -257,6 +326,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_lugar_edicion.setStyle("-fx-border-color: red");
                 Lugar_edicion_bol = false;
+                Tooltip.install(Lugar_edicion_info,crearTooltip("El lugar de edición debe de ser de 1 a 4 palabras que empiecen con mayúscula con un margen de 40 caracteres incluidos el simolo - espacios, vocales con acentos"+" \n"+"Ejemplos: Ciudad de México, México"));
+                Lugar_edicion_info.setVisible(true);
+                Lugar_edicion_info.setPickOnBounds(true);
             }
         }
     }
@@ -266,6 +338,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_nombre_autor.isEditable()) {
             if (Campo_nombre_autor.getText().matches("^[A-Z][a-záéíóú]+(\\s[A-Z][a-záéíóú]+){1,3}$") && !Campo_nombre_autor.getText().isEmpty()) {
                 Nombre_autor_bol = true;
+                Nombre_autor_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_nombre_autor.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -274,6 +347,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_nombre_autor.setStyle("-fx-border-color: red");
                 Nombre_autor_bol = false;
+                Tooltip.install(Nombre_autor_info,crearTooltip("El nombre del autor debe de ser de 1 a 4 palabras que empiecen con mayúscula con un margen de 40 caracteres incluidos espacios, vocales con acentos"+" \n"+"Ejemplos: Juan Pérez, Juan Pérez Sánchez Hernández"));
+                Nombre_autor_info.setVisible(true);
+                Nombre_autor_info.setPickOnBounds(true);
             }
         }
     }
@@ -283,6 +359,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_titulo_libro.isEditable()) {
             if (Campo_titulo_libro.getText().matches("^[A-Za-z\\sáéíóúñ]{1,40}$") && !Campo_titulo_libro.getText().isEmpty()) {
                 Titulo_libro_bol = true;
+                Titulo_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_titulo_libro.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -291,6 +368,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_titulo_libro.setStyle("-fx-border-color: red");
                 Titulo_libro_bol = false;
+                Tooltip.install(Titulo_info,crearTooltip("El título debe empezar con mayúsculas puede contener caracteres como: espacios, vocales con acentos"+" \n"+"Ejemplos: El principito, El principito y el zorro"));
+                Titulo_info.setVisible(true);
+                Titulo_info.setPickOnBounds(true);
             }
         }
     }
@@ -298,8 +378,9 @@ public class AltaLibrosController implements Initializable {
     //Campo Año de edición valida que se escriba un año mayor a 1000 y menor a 2029
     public void validar_anio_edicion() {
         if (Campo_anio_edicion.isEditable()) {
-            if (Campo_anio_edicion.getText().matches("^(1\\d{3}|20[0-2]\\d)$") && !Campo_anio_edicion.getText().isEmpty()) {
+            if (Campo_anio_edicion.getText().matches("^(1\\d{3}|20[0-9]\\d)$") && !Campo_anio_edicion.getText().isEmpty()) {
                 Anio_edicion_bol = true;
+                Anio_edicion_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_anio_edicion.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -308,6 +389,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_anio_edicion.setStyle("-fx-border-color: red");
                 Anio_edicion_bol = false;
+                Tooltip.install(Anio_edicion_info,crearTooltip("El año de edición debe de ser de 4 digitos y debe de ser mayor a 1000 y menor a 2099"+" \n"+"Ejemplos: 1000, 2029, 2019"));
+                Anio_edicion_info.setVisible(true);
+                Anio_edicion_info.setPickOnBounds(true);
             }
         }
     }
@@ -317,6 +401,7 @@ public class AltaLibrosController implements Initializable {
         if (Campo_descripcion_libro.isEditable()) {
             if (Campo_descripcion_libro.getText().matches("^[A-Za-z\\s.,áéíóúñ]{1,80}$") && !Campo_descripcion_libro.getText().isEmpty()) {
                 Descripcion_libro_bol = true;
+                Descripcion_info.setVisible(false);
                 if (IndexApp.TEMA == 1) {
                     Campo_descripcion_libro.setStyle("-fx-border-color: #595b5d");
                 } else {
@@ -325,6 +410,9 @@ public class AltaLibrosController implements Initializable {
             } else {
                 Campo_descripcion_libro.setStyle("-fx-border-color: red");
                 Descripcion_libro_bol = false;
+                Tooltip.install(Descripcion_info,crearTooltip("La descripción debe de ser de 1 a  80 puede incluir caracteres como: los simolos ., espacios, vocales con acentos"+" \n"+"Ejemplos: El principito es un libro de literatura infantil, El principito es un libro de literatura infantil escrito por Antoine de Saint-Exupéry"));
+                Descripcion_info.setVisible(true);
+                Descripcion_info.setPickOnBounds(true);
             }
         }
     }
@@ -350,6 +438,7 @@ public class AltaLibrosController implements Initializable {
    */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Tooltipfalse();
 
         //Caja de campo Clasificación rango de 15 caracteres
         Campo_clasificacion.setTextFormatter(new TextFormatter<>(change -> {
