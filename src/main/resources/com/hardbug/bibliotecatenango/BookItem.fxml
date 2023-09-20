@@ -41,7 +41,7 @@
             <Insets />
          </GridPane.margin>
       </Label>
-      <Label id="Labels" fx:id="LabelClasificacion" prefHeight="17.0" prefWidth="219.0" text="Clasificación:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label id="Labels" fx:id="LabelClasificacion" prefHeight="17.0" prefWidth="219.0" text="Registro Clasificación:" GridPane.columnIndex="1" GridPane.rowIndex="2">
           <font>
               <Font name="Roboto Light" size="14.0" />
           </font>
