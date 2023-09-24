@@ -84,7 +84,8 @@ public class ReporteController extends BDController implements Initializable {
                     Platform.runLater(() -> {
                         IconoCarga.setVisible(false);
                         IconoCarga.setProgress(0);
-                        GenerarPdf.GenerarReporte(Fechas.obtenerFechaActual(),reporte);
+                        GenerarPdf pdf = new GenerarPdf();
+                        pdf.GenerarReporte(Fechas.obtenerFechaActual(),reporte);
                         if (reporte != null) {
                             alert = new Alertas().CrearAlertaInformativa("Reporte", "Reporte generado con éxito");
                             alert.showAndWait();

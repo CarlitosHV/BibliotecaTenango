@@ -1163,4 +1163,24 @@ public class BDController {
             throw new RuntimeException(e);
         }
     }
+    public boolean InsertarRegistroLibro(String clave_registro, String  registro_clasificacion){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarRegistroLibro(?,?)");
+            stmt.setString(1, clave_registro);
+            stmt.setString(2, registro_clasificacion);
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
