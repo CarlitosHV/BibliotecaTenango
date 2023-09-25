@@ -40,7 +40,6 @@ public class IndexApp extends Application {
             System.exit(0);
         });
         stage.show();
-        new BDController().ConsultarPrestamos();
     }
 
     public void ObtenerPropiedades() {

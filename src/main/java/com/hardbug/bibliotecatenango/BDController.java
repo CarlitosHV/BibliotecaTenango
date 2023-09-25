@@ -1151,14 +1151,49 @@ public class BDController {
                 reporte.FEMTotales = rs.getInt("FEMTotales");
                 reporte.FEMDiscTotales = rs.getInt("FEMDisTotales");
                 reporte.TotalUsers = rs.getInt("TotalUsers");
-            }
 
+                PreparedStatement stmt1 = conn.prepareStatement("select * from fnSeleccionarConteoGrados(?,?)");
+                stmt1.setDate(1, inicio);
+                stmt1.setDate(2, fin);
+                stmt1.execute();
+                ResultSet rs1 = stmt1.getResultSet();
+
+                while(rs1.next()){
+                    reporte.Preescolar = rs1.getInt("Preescolar");
+                    reporte.Primaria = rs1.getInt("Primaria");
+                    reporte.Secundaria = rs1.getInt("Secundaria");
+                    reporte.Preparatoria = rs1.getInt("Preparatoria");
+                    reporte.Universidad = rs1.getInt("Universidad");
+                    reporte.Posgrado = rs1.getInt("Posgrado");
+                }
+                stmt1.close();
+            }
             stmt.close();
             conn.close();
             return reporte;
         }catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean InsertarRegistroLibro(String clave_registro, String  registro_clasificacion){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
+                    IndexApp.usuario, IndexApp.contrasenia);
+
+            PreparedStatement stmt = conn.prepareStatement("call spInsertarRegistroLibro(?,?)");
+            stmt.setString(1, clave_registro);
+            stmt.setString(2, registro_clasificacion);
+            stmt.execute();
+
+            stmt.close();
+            conn.close();
+            return true;
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

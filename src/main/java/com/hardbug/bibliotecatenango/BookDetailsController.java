@@ -3,6 +3,7 @@ package com.hardbug.bibliotecatenango;
 import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class BookDetailsController extends BuscadorLibrosController implements Initializable{
     @FXML
-    private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar;
+    private Button ButtonCerrar, ButtonEliminar, ButtonEditar, ButtonSolicitar, ButtonInterno;
     @FXML
     private Label LabelTitulo, LabelAutor, LabelEditorial, LabelClaveRegistro, LabelEstante, LabelClasificacion, LabelDisponibilidad, LabelRegClas;
     @FXML
@@ -62,15 +63,30 @@ public class BookDetailsController extends BuscadorLibrosController implements I
             ButtonEditar.setVisible(false);
             ButtonEliminar.setVisible(false);
             ButtonSolicitar.setVisible(true);
+            ButtonInterno.setVisible(true);
         }else{
             ButtonEditar.setVisible(true);
             ButtonEliminar.setVisible(true);
             ButtonSolicitar.setVisible(false);
+            ButtonInterno.setVisible(false);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ButtonInterno.setOnAction( evt -> {
+            Alert alert;
+            if(bd.InsertarRegistroLibro(libroseleccionado.getClave_registro(), libroseleccionado.getRegistro_clasificacion())){
+                alert = new Alertas().CrearAlertaInformativa("Libro solicitado", "Se ha solicitado internamente el libro");
+                alert.showAndWait();
+                CerrarVista();
+            }else{
+                alert = new Alertas().CrearAlertaError("Ocurrió un error", "Hubo un error al solicitar el libro, inténtalo después");
+                alert.showAndWait();
+                CerrarVista();
+            }
+        });
 
         ButtonCerrar.setOnAction(actionEvent -> CerrarVista());
 

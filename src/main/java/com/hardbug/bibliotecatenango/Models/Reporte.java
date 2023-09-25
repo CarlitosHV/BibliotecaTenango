@@ -28,6 +28,12 @@ public class Reporte {
     public int FEMTotales = 0;
     public int FEMDiscTotales = 0;
     public int TotalUsers = 0;
+    public int Preescolar = 0;
+    public int Primaria = 0;
+    public int Secundaria = 0;
+    public int Preparatoria = 0;
+    public int Universidad = 0;
+    public int Posgrado = 0;
     public Date FechaInicio = null;
     public Date FechaFin = null;
 }
