@@ -80,6 +80,16 @@ public class GenerarPdf {
 
                         addParagraph(cb, String.valueOf(reporte.FEMTotales), 365, 806 - offset, 559, 806 - offset + 20);
                         addParagraph(cb, String.valueOf(reporte.FEMDiscTotales), 410, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 30;
+                        addParagraph(cb, String.valueOf(reporte.Preescolar), 190, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.Primaria), 330, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.Secundaria), 518, 806 - offset, 559, 806 - offset + 20);
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.Preparatoria), 190, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.Universidad), 330, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.Posgrado), 518, 806 - offset, 559, 806 - offset + 20);
+
                         ct.go();
                         break;
                     }
