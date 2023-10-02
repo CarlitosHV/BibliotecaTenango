@@ -1,14 +1,23 @@
 package com.hardbug.bibliotecatenango;
 
+import com.hardbug.bibliotecatenango.Models.GenerarPdf;
+import com.hardbug.bibliotecatenango.Models.Reporte;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /*Clase principal que maneja el inicio de la aplicación y muestra el Stage*/
 
@@ -17,6 +26,7 @@ public class IndexApp extends Application {
     OutputStream configOutput = null;
     public static int TEMA;
     public static String servidor, usuario, contrasenia, base_datos, key, correo;
+    Reporte reporte;
     //Método que inicia la aplicación
     public static void main(String[] args) {
         launch(args);
@@ -26,7 +36,7 @@ public class IndexApp extends Application {
     @Override
     public void start(Stage stage) {
         ObtenerPropiedades();
-        var scene = new Scene(new Pane());
+        /*var scene = new Scene(new Pane());
         scene.getStylesheets().clear();
         ViewSwitcher.setScene(scene);
         ViewSwitcher.switchTo(View.MENU_PRINCIPAL, TEMA);
@@ -39,7 +49,38 @@ public class IndexApp extends Application {
         stage.setOnCloseRequest(evt -> {
             System.exit(0);
         });
-        stage.show();
+        stage.show();*/
+        BDController bd = new BDController();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        Date startDate = Date.valueOf(year + "-01-01");
+        Date endDate = Date.valueOf(year + "-12-31");
+
+        Callable<Reporte> miCallable = () -> {
+            Platform.runLater(() -> {
+            });
+            Thread.sleep(2000);
+            return bd.GenerarReporte(startDate, endDate);
+        };
+
+        FutureTask<Reporte> futureTask = new FutureTask<>(miCallable);
+        Thread thread = new Thread(futureTask);
+        thread.start();
+        try {
+            reporte = futureTask.get();
+
+            Platform.runLater(() -> {
+                GenerarPdf pdf = new GenerarPdf();
+                pdf.GenerarReporte(Fechas.obtenerFechaActual(),reporte);
+                if (reporte != null) {
+                    System.out.println("Creado");
+                } else {
+                    System.out.println("Error");
+                }
+                System.exit(0);
+            });
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void ObtenerPropiedades() {

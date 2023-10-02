@@ -11,7 +11,7 @@ import java.util.Objects;
 public class GenerarPdf {
     Document document;
 
-    public void GenerarReporte(Date fecha,Reporte reporte) {
+    public void GenerarReporte(Date fecha, Reporte reporte) {
         String nombreReporte = "Reporte " + fecha + ".pdf";
         String rutaDocumento = System.getProperty("user.home") + "\\Downloads\\" + nombreReporte;
 
@@ -90,6 +90,43 @@ public class GenerarPdf {
                         addParagraph(cb, String.valueOf(reporte.Preparatoria), 190, 806 - offset, 559, 806 - offset + 20);
                         addParagraph(cb, String.valueOf(reporte.Universidad), 330, 806 - offset, 559, 806 - offset + 20);
                         addParagraph(cb, String.valueOf(reporte.Posgrado), 518, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 29;
+                        addParagraph(cb, String.valueOf(reporte.Hogar), 215, 806 - offset, 559, 806 - offset + 20);
+                        offset += 2;
+                        addParagraph(cb, String.valueOf(reporte.Empleado), 515, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.Estudiante), 215, 806 - offset, 559, 806 - offset + 20);
+                        offset += 3;
+                        addParagraph(cb, String.valueOf(reporte.Desempleado), 515, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 35;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionGeneral), 190, 806 - offset, 559, 806 - offset + 20);
+                        offset += 2;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionConsulta), 330, 806 - offset, 559, 806 - offset + 20);
+                        offset += 1;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionInfantil), 518, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 37;
+                        addParagraph(cb, String.valueOf(reporte.PublicacionesPeriodicas), 175, 806 - offset, 559, 806 - offset + 20);
+                        offset += 2;
+                        addParagraph(cb, String.valueOf(reporte.AudioVisual), 280, 806 - offset, 559, 806 - offset + 20);
+                        offset += 1;
+                        addParagraph(cb, String.valueOf(reporte.Ludoteca), 370, 806 - offset, 559, 806 - offset + 20);
+                        offset += 1;
+                        addParagraph(cb, String.valueOf(reporte.Braille), 510, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 20;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionEstatal), 230, 806 - offset, 559, 806 - offset + 20);
+                        offset += 1;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionEspecial), 410, 806 - offset, 559, 806 - offset + 20);
+                        offset += 1;
+                        addParagraph(cb, String.valueOf(reporte.ColeccionOtra), 530, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 35;
+                        addParagraph(cb, String.valueOf(reporte.CredencialesExpedidas), 230, 806 - offset, 559, 806 - offset + 20);
+                        offset += 4;
+                        addParagraph(cb, String.valueOf(reporte.LibrosDomicilio), 480, 806 - offset, 559, 806 - offset + 20);
 
                         ct.go();
                         break;

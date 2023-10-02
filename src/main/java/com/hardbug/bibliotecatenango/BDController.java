@@ -1165,6 +1165,42 @@ public class BDController {
                     reporte.Preparatoria = rs1.getInt("Preparatoria");
                     reporte.Universidad = rs1.getInt("Universidad");
                     reporte.Posgrado = rs1.getInt("Posgrado");
+
+                    PreparedStatement stmt2 = conn.prepareStatement("select * from fnContarOcupaciones(?,?)");
+                    stmt2.setDate(1, inicio);
+                    stmt2.setDate(2, fin);
+                    stmt2.execute();
+                    ResultSet rs2 = stmt2.getResultSet();
+                    while(rs2.next()){
+                        reporte.Hogar = rs2.getInt("hogar");
+                        reporte.Estudiante = rs2.getInt("estudiante");
+                        reporte.Empleado = rs2.getInt("empleado");
+                        reporte.Desempleado = rs2.getInt("desocupado");
+
+                        PreparedStatement stmt3 = conn.prepareStatement("select * from fnContarClasificaciones(?,?)");
+                        stmt3.setDate(1, inicio);
+                        stmt3.setDate(2, fin);
+                        stmt3.execute();
+                        ResultSet rs3 = stmt3.getResultSet();
+                        while(rs3.next()){
+                            reporte.ColeccionGeneral = rs3.getInt("ColGen");
+                            reporte.ColeccionConsulta = rs3.getInt("ColCon");
+                            reporte.ColeccionInfantil = rs3.getInt("Colinf");
+
+                            PreparedStatement stmt4 = conn.prepareStatement("select * from fnContarUsuariosLibros(?,?)");
+                            stmt4.setDate(1, inicio);
+                            stmt4.setDate(2, fin);
+                            stmt4.execute();
+                            ResultSet rs4 = stmt4.getResultSet();
+                            while(rs4.next()){
+                                reporte.CredencialesExpedidas = rs4.getInt("TotalCredenciales");
+                                reporte.LibrosDomicilio = rs4.getInt("TotalLibros");
+                            }
+                            stmt4.close();
+                        }
+                        stmt3.close();
+                    }
+                    stmt2.close();
                 }
                 stmt1.close();
             }
