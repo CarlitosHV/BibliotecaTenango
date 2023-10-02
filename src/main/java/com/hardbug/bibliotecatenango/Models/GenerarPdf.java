@@ -37,6 +37,8 @@ public class GenerarPdf {
                         addParagraph(cb, "Tenango del Valle ", 302, 806 - offset, 559, 806 - offset + 20);
                         addParagraph(cb, "Tenango del Valle ", 482, 806 - offset, 559, 806 - offset + 20);
                         offset += 20;
+                        addParagraph(cb, "Colección", 482, 806 - offset, 559, 806 - offset + 20);
+
                         addParagraph(cb, "Biblioteca Pública Municipal Lic. Abel C. Salazar ", 199, 806 - offset, 559, 806 - offset + 20);
                         offset += 19;
                         addParagraph(cb, Fechas.ObtenerFechaInicio(), 480, 806 - offset, 559, 806 - offset + 20);
@@ -259,8 +261,6 @@ public class GenerarPdf {
                 }
             }
             document.close();
-
-            System.out.println("PDF en blanco creado correctamente en: " + nombreReporte);
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }

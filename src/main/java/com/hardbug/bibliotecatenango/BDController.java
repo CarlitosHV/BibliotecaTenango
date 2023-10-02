@@ -1195,6 +1195,115 @@ public class BDController {
                             while(rs4.next()){
                                 reporte.CredencialesExpedidas = rs4.getInt("TotalCredenciales");
                                 reporte.LibrosDomicilio = rs4.getInt("TotalLibros");
+
+                                PreparedStatement stmt5 = conn.prepareStatement("select * from fnContarActividadesPorEdadYSexo(?,?)");
+                                stmt5.setDate(1, inicio);
+                                stmt5.setDate(2, fin);
+                                stmt5.execute();
+                                ResultSet rs5 = stmt5.getResultSet();
+                                while(rs5.next()){
+                                    reporte.ActividadLectura60 = rs5.getInt("Actividades60");
+                                    reporte.ActividadLectura3059 = rs5.getInt("Actividades30a59");
+                                    reporte.ActividadLectura1829 = rs5.getInt("Actividades18a29");
+                                    reporte.ActividadLectura1317 = rs5.getInt("Actividades13a17");
+                                    reporte.ActividadLectura012 = rs5.getInt("Actividades0a12");
+                                    reporte.ActividadLecturaTotal = rs5.getInt("TotalActividades");
+                                    reporte.ActMasculinos60 = rs5.getInt("ActividadHombres60");
+                                    reporte.ActMasculinos3059 = rs5.getInt("ActividadHombres30a59");
+                                    reporte.ActMasculinos1829 = rs5.getInt("ActividadHombres18a29");
+                                    reporte.ActMasculinos1317 = rs5.getInt("ActividadHombres13a17");
+                                    reporte.ActMasculinos012 = rs5.getInt("ActividadHombres0a12");
+                                    reporte.ActFem60 = rs5.getInt("ActividadMujeres60");
+                                    reporte.ActFem3059 = rs5.getInt("ActividadMujeres30a59");
+                                    reporte.ActFem1829 = rs5.getInt("ActividadMujeres18a29");
+                                    reporte.ActFem1317 = rs5.getInt("ActividadMujeres13a17");
+                                    reporte.ActFem012 = rs5.getInt("ActividadMujeres0a12");
+                                    reporte.ActMasculinoTotal = rs5.getInt("TotalHombres");
+                                    reporte.ActFemTotal = rs5.getInt("TotalMujeres");
+
+                                    PreparedStatement stmt6 = conn.prepareStatement("select * from fnContarArtisticasPorEdadYSexo(?,?)");
+                                    stmt6.setDate(1, inicio);
+                                    stmt6.setDate(2, fin);
+                                    stmt6.execute();
+                                    ResultSet rs6 = stmt6.getResultSet();
+                                    while(rs6.next()){
+                                        reporte.ArtisticaLectura60 = rs6.getInt("Artistica60");
+                                        reporte.ArtisticaLectura3059 = rs6.getInt("Artistica30a59");
+                                        reporte.ArtisticaLectura1829 = rs6.getInt("Artistica18a29");
+                                        reporte.ArtisticaLectura1317 = rs6.getInt("Artistica13a17");
+                                        reporte.ArtisticaLectura012 = rs6.getInt("Artistica0a12");
+                                        reporte.ArtisticaLecturaTotal = rs6.getInt("TotalArtistica");
+                                        reporte.ArtMasculinos60 = rs6.getInt("ArtisticaHombres60");
+                                        reporte.ArtMasculinos3059 = rs6.getInt("ArtisticaHombres30a59");
+                                        reporte.ArtMasculinos1829 = rs6.getInt("ArtisticaHombres18a29");
+                                        reporte.ArtMasculinos1317 = rs6.getInt("ArtisticaHombres13a17");
+                                        reporte.ArtMasculinos012 = rs6.getInt("ArtisticaHombres0a12");
+                                        reporte.ArtFem60 = rs6.getInt("ArtisticaMujeres60");
+                                        reporte.ArtFem3059 = rs6.getInt("ArtisticaMujeres30a59");
+                                        reporte.ArtFem1829 = rs6.getInt("ArtisticaMujeres18a29");
+                                        reporte.ArtFem1317 = rs6.getInt("ArtisticaMujeres13a17");
+                                        reporte.ArtFem012 = rs6.getInt("ArtisticaMujeres0a12");
+                                        reporte.ArtMasculinoTotal = rs6.getInt("TotalHombres");
+                                        reporte.ArtFemTotal = rs6.getInt("TotalMujeres");
+
+                                        PreparedStatement stmt7 = conn.prepareStatement("select * from fnContarVisitasGuiadas(?,?)");
+                                        stmt7.setDate(1, inicio);
+                                        stmt7.setDate(2, fin);
+                                        stmt7.execute();
+                                        ResultSet rs7 = stmt7.getResultSet();
+                                        while(rs7.next()){
+                                            reporte.VisMasculinos60 = rs7.getInt("GHombres60");
+                                            reporte.VisMasculinos3059 = rs7.getInt("GHombres30a59");
+                                            reporte.VisMasculinos1829 = rs7.getInt("GHombres18a29");
+                                            reporte.VisMasculinos1317 = rs7.getInt("GHombres13a17");
+                                            reporte.VisMasculinos012 = rs7.getInt("GHombres0a12");
+                                            reporte.VisMasculinoTotal = rs7.getInt("TotalHombres");
+                                            reporte.VisFem60 = rs7.getInt("GMujeres60");
+                                            reporte.VisFem3059 = rs7.getInt("GMujeres30a59");
+                                            reporte.VisFem1829 = rs7.getInt("GMujeres18a29");
+                                            reporte.VisFem1317 = rs7.getInt("GMujeres13a17");
+                                            reporte.VisFem012 = rs7.getInt("GMujeres0a12");
+                                            reporte.VisFemTotal = rs7.getInt("TotalMujeres");
+                                            reporte.VisTotales = rs7.getInt("TotalG");
+
+                                            PreparedStatement stmt8 = conn.prepareStatement("select * from fnContarServiciosDig(?,?)");
+                                            stmt8.setDate(1, inicio);
+                                            stmt8.setDate(2, fin);
+                                            stmt8.execute();
+                                            ResultSet rs8 = stmt8.getResultSet();
+                                            while(rs8.next()){
+                                                reporte.ServMasculinos60 = rs8.getInt("SDHombres60");
+                                                reporte.ServMasculinos3059 = rs8.getInt("SDHombres30a59");
+                                                reporte.ServMasculinos1829 = rs8.getInt("SDHombres18a29");
+                                                reporte.ServMasculinos1317 = rs8.getInt("SDHombres13a17");
+                                                reporte.ServMasculinos012 = rs8.getInt("SDHombres0a12");
+                                                reporte.ServMasculinoTotal = rs8.getInt("TotalHombres");
+                                                reporte.ServFem60 = rs8.getInt("SDMujeres60");
+                                                reporte.ServFem3059 = rs8.getInt("SDMujeres30a59");
+                                                reporte.ServFem1829 = rs8.getInt("SDMujeres18a29");
+                                                reporte.ServFem1317 = rs8.getInt("SDMujeres13a17");
+                                                reporte.ServFem012 = rs8.getInt("SDMujeres0a12");
+                                                reporte.ServFemTotal = rs8.getInt("TotalMujeres");
+                                                reporte.ServCursos60 = rs8.getInt("SDCurso60");
+                                                reporte.ServCursos3059 = rs8.getInt("SDCurso30a59");
+                                                reporte.ServCursos1829 = rs8.getInt("SDCurso18a29");
+                                                reporte.ServCursos1317 = rs8.getInt("SDCurso13a17");
+                                                reporte.ServCursos012 = rs8.getInt("SDCurso0a12");
+                                                reporte.ServCursosTotales = rs8.getInt("TotalCurso");
+                                                reporte.ServAsisCursos60 = rs8.getInt("SDCurso60");
+                                                reporte.ServAsisCursos3059 = rs8.getInt("SDCurso30a59");
+                                                reporte.ServAsisCursos1829 = rs8.getInt("SDCurso18a29");
+                                                reporte.ServAsisCursos1317 = rs8.getInt("SDCurso13a17");
+                                                reporte.ServAsisCursos012 = rs8.getInt("SDCurso0a12");
+                                                reporte.ServAsisCursosTotales = rs8.getInt("TotalCurso");
+                                            }
+                                            stmt8.close();
+                                        }
+                                        stmt7.close();
+                                    }
+                                    stmt6.close();
+                                }
+                                stmt5.close();
                             }
                             stmt4.close();
                         }
