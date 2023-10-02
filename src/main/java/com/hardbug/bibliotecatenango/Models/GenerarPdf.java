@@ -132,9 +132,128 @@ public class GenerarPdf {
                         break;
                     }
                     case 2:{
+                        int offset = 215;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLectura60), 312, 806 - offset, 559, 806 - offset + 20);
+                        offset -= 2;
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinos60), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFem60), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 18;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLectura3059), 312, 806 - offset, 559, 806 - offset + 20);
+                        offset -= 2;
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinos3059), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFem3059), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 19;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLectura1829), 312, 806 - offset, 559, 806 - offset + 20);
+                        offset -= 2;
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinos1829), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFem1829), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 18;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLectura1317), 312, 806 - offset, 559, 806 - offset + 20);
+                        offset -= 2;
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinos1317), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFem1317), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLectura012), 312, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinos012), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFem012), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.ActividadLecturaTotal), 312, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActMasculinoTotal), 405, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ActFemTotal), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 52;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinos60), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFem60), 347, 806 - offset, 559, 806 - offset + 20);
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinos3059), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFem3059), 347, 806 - offset, 559, 806 - offset + 20);
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinos1829), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFem1829), 347, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinos1317), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFem1317), 347, 806 - offset, 559, 806 - offset + 20);
+                        offset -= 4;
+                        addParagraph(cb, String.valueOf(reporte.VisTotales), 450, 806 - offset, 559, 806 - offset + 20);
+                        offset += 20;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinos012), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFem012), 347, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.VisMasculinoTotal), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.VisFemTotal), 347, 806 - offset, 559, 806 - offset + 20);
+
+
+                        offset += 58;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinos60), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFem60), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursos60), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursos60), 500, 806 - offset, 559, 806 - offset + 20);
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinos3059), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFem3059), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursos3059), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursos3059), 500, 806 - offset, 559, 806 - offset + 20);
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinos1829), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFem1829), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursos1829), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursos1829), 500, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinos1317), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFem1317), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursos1317), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursos1317), 500, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinos012), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFem012), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursos012), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursos012), 500, 806 - offset, 559, 806 - offset + 20);
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.ServMasculinoTotal), 277, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServFemTotal), 347, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServCursosTotales), 410, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ServAsisCursosTotales), 500, 806 - offset, 559, 806 - offset + 20);
+
+                        ct.go();
                         break;
                     }
                     case 3:{
+                        int offset = 225;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLectura60), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinos60), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFem60), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 17;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLectura3059), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinos3059), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFem3059), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 19;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLectura1829), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinos1829), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFem1829), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 18;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLectura1317), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinos1317), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFem1317), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 19;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLectura012), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinos012), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFem012), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        offset += 16;
+                        addParagraph(cb, String.valueOf(reporte.ArtisticaLecturaTotal), 305, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtMasculinoTotal), 390, 806 - offset, 559, 806 - offset + 20);
+                        addParagraph(cb, String.valueOf(reporte.ArtFemTotal), 480, 806 - offset, 559, 806 - offset + 20);
+
+                        ct.go();
                         break;
                     }
                 }
