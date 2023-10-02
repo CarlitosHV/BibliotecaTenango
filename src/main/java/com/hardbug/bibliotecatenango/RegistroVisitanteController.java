@@ -50,10 +50,10 @@ public class RegistroVisitanteController extends BDController implements Initial
     @FXML
     private ComboBox<String> Combo_sexo;
 
-    private static ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
-    private static ArrayList<Catalogo> _grados = new ArrayList<>();
-    private static ArrayList<Catalogo> _actividades = new ArrayList<>();
-    private static ArrayList<String> _sexos = new ArrayList<>();
+    private ArrayList<Catalogo> _ocupaciones = new ArrayList<>();
+    private ArrayList<Catalogo> _grados = new ArrayList<>();
+    private ArrayList<Catalogo> _actividades = new ArrayList<>();
+    private ArrayList<String> _sexos = new ArrayList<>();
     Visitante miVisitante;
     BDController bd = new BDController();
     @FXML
@@ -83,9 +83,9 @@ public class RegistroVisitanteController extends BDController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tooltipsfalse();
-        ConfigurarCellFactory();
         //Cargamos los combos de ocupacion y grado
         ConfigurarCombos();
+        ConfigurarCellFactory();
 
         //Hacemos un toglegroup para que solo un radiobutton se active a la vez
         ToggleGroup Si_No = new ToggleGroup();
@@ -258,6 +258,8 @@ public class RegistroVisitanteController extends BDController implements Initial
     //limpia los campos
     private void limpiarCampos() {
         Combo_sexo.setValue(null);
+        Combo_sexo.getItems().clear();
+        Combo_sexo.getItems().addAll(_sexos);
         Campo_edad.setText("");
         Campo_nombre.setText("");
         Combo_ocupacion.setValue(null);
@@ -342,11 +344,7 @@ public class RegistroVisitanteController extends BDController implements Initial
             @Override
             protected void updateItem(String sexo, boolean empty) {
                 super.updateItem(sexo, empty);
-                if (sexo != null) {
-                    setText(sexo);
-                } else {
-                    setText(null);
-                }
+                setText(sexo);
             }
         });
     }
