@@ -42,6 +42,12 @@ public class MenuPrestamosController extends BDController implements Initializab
         configurarLista();
         BotonBuscar.setOnAction(actionEvent -> Search());
         Buscador.textProperty().addListener((observable, oldValue, newValue) -> Search());
+
+        PrestamosListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                PrestamosListView.getSelectionModel().clearSelection();
+            }
+        });
     }
 
     private void Search() {

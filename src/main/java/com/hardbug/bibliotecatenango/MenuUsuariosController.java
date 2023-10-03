@@ -60,6 +60,12 @@ public class MenuUsuariosController implements Initializable {
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
         });
+
+        UsuariosListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                UsuariosListView.getSelectionModel().clearSelection();
+            }
+        });
     }
 
     private void Search() {

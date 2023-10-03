@@ -40,6 +40,11 @@ public class ControladorOcupaciones extends BDController implements Initializabl
             }
             Search();
         });
+        ListaOcupaciones.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                ListaOcupaciones.getSelectionModel().clearSelection();
+            }
+        });
         LabelCrearOcupacion.setOnMouseClicked(event -> {
 
            TextInputDialog dialog = new Alertas().CrearAlertaInput("Ingresa el nombre de la ocupación: ");
