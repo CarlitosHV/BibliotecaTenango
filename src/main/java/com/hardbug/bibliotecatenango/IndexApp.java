@@ -6,7 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -36,9 +39,7 @@ public class IndexApp extends Application {
         stage.setMinWidth(1000);
         stage.setMinHeight(700);
         stage.setMaximized(true);
-        stage.setOnCloseRequest(evt -> {
-            System.exit(0);
-        });
+        stage.setOnCloseRequest(evt -> System.exit(0));
         stage.show();
     }
 
@@ -55,7 +56,7 @@ public class IndexApp extends Application {
             key = config.getProperty("key");
             correo = config.getProperty("email");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -72,7 +73,7 @@ public class IndexApp extends Application {
             config.setProperty("email", correo);
             config.store(configOutput, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

@@ -54,6 +54,11 @@ public class MenuLibrosController implements Initializable {
             Stage stage = (Stage) rootPane.getScene().getWindow();
             mostrarVentanaModal(stage);
         });
+        LibrosListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                LibrosListView.getSelectionModel().clearSelection();
+            }
+        });
     }
 
     private void Search() {

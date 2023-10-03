@@ -70,6 +70,12 @@ public class BuscadorLibrosController implements Initializable {
                 alert.showAndWait();
             }
         });
+
+        LibrosListView.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                LibrosListView.getSelectionModel().clearSelection();
+            }
+        });
     }
 
     private void Search() {
