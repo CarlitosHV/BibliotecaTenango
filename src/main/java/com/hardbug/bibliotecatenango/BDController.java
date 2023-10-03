@@ -1284,18 +1284,18 @@ public class BDController {
                                                 reporte.ServFem1317 = rs8.getInt("SDMujeres13a17");
                                                 reporte.ServFem012 = rs8.getInt("SDMujeres0a12");
                                                 reporte.ServFemTotal = rs8.getInt("TotalMujeres");
-                                                reporte.ServCursos60 = rs8.getInt("SDCurso60");
-                                                reporte.ServCursos3059 = rs8.getInt("SDCurso30a59");
-                                                reporte.ServCursos1829 = rs8.getInt("SDCurso18a29");
-                                                reporte.ServCursos1317 = rs8.getInt("SDCurso13a17");
-                                                reporte.ServCursos012 = rs8.getInt("SDCurso0a12");
-                                                reporte.ServCursosTotales = rs8.getInt("TotalCurso");
-                                                reporte.ServAsisCursos60 = rs8.getInt("SDCurso60");
-                                                reporte.ServAsisCursos3059 = rs8.getInt("SDCurso30a59");
-                                                reporte.ServAsisCursos1829 = rs8.getInt("SDCurso18a29");
-                                                reporte.ServAsisCursos1317 = rs8.getInt("SDCurso13a17");
-                                                reporte.ServAsisCursos012 = rs8.getInt("SDCurso0a12");
-                                                reporte.ServAsisCursosTotales = rs8.getInt("TotalCurso");
+                                                reporte.ServCursos60 = rs8.getInt("SD60");
+                                                reporte.ServCursos3059 = rs8.getInt("SD30a59");
+                                                reporte.ServCursos1829 = rs8.getInt("SD18a29");
+                                                reporte.ServCursos1317 = rs8.getInt("SD13a17");
+                                                reporte.ServCursos012 = rs8.getInt("SD0a12");
+                                                reporte.ServCursosTotales = rs8.getInt("TotalSD");
+                                                reporte.ServAsisCursos60 = rs8.getInt("SD60");
+                                                reporte.ServAsisCursos3059 = rs8.getInt("SD30a59");
+                                                reporte.ServAsisCursos1829 = rs8.getInt("SD18a29");
+                                                reporte.ServAsisCursos1317 = rs8.getInt("SD13a17");
+                                                reporte.ServAsisCursos012 = rs8.getInt("SD0a12");
+                                                reporte.ServAsisCursosTotales = rs8.getInt("TotalSD");
                                             }
                                             stmt8.close();
                                         }
