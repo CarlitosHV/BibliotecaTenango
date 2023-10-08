@@ -36,11 +36,6 @@ public class ControladorActividades extends BDController implements Initializabl
             }
             Search();
         });
-        ListaGrados.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                ListaGrados.getSelectionModel().clearSelection();
-            }
-        });
         LabelCrearGrado.setOnMouseClicked(event -> {
             TextInputDialog dialog = new Alertas().CrearAlertaInput("Ingresa el nombre de la actividad: ");
             ImageView InformacionView = ControladorOcupaciones.CrearHooverInformacion("/assets/informacion.png", "Ejemplos: Café literario, Mesa de lectura");

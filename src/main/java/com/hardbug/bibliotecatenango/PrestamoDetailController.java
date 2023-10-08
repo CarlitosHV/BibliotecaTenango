@@ -84,6 +84,7 @@ public class PrestamoDetailController extends BDController implements Initializa
                 EnviarRecordatorio(mprestamo);
                 Alert alert = new Alertas().CrearAlertaInformativa("Recordatorio enviado", "Se ha enviado un recordatorio al correo del usuario");
                 alert.showAndWait();
+                CerrarVista();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

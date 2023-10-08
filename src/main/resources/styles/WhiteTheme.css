@@ -136,7 +136,7 @@ comboBox .text-field {
 }
 
 #comboBox .list-cell:hover {
-    -fx-background-color: #30cc30;
+    -fx-background-color: #31913c;
     -fx-text-fill: white;
 }
 
@@ -148,7 +148,7 @@ comboBox .text-field {
 }
 
 #MenuItems:hover{
-    -fx-background-color: #30cc30;
+    -fx-background-color: #31913c;
     -fx-text-fill: white;
 }
 
@@ -196,12 +196,12 @@ comboBox .text-field {
 }
 
 #Listas .list-cell:selected {
-    -fx-background-color: #30cc30;
+    -fx-background-color: #31913c;
     -fx-text-fill: white;
 }
 
 #Listas .list-cell:hover {
-    -fx-background-color: #30cc30;
+    -fx-background-color: #31913c;
     -fx-text-fill: white;
 }
 

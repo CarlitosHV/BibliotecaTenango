@@ -1068,7 +1068,7 @@ public class BDController {
     public void EnviarRecordatorio(Prestamo mPrestamo) throws Exception {
         java.sql.Date fechaFin = mPrestamo.FechaFin;
         java.sql.Date fechaActual = Fechas.obtenerFechaActual();
-        if (fechaFin.compareTo(fechaActual) < 0){
+        if (fechaFin.compareTo(fechaActual) > 0){
             String mensaje = String.format("""
                                 <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
                                     <h2 style="color: #2F4F4F;">¡Hola, %s!</h2>

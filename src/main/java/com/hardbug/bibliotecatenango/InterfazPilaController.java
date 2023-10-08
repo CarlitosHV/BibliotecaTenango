@@ -50,11 +50,6 @@ public class InterfazPilaController extends BuscadorLibrosController implements 
             }
             cerrarModalMenuLibros();
         });
-        ListViewLibros.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                ListViewLibros.getSelectionModel().clearSelection();
-            }
-        });
 
         BotonAceptar.setOnAction(evt -> {
             Stage stage = (Stage) ViewSwitcher.getScene().getWindow();
