@@ -26,7 +26,11 @@ BEGIN
 	SET 
 		activo = false
         WHERE id_prestamo = i_id_prestamo;
+	
+	UPDATE DETALLE_PRESTAMO
+	SET
+		id_prestamo = NULL
+		WHERE id_prestamo = i_id_prestamo;
 	RETURN 1;
-
 END;
 $$;

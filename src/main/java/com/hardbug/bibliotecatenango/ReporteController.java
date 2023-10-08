@@ -35,6 +35,9 @@ public class ReporteController extends BDController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         IconoCarga.setVisible(false);
         IconoCarga.setProgress(-1.0);
+        DateFechaInicio.setValue(LocalDate.now());
+        DateFechaFin.setValue(LocalDate.now().plus(30, java.time.temporal.ChronoUnit.DAYS));
+
         DateFechaInicio.setOnAction(event -> {
             LocalDate fechaInicio = DateFechaInicio.getValue();
             LocalDate fechaFin = DateFechaFin.getValue();
@@ -42,8 +45,8 @@ public class ReporteController extends BDController implements Initializable {
             if (fechaInicio != null && fechaFin != null && fechaFin.isBefore(fechaInicio)) {
                 alert = new Alertas().CrearAlertaError("Error", "La fecha de inicio no puede ser mayor a la fecha de fin");
                 alert.showAndWait();
-                DateFechaFin.setValue(null);
-                DateFechaInicio.setValue(null);
+                DateFechaInicio.setValue(LocalDate.now());
+                DateFechaFin.setValue(LocalDate.now().plus(30, java.time.temporal.ChronoUnit.DAYS));
             }
         });
 
@@ -54,8 +57,8 @@ public class ReporteController extends BDController implements Initializable {
             if (fechaInicio != null && fechaFin != null && fechaFin.isBefore(fechaInicio)) {
                 alert = new Alertas().CrearAlertaError("Error", "La fecha de inicio no puede ser mayor a la fecha de fin");
                 alert.showAndWait();
-                DateFechaFin.setValue(null);
-                DateFechaInicio.setValue(null);
+                DateFechaInicio.setValue(LocalDate.now());
+                DateFechaFin.setValue(LocalDate.now().plus(30, java.time.temporal.ChronoUnit.DAYS));
             }
         });
 
