@@ -422,6 +422,9 @@ public class AltasUsersController extends BDController implements Initializable 
 
         //Entra al IF si se va a editar el usuario
         if (OPERACION == 2) {
+            Curp_bol = true;
+            Campo_curp.setEditable(false);
+            Campo_curp.setDisable(true);
             Label_cabecera.setText("Editar al usuario " + editUsuario.Nombre);
             Campo_nombre.setText(editUsuario.nombre.Nombre);
             Campo_apellido_paterno.setText(editUsuario.nombre.ApellidoPaterno);
