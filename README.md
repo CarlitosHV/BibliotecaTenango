@@ -15,3 +15,11 @@ La aplicación estará instalada en una computadora principal. El bibliotecario 
 ## Base de Datos
 
 La aplicación se conecta a una base de datos PostgreSQL de manera local, las consultas se manejan desde Stored Porcedures y Functions, a su vez, se debe crear un perfil de usuario dentro del gestor.
+
+##
+Aquí la copia de la base de datos montada en Postgresql
+Se requiere de crear un usuario dentro de Postgre con la siguiente información
+user: Biblioteca
+psw: dwX48AogL8b
+
+Link de la BD: https://drive.google.com/file/d/1UFaK2XiAbLCT4s8BQRja6Yz3qx0mIX7r/view?usp=sharing
