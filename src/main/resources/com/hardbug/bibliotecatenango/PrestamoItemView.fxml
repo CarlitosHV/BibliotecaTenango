@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-
 <AnchorPane prefHeight="128.0" prefWidth="663.0" styleClass="ElementoLista" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label id="Labels" fx:id="LabelNombre" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="382.0" text="Nombre:">

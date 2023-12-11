@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <AnchorPane id="Fondo" fx:id="Fondo" prefHeight="561.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.RegistroVisitanteController">
     <children>
         <GridPane id="Fondo" layoutX="150.0" layoutY="138.0" prefHeight="322.0" prefWidth="585.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="138.0">

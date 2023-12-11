@@ -3,7 +3,6 @@ package com.hardbug.bibliotecatenango;
 import com.hardbug.bibliotecatenango.Models.GenerarPdf;
 import com.hardbug.bibliotecatenango.Models.Reporte;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;

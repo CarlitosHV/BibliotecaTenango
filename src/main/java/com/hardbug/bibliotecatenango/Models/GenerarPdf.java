@@ -4,7 +4,9 @@ import com.hardbug.bibliotecatenango.Fechas;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.Objects;
 

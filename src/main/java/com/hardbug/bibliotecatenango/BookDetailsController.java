@@ -3,7 +3,6 @@ package com.hardbug.bibliotecatenango;
 import com.hardbug.bibliotecatenango.Models.Libro;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

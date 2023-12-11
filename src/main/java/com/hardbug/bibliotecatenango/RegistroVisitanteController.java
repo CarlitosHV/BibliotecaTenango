@@ -1,22 +1,19 @@
 package com.hardbug.bibliotecatenango;
 
-import com.hardbug.bibliotecatenango.Models.*;
+import com.hardbug.bibliotecatenango.Models.Catalogo;
+import com.hardbug.bibliotecatenango.Models.Nombres;
+import com.hardbug.bibliotecatenango.Models.Visitante;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.math.BigInteger;
 import java.net.URL;
-import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.ResourceBundle;
 
 public class RegistroVisitanteController extends BDController implements Initializable {
 

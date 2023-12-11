@@ -15,7 +15,6 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /* Clase AltaLibros:

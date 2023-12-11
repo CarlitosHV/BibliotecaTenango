@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
 <AnchorPane id="Fondo" prefHeight="450.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hardbug.bibliotecatenango.ControladorOcupaciones">
     <children>
         <Label id="Labels" alignment="CENTER" contentDisplay="CENTER" layoutX="118.0" layoutY="22.0" text="Ocupaciones" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="118.0">

@@ -7,7 +7,6 @@ import io.undertow.server.handlers.PathHandler;
 import io.undertow.util.Headers;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 
 
