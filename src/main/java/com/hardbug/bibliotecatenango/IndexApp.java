@@ -19,7 +19,7 @@ public class IndexApp extends Application {
     InputStream configInput = null;
     OutputStream configOutput = null;
     public static int TEMA;
-    public static String servidor, usuario, contrasenia, base_datos, key, correo;
+    public static String servidor, usuario, contrasenia, base_datos, key, correo, password_email, username_email;
     //Método que inicia la aplicación
     public static void main(String[] args) {
         launch(args);
@@ -55,6 +55,8 @@ public class IndexApp extends Application {
             base_datos = config.getProperty("database");
             key = config.getProperty("key");
             correo = config.getProperty("email");
+            password_email = config.getProperty("password_email");
+            username_email = config.getProperty("username_email");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -71,6 +73,8 @@ public class IndexApp extends Application {
             config.setProperty("database", base_datos);
             config.setProperty("key", key);
             config.setProperty("email", correo);
+            config.setProperty("password_email", password_email);
+            config.setProperty("username_email", username_email);
             config.store(configOutput, null);
         } catch (Exception e) {
             throw new RuntimeException(e);

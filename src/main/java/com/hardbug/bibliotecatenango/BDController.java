@@ -17,7 +17,6 @@ public class BDController {
             stmt.setString(1, ClaveRegistro);
             stmt.execute();
 
-            // Verifica si el libro ha sido eliminado correctamente
             PreparedStatement selectStmt = conn.prepareStatement("SELECT * FROM LIBROS WHERE clave_registro = ?");
             selectStmt.setString(1, ClaveRegistro);
             ResultSet rs = selectStmt.executeQuery();
@@ -48,17 +47,7 @@ public class BDController {
 
             while (rs.next()) {
                 Libro libro = new Libro();
-                libro.setClave_registro(rs.getString("clave_registro"));
-                libro.setEstante(rs.getString("Estante"));
-                libro.setDescripcion_libro(rs.getString("descripcion_libro"));
-                libro.setExistencias(rs.getInt("existencias"));
-                libro.setTitulo_libro(rs.getString("titulo_libro"));
-                libro.setAnio_edicion(rs.getString("anio_edicion"));
-                libro.setNombre_autor(rs.getString("nombre_autor"));
-                libro.setClasificacion(rs.getString("clasificacion"));
-                libro.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
-                libro.setEditorial(rs.getString("editorial"));
-                libro.setLugar_edicion(rs.getString("lugar_edicion"));
+                setBook(rs, libro);
                 _libros.add(libro);
             }
             rs.close();
@@ -69,6 +58,20 @@ public class BDController {
             System.err.println(e.getMessage());
             return null;
         }
+    }
+
+    private void setBook(ResultSet rs, Libro libro) throws SQLException {
+        libro.setClave_registro(rs.getString("clave_registro"));
+        libro.setEstante(rs.getString("Estante"));
+        libro.setDescripcion_libro(rs.getString("descripcion_libro"));
+        libro.setExistencias(rs.getInt("existencias"));
+        libro.setTitulo_libro(rs.getString("titulo_libro"));
+        libro.setAnio_edicion(rs.getString("anio_edicion"));
+        libro.setNombre_autor(rs.getString("nombre_autor"));
+        libro.setClasificacion(rs.getString("clasificacion"));
+        libro.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
+        libro.setEditorial(rs.getString("editorial"));
+        libro.setLugar_edicion(rs.getString("lugar_edicion"));
     }
 
     public Libro TraerLibro(String clave_registro) {
@@ -87,17 +90,7 @@ public class BDController {
 
             if (rs.next()) {
                 book = new Libro();
-                book.setClave_registro(rs.getString("clave_registro"));
-                book.setEstante(rs.getString("Estante"));
-                book.setDescripcion_libro(rs.getString("descripcion_libro"));
-                book.setExistencias(rs.getInt("existencias"));
-                book.setTitulo_libro(rs.getString("titulo_libro"));
-                book.setAnio_edicion(rs.getString("anio_edicion"));
-                book.setNombre_autor(rs.getString("nombre_autor"));
-                book.setClasificacion(rs.getString("clasificacion"));
-                book.setRegistro_clasificacion(rs.getString("registro_clasificacion"));
-                book.setEditorial(rs.getString("editorial"));
-                book.setLugar_edicion(rs.getString("lugar_edicion"));
+                setBook(rs, book);
             }
 
             rs.close();
@@ -388,7 +381,7 @@ public class BDController {
         }
     }
 
-    public boolean InsertarActualizarUsuario(Usuario mUsuario) throws Exception {
+    public boolean InsertarActualizarUsuario(Usuario mUsuario) {
         int IdNombre = 0;
         int IdDir = 0;
         try{
@@ -462,7 +455,9 @@ public class BDController {
                                     </p>
                                 </div>
                             """, mUsuario.getNombre());
-                        new EmailSender().emailSender("Registro de cuenta", mUsuario.getCorreo(), mensaje);
+                        Email email = new Email(mUsuario.getCorreo(), "Registro de cuenta", mensaje);
+                        EmailSender emailSender = new EmailSender();
+                        emailSender.send(email);
                     }else{
                         String mensaje = String.format("""
                                 <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
@@ -481,7 +476,9 @@ public class BDController {
                                     </p>
                                 </div>
                             """, mUsuario.getNombre());
-                        new EmailSender().emailSender("Actualización de cuenta", mUsuario.getCorreo(), mensaje);
+                        Email email = new Email(mUsuario.getCorreo(), "Actualización de cuenta", mensaje);
+                        EmailSender emailSender = new EmailSender();
+                        emailSender.send(email);
                     }
                     return true;
                 }else{
@@ -515,28 +512,7 @@ public class BDController {
                 usuario.setEdad(rs.getInt("edad"));
                 usuario.sexo = rs.getString("sexo");
                 usuario.setCurp(rs.getString("curp"));
-                usuario.Contrasenia = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
-                usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
-                usuario.setCorreo(rs.getString("correo"));
-                Nombres nombre = new Nombres();
-                nombre.IdNombre = rs.getInt("id_nombre");
-                nombre.Nombre = rs.getString("nombre");
-                nombre.ApellidoPaterno = rs.getString("apellido_paterno");
-                nombre.ApellidoMaterno = rs.getString("apellido_materno");
-                usuario.nombre = nombre;
-                usuario.TipoUsuario = new Catalogo(rs.getInt("id_tipo_usuario"), rs.getString("tipo_usuario"));
-                usuario.Ocupacion = new Catalogo(rs.getInt("id_ocupacion"), rs.getString("ocupacion"));
-                Direccion direccion = new Direccion();
-                direccion.IdDireccion = rs.getInt("id_direccion");
-                direccion.setCalle(rs.getString("calle"));
-                direccion.setCP(rs.getString("codigo_postal"));
-                direccion.IdMunicipio = rs.getInt("id_municipio");
-                direccion.Municipio = rs.getString("municipio");
-                direccion.IdEstado = rs.getInt("id_estado");
-                direccion.Estado = rs.getString("estado");
-                direccion.IdLocalidad = rs.getInt("id_localidad");
-                direccion.Localidad = rs.getString("localidad");
-                usuario.direccion = direccion;
+                setUser(usuario, rs);
                 _usuarios.add(usuario);
             }
 
@@ -589,7 +565,9 @@ public class BDController {
                                     </p>
                                 </div>
                             """, usuario.getNombre());
-                new EmailSender().emailSender("Cuenta eliminada del sistema", Correo, mensaje);
+                Email email = new Email(Correo, "Cuenta eliminada del sistema", mensaje);
+                EmailSender emailSender = new EmailSender();
+                emailSender.send(email);
                 return true;
             }
         }catch (SQLException e) {
@@ -630,7 +608,7 @@ public class BDController {
         }
     }
 
-    public int InsertarActualizarPrestamo(Prestamo mPrestamo) throws Exception {
+    public int InsertarActualizarPrestamo(Prestamo mPrestamo) {
         int IdPrestamo = 0;
         StringJoiner joiner = new StringJoiner(",");
         for (Libro libro : mPrestamo.libros) {
@@ -691,7 +669,9 @@ public class BDController {
                                 </div>
                             """, mPrestamo.Usuario.nombre.Nombre, Fechas.obtenerFechaInicio(mPrestamo.FechaInicio),
                         Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
-                new EmailSender().emailSender("Préstamo generado", mPrestamo.Usuario.Correo, mensaje);
+                Email email = new Email(mPrestamo.Usuario.Correo, "Préstamo generado", mensaje);
+                EmailSender emailSender = new EmailSender();
+                emailSender.send(email);
                 return 0;
             }else{
                 conn.close();
@@ -899,28 +879,7 @@ public class BDController {
                 usuario.setEdad(rs.getInt("edad"));
                 usuario.sexo = rs.getString("sexo");
                 usuario.setCurp(rs.getString("curp").trim());
-                usuario.Contrasenia = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
-                usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
-                usuario.setCorreo(rs.getString("correo"));
-                Nombres nombre = new Nombres();
-                nombre.IdNombre = rs.getInt("id_nombre");
-                nombre.Nombre = rs.getString("nombre");
-                nombre.ApellidoPaterno = rs.getString("apellido_paterno");
-                nombre.ApellidoMaterno = rs.getString("apellido_materno");
-                usuario.nombre = nombre;
-                usuario.TipoUsuario = new Catalogo(rs.getInt("id_tipo_usuario"), rs.getString("tipo_usuario"));
-                usuario.Ocupacion = new Catalogo(rs.getInt("id_ocupacion"), rs.getString("ocupacion"));
-                Direccion direccion = new Direccion();
-                direccion.IdDireccion = rs.getInt("id_direccion");
-                direccion.setCalle(rs.getString("calle"));
-                direccion.setCP(rs.getString("codigo_postal"));
-                direccion.IdMunicipio = rs.getInt("id_municipio");
-                direccion.Municipio = rs.getString("municipio");
-                direccion.IdEstado = rs.getInt("id_estado");
-                direccion.Estado = rs.getString("estado");
-                direccion.IdLocalidad = rs.getInt("id_localidad");
-                direccion.Localidad = rs.getString("localidad");
-                usuario.direccion = direccion;
+                setUser(usuario, rs);
             }
 
             stmt.close();
@@ -934,7 +893,32 @@ public class BDController {
         }
     }
 
-    public boolean ExtenderPrestamo(Prestamo mPrestamo) throws Exception {
+    private void setUser(Usuario usuario, ResultSet rs) throws Exception {
+        usuario.Contrasenia = ClaseCifrarContrasenia.decrypt(rs.getString("contrasenia"));
+        usuario.setGradoEscolar(new Catalogo(rs.getInt("id_grado_escolar"), rs.getString("grado_escolar")));
+        usuario.setCorreo(rs.getString("correo"));
+        Nombres nombre = new Nombres();
+        nombre.IdNombre = rs.getInt("id_nombre");
+        nombre.Nombre = rs.getString("nombre");
+        nombre.ApellidoPaterno = rs.getString("apellido_paterno");
+        nombre.ApellidoMaterno = rs.getString("apellido_materno");
+        usuario.nombre = nombre;
+        usuario.TipoUsuario = new Catalogo(rs.getInt("id_tipo_usuario"), rs.getString("tipo_usuario"));
+        usuario.Ocupacion = new Catalogo(rs.getInt("id_ocupacion"), rs.getString("ocupacion"));
+        Direccion direccion = new Direccion();
+        direccion.IdDireccion = rs.getInt("id_direccion");
+        direccion.setCalle(rs.getString("calle"));
+        direccion.setCP(rs.getString("codigo_postal"));
+        direccion.IdMunicipio = rs.getInt("id_municipio");
+        direccion.Municipio = rs.getString("municipio");
+        direccion.IdEstado = rs.getInt("id_estado");
+        direccion.Estado = rs.getString("estado");
+        direccion.IdLocalidad = rs.getInt("id_localidad");
+        direccion.Localidad = rs.getString("localidad");
+        usuario.direccion = direccion;
+    }
+
+    public boolean ExtenderPrestamo(Prestamo mPrestamo) {
         int response = 0;
         try{
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -976,7 +960,9 @@ public class BDController {
                                 </div>
                             """,mPrestamo.Usuario.nombre.Nombre,
                         Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
-                new EmailSender().emailSender("Tu préstamo solicitado se ha extendido", mPrestamo.Usuario.Correo, mensaje);
+                Email email = new Email(mPrestamo.Usuario.Correo, "Tu préstamo solicitado se ha extendido", mensaje);
+                EmailSender emailSender = new EmailSender();
+                emailSender.send(email);
                 return true;
             }else{
                 conn.close();
@@ -988,7 +974,7 @@ public class BDController {
         }
     }
 
-    public boolean FinalizarPrestamo(Prestamo mPrestamo) throws Exception {
+    public boolean FinalizarPrestamo(Prestamo mPrestamo) {
         int response = 0;
         StringJoiner joiner = new StringJoiner(",");
         for (Libro libro : mPrestamo.libros) {
@@ -1032,7 +1018,9 @@ public class BDController {
                                     </p>
                                 </div>
                             """,mPrestamo.Usuario.nombre.Nombre);
-                new EmailSender().emailSender("Finalización de préstamo", mPrestamo.Usuario.Correo, mensaje);
+                Email email = new Email(mPrestamo.Usuario.Correo, "Finalización de préstamo", mensaje);
+                EmailSender emailSender = new EmailSender();
+                emailSender.send(email);
                 return true;
             }else{
                 conn.close();
@@ -1044,7 +1032,7 @@ public class BDController {
         }
     }
 
-    public boolean ValidarPrestamo(int IdUsuario) throws Exception {
+    public boolean ValidarPrestamo(int IdUsuario) {
         boolean response = false;
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://" + IndexApp.servidor + "/" + IndexApp.base_datos,
@@ -1065,7 +1053,7 @@ public class BDController {
         }
     }
 
-    public void EnviarRecordatorio(Prestamo mPrestamo) throws Exception {
+    public void EnviarRecordatorio(Prestamo mPrestamo) {
         java.sql.Date fechaFin = mPrestamo.FechaFin;
         java.sql.Date fechaActual = Fechas.obtenerFechaActual();
         if (fechaFin.compareTo(fechaActual) > 0){
@@ -1087,7 +1075,9 @@ public class BDController {
                                 </div>
                             """,mPrestamo.Usuario.nombre.Nombre,
                     Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
-            new EmailSender().emailSender("Recordatorio de préstamo, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
+            Email email = new Email(mPrestamo.Usuario.Correo, "Recordatorio de préstamo, " + mPrestamo.Usuario.nombre.Nombre, mensaje);
+            EmailSender emailSender = new EmailSender();
+            emailSender.send(email);
         }else{
             String mensaje = String.format("""
                                 <div style="font-family: Arial, sans-serif; margin: 0 auto; padding: 20px; max-width: 600px;">
@@ -1109,7 +1099,9 @@ public class BDController {
                             """,mPrestamo.Usuario.nombre.Nombre,
                     Fechas.obtenerFechaDevolucion(mPrestamo.FechaFin));
 
-            new EmailSender().emailSender("Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mPrestamo.Usuario.Correo, mensaje);
+            Email email = new Email(mPrestamo.Usuario.Correo, "Préstamo vencido, " + mPrestamo.Usuario.nombre.Nombre, mensaje);
+            EmailSender emailSender = new EmailSender();
+            emailSender.send(email);
         }
     }
 
