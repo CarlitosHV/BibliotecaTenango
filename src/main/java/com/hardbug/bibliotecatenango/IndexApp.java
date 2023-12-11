@@ -6,10 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -46,8 +43,13 @@ public class IndexApp extends Application {
     public void ObtenerPropiedades() {
         try {
             Properties config = new Properties();
-            configInput = new FileInputStream("src/main/resources/config.properties");
-            config.load(configInput);
+            String path = new File(".").getCanonicalPath();
+            configInput = new FileInputStream(path + "/config.properties");
+            if (configInput != null) {
+                config.load(configInput);
+            } else {
+                throw new FileNotFoundException("Archivo de propiedades no encontrado");
+            }
             TEMA = Integer.parseInt(config.getProperty("theme"));
             servidor = config.getProperty("server");
             usuario = config.getProperty("user");
@@ -64,7 +66,8 @@ public class IndexApp extends Application {
 
     public void EscribirPropiedades(String property, String value) {
         try {
-            configOutput = new FileOutputStream("src/main/resources/config.properties");
+            String path = new File(".").getCanonicalPath();
+            configOutput = new FileOutputStream(path + "/config.properties");
             Properties config = new Properties();
             config.setProperty(property, value);
             config.setProperty("server", servidor);
